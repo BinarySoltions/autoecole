@@ -1,0 +1,71 @@
+ 
+ <mdb-card>
+    <mdb-card-header><h3>{{action}} - {{champ.titre.eleve}}</h3></mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+ <div class="row">
+   <div class="col col-12">
+      <label class="">{{champ.label.prenom}} et {{champ.label.nom}}</label>
+   </div>
+ <div class="md-form input-group col col-12 none-border-top">
+  <input type="text" aria-label="Prenom" [(ngModel)]="eleveModele.prenom" class="form-control" placeholder="prenom">
+  <input type="text" aria-label="Nom" [(ngModel)]="eleveModele.nom" class="form-control" placeholder="nom">
+</div>
+</div>
+<div class="row">
+    <div class="col col-12">
+        <label class="">{{champ.label.adresse}} ({{champ.label.numero_rue_app}})</label>
+     </div>
+    <div class="md-form input-group col col-12  none-border-top">
+        <input type="text" aria-label="Numero" [(ngModel)]="eleveModele.adresse.numero" class="form-control col-3" placeholder="numero">
+        <input type="text" aria-label="Rue" [(ngModel)]="eleveModele.adresse.rue" class="form-control col-6" placeholder="rue">
+        <input type="text" aria-label="App" [(ngModel)]="eleveModele.adresse.appartement" class="form-control col-3" placeholder="app">
+      </div>
+</div>
+<div class="row">
+  <div class="md-form col col-4  none-border-top">
+      <label for="municipalite">{{champ.label.municipalite}}</label>
+      <input type="text" aria-label="Municipalite" [(ngModel)]="eleveModele.adresse.municipalite" class="form-control" placeholder="municipalite">
+  </div>
+  <div class="md-form col col-4">
+      <label for="province">{{champ.label.province}}</label>
+      <select class="browser-default custom-select" [(ngModel)]="eleveModele.adresse.province">
+        <option selected>{{champ.label.selectionner}}</option>
+        <option *ngFor="let province of listeProvinces" value="province.value">{{province.label}}</option>
+    </select>
+  </div>
+  <div class="md-form col col-4  none-border-top">
+      <label for="codePostal">{{champ.label.code_postal}}</label>
+      <input type="text" aria-label="Code postal" [(ngModel)]="eleveModele.adresse.code_postal" class="form-control" placeholder="champ code postal">
+  </div>
+</div>
+<div class="row">
+    <div class="md-form col col-4  none-border-top">
+        <label for="numero">{{champ.label.numero_contrat}}</label>
+      <input type="text" aria-label="{{champ.label.numero_contrat}}" [(ngModel)]="eleveModele.numero_contrat" class="form-control" placeholder="champ numero contrat">
+    </div>
+    <div class="md-form col col-4  none-border-top">
+        <label for="telephone">{{champ.label.telephone}}</label>
+        <input type="text" aria-label="{{champ.label.telephone}}" [(ngModel)]="eleveModele.coordonnee.telephone" class="form-control" placeholder="champ telephone">
+    </div>
+    <div class="md-form col col-4  none-border-top">
+        <label for="telephoneAutre">{{champ.label.telephone_autre}}</label>
+        <input type="text" aria-label="{{champ.label.telephone_autre}}" [(ngModel)]="eleveModele.coordonnee.telephone_autre" class="form-control" placeholder="champ telephone autre">
+    </div>
+</div>
+</mdb-card-text>
+</mdb-card-body>
+<mdb-card-footer class="text-muted">
+<div class="row">
+  <div class="col offset-8 col-2">
+      <button mdbBtn type="button" color="primary" (click)="enregistrer()" mdbWavesEffect>
+          <mdb-icon fas icon="save" class="mr-1"></mdb-icon>{{champ.label.enregistrer}}
+        </button>
+  </div>
+  <div class="col col-2">
+      <button mdbBtn type="button" color="primary" (click)="fermer()" mdbWavesEffect>{{champ.label.fermer}}<mdb-icon fas icon="ban" class="ml-1"></mdb-icon></button>
+  </div>
+</div>
+</mdb-card-footer>
+</mdb-card>
+  

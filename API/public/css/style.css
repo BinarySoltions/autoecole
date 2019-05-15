@@ -1,0 +1,32 @@
+body{
+    font-size: 12px;
+    width:  791px;
+}
+.centrer{
+    text-align: center;
+}
+.bg-color-green{
+    background-color: lightgray;
+}
+.bg-color-black{
+    background-color: black;
+    color: white;
+}
+.no-padding{
+    padding: 0px 0px 0px 12px !important;
+    font-size: 8px;
+    border-bottom-color: transparent !important;
+}
+tr>td,th{
+    padding-top: 0px !important;
+    padding-bottom: 2px !important;
+}
+.no-border-left{
+    border-left-color: transparent !important;
+}
+.no-border-right{
+    border-right-color: transparent !important;
+}
+.no-border-bottom{
+    border-bottom-color: transparent !important;
+}

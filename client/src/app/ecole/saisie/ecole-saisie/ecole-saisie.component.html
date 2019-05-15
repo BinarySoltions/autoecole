@@ -1,0 +1,63 @@
+ 
+ <mdb-card>
+    <mdb-card-header><h3>{{champ.titre.ecole_identification}}</h3></mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+ <div class="row">
+   <div class="col col-12">
+      <label class="">{{champ.label.raison_sociale}} et {{champ.label.nom_ecole}}</label>
+   </div>
+ <div class="md-form input-group col col-12  none-border-top">
+  <input type="text" aria-label="Prenom" class="form-control" placeholder="prenom">
+  <input type="text" aria-label="Nom" class="form-control" placeholder="nom">
+</div>
+</div>
+<div class="row">
+    <div class="col col-12">
+        <label class="">{{champ.label.adresse}} ({{champ.label.numero_rue_app}})</label>
+     </div>
+    <div class="md-form input-group col col-12  none-border-top">
+        <input type="text" aria-label="Numero" class="form-control col-3" placeholder="numero">
+        <input type="text" aria-label="Rue" class="form-control col-6" placeholder="rue">
+        <input type="text" aria-label="App" class="form-control col-3" placeholder="app">
+      </div>
+</div>
+<div class="row">
+  <div class="md-form col col-4  none-border-top">
+      <label for="municipalite">{{champ.label.municipalite}}</label>
+      <input type="text" aria-label="{{champ.label.municipalite}}" class="form-control" placeholder="{{champ.label.municipalite}}">
+  </div>
+  <div class="md-form col col-4">
+      <label for="province">{{champ.label.province}}</label>
+      <select class="browser-default custom-select">
+        <option selected>{{champ.label.selectionner}}</option>
+        <option *ngFor="let province of listeProvinces" value="province.value">{{province.label}}</option>
+    </select>
+  </div>
+  <div class="md-form col col-4  none-border-top">
+      <label for="codePostal">{{champ.label.code_postal}}</label>
+      <input type="text" aria-label="{{champ.label.code_postal}}" class="form-control" placeholder="{{champ.label.code_postal}}">
+  </div>
+</div>
+<div class="row">
+    <div class="md-form col col-12  none-border-top">
+        <label for="numero">{{champ.label.email}}</label>
+      <input type="text" aria-label="{{champ.label.email}}" class="form-control" placeholder="{{champ.label.email}}">
+    </div>
+</div>
+</mdb-card-text>
+</mdb-card-body>
+<mdb-card-footer class="text-muted">
+<div class="row">
+  <div class="col offset-8 col-2">
+      <button mdbBtn type="button" color="primary" mdbWavesEffect>
+          <mdb-icon fas icon="save" class="mr-1"></mdb-icon>{{champ.label.enregistrer}}
+        </button>
+  </div>
+  <div class="col col-2">
+      <button mdbBtn type="button" color="primary" mdbWavesEffect>{{champ.label.fermer}}<mdb-icon fas icon="ban" class="ml-1"></mdb-icon></button>
+  </div>
+</div>
+</mdb-card-footer>
+</mdb-card>
+  

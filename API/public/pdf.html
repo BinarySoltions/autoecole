@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+   <style>
+       body{
+    font-size: 12px;
+    margin-left: 10%;
+    margin-right: 10%;
+    width:  791px;
+}
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.container{
+    width: auto;
+    height: auto;
+}
+.col-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.col-8 {
+    -ms-flex: 0 0 66.666667%;
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+}
+.col-4 {
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+}
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+table { border-collapse: collapse; }
+
+.centrer{
+    text-align: center;
+}
+.bg-color-green{
+    background-color: lightgray;
+    padding: 5px;
+}
+.bg-color-black{
+    background-color: black;
+    color: white;
+}
+.no-padding{
+    padding: 0px 0px 0px 12px !important;
+    font-size: 10px;
+    border-bottom-color: transparent !important;
+}
+tr{
+    border-bottom:1px solid #dee2e6;
+}
+tr>td,th{
+    padding-top: 1px !important;
+    padding-bottom: 3px !important;
+    padding-left: 17px;
+    border-bottom:1px solid #dee2e6;
+}
+
+.no-border-left{
+    border-left: 0px solid transparent !important;
+}
+.no-border-right{
+    border-right-color: transparent !important;
+}
+tr.no-border{
+    border:0px transparent !important;
+}
+tr>.border-left{
+    border-left: 1px solid #dee2e6 !important;
+}
+tr>.border-bottom{
+    border-bottom: 1px solid #dee2e6 !important;
+}
+tr>.no-border-bottom{
+    border-bottom: 0px solid transparent !important;
+}
+   </style>
+  </head>
+  <body class="container">
+  <div class="row">
+    <div class="col col-8">
+    <table class="table table-bordered">
+    <tr>
+        <th colspan="3" class="bg-color-green" align="left">
+            Identification de l'élève
+        </th>
+    </tr>
+      <tr class="no-border">
+        <td colspan="3" class="no-padding">
+         Prenom et Nom
+        </td>
+      </tr>
+      <tr class="border-bottom"> 
+        <td colspan="3">
+        Ousmane
+        
+         Dieng
+        </td>
+      </tr>
+      <tr class="no-border"> 
+        <td colspan="3" class="no-padding">
+         Adresse (Numero, rue, app)
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+        Ousmane
+        </td>
+      </tr>
+      <tr class="no-border">
+        <td class="no-padding no-border-right">
+         Municipalité
+        </td>
+        <td class="no-padding no-border-right">Province</td>
+        <td class="no-padding">Code postal</td>
+      </tr>
+      <tr>
+        <td class="no-border-right">
+        Ousmane
+        </td>
+        <td class="no-border-right">
+         Dieng
+        </td>
+        <td>
+         Dieng
+        </td>
+      </tr>
+      <tr class="no-border">
+        <td class="no-padding no-border-right">
+         Numéro de contrat
+        </td>
+        <td class="no-padding no-border-right">Téléphone</td>
+        <td class="no-padding">Téléphone autre</td>
+      </tr>
+      <tr>
+        <td class="no-border-right">
+        Ousmane
+        </td>
+        <td class="no-border-right">
+         Dieng
+        </td>
+        <td>
+         Dieng
+        </td>
+      </tr>
+    </table>
+    </div>
+    </div>
+    <div class="row">
+        <div class="col col-12">
+        <table class="table table-bordered">
+        <tr>
+        <th colspan="3" class="bg-color-green" align="left">
+            Identification de l'école
+        </th>
+    </tr>
+      <tr class="no-border">
+        <td colspan="3" class="no-padding">
+         Raison sociale - Nom de l'école
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+        Ousmane
+        
+         Dieng
+        </td>
+      </tr>
+      <tr class="no-border">
+        <td colspan="3" class="no-padding">
+         Adresse (Numero, rue, app)
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+        Ousmane
+        </td>
+      </tr>
+      <tr class="no-border">
+        <td class="no-padding no-border-right">
+         Municipalité
+        </td>
+        <td class="no-padding no-border-right">Province</td>
+        <td class="no-padding">Code postal</td>
+      </tr>
+      <tr>
+        <td class="no-border-right">
+        Ousmane
+        </td>
+        <td class="no-border-right">
+         Dieng
+        </td>
+        <td>
+         Dieng
+        </td>
+      </tr>
+      <tr class="no-border">
+        <td colspan="3" class="no-padding">
+         Adresse de courriel
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+        Ousmane
+        </td>
+      </tr>
+    </table>
+        </div>
+    </div>
+    <div class="row">
+    <div class="col col-4">
+        <table class="table table-bordered">
+            <tr>
+                <th colspan="4" class="centrer bg-color-black">Phase 1</th>
+            </tr>
+            <tr class="no-border">
+                <th class="bg-color-green border-bottom" rowspan="2">Module</th>
+                <th colspan="3" class="centrer bg-color-green no-border-bottom border-left" >Complété le</th>
+            </tr>
+            <tr>
+                <th class="no-border-right bg-color-green border-left">Année</th><th class="no-border-right bg-color-green">mois</th><th class="bg-color-green">Jour</th>
+            </tr>
+            <tr>
+                <td>Module 1</td><td class="no-border-right border-left"></td><td class="no-border-right"></td><td></td>
+            </tr>
+            <tr>
+                <td>Module 2</td><td class="no-border-right border-left"></td><td class="no-border-right"></td><td></td>
+            </tr>
+            <tr>
+                <td>Module 3</td><td class="no-border-right border-left"></td><td class="no-border-right"></td><td></td>
+            </tr>
+            <tr>
+                <td>Module 4</td><td class="no-border-right border-left"></td><td class="no-border-right"></td><td></td>
+            </tr>
+            <tr>
+                <td>Module 5</td><td class="no-border-right border-left"></td><td class="no-border-right"></td><td></td>
+            </tr>
+        </table>
+    </div>
+    <div class="col col-8">
+    </div>
+    </div>
+  </body>
+</html>
