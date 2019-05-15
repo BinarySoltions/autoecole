@@ -1,3 +1,3 @@
 # autoecole
 
-Projet pour le systèeme d'auto-école.
+Projet pour le système d'auto-école.
