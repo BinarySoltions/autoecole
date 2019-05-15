@@ -1,8 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
 import jsPDF from 'jspdf';
 import * as html2canvas from "html2canvas";
 import * as $ from 'jquery';
-declare let JsBarcode: any;
+var JsBarcode = require('jsbarcode');
 // @Component({
 //   selector: 'app-attestation',
 //   templateUrl: './attestation.component.html',
@@ -17,12 +17,21 @@ declare let JsBarcode: any;
     { provide: 'Window',  useValue: window }
   ]
 })
-export class AttestationComponent implements OnInit {
+export class AttestationComponent implements OnInit,AfterViewInit {
+  ngAfterViewInit(): void {
+    JsBarcode("#barcode", "00597587", {
+      format: "CODE128C",
+      width: 2.5,
+      height: 40,
+      displayValue: false
+    });
+  }
 
   constructor(
     @Inject('Window') private window: Window,
-    ) { }
-
+    ) { 
+      
+    }
 
   ngOnInit() {
     
@@ -43,12 +52,12 @@ export class AttestationComponent implements OnInit {
     }
 
     public print(quality = 1) {
-      const filename  = 'ThisIsYourPDFFilename.pdf';
+      const filename  = 'attestation_test.pdf';
   
       html2canvas(document.querySelector('#pdf'), 
                   {scale: quality}
                ).then(canvas => {
-        let pdf = new jsPDF('p', 'px', 'letter');
+        let pdf = new jsPDF('p', 'pt', 'letter');
         pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 612, 792);
         pdf.save(filename);
       });
