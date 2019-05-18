@@ -7,13 +7,14 @@
   <style>
     body {
       width: 100%;
+      font-size: 16px;
     }
 
     /* #pdf{
   width:  80% !important;
 } */
     .font-label {
-      font-size: 12px;
+      font-size: 14px;
     }
 
     .row {
@@ -80,7 +81,7 @@
 
     .centrer {
       text-align: center !important;
-      font-size: 12px;
+      font-size: 14px;
     }
 
     .bg-color-green {
@@ -168,7 +169,14 @@
       width: 15% !important;
       height: 2% !important;
     }
-
+    .numero-attestation{
+      font-size: 30px;
+      letter-spacing: 10px;
+    }
+    .numero-permis{
+      font-size: 20px;
+      letter-spacing: 18px;
+    }
     .resize-100 {
       width: 100% !important;
     }
@@ -207,29 +215,40 @@
       padding: 0px;
       text-align: center;
     }
+    .hide-phase{
+      opacity: 0;
+    }
+    .height-champ{
+      height:45px !important;
+    }
   </style>
 
 </head>
 
 <body>
+  <div class="row">
+    <div class="col col-3">
+    <label class="checkbox-inline">
+        <input type="checkbox" aria-label="phaseUne" [(ngModel)]="phaseUne" class="form-control">Phase 1
+      </label>
+    </div>
+    
+    <div class="col col-3 checkbox">
+      <label>
+          <input type="checkbox" aria-label="complet" [(ngModel)]="complet" class="form-control">Complet
+        </label>
+        </div>
+    <div class="col col-4">
+        <button type="button" (click)="download()">Télécharger </button>
+        </div>
+  </div>
   <div id="pdf" class="container">
-    <table class="resize-100">
+    <table class="resize-100" style="margin:30px 0px 30px 0px;">
       <tr>
-        <td class="no-border" rowspan="2" width="200px"><img style="width:200px" src="assets/aqtr.png" alt="logo" />
-        </td>
-        <td rowspan="2" class="no-border font-label" colspan="2" width="43%" align="left"
-          style="padding:0px 0px 0px 50px">
-          <table class="no-border">
-            <tr>
-              <td class="no-border">
-                <span class="font-weight-bold">Association québécoise des transports</span><br />
-                Programme de reconnaissance des écoles de conduite<br />
-                Téléphone:514 595-9110 Télécopieur:514 370-8559 <br />
-                www.aqtr.com
-              </td>
-            </tr>
-          </table>
-
+        <td colspan="2" class="no-border" style="height:20px"></td>
+      </tr>
+      <tr>
+        <td class="no-border" rowspan="2" width="200px"><img style="width:200px" src="assets/logo_pconduite.JPG" alt="logo" />
         </td>
         <td class="no-border padding-0" align="right" width="40%"
           style="text-align:bottom;font-weight:bold;font-size:20px">
@@ -249,19 +268,7 @@
               <td rowspan="2" class="border-top border-right border-left bg-gray font-label permis-w" style="margin-bottom:0px">
                 Numéro de permis
               </td>
-              <td class="border-top no-border-bottom no-border-right"></td>
-              <td class="border-top no-border-bottom no-border-right"></td>
-              <td class="border-top no-border-bottom no-border-right"></td>
-              <td class="border-top no-border-bottom no-border-right"></td>
-              <td class="border-top no-border-bottom no-border-right"></td>
-              <td class="border-top no-border-bottom no-border-right"></td>
-              <td class="border-top no-border-bottom no-border-right"></td>
-              <td class="border-top no-border-bottom no-border-right"></td>
-              <td class="border-top no-border-bottom no-border-right"></td>
-              <td class="border-top no-border-bottom no-border-right"></td>
-              <td class="border-top no-border-bottom no-border-right"></td>
-              <td class="border-top no-border-bottom no-border-right"></td>
-              <td class="border-top no-border-bottom border-right"></td>
+              <td colspan="13" class="border-top no-border-bottom border-right numero-permis">{{numeroPermis}}</td>
             </tr>
             <tr>
               <td class="trait no-border-top"></td>
@@ -296,18 +303,11 @@
               <td class="no-border-bottom no-border-top" style="padding-bottom: 17px;">
                 <table class="table table-bordered" style="margin-left:1%">
                   <tr>
-                    <th colspan="8" class="bg-color-green centrer border-bottom border-top border-left font-label">
+                    <th colspan="8" class="bg-color-green centrer border-bottom border-top border-left font-label ">
                       Numéro d'attestation</th>
                   </tr>
                   <tr>
-                    <td class="no-border-bottom border-left color-red">0</td>
-                    <td class="no-border-bottom color-red">0</td>
-                    <td class="no-border-bottom color-red">5</td>
-                    <td class="no-border-bottom color-red">9</td>
-                    <td class="no-border-bottom color-red">7</td>
-                    <td class="no-border-bottom color-red">5</td>
-                    <td class="no-border-bottom color-red">8</td>
-                    <td class="no-border-bottom border-right2 color-red">7</td>
+                    <td colspan="8" class="no-border-bottom border-left border-right2 color-red numero-attestation" style="font-size: 30px;">{{numeroAttestation}}</td>
                   </tr>
                   <tr>
                     <td class="border-right border-left trait padding-0"></td>
@@ -326,10 +326,10 @@
               <td class="no-border-bottom no-border-top">
                 <table class="table table-bordered" style="margin-left:1%; width: 188px;">
                   <tr>
-                    <th class="bg-color-green border-bottom border-top border-left font-label" style="width:100%;">Numéro de l'école</th>
+                    <th class="bg-color-green border-bottom border-top border-left font-label centrer" style="width:100%;">Numéro de l'école</th>
                   </tr>
                   <tr>
-                    <td style="padding:1%px;" align="center" class="border-right2 border-left">545122</td>
+                    <td style="padding:1%px;" align="center" class="border-right2 border-left">{{numeroEcole}}</td>
                   </tr>
 
                 </table>
@@ -353,14 +353,12 @@
                   </tr>
                   <tr class="">
                     <td colspan="3" class=" no-border-bottom font-label">
-                      Prénom et Nom
+                      Nom et prénom
                     </td>
                   </tr>
                   <tr class="">
                     <td colspan="3" class="border-bottom">
-                      <span class="text-left"> Ousmane
-
-                        Dieng</span>
+                      <span class="text-left"> {{nomEleve}}</span>
                     </td>
 
                   </tr>
@@ -371,7 +369,7 @@
                   </tr>
                   <tr>
                     <td colspan="3" class="border-bottom">
-                      8956 Arthur Peloquin #40
+                      {{adresseEleve}}
                     </td>
                   </tr>
                   <tr class="">
@@ -383,32 +381,32 @@
                   </tr>
                   <tr>
                     <td class=" border-bottom">
-                      Saint Laurent
+                      {{municipaliteEleve}}
                     </td>
                     <td class="border-bottom">
-                      QC
+                      {{provinceEleve}}
                     </td>
                     <td class="border-bottom">
-                      H1K 2S2
+                      {{codePostalEleve}}
                     </td>
                   </tr>
                   <tr class="">
-                    <td class=" no-border-bottom  font-label">
+                    <td class=" no-border-bottom  font-label border-right">
                       Numéro de contrat
                     </td>
-                    <td class="no-border-bottom font-label ">Téléphone</td>
+                    <td class="no-border-bottom font-label border-right ">Téléphone</td>
                     <td class=" no-border-bottom font-label">Téléphone autre</td>
 
                   </tr>
                   <tr>
-                    <td class="">
-                      3932019
+                    <td class="border-right">
+                      {{numeroContratEleve}}
+                    </td>
+                    <td class="border-right">
+                      {{telephoneEleve}}
                     </td>
                     <td class="">
-                      Dieng
-                    </td>
-                    <td class="">
-                      Dieng
+                      
                     </td>
                   </tr>
                 </table>
@@ -433,19 +431,17 @@
       </tr>
       <tr>
         <td colspan="3" class="border-bottom">
-          Ousmane
-
-          Dieng
+          {{nomEcole}}
         </td>
       </tr>
       <tr class="">
         <td colspan="3" class="no-border-bottom font-label">
-          Adresse (Numero, rue, app)
+          Adresse (Numéro, rue, app)
         </td>
       </tr>
       <tr>
         <td colspan="3" class="border-bottom">
-          Ousmane
+          {{adresseEcole}}
         </td>
       </tr>
       <tr class="">
@@ -457,13 +453,13 @@
       </tr>
       <tr>
         <td class="border-bottom">
-          Ousmane
+          {{municipaliteEcole}}
         </td>
         <td class="border-bottom">
-          Dieng
+          {{provinceEcole}}
         </td>
         <td class="border-bottom">
-          Dieng
+          {{codePostalEcole}}
         </td>
       </tr>
       <tr class="">
@@ -473,14 +469,14 @@
       </tr>
       <tr>
         <td colspan="3">
-          bababbbaa@bababab.com
+          {{emailEcole}}
         </td>
       </tr>
     </table>
     <table style="width:100%;">
       <tr>
-        <td style="width:15%; padding:10px;" class="no-border-bottom bg-color-gray">
-          <table class="table-bordered" style="width:150px; padding:10px;">
+        <td style="padding:10px;" class="no-border-bottom bg-color-gray">
+          <table class="table-bordered" style="width:230px; padding:10px;">
             <tr>
               <th colspan="4" class="bg-color-black centrer">Phase 1</th>
             </tr>
@@ -497,23 +493,23 @@
             </tr>
             <tr>
               <td class="border-right bg-color-white border-bottom centrer">1</td>
-              <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+              <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
             </tr>
             <tr>
               <td class="border-right bg-color-white centrer border-bottom">2</td>
-              <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+              <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
             </tr>
             <tr>
               <td class="border-right bg-color-white centrer border-bottom">3</td>
-              <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+              <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
             </tr>
             <tr>
               <td class="border-right bg-color-white centrer border-bottom">4</td>
-              <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+              <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
             </tr>
             <tr>
               <td class="border-right bg-color-white centrer border-bottom">5</td>
-              <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+              <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
             </tr>
           </table>
         </td>
@@ -530,21 +526,21 @@
                     </th>
                   </tr>
                   <tr class="">
-                    <td class="border-bottom font-label">
+                    <td class="border-bottom font-label height-champ" >
                       J'atteste que la phase 1 du cours de conduite est :
                     </td>
-                    <td class="border-bottom font-label"> <input type="checkbox" value="0" /> Réussie</td>
-                    <td class="border-bottom font-label"> <input type="checkbox" value="0" /> Échouée</td>
-                    <td class="border-bottom font-label"> <input type="checkbox" value="0" /> Incomplète</td>
+                    <td class="border-bottom font-label" > <input type="checkbox" value="0" /> Réussie</td>
+                    <td class="border-bottom font-label" > <input type="checkbox" value="0" /> Échouée</td>
+                    <td class="border-bottom font-label" > <input type="checkbox" value="0" /> Incomplète</td>
                   </tr>
                   <tr>
-                    <td class="border-bottom font-label">
+                    <td class="border-bottom font-label height-champ">
                       Nom de la personne responsable :
                     </td>
-                    <td colspan="3" class="border-bottom font-label"></td>
+                    <td colspan="3" class="border-bottom font-label height-champ"></td>
                   </tr>
                   <tr class="font-label">
-                    <td colspan="2" class="font-label" style="height:26px">
+                    <td colspan="2" class="font-label" style="height:26px;padding:12px 0px 12px;">
                       Signature :
                     </td>
                     <td class="font-label">Date :</td>
@@ -572,8 +568,8 @@
         <td class="bg-color-gray no-border-bottom" colspan="3" style="width:100%;padding: 10px 10px 0px 10px;">
           <table style="margin-bottom:0px">
             <tr>
-              <td class="no-border">
-                <table class="table-bordered no-border" style="width:200px; padding:10px;">
+              <td class="no-border" [ngClass]="{'hide-phase':phaseUne}">
+                <table class="table-bordered no-border" style="width:230px; padding:10px;">
                   <tr>
                     <th colspan="4" class="border-left border-bottom border-top bg-color-black centrer border-right">
                       Phase 2</th>
@@ -591,27 +587,27 @@
                   </tr>
                   <tr>
                     <td class="border-left border-right bg-color-white border-bottom centrer">6</td>
-                    <td class="bg-color-white border-bottom centrer border-right" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer border-right" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-left border-right bg-color-white centrer border-bottom">Sortie 1</td>
-                    <td class="bg-color-white border-bottom centrer border-right" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer border-right" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-left border-right bg-color-white centrer border-bottom">Sortie 2</td>
-                    <td class="bg-color-white border-bottom centrer border-right" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer border-right" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-left border-right bg-color-white centrer border-bottom">7</td>
-                    <td class="bg-color-white border-bottom centrer border-right" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer border-right" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-left border-right bg-color-white centrer border-bottom">Sortie 3</td>
-                    <td class="bg-color-white border-bottom centrer border-right" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer border-right" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class=" border-left border-right bg-color-white centrer border-bottom">Sortie 4</td>
-                    <td class="bg-color-white border-bottom centrer border-right" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer border-right" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="no-border" colspan="4"></td>
@@ -625,8 +621,8 @@
                 </table>
               </td>
               <td class="bg-color-gray no-border-bottom" align="center"
-                style="width:500px;padding: 10px 0px 10px 10px;">
-                <table class="table-bordered" style="width:200px; padding:10px;">
+                style="width:500px;padding: 10px 0px 10px 10px;" [ngClass]="{'hide-phase':phaseUne}">
+                <table class="table-bordered" style="width:230px; padding:10px;">
                   <tr>
                     <th colspan="4" class="bg-color-black centrer">Phase 3</th>
                   </tr>
@@ -643,44 +639,46 @@
                   </tr>
                   <tr>
                     <td class="border-right bg-color-white border-bottom centrer">8</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-right bg-color-white centrer border-bottom">Sortie 5</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-right bg-color-white centrer border-bottom">Sortie 6</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-right bg-color-white centrer border-bottom">9</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-right bg-color-white centrer border-bottom">Sortie 7</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-right bg-color-white centrer border-bottom">Sortie 8</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-right bg-color-white centrer border-bottom">10</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-right bg-color-white centrer border-bottom">Sortie 9</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-right bg-color-white centrer border-bottom">Sortie 10</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                 </table>
               </td>
-              <td align="top" class="bg-color-gray no-border-bottom" style="width:200px;padding: 10px 0px 10px 10px;">
-                <table class="table-bordered" style="width:200px; padding:10px;">
+              <td align="top" class="bg-color-gray no-border-bottom" 
+              style="width:200px;padding: 10px 0px 10px 10px;"
+              [ngClass]="{'hide-phase':phaseUne}">
+                <table class="table-bordered" style="width:230px; padding:10px;">
                   <tr>
                     <th colspan="4" class="bg-color-black centrer">Phase 4</th>
                   </tr>
@@ -697,31 +695,31 @@
                   </tr>
                   <tr>
                     <td class="border-right bg-color-white border-bottom centrer">11</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-right bg-color-white centrer border-bottom">Sortie 11</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-right bg-color-white centrer border-bottom">Sortie 12</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-right bg-color-white centrer border-bottom">Sortie 13</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-right bg-color-white centrer border-bottom">12</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-right bg-color-white centrer border-bottom">Sortie 14</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                   <tr>
                     <td class="border-right bg-color-white centrer border-bottom">Sortie 15</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3"></td>
+                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
                   </tr>
                 </table>
               </td>
@@ -736,7 +734,7 @@
         <td class="no-border-bottom font-label" align="center" style="font-weight:bold"> Sceau de l'école </td>
       </tr>
       <tr>
-        <td style="width:80%" class="no-border-bottom">
+        <td style="width:80%" class="no-border-bottom" [ngClass]="{'hide-phase':phaseUne}">
           <!-- atteste -->
           <table class="table-bordered texte" style="width:100%">
             <tr>
@@ -745,7 +743,7 @@
               </th>
             </tr>
             <tr class="">
-              <td class="border-bottom font-label">
+              <td class="border-bottom font-label height-champ">
                 J'atteste que le cours de conduite est :
               </td>
               <td class="border-bottom font-label"> <input type="checkbox" value="0" /> Réussie</td>
@@ -753,13 +751,13 @@
               <td class="border-bottom font-label"> <input type="checkbox" value="0" /> Incomplet</td>
             </tr>
             <tr>
-              <td class="border-bottom font-label">
+              <td class="border-bottom font-label height-champ">
                 Nom de la personne responsable :
               </td>
               <td colspan="3" class="border-bottom font-label"></td>
             </tr>
             <tr class="">
-              <td colspan="2" class="font-label" style="height:26px">
+              <td colspan="2" class="font-label" style="height:26px;padding:12px 0px 12px;">
                 Signature :
               </td>
               <td class="font-label">Date : </td>
@@ -772,7 +770,7 @@
               </th>
             </tr>
             <tr>
-              <td colspan="4" class="border-bottom font-label">Je reconnais avoir suivi le cours de conduite ci-dessus
+              <td colspan="4" class="border-bottom font-label height-champ">Je reconnais avoir suivi le cours de conduite ci-dessus
                 mentionné</td>
             </tr>
             <tr class="">
@@ -785,25 +783,16 @@
           </table>
         </td>
         <td align="top" class="no-border-bottom" style="padding-left:20px;">
-          <div style="width: 202px;height: 202px;border: 2px solid black;"></div>
+          <div style="width: 280px;height: 280px;border: 2px solid black;"></div>
         </td>
       </tr>
     </table>
     <table class="resize-100 no-border">
       <tr>
-        <td align="right" class="no-border font-label">www.aqtr.com</td>
-      </tr>
-      <tr>
-        <td align="center" class="no-border font-label font-weight-bold"><em> Formulaire prescrit par l'AQTr pour la
-            réussite du cours de conduite dans une école reconnue.</em></td>
-      </tr>
-      <tr>
-        <td align="center" class="no-border font-weight-bold font-label" style="color:red">COPIE DU DÉLÉGATAIRE</td>
+        <td align="center" class="no-border font-weight-bold font-label" style="color:red;margin-bottom: 10px;height: 30px; text-align: top;">{{typeCopie}}</td>
       </tr>
     </table>
   </div>
-
-  <button (click)="download()">download </button>
 </body>
 
 </html>

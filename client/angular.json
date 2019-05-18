@@ -94,7 +94,7 @@
               "node_modules/hammerjs/hammer.min.js",
               "../node_modules/jspdf/dist/jspdf.min.js",
               "../node_modules/jquery/dist/jquery.min.js",
-              "src/assets/JsBarcode.code128.min.js"
+              "../node_modules/jsbarcode/dist/JsBarcode.all.min.js"
             ],
             "assets": [
               "src/favicon.ico",

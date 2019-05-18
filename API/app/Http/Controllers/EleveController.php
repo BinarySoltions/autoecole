@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Services\Eleve\IEleveService;
+use App\Services\Eleve\EleveRequete;
 use App\Http\Resources\EleveResource;
 use App\Eleve;
 use App\Adresse;
@@ -12,6 +14,11 @@ use App\Module;
 
 class EleveController extends Controller
 {
+    protected $serviceEleve;
+
+    public function __construct(IEleveService $eleveService){
+        $this->serviceEleve = $eleveService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,9 +26,7 @@ class EleveController extends Controller
      */
     public function index()
     {
-        $eleves = Eleve::with('adresse','coordonnee','modules')
-                ->get();
-        return EleveResource::Collection($eleves);
+        return $this->serviceEleve->obtenirListeEleves();
     }
 
     /**
@@ -42,35 +47,7 @@ class EleveController extends Controller
      */
     public function store(Request $request)
     {
-        $eleve = new Eleve;
-       
-        //save eleve
-        $eleve->prenom = $request->prenom;
-        $eleve->nom = $request->nom;
-        $eleve->numero_contrat = $request->numero_contrat;
-        
-        $adresse = new Adresse;
-        $adresse->numero = $request->adresse['numero'];
-        $adresse->rue = $request->adresse['rue'];
-        $adresse->appartement = $request->adresse['appartement'];
-        $adresse->municipalite = $request->adresse['municipalite'];
-        $adresse->province = $request->adresse['province'];
-        $adresse->code_postal = $request->adresse['code_postal'];
-
-        $coordonnee = new Coordonnee;
-        $coordonnee->telephone = $request->coordonnee['telephone'];
-        $coordonnee->telephone_autre = $request->coordonnee['telephone_autre'];
-        
-       //module eleve
-       $modules = Module::orderBy('numero','asc')->get('id');
-      
-       //save all
-       $eleve->save();
-       $eleve->adresse()->save($adresse);
-       $eleve->coordonnee()->save($coordonnee);
-       $eleve->modules()->sync($modules,false);
-       
-       return $eleve;
+        return $this->serviceEleve->sauvegarderEleve($request);
     }
 
     /**
