@@ -6,6 +6,8 @@ import { Eleve } from 'src/app/entite/eleve.entity';
 import { Adresse } from 'src/app/entite/adresse.entity';
 import { Coordonnee } from 'src/app/entite/coordonnee.entity';
 import { EleveService } from 'src/app/service/eleve/eleve.service';
+import { ToastrService } from 'ngx-toastr';
+import {_} from 'underscore';
 
 @Component({
   selector: 'app-eleve-saisie',
@@ -20,19 +22,22 @@ export class EleveSaisieComponent implements OnInit {
   eleveModele:Eleve;
   idEleve:number;
   action:string;
+  model:any;
 
   constructor(private router:Router, 
         private serviceEleve:EleveService,
-        private activatedRoute: ActivatedRoute) { }
+        private activatedRoute: ActivatedRoute,
+        private toastr: ToastrService) {
+         
+         }
 
   ngOnInit() {
+    this.initialiserEleveModele();
     this.idEleve = +this.activatedRoute.snapshot.paramMap.get('id');
     this.obtenirEleveById(this.idEleve);
-    this.initialiserEleveModele();
     this.listeProvinces = [
-      { value: '1', label: 'QC' },
-      { value: '2', label: 'AB' },
-      { value: '3', label: 'ON' },
+      { value: 'Québec', label: 'Québec' },
+      { value: 'Ontario', label: 'Ontario' }
       ];
   
     }
@@ -47,9 +52,12 @@ export class EleveSaisieComponent implements OnInit {
       this.action = "Ajouter";
     }
   }
+ 
   public enregistrer(){
     this.serviceEleve.ajouterEleve(this.eleveModele).subscribe((eleve)=>{
       this.eleveModele.id = eleve.id;
+      this.toastr.success("L'élève a été ajouté avec succés!", "Sauvegarde d'un élève", {timeOut: 5000});
+      this.fermer();
     });
   }
 

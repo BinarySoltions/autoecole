@@ -7,12 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ecole extends Model
 {
-    use SoftDeletes;
 
     protected $table = 'ecole';
 
     protected $hidden = [
-        'created_at', 'updated_at','deleted_at'
+        'created_at', 'updated_at'
     ];
 
     public function attestation(){

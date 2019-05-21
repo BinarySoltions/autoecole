@@ -34,24 +34,28 @@
         "ajouter":"Ajouter",
         "nom_phase":"Nom de la phase",
         "numero_phase" : "Numéro de la phase",
-        "nombre_module":"Nombre de modules"
+        "nombre_module":"Nombre de modules",
+        "rechercher":"Rechercher",
+        "personne_responsable":"Nom complet de la personne responsable"
     },
     "titre":{
         "eleve":"Élève",
         "ecole_identification":"Identification de l'école",
         "attestation_personne_responsable":"Attestation de la personne responsable",
-        "phase_config":"Ajouter une phase",
+        "phase_config":"Ajouter un module dans une phase",
         "phase_module": "Liste des modules",
-        "ajout_module": "Ajouter un module à un ou plusieurs élèves"
+        "ajout_module": "Ajouter un module à un ou plusieurs élèves",
+        "liste_personnes_responsables":"Liste des personnes responsables",
+        "personne_responsable":"Ajouter une personne responsable"
     },
     "menu":{
         "eleve":"Élève",
-        "parametre":"Paramètre",
+        "parametre":"Paramètres",
         "autre":"Autre"
     },
     "module":{
         "nom":"Module",
-        "date_complete":"Date complétée",
+        "date_complete":"Date",
         "eleves":"Élèves"
     }
 }

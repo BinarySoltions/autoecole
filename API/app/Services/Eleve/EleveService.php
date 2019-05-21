@@ -52,14 +52,15 @@ class EleveService implements IEleveService
        $eleve->coordonnee()->save($coordonnee);
        $eleve->modules()->sync($modules,false);
        
-       return $eleve;
+       $eleves = Eleve::with('adresse','coordonnee','modules.phase')
+       ->find($eleve->id);
+       return  new EleveResource($eleves); 
     }
     public function modifierEleve($request){
 
         $eleve = Eleve::find($request->id);
-        $adresse = $eleve->adresse();
-        $coordonnee = $eleve->coordonnee();
-
+        $adresse = Eleve::find($request->id)->adresse;
+        $coordonnee = Eleve::find($request->id)->coordonnee;
         //save eleve
         $eleve->prenom = $request->prenom;
         $eleve->nom = $request->nom;
@@ -77,19 +78,25 @@ class EleveService implements IEleveService
         
        //module eleve
        //$modules = Module::orderBy('numero','asc')->get('id');
-      
+     
        //save all
        $eleve->save();
        $eleve->adresse()->save($adresse);
        $eleve->coordonnee()->save($coordonnee);
        //$eleve->modules()->sync($modules,false);
        
-       return $eleve;
+       $eleves = Eleve::with('adresse','coordonnee','modules.phase')
+       ->find($eleve->id);
+       return  new EleveResource($eleves); 
     }
 
     public function obtenirListeEleves(){
         $eleves = Eleve::with('adresse','coordonnee','modules')
-        ->get();
+        ->orderBy('created_at','desc')->get();
+        return EleveResource::Collection($eleves);
+    }
+    public function obtenirListeElevesSeulement(){
+        $eleves = Eleve::orderBy('created_at','desc')->get();
         return EleveResource::Collection($eleves);
     }
 }

@@ -8,4 +8,5 @@ interface IEleveService
 {
     public function sauvegarderEleve(Request $requete);
     public function obtenirListeEleves();
+    public function obtenirListeElevesSeulement();
 }

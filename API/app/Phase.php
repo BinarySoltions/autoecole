@@ -7,15 +7,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Phase extends Model
 {
-    use SoftDeletes;
 
     protected $table = 'phase';
 
     protected $hidden = [
-        'created_at', 'updated_at','deleted_at'
+        'created_at', 'updated_at'
     ];
 
-    public function eleve(){
+    public function modules(){
         return $this->hasMany('App\Module');
     }
 }

@@ -1,0 +1,127 @@
+ 
+ <mdb-card>
+    <mdb-card-header><h3>Identification de l'élève</h3></mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+ <div class="row">
+   <div class="col col-12">
+      <label class="">{{'label.nom' | translate}} et {{'label.prenom' | translate}}</label>
+   </div>
+ <div class="md-form input-group col col-12 none-border-top">
+  <input readonly type="text" aria-label="Nom" [(ngModel)]="eleveModele.nom" class="form-control" placeholder="nom">
+  <input readonly type="text" aria-label="Prenom" [(ngModel)]="eleveModele.prenom" class="form-control" placeholder="prenom">
+</div>
+</div>
+<div class="row">
+    <div class="col col-12">
+        <label class="">{{'label.adresse' | translate}} ({{'label.numero_rue_app' | translate}})</label>
+     </div>
+    <div class="md-form input-group col col-12  none-border-top">
+        <input readonly type="text" aria-label="Numero" [(ngModel)]="eleveModele.adresse.numero" class="form-control col-3" placeholder="numero">
+        <input readonly type="text" aria-label="Rue" [(ngModel)]="eleveModele.adresse.rue" class="form-control col-6" placeholder="rue">
+        <input readonly type="text" aria-label="App" [(ngModel)]="eleveModele.adresse.appartement" class="form-control col-3" placeholder="app">
+      </div>
+</div>
+<div class="row">
+  <div class="md-form col col-4  none-border-top">
+      <label for="municipalite">{{'label.municipalite' | translate}}</label>
+      <input readonly type="text" aria-label="Municipalite" [(ngModel)]="eleveModele.adresse.municipalite" class="form-control" placeholder="municipalite">
+  </div>
+  <div class="md-form col col-4">
+      <label for="province">{{'label.province' |translate}}</label>
+      <input readonly class="form-control" [(ngModel)]="eleveModele.adresse.province">
+  </div>
+  <div class="md-form col col-4  none-border-top">
+      <label for="codePostal">{{'label.code_postal' | translate}}</label>
+      <input readonly type="text" aria-label="Code postal" [(ngModel)]="eleveModele.adresse.code_postal" class="form-control" placeholder="champ code postal">
+  </div>
+</div>
+<div class="row">
+    <div class="md-form col col-4  none-border-top">
+        <label for="numero">{{'label.numero_contrat' | translate}}</label>
+      <input readonly type="text" aria-label="" [(ngModel)]="eleveModele.numero_contrat" class="form-control" placeholder="champ numero contrat">
+    </div>
+    <div class="md-form col col-4  none-border-top">
+        <label for="telephone">{{'label.telephone' | translate}}</label>
+        <input readonly type="text" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone" class="form-control" placeholder="champ telephone">
+    </div>
+    <div class="md-form col col-4  none-border-top">
+        <label for="telephoneAutre">{{'label.telephone_autre' | translate}}</label>
+        <input readonly type="text" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone_autre" class="form-control" placeholder="champ telephone autre">
+    </div>
+</div>
+</mdb-card-text>
+</mdb-card-body>
+<mdb-card-footer class="text-muted">
+</mdb-card-footer>
+</mdb-card>
+<div style="height:40px"></div>
+
+<mdb-card>
+    <mdb-card-header><h3>{{'titre.phase_module' | translate}}</h3></mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+          <div class="row">
+<!-- phase1 -->
+  <div class="col col-4" style="text-align:center">
+    <table class="table table-bordered">
+      <tr>
+        <th class="bg-color-black">{{phaseUne.nom}}</th>
+      </tr>
+      <tr>
+        <td>
+            <app-phase-deux-affichage [modules]="phaseUne.modules"></app-phase-deux-affichage>
+        </td>
+      </tr>
+    </table>
+</div>
+<!-- phase 2 -->
+<div class="col col-4" style="text-align:center">
+  <table class="table table-bordered">
+    <tr>
+      <th class="bg-color-black">{{phaseDeux.nom}}</th>
+    </tr>
+    <tr>
+      <td>
+          <app-phase-deux-affichage [modules]="phaseDeux.modules"></app-phase-deux-affichage>
+      </td>
+    </tr>
+  </table>
+</div>
+<!-- phase 3 -->
+<div class="col col-4" style="text-align:center">
+  <table class="table table-bordered">
+    <tr>
+      <th class="bg-color-black">{{phaseTrois.nom}}</th>
+    </tr>
+    <tr>
+      <td>
+          <app-phase-deux-affichage [modules]="phaseTrois.modules"></app-phase-deux-affichage>
+      </td>
+    </tr>
+  </table>
+</div>
+<!-- phase 4 -->
+<div class="col col-4" style="text-align:center">
+  <table class="table table-bordered">
+    <tr>
+      <th class="bg-color-black">{{phaseQuatre.nom}}</th>
+    </tr>
+    <tr>
+      <td>
+          <app-phase-deux-affichage [modules]="phaseQuatre.modules"></app-phase-deux-affichage>
+      </td>
+    </tr>
+  </table>
+</div>
+</div>
+</mdb-card-text>
+</mdb-card-body>
+<mdb-card-footer class="text-muted">
+</mdb-card-footer>
+</mdb-card>
+<div class="row" style="margin-top:20px">
+    <div class="col col-2">
+        <button mdbBtn type="button" color="primary" class="bg-color-green" (click)="fermer()" mdbWavesEffect>{{'label.fermer' | translate}}<mdb-icon fas icon="ban" class="ml-1"></mdb-icon></button>
+      </div>
+</div>

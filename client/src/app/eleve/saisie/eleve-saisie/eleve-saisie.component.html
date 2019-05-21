@@ -31,7 +31,7 @@
       <label for="province">{{champ.label.province}}</label>
       <select class="browser-default custom-select" [(ngModel)]="eleveModele.adresse.province">
         <option selected>{{champ.label.selectionner}}</option>
-        <option *ngFor="let province of listeProvinces" value="province.value">{{province.label}}</option>
+        <option *ngFor="let province of listeProvinces" [value]="province.value">{{province.label}}</option>
     </select>
   </div>
   <div class="md-form col col-4  none-border-top">

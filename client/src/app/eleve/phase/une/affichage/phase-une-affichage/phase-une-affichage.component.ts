@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-phase-une-affichage',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PhaseUneAffichageComponent implements OnInit {
 
+  @Input() modules:any = [];
   constructor() { }
 
   ngOnInit() {

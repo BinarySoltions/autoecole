@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\Http\Resources\PhaseResource;
 use App\Phase;
 
 class PhaseController extends Controller
@@ -15,6 +17,8 @@ class PhaseController extends Controller
     public function index()
     {
         //
+        $phase = Phase::with('modules')->get();
+        return PhaseResource::Collection($phase);
     }
 
     /**
@@ -35,14 +39,14 @@ class PhaseController extends Controller
      */
     public function store(Request $request)
     {
-        $phase = new Phase;
-       
-        //save phase
-        $phase->nom = $request->nom;
-        $phase->numero = $request->numero;
-       //save phase
-       $phase->save();
-       
+            if($request->id){
+                $phase = Phase::find($request->id);
+            }else{
+                 $phase = new Phase;
+            }
+            $phase->nom = $request->nom;
+            $phase->numero = $request->numero;
+            $phase->save();
     }
 
     /**

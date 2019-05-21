@@ -5,6 +5,9 @@ import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstra
 import core from 'src/app/core/core.json';
 import lien from 'src/app/core/lien.json';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { Module } from 'src/app/entite/module.entity';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -23,27 +26,37 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
   @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('row') row: ElementRef;
   elements: Eleve[]=[];
-  headElements = ['numero_contrat', 'prenom', 'nom', 'adresse','id'];
+  headElements = ['Nom', 'Prénom', 'Adresse','Téléphone','Phase','Action'];
 
   searchText: string = '';
   previous: Eleve[]=[];
 
-  maxVisibleItems: number = 5;
+  maxVisibleItems: number = 20;
   
   constructor(private serviceEleve:EleveService,
     private cdRef: ChangeDetectorRef,
-    private router: Router) {
+    private router: Router,
+    private translate:TranslateService,
+    private spinner:NgxSpinnerService) {
+      this.translate.setDefaultLang('fr');
    }
 
   @HostListener('input') oninput() {
     this.mdbTablePagination.searchText = this.searchText;
   }
   ngOnInit() { 
-    this.serviceEleve.obtneirEleves().subscribe((result)=>{
+    this.spinner.show(undefined, { fullScreen: true });
+ 
+    setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.spinner.hide();
+    }, 5000);
+    this.serviceEleve.obtenirEleves().subscribe((result)=>{
       this.elements = result;
       this.mdbTable.setDataSource(this.elements);
       this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
+      //this.spinner.hide();
     });
    
   }
@@ -81,7 +94,28 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
  public editerEleve(value){
    this.router.navigate([lien.url.ajout_eleve+"/"+value]);
  }
+ public detailEleve(value){
+  this.router.navigate(["eleve/detail/"+value]);
+}
  public ajouterEleve(){
    this.router.navigate([lien.url.ajout_eleve]);
  }
+
+ determinerPhase(modules:Module[]):string{
+   let mapModule = new Map;
+   modules.forEach(m=>{
+      if(m.eleve_module.date_complete == null){
+        mapModule.set(m.numero,m.nom);
+      }
+   });
+   let resultatArray = Array.from(mapModule.keys()).sort(this.compare);
+   let resultat = mapModule.get(resultatArray[0]);
+  return resultat;
+ }
+  compare(a, b){
+  if (a > b) return 1;
+  if (b > a) return -1;
+
+  return 0;
+}
 }

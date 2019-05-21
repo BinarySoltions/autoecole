@@ -18,4 +18,7 @@ class Module extends Model
             ->withPivot('date_complete')
             ->withTimestamps();
     }
+    public function phase(){
+        return $this->belongsTo('App\Phase');
+    }
 }

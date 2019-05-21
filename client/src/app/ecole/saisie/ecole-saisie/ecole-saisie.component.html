@@ -1,48 +1,71 @@
  
  <mdb-card>
-    <mdb-card-header><h3>{{champ.titre.ecole_identification}}</h3></mdb-card-header>
+    <mdb-card-header><h3>{{'titre.ecole_identification' | translate}}</h3></mdb-card-header>
     <mdb-card-body>
       <mdb-card-text>
  <div class="row">
-   <div class="col col-12">
-      <label class="">{{champ.label.raison_sociale}} et {{champ.label.nom_ecole}}</label>
+   <div class="col col-8">
+      <label class="">{{'label.raison_sociale' | translate}} et {{'label.nom_ecole' | translate}}</label>
    </div>
+   <div class="col col-4">
+    <label class="">Numéro de l'école</label>
+ </div>
  <div class="md-form input-group col col-12  none-border-top">
-  <input type="text" aria-label="Prenom" class="form-control" placeholder="prenom">
-  <input type="text" aria-label="Nom" class="form-control" placeholder="nom">
+  <input type="text" aria-label="raison" [(ngModel)]="ecole.raison_social" class="form-control" placeholder="raison sociale">
+  <input type="text" aria-label="Nom" [(ngModel)]="ecole.nom" class="form-control" placeholder="nom">
+  <input type="text" aria-label="Nom" [(ngModel)]="ecole.numero" class="form-control" placeholder="numéro">
 </div>
 </div>
 <div class="row">
     <div class="col col-12">
-        <label class="">{{champ.label.adresse}} ({{champ.label.numero_rue_app}})</label>
+        <label class="">{{'label.adresse' | translate}} ({{'label.numero_rue_app' | translate}})</label>
      </div>
     <div class="md-form input-group col col-12  none-border-top">
-        <input type="text" aria-label="Numero" class="form-control col-3" placeholder="numero">
-        <input type="text" aria-label="Rue" class="form-control col-6" placeholder="rue">
-        <input type="text" aria-label="App" class="form-control col-3" placeholder="app">
+        <input type="text" 
+        aria-label="Numero" 
+        class="form-control col-3" 
+        placeholder="numero"
+        [(ngModel)]="ecole.adresse.numero">
+        <input type="text" aria-label="Rue" 
+        class="form-control col-6" placeholder="rue"
+        [(ngModel)]="ecole.adresse.rue">
+        <input type="text" 
+        aria-label="App" 
+        class="form-control col-3" 
+        placeholder="app"
+        [(ngModel)]="ecole.adresse.appartement">
       </div>
 </div>
 <div class="row">
   <div class="md-form col col-4  none-border-top">
-      <label for="municipalite">{{champ.label.municipalite}}</label>
-      <input type="text" aria-label="{{champ.label.municipalite}}" class="form-control" placeholder="{{champ.label.municipalite}}">
+      <label for="municipalite">{{'label.municipalite' | translate}}</label>
+      <input type="text" 
+      aria-label="" class="form-control" 
+      placeholder="{{'label.municipalite' | translate}}"
+      [(ngModel)]="ecole.adresse.municipalite">
   </div>
   <div class="md-form col col-4">
-      <label for="province">{{champ.label.province}}</label>
-      <select class="browser-default custom-select">
-        <option selected>{{champ.label.selectionner}}</option>
+      <label for="province">{{'label.province'| translate}}</label>
+      <select class="browser-default custom-select" [(ngModel)]="ecole.adresse.province">
+        <option selected>{{'label.selectionner' | translate}}</option>
         <option *ngFor="let province of listeProvinces" value="province.value">{{province.label}}</option>
     </select>
   </div>
   <div class="md-form col col-4  none-border-top">
-      <label for="codePostal">{{champ.label.code_postal}}</label>
-      <input type="text" aria-label="{{champ.label.code_postal}}" class="form-control" placeholder="{{champ.label.code_postal}}">
+      <label for="codePostal">{{'label.code_postal' | translate}}</label>
+      <input type="text" aria-label="" 
+      class="form-control" 
+      placeholder="H12 2K3"
+      mask="A0A 0A0"
+      [(ngModel)]="ecole.adresse.code_postal">
   </div>
 </div>
 <div class="row">
     <div class="md-form col col-12  none-border-top">
-        <label for="numero">{{champ.label.email}}</label>
-      <input type="text" aria-label="{{champ.label.email}}" class="form-control" placeholder="{{champ.label.email}}">
+        <label for="numero">{{'label.email' | translate}}</label>
+      <input type="text" aria-label="" class="form-control" 
+      placeholder="courriel"
+      [(ngModel)]="ecole.email">
     </div>
 </div>
 </mdb-card-text>
@@ -50,12 +73,12 @@
 <mdb-card-footer class="text-muted">
 <div class="row">
   <div class="col offset-8 col-2">
-      <button mdbBtn type="button" color="primary" mdbWavesEffect>
-          <mdb-icon fas icon="save" class="mr-1"></mdb-icon>{{champ.label.enregistrer}}
+      <button mdbBtn type="button" color="primary" class="bg-color-black"  (click)="enregistrer()" mdbWavesEffect>
+          <mdb-icon fas icon="save" class="mr-1"></mdb-icon>{{'label.enregistrer' | translate}}
         </button>
   </div>
   <div class="col col-2">
-      <button mdbBtn type="button" color="primary" mdbWavesEffect>{{champ.label.fermer}}<mdb-icon fas icon="ban" class="ml-1"></mdb-icon></button>
+      <button mdbBtn type="button" color="primary" class="bg-color-black" (click)="fermer()" mdbWavesEffect>{{'label.fermer' | translate}}<mdb-icon fas icon="ban" class="ml-1"></mdb-icon></button>
   </div>
 </div>
 </mdb-card-footer>

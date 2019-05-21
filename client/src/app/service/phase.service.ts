@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { Module } from 'src/app/entite/module.entity';
 import { environment } from 'src/environments/environment';
-import { HttpHeaders,HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { Phase } from '../entite/phase.entity';
 import { catchError } from 'rxjs/operators';
-import { ModuleModel } from 'src/app/module/ajouter-module/ajouter-module.component';
-import { Eleve } from 'src/app/entite/eleve.entity';
-import { Phase } from 'src/app/entite/phase.entity';
-import { PhaseModel } from 'src/app/phase/module/phase-module/phase-module.component';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,25 +15,15 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class ModuleService {
-
+export class PhaseService {
   readonly apiUrl = environment.apiEndpoint;
-
-
   constructor(private http: HttpClient) { }
 
-  obtnenirModules(): Observable<Module[]> {
-    return this.http.get<Module[]>(this.apiUrl + 'modules');
-  }
-
-  ajouterModuleEleves(module: ModuleModel): Observable<{'valid':boolean}> {
-    return this.http.post<{'valid':boolean}>(this.apiUrl + 'module_eleves', module, httpOptions)
-      .pipe(catchError(this.handleError));
-  }
-  ajouterPhaseModule(phaseModule:PhaseModel):Observable<Phase[]>{
-    return this.http.post<Phase[]>(this.apiUrl+'module',phaseModule,httpOptions)
+  obtenirPhasesModules():Observable<Phase[]>{
+    return this.http.get<Phase[]>(this.apiUrl+'phases')
     .pipe(catchError(this.handleError));
   }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

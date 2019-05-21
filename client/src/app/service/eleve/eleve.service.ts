@@ -26,8 +26,12 @@ export class EleveService {
     return this.http.get<Eleve>(this.apiUrl + 'eleve/' + id);
   }
 
-  obtneirEleves(): Observable<Eleve[]> {
+  obtenirEleves(): Observable<Eleve[]> {
     return this.http.get<Eleve[]>(this.apiUrl + 'eleves');
+  }
+
+  obtenirElevesUniquement(): Observable<Eleve[]> {
+    return this.http.get<Eleve[]>(this.apiUrl + 'eleves_seulement');
   }
 
   ajouterEleve(eleve: Eleve): Observable<Eleve> {

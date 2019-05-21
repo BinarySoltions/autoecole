@@ -1,5 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+// regular style toast 
+@import '~ngx-toastr/toastr';
+
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/material.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+ 
 
 .none-border-top > input{
     border-top-color: transparent !important;
@@ -13,4 +20,21 @@
 
 .push-right{
     text-align: right;
+}
+
+.sticky-top{
+    background-color: #28a745 !important;
+    color:white !important;
+}
+
+.bg-color-black{
+    background-color: black;
+    color:white;
+}
+.bg-color-white{
+    background-color: white;
+}
+
+.bg-color-green{
+    background-color: #28a745;
 }

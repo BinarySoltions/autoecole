@@ -14,6 +14,7 @@ class CreateAdresseEcoleTable extends Migration
     public function up()
     {
         Schema::create('adresse_ecole', function (Blueprint $table) {
+        $table->bigIncrements('id');
         $table->bigInteger('ecole_id');
         $table->integer('numero')->nullable();
         $table->string('rue',250)->nullable();
@@ -22,6 +23,7 @@ class CreateAdresseEcoleTable extends Migration
         $table->string('province',100)->nullable();
         $table->string('code_postal')->nullable();
         $table->foreign('ecole_id')->references('id')->on('ecole');
+        $table->timestamps();
         });
     }
 

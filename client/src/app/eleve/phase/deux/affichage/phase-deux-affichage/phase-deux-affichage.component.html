@@ -1,3 +1,21 @@
-<p>
-  phase-deux-affichage works!
-</p>
+
+<table class="table table-bordered bg-color-white">
+    <tr>
+      <th>Module</th>
+      <th>
+          <span>Complété le</span><br/>
+          Année  mois  Jour
+      </th>
+    </tr>
+    <ng-template ngFor let-row [ngForOf]="modules">
+    <tr>
+      <td>
+          {{row?.nom}}
+      </td>
+      <td>
+          {{row?.eleve_module?.date_complete}}
+      </td>
+   
+    </tr>
+  </ng-template>
+  </table>

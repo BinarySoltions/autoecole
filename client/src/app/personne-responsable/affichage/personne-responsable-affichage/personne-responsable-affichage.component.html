@@ -1,3 +1,53 @@
-<p>
-  personne-responsable-affichage works!
-</p>
+
+  <mdb-card>
+      <mdb-card-header><h3>{{'titre.personne_responsable' | translate}}</h3></mdb-card-header>
+      <mdb-card-body>
+        <mdb-card-text>
+          <div class="row">
+      <div class="md-form col col-12 none-border-top">
+          <label for="numero">{{'label.personne_responsable' | translate}}</label>
+        <input type="text" 
+        aria-label="{{'label.personne_responsable' | translate}}" 
+        [(ngModel)]="personneResponsable.nom" class="form-control" 
+        placeholder="nom" style="width:100%">
+      </div>
+    </div>
+  </mdb-card-text>
+  </mdb-card-body>
+  <mdb-card-footer class="text-muted">
+  <div class="row">
+    <div class="col offset-10 col-2" style="text-align:right">
+        <button mdbBtn type="button" color="primary" (click)="ajouter()" mdbWavesEffect>
+            <mdb-icon fas icon="plus" class="mr-1"></mdb-icon>{{'label.ajouter' | translate}}
+          </button>
+    </div>
+  </div>
+  </mdb-card-footer>
+  </mdb-card>
+  <div style="height:40px"></div>
+  
+      <mdb-card>
+          <mdb-card-header><h3>{{'titre.liste_personnes_responsables' | translate}}</h3></mdb-card-header>
+          <mdb-card-body>
+            <mdb-card-text>
+    <ngx-datatable
+      #mydatatable
+      class="material"
+      [messages]="message"
+      [headerHeight]="50"
+      [limit]="27"
+      [columnMode]="'force'"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [rows]="listePersonneResponsable">
+      <ngx-datatable-column name="Personne responsable autorisée" >
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row">
+            {{row?.nom}}
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </mdb-card-text>
+  </mdb-card-body>
+  <mdb-card-footer class="text-muted">
+  </mdb-card-footer>
+  </mdb-card>

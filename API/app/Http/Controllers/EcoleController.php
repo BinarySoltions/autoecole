@@ -4,21 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Services\Eleve\IEleveService;
-use App\Services\Eleve\EleveRequete;
-use App\Http\Resources\EleveResource;
-use App\Eleve;
-use App\Adresse;
-use App\Coordonnee;
-use App\Module;
+use App\Http\Resources\EcoleResource;
+use App\Ecole;
+use App\AdresseEcole;
 
-class EleveController extends Controller
+class EcoleController extends Controller
 {
-    protected $serviceEleve;
-
-    public function __construct(IEleveService $eleveService){
-        $this->serviceEleve = $eleveService;
-    }
     /**
      * Display a listing of the resource.
      *
@@ -26,13 +17,11 @@ class EleveController extends Controller
      */
     public function index()
     {
-        return $this->serviceEleve->obtenirListeEleves();
+        //
+        $ecole = Ecole::with('adresse')->first();
+        return new EcoleResource($ecole);
     }
 
-    public function seulement()
-    {
-        return $this->serviceEleve->obtenirListeElevesSeulement();
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -51,7 +40,34 @@ class EleveController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->serviceEleve->sauvegarderEleve($request);
+        $adresse = null;
+            if($request->id){
+                $ecole = Ecole::find($request->id);
+                $adresse = Ecole::find($request->id)->adresse;
+            }else{
+                 $ecole= new Ecole;
+            }
+            $ecole->nom = $request->nom;
+            $ecole->numero = $request->numero;
+            $ecole->raison_social =  $request->raison_social;
+            $ecole->email =  $request->email;
+
+            if(!$adresse){
+                $adresse = new AdresseEcole;
+            }
+            
+            $adresse->numero = $request->adresse['numero'];
+            $adresse->rue = $request->adresse['rue'];
+            $adresse->appartement = $request->adresse['appartement'];
+            $adresse->municipalite = $request->adresse['municipalite'];
+            $adresse->province = $request->adresse['province'];
+            $adresse->code_postal = $request->adresse['code_postal'];
+
+            $ecole->save();
+            $ecole->adresse()->save($adresse);
+
+            $ecole = Ecole::with('adresse')->first();
+            return new EcoleResource($ecole);
     }
 
     /**
@@ -62,9 +78,7 @@ class EleveController extends Controller
      */
     public function show($id)
     {
-        $eleves = Eleve::with('adresse','coordonnee','modules.phase')
-        ->find($id);
-        return  new EleveResource($eleves); 
+        //
     }
 
     /**

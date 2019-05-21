@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule,NO_ERRORS_SCHEMA } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
@@ -8,7 +8,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from "@angular/material/icon";
-
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,6 +34,17 @@ import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar/navbar.component';
 import { AttestationComponent } from './attestation/attestation/attestation.component';
 
+import {NgxMaskModule, IConfig} from 'ngx-mask'
+import { NgxSpinnerModule } from 'ngx-spinner';
+
+import { ToastrModule } from 'ngx-toastr';
+// import ngx-translate and the http loader
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { PhaseModuleComponent } from './phase/module/phase-module/phase-module.component';
+import { AjouterModuleComponent } from './module/ajouter-module/ajouter-module.component';
+import { DetailComponent } from './eleve/detail/detail.component';
+
 
 @NgModule({
   declarations: [
@@ -50,7 +64,10 @@ import { AttestationComponent } from './attestation/attestation/attestation.comp
     PersonneResponsableSaisieComponent,
     PersonneResponsableAffichageComponent,
     NavbarComponent,
-    AttestationComponent
+    AttestationComponent,
+    PhaseModuleComponent,
+    AjouterModuleComponent,
+    DetailComponent
   ],
   imports: [
     BrowserModule,
@@ -65,9 +82,27 @@ import { AttestationComponent } from './attestation/attestation/attestation.comp
     MDBBootstrapModule,
     MatButtonModule,
     MatIconModule,
+    ToastrModule.forRoot(),
+    NgxDatatableModule,
+    NgMultiSelectDropDownModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+  }),
+  NgbModule,NgbPaginationModule, NgbAlertModule,
+  NgxMaskModule.forRoot(options),
+  NgxSpinnerModule
   ],
   schemas:[ NO_ERRORS_SCHEMA],
   providers: [EleveService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+export var options: Partial<IConfig> | (() => Partial<IConfig>);
