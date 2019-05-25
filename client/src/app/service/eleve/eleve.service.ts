@@ -38,6 +38,10 @@ export class EleveService {
     return this.http.post<Eleve>(this.apiUrl + 'eleve', eleve, httpOptions)
       .pipe(catchError(this.handleError));
   }
+  supprimerEleveById(id: number): Observable<{valid:boolean}> {
+    return this.http.delete<{valid:boolean}>(this.apiUrl + 'eleve/' + id)
+    .pipe(catchError(this.handleError));
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

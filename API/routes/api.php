@@ -37,6 +37,8 @@ Route::get('eleves','EleveController@index');
 Route::get('eleves_seulement','EleveController@seulement');
 //get eleve
 Route::get('eleve/{id}','EleveController@show');
+//get eleve
+Route::delete('eleve/{id}','EleveController@destroy');
 
 //create ecole
 Route::post('ecole','EcoleController@store');

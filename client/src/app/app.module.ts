@@ -44,6 +44,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { PhaseModuleComponent } from './phase/module/phase-module/phase-module.component';
 import { AjouterModuleComponent } from './module/ajouter-module/ajouter-module.component';
 import { DetailComponent } from './eleve/detail/detail.component';
+import { GenererComponent } from './attestation/generer/generer.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { DetailComponent } from './eleve/detail/detail.component';
     AttestationComponent,
     PhaseModuleComponent,
     AjouterModuleComponent,
-    DetailComponent
+    DetailComponent,
+    GenererComponent
   ],
   imports: [
     BrowserModule,

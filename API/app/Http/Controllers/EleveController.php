@@ -99,5 +99,15 @@ class EleveController extends Controller
     public function destroy($id)
     {
         //
+        $eleve = Eleve::find($id);
+        $valid = false;
+        if($eleve){
+            Eleve::where('id','=',$id)->delete();
+            $valid = true;
+        }
+           
+        return response()->json([
+            'valid' => $valid
+            ]);
     }
 }

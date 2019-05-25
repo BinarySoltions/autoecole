@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Module } from 'src/app/entite/module.entity';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
     private cdRef: ChangeDetectorRef,
     private router: Router,
     private translate:TranslateService,
-    private spinner:NgxSpinnerService) {
+    private spinner:NgxSpinnerService,
+    private toastr:ToastrService) {
       this.translate.setDefaultLang('fr');
    }
 
@@ -96,6 +98,16 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
  }
  public detailEleve(value){
   this.router.navigate(["eleve/detail/"+value]);
+}
+public supprimerEleve(value,index){
+  this.serviceEleve.supprimerEleveById(value).subscribe(res=>{
+    if(res.valid){
+      this.elements.splice(index,1);
+      this.mdbTable.setDataSource(this.elements);
+      this.elements = this.mdbTable.getDataSource();
+      this.toastr.success("L'élève a été supprimé avec succes!","Infrormation");
+    }
+  })
 }
  public ajouterEleve(){
    this.router.navigate([lien.url.ajout_eleve]);
