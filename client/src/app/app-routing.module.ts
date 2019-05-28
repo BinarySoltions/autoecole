@@ -8,11 +8,13 @@ import { AjouterModuleComponent } from './module/ajouter-module/ajouter-module.c
 import { PhaseModuleComponent } from './phase/module/phase-module/phase-module.component';
 import { PersonneResponsableAffichageComponent } from './personne-responsable/affichage/personne-responsable-affichage/personne-responsable-affichage.component';
 import { DetailComponent } from './eleve/detail/detail.component';
+import { GenererComponent } from './attestation/generer/generer.component';
 
 const routes: Routes = [
   { path: 'eleves', component: EleveAffichageComponent },
   { path: 'eleve' , component: EleveSaisieComponent},
   { path: 'attestation' , component: AttestationComponent},
+  { path: 'attestation/:id' , component: GenererComponent},
   { path: 'eleve/:id' , component: EleveSaisieComponent},
   { path: 'eleve/detail/:id' , component: DetailComponent},
   { path: 'ecole' , component: EcoleSaisieComponent},
@@ -22,7 +24,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{ enableTracing: true } )],
+  imports: [RouterModule.forRoot(routes,{ enableTracing: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

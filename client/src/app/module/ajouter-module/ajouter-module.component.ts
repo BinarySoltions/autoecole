@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component,EventEmitter, OnInit, AfterViewInit, Input, Output } from '@angular/core';
 import { Module } from 'src/app/entite/module.entity';
 import { ModuleService } from 'src/app/service/module/module.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -25,6 +25,9 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
   moduleModel:ModuleModel = new ModuleModel();
   listeModules:Module[] = [];
 
+  @Input() listeEleves:any;
+  @Output() estAjouterModule = new EventEmitter<any>();
+
   constructor(private serviceModule:ModuleService,
     private translate:TranslateService,
     private serviceEleve:EleveService,
@@ -33,12 +36,6 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
     }
 
   ngOnInit() {
-    this.serviceEleve.obtenirElevesUniquement().subscribe(e=>{
-      let el = e.filter(eleve=>{
-        return _.extend(eleve, {'nomcomplet':eleve.nom+', '+eleve.prenom}) ;
-      });
-      this.dropdownListEleve = el;
-    });
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',
@@ -62,7 +59,6 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
   obtenirModules(){
     this.serviceModule.obtnenirModules().subscribe(m=>{
       this.listeModules = m;
-      console.log(this.listeModules);
     });
   }
   ajouter(){
@@ -70,8 +66,10 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
     this.moduleModel.date_complete = _.values(this.moduleModel.date_complete).join('-');
     this.serviceModule.ajouterModuleEleves(this.moduleModel).subscribe(res=>{
       if(res.valid){
+        this.estAjouterModule.emit(true);
         this.toastr.success("Le module a été ajouté avec succés!","Information");
       }else{
+        this.estAjouterModule.emit(false);
         this.toastr.error("Une erreur est survenue lors de l'enregistement!");
       }
     });

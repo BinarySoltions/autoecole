@@ -51,6 +51,8 @@ Route::get('personnes','PersonneResponsableController@index');
 Route::post('personne','PersonneResponsableController@store');
 //create attestation
 Route::post('attestation','AttestationController@store');
+//create attestation
+Route::get('attestation/{id}','AttestationController@show');
 
 //get attestation
 Route::get('attestations','AttestationController@index');

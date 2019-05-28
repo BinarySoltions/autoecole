@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 use DNS1D;
+use App\Attestation;
+use App\Http\Resources\AttestationResource;
+
 class AttestationController extends Controller
 {
     /**
@@ -47,7 +50,28 @@ class AttestationController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $attestation = Attestation::where('eleve_id','=',$request->eleve_id)->first();
+        if(!$attestation){
+            $attestation = new Attestation();
+            $attestation->eleve_id = $request->eleve_id;
+            $attestation->ecole_id = $request->ecole_id;
+        }
+        if($request->phase_une){
+            $attestation->numero = $request->numero;
+            $attestation->resultat_phase_une = $request->resultat_phase_une;
+            $attestation->signature_eleve_phase_une = date("Y-m-d H:i:s");
+            $attestation->signature_ecole_phase_une = date("Y-m-d H:i:s");
+            $attestation->personne_responsable_id = $request->personne_responsable_id;
+        }else{
+            $attestation->resultat_final = $request->resultat_final;
+            $attestation->signature_responsable = date("Y-m-d H:i:s");
+            $attestation->signature_eleve = date("Y-m-d H:i:s");
+            $attestation->personne_responsable2_id = $request->personne_responsable2_id;
+        }
+        $attestation->save();
+        $att = Attestation::find($attestation->id);
+
+        return new AttestationResource($att);
     }
 
     /**
@@ -58,7 +82,8 @@ class AttestationController extends Controller
      */
     public function show($id)
     {
-        //
+        $attestation = Attestation::where('eleve_id','=',$id)->first();
+        return new AttestationResource($attestation);
     }
 
     /**

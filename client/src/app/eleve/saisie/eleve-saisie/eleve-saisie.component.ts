@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import core from 'src/app/core/core.json';
 import lien from 'src/app/core/lien.json';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,6 +8,7 @@ import { Coordonnee } from 'src/app/entite/coordonnee.entity';
 import { EleveService } from 'src/app/service/eleve/eleve.service';
 import { ToastrService } from 'ngx-toastr';
 import {_} from 'underscore';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-eleve-saisie',
@@ -17,18 +18,20 @@ import {_} from 'underscore';
 export class EleveSaisieComponent implements OnInit {
 
   listeProvinces : any;
-  lien:any=lien;
-  champ:any = core;
   eleveModele:Eleve;
   idEleve:number;
   action:string;
   model:any;
 
+  baseUrl:any;
   constructor(private router:Router, 
         private serviceEleve:EleveService,
         private activatedRoute: ActivatedRoute,
-        private toastr: ToastrService) {
-         
+        private toastr: ToastrService,
+        @Inject('BASE_URL') baseUrl: string,
+        private translate:TranslateService) {
+         this.translate.setDefaultLang('fr');
+          this.baseUrl = baseUrl;
          }
 
   ngOnInit() {
@@ -62,7 +65,7 @@ export class EleveSaisieComponent implements OnInit {
   }
 
   public fermer(){
-    this.router.navigate([lien.url.eleve]);
+    this.router.navigate(['/eleves']);
   }
 
   public initialiserEleveModele(){

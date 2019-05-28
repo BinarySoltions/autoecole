@@ -9,6 +9,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { Module } from 'src/app/entite/module.entity';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import {_} from 'underscore';
+
 
 
 @Component({
@@ -27,12 +29,14 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
   @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('row') row: ElementRef;
   elements: Eleve[]=[];
-  headElements = ['Nom', 'Prénom', 'Adresse','Téléphone','Phase','Action'];
+  headElements = ['Nom', 'Prénom', 'Adresse','Téléphone','Module','Action'];
 
   searchText: string = '';
   previous: Eleve[]=[];
 
   maxVisibleItems: number = 20;
+  idEleveASupprimer : number;
+  indexASupprimer :number;
   
   constructor(private serviceEleve:EleveService,
     private cdRef: ChangeDetectorRef,
@@ -53,13 +57,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
         /** spinner ends after 5 seconds */
         this.spinner.hide();
     }, 5000);
-    this.serviceEleve.obtenirEleves().subscribe((result)=>{
-      this.elements = result;
-      this.mdbTable.setDataSource(this.elements);
-      this.elements = this.mdbTable.getDataSource();
-      this.previous = this.mdbTable.getDataSource();
-      //this.spinner.hide();
-    });
+   this.obtenirEleves();
    
   }
 
@@ -71,7 +69,18 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
 
     this.cdRef.detectChanges();
   }
-
+  obtenirEleves(){
+    this.serviceEleve.obtenirEleves().subscribe((result)=>{
+      this.elements = result;
+      this.listeEleves  = result.filter(eleve=>{
+        return _.extend(eleve, {'nomcomplet':eleve.nom+', '+eleve.prenom}) ;
+      });
+      this.mdbTable.setDataSource(this.elements);
+      this.elements = this.mdbTable.getDataSource();
+      this.previous = this.mdbTable.getDataSource();
+      //this.spinner.hide();
+    });
+  }
   searchItems(value) {
     const prev = this.mdbTable.getDataSource();
     this.searchText=value;
@@ -99,15 +108,24 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
  public detailEleve(value){
   this.router.navigate(["eleve/detail/"+value]);
 }
+public attestationEleve(value){
+  this.router.navigate(["attestation/"+value]);
+}
 public supprimerEleve(value,index){
-  this.serviceEleve.supprimerEleveById(value).subscribe(res=>{
-    if(res.valid){
-      this.elements.splice(index,1);
-      this.mdbTable.setDataSource(this.elements);
-      this.elements = this.mdbTable.getDataSource();
-      this.toastr.success("L'élève a été supprimé avec succes!","Infrormation");
-    }
-  })
+  this.idEleveASupprimer = value;
+  this.indexASupprimer = index;
+}
+confirmerSuppression(value){
+  if(value){
+    this.serviceEleve.supprimerEleveById(this.idEleveASupprimer).subscribe(res=>{
+      if(res.valid){
+        this.elements.splice(this.indexASupprimer,1);
+        this.mdbTable.setDataSource(this.elements);
+        this.elements = this.mdbTable.getDataSource();
+        this.toastr.success("L'élève a été supprimé avec succes!","Infrormation");
+      }
+    })
+  }
 }
  public ajouterEleve(){
    this.router.navigate([lien.url.ajout_eleve]);
@@ -116,7 +134,7 @@ public supprimerEleve(value,index){
  determinerPhase(modules:Module[]):string{
    let mapModule = new Map;
    modules.forEach(m=>{
-      if(m.eleve_module.date_complete == null){
+      if(m.eleve_module.date_complete != null){
         mapModule.set(m.numero,m.nom);
       }
    });
@@ -125,9 +143,14 @@ public supprimerEleve(value,index){
   return resultat;
  }
   compare(a, b){
-  if (a > b) return 1;
-  if (b > a) return -1;
+  if (a < b) return 1;
+  if (b < a) return -1;
 
   return 0;
+}
+evenementAjouterModule(value){
+  if(value){
+    this.obtenirEleves();
+  }
 }
 }

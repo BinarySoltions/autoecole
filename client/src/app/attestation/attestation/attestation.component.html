@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title></title>
   <style>
     body {
       width: 100%;
@@ -87,6 +82,15 @@
     .bg-color-green {
       background-color: lightgray;
       padding: 5px 0px 5px 5px;
+      color:black !important;
+    }
+    .bg-color-green-btn {
+      background-color: #28a745;
+      padding: 5px 0px 5px 5px;
+      color:white !important;
+      font-weight: bold;
+      margin-bottom: 10px;
+      padding: 6px 12px;
     }
 
     .bg-color-black {
@@ -166,9 +170,10 @@
     }
 
     .permis-w {
-      width: 15% !important;
+      width: 17% !important;
       height: 2% !important;
     }
+ 
     .numero-attestation{
       font-size: 30px;
       letter-spacing: 10px;
@@ -218,31 +223,48 @@
     .hide-phase{
       opacity: 0;
     }
+    .hide-phase1{
+      display: none;
+    }
+    .hide-complet{
+      display: none;
+    }
     .height-champ{
       height:45px !important;
     }
   </style>
-
-</head>
-
-<body>
+<mdb-card>
+    <mdb-card-header><h3>Attestation</h3></mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
   <div class="row">
-    <div class="col col-3">
-    <label class="checkbox-inline">
-        <input type="checkbox" aria-label="phaseUne" [(ngModel)]="phaseUne" class="form-control">Phase 1
-      </label>
-    </div>
-    
-    <div class="col col-3 checkbox">
-      <label>
-          <input type="checkbox" aria-label="complet" [(ngModel)]="complet" class="form-control">Complet
-        </label>
-        </div>
-    <div class="col col-4">
-        <button type="button" (click)="download()">Télécharger </button>
-        </div>
+   <table class="resize-100">
+     <tr>
+       <td><input type="checkbox" 
+        aria-label="phaseUne" 
+        [(ngModel)]="estPhaseUne" 
+        >&nbsp;Copie Phase 1
+      </td>
+      <td>
+          <label class="inline-block"><input
+            (click)="selectionnerComplet()"
+             type="checkbox" aria-label="complet"  [(ngModel)]="estCopieDelegataire" 
+      
+         >&nbsp;Copie Complète</label>
+      </td>
+      
+      <td align="right" style="width:60%">
+          <button type="button" class="btn bg-color-green-btn"
+           (click)="telecharger()"
+           [disabled]="eventClickTelecharger">
+           <i [class.spinner-border.spinner-border-sm]="eventClickTelecharger"></i>&nbsp;<i class="fas fa-save"></i>&nbsp;Télécharger </button>
+          <button type="button" class="btn btn-secondary" (click)="fermer()" style="margin:0px 10px 10px 10px"><i class="fas fa-ban"></i>&nbsp;Fermer </button>
+        </td>
+     </tr>
+   </table>
   </div>
-  <div id="pdf" class="container">
+  <ng-template ngFor let-typeCopie [ngForOf]="typeDeCopies" let-i="index">
+  <div id="{{i}}pdf" class="container" [class.hide-complet]="i>0 && estPhaseUne" [class.hide-phase1]="i == 0 && estCopieDelegataire">
     <table class="resize-100" style="margin:30px 0px 30px 0px;">
       <tr>
         <td colspan="2" class="no-border" style="height:20px"></td>
@@ -259,7 +281,7 @@
           style="text-align:top;font-weight:bold;font-size:20px"> </td>
       </tr>
     </table>
-    <table class="resize-100 no-border-bottom" style="">
+    <table class="resize-100 no-border-bottom">
       <tr>
         <td class="resize-100 no-border-bottom" style="padding-bottom:0px;margin-bottom:0px">
           <table class="resize-100" style="margin-bottom:0px">
@@ -329,7 +351,7 @@
                     <th class="bg-color-green border-bottom border-top border-left font-label centrer" style="width:100%;">Numéro de l'école</th>
                   </tr>
                   <tr>
-                    <td style="padding:1%px;" align="center" class="border-right2 border-left">{{numeroEcole}}</td>
+                    <td style="padding:1%px;" align="center" class="border-right2 border-left">{{ecole.numero}}</td>
                   </tr>
 
                 </table>
@@ -358,7 +380,7 @@
                   </tr>
                   <tr class="">
                     <td colspan="3" class="border-bottom">
-                      <span class="text-left"> {{nomEleve}}</span>
+                      <span class="text-left"> {{eleve.nom}},&nbsp;{{eleve.prenom}}</span>
                     </td>
 
                   </tr>
@@ -369,7 +391,7 @@
                   </tr>
                   <tr>
                     <td colspan="3" class="border-bottom">
-                      {{adresseEleve}}
+                      {{eleve.adresse.numero}},&nbsp;{{eleve.adresse.rue}},&nbsp;{{eleve.adresse.appartement}}
                     </td>
                   </tr>
                   <tr class="">
@@ -381,13 +403,13 @@
                   </tr>
                   <tr>
                     <td class=" border-bottom">
-                      {{municipaliteEleve}}
+                      &nbsp;{{eleve.adresse.municipalite}}
                     </td>
                     <td class="border-bottom">
-                      {{provinceEleve}}
+                      &nbsp;{{eleve.adresse.province}}
                     </td>
                     <td class="border-bottom">
-                      {{codePostalEleve}}
+                      &nbsp;{{eleve.adresse.code_postal}}
                     </td>
                   </tr>
                   <tr class="">
@@ -400,13 +422,13 @@
                   </tr>
                   <tr>
                     <td class="border-right">
-                      {{numeroContratEleve}}
+                      {{eleve.numero_contrat}}
                     </td>
                     <td class="border-right">
-                      {{telephoneEleve}}
+                      &nbsp;{{eleve.coordonnee.telephone}}
                     </td>
                     <td class="">
-                      
+                      &nbsp;{{eleve.coordonnee.telephone_autre}}
                     </td>
                   </tr>
                 </table>
@@ -431,7 +453,7 @@
       </tr>
       <tr>
         <td colspan="3" class="border-bottom">
-          {{nomEcole}}
+          <span>{{ecole.raison_social}}</span><span *ngIf="ecole.nom">&nbsp;-&nbsp;{{ecole.nom}}</span>
         </td>
       </tr>
       <tr class="">
@@ -441,7 +463,7 @@
       </tr>
       <tr>
         <td colspan="3" class="border-bottom">
-          {{adresseEcole}}
+          {{ecole.adresse.numero}}, &nbsp;{{ecole.adresse.rue}}, &nbsp;{{ecole.adresse.appartement}}
         </td>
       </tr>
       <tr class="">
@@ -453,13 +475,13 @@
       </tr>
       <tr>
         <td class="border-bottom">
-          {{municipaliteEcole}}
+          &nbsp;{{ecole.adresse.municipalite}}
         </td>
         <td class="border-bottom">
-          {{provinceEcole}}
+          &nbsp;{{ecole.adresse.province}}
         </td>
         <td class="border-bottom">
-          {{codePostalEcole}}
+          &nbsp;{{ecole.adresse.code_postal}}
         </td>
       </tr>
       <tr class="">
@@ -469,7 +491,7 @@
       </tr>
       <tr>
         <td colspan="3">
-          {{emailEcole}}
+          &nbsp;{{ecole.email}}
         </td>
       </tr>
     </table>
@@ -491,26 +513,12 @@
               <td style="padding:0" class="bg-color-green no-border-right border-bottom centrer">mois</td>
               <td style="padding:0" class="bg-color-green border-bottom centrer border-right">Jour</td>
             </tr>
-            <tr>
-              <td class="border-right bg-color-white border-bottom centrer">1</td>
-              <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-            </tr>
-            <tr>
-              <td class="border-right bg-color-white centrer border-bottom">2</td>
-              <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-            </tr>
-            <tr>
-              <td class="border-right bg-color-white centrer border-bottom">3</td>
-              <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-            </tr>
-            <tr>
-              <td class="border-right bg-color-white centrer border-bottom">4</td>
-              <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-            </tr>
-            <tr>
-              <td class="border-right bg-color-white centrer border-bottom">5</td>
-              <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-            </tr>
+            <ng-template ngFor let-module [ngForOf]="phaseUne.modules">
+              <tr>
+                <td class="border-left border-right bg-color-white border-bottom centrer">{{module.nom}}</td>
+                <td class="border-right bg-color-white border-bottom centrer" colspan="3">{{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}</td>
+              </tr>
+            </ng-template>
           </table>
         </td>
         <td class="no-border-bottom" style="width:75%;  padding:0px 0px 0px 10px;" colspan="1">
@@ -529,15 +537,22 @@
                     <td class="border-bottom font-label height-champ" >
                       J'atteste que la phase 1 du cours de conduite est :
                     </td>
-                    <td class="border-bottom font-label" > <input type="checkbox" value="0" /> Réussie</td>
-                    <td class="border-bottom font-label" > <input type="checkbox" value="0" /> Échouée</td>
-                    <td class="border-bottom font-label" > <input type="checkbox" value="0" /> Incomplète</td>
+                    <td class="border-bottom font-label" > <input type="checkbox" [(ngModel)]="resultat_phaseUne[0]" /> Réussie</td>
+                    <td class="border-bottom font-label" > <input type="checkbox" [(ngModel)]="resultat_phaseUne[1]" /> Échouée</td>
+                    <td class="border-bottom font-label" > <input type="checkbox" [(ngModel)]="resultat_phaseUne[2]" /> Incomplète</td>
                   </tr>
                   <tr>
                     <td class="border-bottom font-label height-champ">
                       Nom de la personne responsable :
                     </td>
-                    <td colspan="3" class="border-bottom font-label height-champ"></td>
+                    <td colspan="3" class="border-bottom font-label height-champ" (dblclick)="personnePhase1.id=null">
+                      <span *ngIf="personnePhase1.id">{{obtenirPersonne(personnePhase1.id)}}</span>&nbsp;&nbsp;
+                      <span *ngIf="!personnePhase1.id"><select [(ngModel)]="personnePhase1.id">
+                          <option [value]="null">Selectionner</option>
+                        <option *ngFor="let personne of personnes" [value]="personne.id">{{personne.nom}}</option>
+                      </select>
+                    </span>
+                    </td>
                   </tr>
                   <tr class="font-label">
                     <td colspan="2" class="font-label" style="height:26px;padding:12px 0px 12px;">
@@ -568,7 +583,7 @@
         <td class="bg-color-gray no-border-bottom" colspan="3" style="width:100%;padding: 10px 10px 0px 10px;">
           <table style="margin-bottom:0px">
             <tr>
-              <td class="no-border" [ngClass]="{'hide-phase':phaseUne}">
+              <td class="no-border" [ngClass]="{'hide-phase':estPhaseUne}">
                 <table class="table-bordered no-border" style="width:230px; padding:10px;">
                   <tr>
                     <th colspan="4" class="border-left border-bottom border-top bg-color-black centrer border-right">
@@ -585,30 +600,12 @@
                     <td style="padding:0" class="bg-color-green no-border-right border-bottom centrer">mois</td>
                     <td style="padding:0" class="bg-color-green border-bottom centrer border-right">Jour</td>
                   </tr>
-                  <tr>
-                    <td class="border-left border-right bg-color-white border-bottom centrer">6</td>
-                    <td class="bg-color-white border-bottom centrer border-right" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-left border-right bg-color-white centrer border-bottom">Sortie 1</td>
-                    <td class="bg-color-white border-bottom centrer border-right" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-left border-right bg-color-white centrer border-bottom">Sortie 2</td>
-                    <td class="bg-color-white border-bottom centrer border-right" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-left border-right bg-color-white centrer border-bottom">7</td>
-                    <td class="bg-color-white border-bottom centrer border-right" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-left border-right bg-color-white centrer border-bottom">Sortie 3</td>
-                    <td class="bg-color-white border-bottom centrer border-right" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class=" border-left border-right bg-color-white centrer border-bottom">Sortie 4</td>
-                    <td class="bg-color-white border-bottom centrer border-right" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
+                  <ng-template ngFor let-module [ngForOf]="phaseDeux.modules">
+                    <tr>
+                      <td class="border-left border-right bg-color-white border-bottom centrer">{{module.nom}}</td>
+                      <td class="border-right bg-color-white border-bottom centrer" colspan="3">{{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}</td>
+                    </tr>
+                  </ng-template>
                   <tr>
                     <td class="no-border" colspan="4"></td>
                   </tr>
@@ -621,7 +618,7 @@
                 </table>
               </td>
               <td class="bg-color-gray no-border-bottom" align="center"
-                style="width:500px;padding: 10px 0px 10px 10px;" [ngClass]="{'hide-phase':phaseUne}">
+                style="width:500px;padding: 10px 0px 10px 10px;" [ngClass]="{'hide-phase':estPhaseUne}">
                 <table class="table-bordered" style="width:230px; padding:10px;">
                   <tr>
                     <th colspan="4" class="bg-color-black centrer">Phase 3</th>
@@ -637,47 +634,17 @@
                     <td style="padding:0" class="bg-color-green no-border-right border-bottom centrer">mois</td>
                     <td style="padding:0" class="bg-color-green border-bottom centrer border-right">Jour</td>
                   </tr>
-                  <tr>
-                    <td class="border-right bg-color-white border-bottom centrer">8</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-right bg-color-white centrer border-bottom">Sortie 5</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-right bg-color-white centrer border-bottom">Sortie 6</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-right bg-color-white centrer border-bottom">9</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-right bg-color-white centrer border-bottom">Sortie 7</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-right bg-color-white centrer border-bottom">Sortie 8</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-right bg-color-white centrer border-bottom">10</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-right bg-color-white centrer border-bottom">Sortie 9</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-right bg-color-white centrer border-bottom">Sortie 10</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                </table>
+                  <ng-template ngFor let-module [ngForOf]="phaseTrois.modules">
+                    <tr>
+                      <td class="border-left border-right bg-color-white border-bottom centrer">{{module.nom}}</td>
+                      <td class="border-right bg-color-white border-bottom centrer" colspan="3">{{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}</td>
+                    </tr>
+                  </ng-template>
+                  </table>
               </td>
               <td align="top" class="bg-color-gray no-border-bottom" 
               style="width:200px;padding: 10px 0px 10px 10px;"
-              [ngClass]="{'hide-phase':phaseUne}">
+              [ngClass]="{'hide-phase':estPhaseUne}">
                 <table class="table-bordered" style="width:230px; padding:10px;">
                   <tr>
                     <th colspan="4" class="bg-color-black centrer">Phase 4</th>
@@ -693,34 +660,13 @@
                     <td style="padding:0" class="bg-color-green no-border-right border-bottom centrer">mois</td>
                     <td style="padding:0" class="bg-color-green border-bottom centrer border-right">Jour</td>
                   </tr>
-                  <tr>
-                    <td class="border-right bg-color-white border-bottom centrer">11</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-right bg-color-white centrer border-bottom">Sortie 11</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-right bg-color-white centrer border-bottom">Sortie 12</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-right bg-color-white centrer border-bottom">Sortie 13</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-right bg-color-white centrer border-bottom">12</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-right bg-color-white centrer border-bottom">Sortie 14</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
-                  <tr>
-                    <td class="border-right bg-color-white centrer border-bottom">Sortie 15</td>
-                    <td class="bg-color-white border-bottom centrer" colspan="3">{{dateModule | date:"yyyy-MM-dd"}}</td>
-                  </tr>
+                  <ng-template ngFor let-module [ngForOf]="phaseQuatre.modules">
+                    <tr>
+                      <td class="border-left border-right bg-color-white border-bottom centrer">{{module.nom}}</td>
+                      <td class="border-right bg-color-white border-bottom centrer" colspan="3">{{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}</td>
+                    </tr>
+                  </ng-template>
+                  
                 </table>
               </td>
             </tr>
@@ -734,7 +680,7 @@
         <td class="no-border-bottom font-label" align="center" style="font-weight:bold"> Sceau de l'école </td>
       </tr>
       <tr>
-        <td style="width:80%" class="no-border-bottom" [ngClass]="{'hide-phase':phaseUne}">
+        <td style="width:80%" class="no-border-bottom" [ngClass]="{'hide-phase':estPhaseUne}">
           <!-- atteste -->
           <table class="table-bordered texte" style="width:100%">
             <tr>
@@ -746,15 +692,22 @@
               <td class="border-bottom font-label height-champ">
                 J'atteste que le cours de conduite est :
               </td>
-              <td class="border-bottom font-label"> <input type="checkbox" value="0" /> Réussie</td>
-              <td class="border-bottom font-label"> <input type="checkbox" value="0" /> Échoué</td>
-              <td class="border-bottom font-label"> <input type="checkbox" value="0" /> Incomplet</td>
+              <td class="border-bottom font-label"> <input type="checkbox" [(ngModel)]="resultat_final[0]" /> Réussie</td>
+              <td class="border-bottom font-label"> <input type="checkbox" [(ngModel)]="resultat_final[1]" /> Échoué</td>
+              <td class="border-bottom font-label"> <input type="checkbox" [(ngModel)]="resultat_final[2]" /> Incomplet</td>
             </tr>
             <tr>
               <td class="border-bottom font-label height-champ">
                 Nom de la personne responsable :
               </td>
-              <td colspan="3" class="border-bottom font-label"></td>
+              <td colspan="3" class="border-bottom font-label" (dblclick)="personneAutre.id=null">
+                  <span *ngIf="personneAutre.id">{{obtenirPersonne(personneAutre.id)}}</span>&nbsp;&nbsp;
+                  <span *ngIf="!personneAutre.id"><select [(ngModel)]="personneAutre.id">
+                    <option [value]="null">Sélectionner</option>
+                    <option *ngFor="let personne of personnes" [value]="personne.id">{{personne.nom}}</option>
+                  </select>
+                </span>
+              </td>
             </tr>
             <tr class="">
               <td colspan="2" class="font-label" style="height:26px;padding:12px 0px 12px;">
@@ -793,6 +746,24 @@
       </tr>
     </table>
   </div>
-</body>
-
-</html>
+</ng-template>
+</mdb-card-text>
+</mdb-card-body>
+<mdb-card-footer class="text-muted">
+    <div class="row">
+      <div class="col offset-8 col-2">
+          <button type="button" c class="btn bg-color-green-btn"  
+          (click)="telecharger()"
+          [disabled]="eventClickTelecharger">
+              <i [class.spinner-border.spinner-border-sm]="eventClickTelecharger"></i>&nbsp;<i class="fas fa-save"></i>&nbsp; Télécharger
+            </button>
+      </div>
+      <div class="col col-2">
+          <button type="button" class="btn btn-secondary" (click)="fermer()"><i  class="fas fa-ban"></i>&nbsp;{{'label.fermer' | translate}}</button>
+      </div>
+    </div>
+    </mdb-card-footer>
+</mdb-card>
+<!-- <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+    <span class="sr-only">Loading...</span>
+  </div> -->

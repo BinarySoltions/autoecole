@@ -36,7 +36,9 @@
         "numero_phase" : "Numéro de la phase",
         "nombre_module":"Nombre de modules",
         "rechercher":"Rechercher",
-        "personne_responsable":"Nom complet de la personne responsable"
+        "personne_responsable":"Nom complet de la personne responsable",
+        "ajouterModule":"Ajouter module",
+        "ajouterEleve":"Ajouter élève"
     },
     "titre":{
         "eleve":"Élève",
@@ -57,5 +59,10 @@
         "nom":"Module",
         "date_complete":"Date",
         "eleves":"Élèves"
+    },
+    
+    "url":{
+        "eleve":"eleves",
+        "ajout_eleve":"eleve"
     }
 }

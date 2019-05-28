@@ -48,7 +48,7 @@
       <label for="province">{{'label.province'| translate}}</label>
       <select class="browser-default custom-select" [(ngModel)]="ecole.adresse.province">
         <option selected>{{'label.selectionner' | translate}}</option>
-        <option *ngFor="let province of listeProvinces" value="province.value">{{province.label}}</option>
+        <option *ngFor="let province of listeProvinces" [value]="province.value">{{province.label}}</option>
     </select>
   </div>
   <div class="md-form col col-4  none-border-top">
@@ -56,7 +56,6 @@
       <input type="text" aria-label="" 
       class="form-control" 
       placeholder="H12 2K3"
-      mask="A0A 0A0"
       [(ngModel)]="ecole.adresse.code_postal">
   </div>
 </div>
@@ -78,7 +77,7 @@
         </button>
   </div>
   <div class="col col-2">
-      <button mdbBtn type="button" color="primary" class="bg-color-green" (click)="fermer()" mdbWavesEffect>{{'label.fermer' | translate}}<mdb-icon fas icon="ban" class="ml-1"></mdb-icon></button>
+      <button type="button" class="btn btn-secondary" (click)="fermer()"><i class="fas fa-ban"></i>&nbsp;{{'label.fermer' | translate}}</button>
   </div>
 </div>
 </mdb-card-footer>

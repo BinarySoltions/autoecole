@@ -65,6 +65,6 @@ export class EcoleSaisieComponent implements OnInit {
   }
 
   fermer(){
-    this.router.navigate(['/']);
+    this.router.navigate(['/eleves']);
   }
 }

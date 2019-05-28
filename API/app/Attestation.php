@@ -7,12 +7,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Attestation extends Model
 {
-    use SoftDeletes;
-
     protected $table = 'attestation';
 
     protected $hidden = [
-        'created_at', 'updated_at','deleted_at'
+        'created_at', 'updated_at'
     ];
 
     public function eleve(){

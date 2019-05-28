@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import core from 'src/app/core/core.json';
-import lien from 'src/app/core/lien.json';
+import { Component, OnInit, Inject } from '@angular/core';
+
+import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-navbar',
@@ -8,12 +9,15 @@ import lien from 'src/app/core/lien.json';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
-  champ:any=core;
-  lien:any=lien;
-  constructor() { }
+  baseUrl:any;
+  constructor(private translate:TranslateService,
+    @Inject('BASE_URL') baseUrl: string) { 
+    this.translate.setDefaultLang('fr');
+    this.baseUrl = baseUrl;
+  }
 
   ngOnInit() {
+    console.log(this.baseUrl);
   }
 
 }

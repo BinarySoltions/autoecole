@@ -5,7 +5,7 @@ import { PersonneResponsable } from './personne-responsable.entity';
 
 export class Attestation implements Deserializable{
     id:number;
-    numero:number;
+    numero:string;
     signature_responsable:Date;
     signature_eleve:Date;
     eleve:Eleve;

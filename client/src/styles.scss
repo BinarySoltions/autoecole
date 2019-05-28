@@ -6,16 +6,22 @@
 @import '~@swimlane/ngx-datatable/release/index.css';
 @import '~@swimlane/ngx-datatable/release/themes/material.css';
 @import '~@swimlane/ngx-datatable/release/assets/icons.css';
- 
 
+$green-color: #28a745;
+$light-gray-color:lightgray;
+$white-color:white;
+ 
+body{
+    background-color:$light-gray-color;
+}
 .none-border-top > input{
     border-top-color: transparent !important;
 }
 
 .bande{
-    width: auto;
-    height: 20px;
-    background-color: aqua;
+    width: 100%;
+    height: 40px;
+    background-color:$green-color;
 }
 
 .push-right{
@@ -23,18 +29,20 @@
 }
 
 .sticky-top{
-    background-color: #28a745 !important;
-    color:white !important;
+    background-color: $green-color !important;
+    color:$white-color !important;
 }
 
 .bg-color-black{
     background-color: black;
-    color:white;
+    color:$white-color;
 }
 .bg-color-white{
-    background-color: white;
+    background-color: $white-color;
 }
 
 .bg-color-green{
-    background-color: #28a745;
+    background-color: $green-color;
+    color:$white-color;
+    font-weight: bold;
 }

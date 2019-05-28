@@ -118,10 +118,8 @@
 </mdb-card-text>
 </mdb-card-body>
 <mdb-card-footer class="text-muted">
+    <div class="col offset-8 col-4">
+        <button type="button" class="btn btn-secondary" (click)="fermer()"><i class="fas fa-ban"></i>&nbsp;{{'label.fermer' | translate}}</button>
+      </div>
 </mdb-card-footer>
 </mdb-card>
-<div class="row" style="margin-top:20px">
-    <div class="col col-2">
-        <button mdbBtn type="button" color="primary" class="bg-color-green" (click)="fermer()" mdbWavesEffect>{{'label.fermer' | translate}}<mdb-icon fas icon="ban" class="ml-1"></mdb-icon></button>
-      </div>
-</div>

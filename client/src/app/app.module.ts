@@ -4,6 +4,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import {MatDialogModule} from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {MatButtonModule} from '@angular/material/button';
@@ -12,6 +13,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -45,6 +47,7 @@ import { PhaseModuleComponent } from './phase/module/phase-module/phase-module.c
 import { AjouterModuleComponent } from './module/ajouter-module/ajouter-module.component';
 import { DetailComponent } from './eleve/detail/detail.component';
 import { GenererComponent } from './attestation/generer/generer.component';
+import { DialogConfirmerComponent } from './partage/dialog-confirmer/dialog-confirmer.component';
 
 
 @NgModule({
@@ -69,7 +72,8 @@ import { GenererComponent } from './attestation/generer/generer.component';
     PhaseModuleComponent,
     AjouterModuleComponent,
     DetailComponent,
-    GenererComponent
+    GenererComponent,
+    DialogConfirmerComponent
   ],
   imports: [
     BrowserModule,
@@ -95,16 +99,22 @@ import { GenererComponent } from './attestation/generer/generer.component';
       }
   }),
   NgbModule,NgbPaginationModule, NgbAlertModule,
-  NgxMaskModule.forRoot(options),
-  NgxSpinnerModule
+  NgxMaskModule.forRoot(),
+  NgxSpinnerModule,
+  MatDialogModule,
+  MatProgressSpinnerModule
   ],
   schemas:[ NO_ERRORS_SCHEMA],
-  providers: [EleveService],
+  providers: [EleveService, { provide: 'BASE_URL', useFactory: getBaseUrl }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http,getBaseUrl()+"assets/i18n/", ".json");
 }
-export var options: Partial<IConfig> | (() => Partial<IConfig>);
+
+
+export function getBaseUrl() {
+  return document.getElementsByTagName('base')[0].href;
+}
