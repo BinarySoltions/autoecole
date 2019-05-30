@@ -2,14 +2,14 @@
   <style>
     body {
       width: 100%;
-      font-size: 16px;
+      font-size: 18px;
     }
 
     /* #pdf{
   width:  80% !important;
 } */
     .font-label {
-      font-size: 14px;
+      font-size: 18px;
     }
 
     .row {
@@ -76,7 +76,7 @@
 
     .centrer {
       text-align: center !important;
-      font-size: 14px;
+      font-size: 18px;
     }
 
     .bg-color-green {
@@ -270,11 +270,11 @@
         <td colspan="2" class="no-border" style="height:20px"></td>
       </tr>
       <tr>
-        <td class="no-border" rowspan="2" width="200px"><img style="width:200px" src="assets/logo_pconduite.JPG" alt="logo" />
+        <td class="no-border" rowspan="2" width="200px"><img style="width:335px" src="assets/logo_pconduite.JPG" alt="logo" />
         </td>
-        <td class="no-border padding-0" align="right" width="40%"
-          style="text-align:bottom;font-weight:bold;font-size:20px">
-          Attestation du cours de conduite<br />pour la classe 5</td>
+        <td class="no-border padding-0" align="right" width="50%"
+          style="text-align:bottom;font-weight:bold;font-size:30px">
+          Attestation de cours de conduite<br />pour la classe 5</td>
       </tr>
       <tr>
         <td class="no-border padding-0" align="right" width="40%"
@@ -287,7 +287,7 @@
           <table class="resize-100" style="margin-bottom:0px">
             <tr>
               <td rowspan="2" width="17%" class="resize-10 no-border" style="margin-bottom:0px;height:30px"></td>
-              <td rowspan="2" class="border-top border-right border-left bg-gray font-label permis-w" style="margin-bottom:0px">
+              <td rowspan="2" class="border-top border-right border-left bg-gray font-label permis-w" style="margin-bottom:0px;font-size: 15px">
                 Numéro de permis
               </td>
               <td colspan="13" class="border-top no-border-bottom border-right numero-permis">{{numeroPermis}}</td>
@@ -351,7 +351,7 @@
                     <th class="bg-color-green border-bottom border-top border-left font-label centrer" style="width:100%;">Numéro de l'école</th>
                   </tr>
                   <tr>
-                    <td style="padding:1%px;" align="center" class="border-right2 border-left">{{ecole.numero}}</td>
+                    <td style="padding:1%px;font-weight: bold;font-size: 22px !important" align="center" class="border-right2 font-label border-left">{{ecole.numero}}</td>
                   </tr>
 
                 </table>
@@ -380,7 +380,7 @@
                   </tr>
                   <tr class="">
                     <td colspan="3" class="border-bottom">
-                      <span class="text-left"> {{eleve.nom}},&nbsp;{{eleve.prenom}}</span>
+                      <span class="text-left font-label"> {{eleve.nom}},&nbsp;{{eleve.prenom}}</span>
                     </td>
 
                   </tr>
@@ -390,7 +390,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="3" class="border-bottom">
+                    <td colspan="3" class="border-bottom font-label">
                       {{eleve.adresse.numero}},&nbsp;{{eleve.adresse.rue}},&nbsp;{{eleve.adresse.appartement}}
                     </td>
                   </tr>
@@ -402,13 +402,13 @@
                     <td class=" font-label ">Code postal</td>
                   </tr>
                   <tr>
-                    <td class=" border-bottom">
+                    <td class=" border-bottom font-label">
                       &nbsp;{{eleve.adresse.municipalite}}
                     </td>
-                    <td class="border-bottom">
-                      &nbsp;{{eleve.adresse.province}}
+                    <td class="border-bottom font-label">
+                      &nbsp;{{eleve.adresse.province | uppercase}}
                     </td>
-                    <td class="border-bottom">
+                    <td class="border-bottom font-label">
                       &nbsp;{{eleve.adresse.code_postal}}
                     </td>
                   </tr>
@@ -421,13 +421,13 @@
 
                   </tr>
                   <tr>
-                    <td class="border-right">
+                    <td class="border-right font-label">
                       {{eleve.numero_contrat}}
                     </td>
-                    <td class="border-right">
+                    <td class="border-right font-label">
                       &nbsp;{{eleve.coordonnee.telephone}}
                     </td>
-                    <td class="">
+                    <td class="font-label">
                       &nbsp;{{eleve.coordonnee.telephone_autre}}
                     </td>
                   </tr>
@@ -452,7 +452,7 @@
         </td>
       </tr>
       <tr>
-        <td colspan="3" class="border-bottom">
+        <td colspan="3" class="border-bottom font-label">
           <span>{{ecole.raison_social}}</span><span *ngIf="ecole.nom">&nbsp;-&nbsp;{{ecole.nom}}</span>
         </td>
       </tr>
@@ -462,8 +462,8 @@
         </td>
       </tr>
       <tr>
-        <td colspan="3" class="border-bottom">
-          {{ecole.adresse.numero}}, &nbsp;{{ecole.adresse.rue}}, &nbsp;{{ecole.adresse.appartement}}
+        <td colspan="3" class="border-bottom font-label">
+          {{ecole.adresse.numero}}, &nbsp;{{ecole.adresse.rue}}<span *ngIf="ecole.adresse.appartement">, &nbsp;{{ecole.adresse.appartement}}</span>
         </td>
       </tr>
       <tr class="">
@@ -474,13 +474,13 @@
         <td class="no-border-bottom font-label">Code postal</td>
       </tr>
       <tr>
-        <td class="border-bottom">
+        <td class="border-bottom font-label">
           &nbsp;{{ecole.adresse.municipalite}}
         </td>
-        <td class="border-bottom">
-          &nbsp;{{ecole.adresse.province}}
+        <td class="border-bottom font-label">
+          &nbsp;{{ecole.adresse.province | uppercase}}
         </td>
-        <td class="border-bottom">
+        <td class="border-bottom font-label">
           &nbsp;{{ecole.adresse.code_postal}}
         </td>
       </tr>
@@ -490,7 +490,7 @@
         </td>
       </tr>
       <tr>
-        <td colspan="3">
+        <td colspan="3" class="font-label">
           &nbsp;{{ecole.email}}
         </td>
       </tr>
@@ -515,8 +515,8 @@
             </tr>
             <ng-template ngFor let-module [ngForOf]="phaseUne.modules">
               <tr>
-                <td class="border-left border-right bg-color-white border-bottom centrer">{{module.nom}}</td>
-                <td class="border-right bg-color-white border-bottom centrer" colspan="3">{{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}</td>
+                <td class="border-left font-label border-right bg-color-white border-bottom centrer">{{module.nom}}</td>
+                <td class="border-right font-label bg-color-white border-bottom centrer" colspan="3">{{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}</td>
               </tr>
             </ng-template>
           </table>
@@ -567,7 +567,7 @@
                     <th colspan="4" align="left" class="bg-color-green border-bottom border-top border-left">Élève</th>
                   </tr>
                   <tr class="">
-                    <td colspan="2" class="font-label" style="height:26px">
+                    <td colspan="2" class="font-label" style="height:26px;width: 69.5%">
                       Signature :
                     </td>
                     <td class="font-label">Date : </td>
@@ -602,15 +602,15 @@
                   </tr>
                   <ng-template ngFor let-module [ngForOf]="phaseDeux.modules">
                     <tr>
-                      <td class="border-left border-right bg-color-white border-bottom centrer">{{module.nom}}</td>
-                      <td class="border-right bg-color-white border-bottom centrer" colspan="3">{{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}</td>
+                      <td class="border-left border-right font-label bg-color-white border-bottom centrer">{{module.nom}}</td>
+                      <td class="border-right bg-color-white font-label border-bottom centrer" colspan="3">{{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}</td>
                     </tr>
                   </ng-template>
                   <tr>
                     <td class="no-border" colspan="4"></td>
                   </tr>
                   <tr>
-                    <td colspan="4" rowspan="2" style="padding-top:20px" class="font-weight-bold no-border font-label">
+                    <td colspan="4" rowspan="2" style="padding-top:20px;font-size:14px" class="font-weight-bold no-border font-label">
                       <em>Théorie : 12 modules - 24 heures
                         Pratique : 15 sorties - 15 heures</em>
                     </td>
@@ -636,8 +636,8 @@
                   </tr>
                   <ng-template ngFor let-module [ngForOf]="phaseTrois.modules">
                     <tr>
-                      <td class="border-left border-right bg-color-white border-bottom centrer">{{module.nom}}</td>
-                      <td class="border-right bg-color-white border-bottom centrer" colspan="3">{{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}</td>
+                      <td class="border-left font-label border-right bg-color-white border-bottom centrer">{{module.nom}}</td>
+                      <td class="border-right font-label bg-color-white border-bottom centrer" colspan="3">{{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}</td>
                     </tr>
                   </ng-template>
                   </table>
@@ -662,8 +662,8 @@
                   </tr>
                   <ng-template ngFor let-module [ngForOf]="phaseQuatre.modules">
                     <tr>
-                      <td class="border-left border-right bg-color-white border-bottom centrer">{{module.nom}}</td>
-                      <td class="border-right bg-color-white border-bottom centrer" colspan="3">{{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}</td>
+                      <td class="border-left font-label border-right bg-color-white border-bottom centrer">{{module.nom}}</td>
+                      <td class="border-right font-label bg-color-white border-bottom centrer" colspan="3">{{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}</td>
                     </tr>
                   </ng-template>
                   
@@ -677,7 +677,7 @@
     <table>
       <tr>
         <td colspan="1" class="no-border-bottom"></td>
-        <td class="no-border-bottom font-label" align="center" style="font-weight:bold"> Sceau de l'école </td>
+        <td class="no-border-bottom font-label" align="center" style="font-weight:bolder"> Sceau de l'école </td>
       </tr>
       <tr>
         <td style="width:80%" class="no-border-bottom" [ngClass]="{'hide-phase':estPhaseUne}">
@@ -727,7 +727,7 @@
                 mentionné</td>
             </tr>
             <tr class="">
-              <td colspan="2" class="font-label" style="height:26px">
+              <td colspan="2" class="font-label" style="height:26px;width: 67%">
                 Signature :
               </td>
               <td class="font-label">Date : </td>
@@ -736,7 +736,7 @@
           </table>
         </td>
         <td align="top" class="no-border-bottom" style="padding-left:20px;">
-          <div style="width: 280px;height: 280px;border: 2px solid black;"></div>
+          <div style="width: 250px;height: 300px;border: 2px solid black;"></div>
         </td>
       </tr>
     </table>

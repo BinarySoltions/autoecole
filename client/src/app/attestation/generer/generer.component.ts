@@ -30,6 +30,7 @@ export class GenererComponent implements OnInit {
 
   ngOnInit() {
     this.idEleve = +this.activatedRoute.snapshot.paramMap.get('id');
+    this.initialiserAttestation();
     this.obtenirAttestationById(this.idEleve);
   }
   ajouter(){
@@ -44,5 +45,16 @@ export class GenererComponent implements OnInit {
         this.eventsSubject.next(this.attestation.numero);
       }
     })
+  }
+
+  initialiserAttestation(){
+    this.attestation = new AttestationModel;
+    this.attestation.eleve_id = null;
+    this.attestation.ecole_id = null;
+    this.attestation.numero = "";
+    this.attestation.personne_responsable2_id = null;
+    this.attestation.personne_responsable_id = null;
+    this.attestation.resultat_final = 0;
+    this.attestation.resultat_phase_une = 0;
   }
 }

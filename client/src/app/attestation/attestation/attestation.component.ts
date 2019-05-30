@@ -18,11 +18,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { AttestationService } from 'src/app/service/attestation/attestation.service';
 import { Attestation } from 'src/app/entite/attestation.entity';
-// @Component({
-//   selector: 'app-attestation',
-//   templateUrl: './attestation.component.html',
-//   styleUrls: ['./attestation.component.scss']
-// })
+
+const observableGenerer = new Observable(subscriber => {
+  subscriber.next();
+  setTimeout(() => {
+    subscriber.complete();
+  }, 1000);
+});
 export class AttestationModel extends Attestation{
   eleve_id:number;
   ecole_id:number;
@@ -112,6 +114,7 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
     
     this.eventsSubscription = this.events.subscribe((numAttestation) => {
       this.numeroAttestation = numAttestation;
+      this.attestation.numero = numAttestation;
       this.genererBarreCode();
     })
   }
@@ -166,7 +169,8 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
   telecharger() {
     this.eventClickTelecharger = true
       this.sauvegarderAttestation();
-     this.telechargerParTypeCopies();
+      this.telechargerParTypeCopies();
+    
     }
     sauvegarderAttestation(){
       if(this.estPhaseUne){
@@ -177,6 +181,7 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
         this.attestation.resultat_final = _.indexOf(this.resultat_final,true)+1;
         this.attestation.personne_responsable2_id = this.personneAutre.id;
       }
+      this.attestation.numero = this.numeroAttestation;
       this.serviceAttestation.AjouterAttestation(this.attestation).subscribe(res=>{
         if(_.has(res,'id')){
           
@@ -190,18 +195,17 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
       this.eventClickTelecharger = true;
       filename  = filename+'.pdf';
       const id = `${i}pdf`;
-      html2canvas(document.getElementById(id), 
-                  {scale: quality}
+      html2canvas(document.getElementById(id)
                ).then(canvas => {
-        let pdf = new jsPDF('p', 'pt', 'letter');
-        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 612, 792);
+        let pdf = new jsPDF('p', 'pt', 'letter',1);
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 612, 792,'','FAST');
         pdf.save(filename);
         this.eventClickTelecharger = false;
       });
     }
 
     telechargerParTypeCopies(){
-      let q = 2;
+      let q = 1;
       if(this.estPhaseUne){
         this.typeCopie = this.typeDeCopies[0];
         this.print(q,"attestation_phase1_test",0);
