@@ -203,7 +203,26 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
         this.eventClickTelecharger = false;
       });
     }
-
+    public printAll() {
+      var img = [];
+      for(let i = 1; i< 4; i++){
+        const id = `${i}pdf`;
+        html2canvas(document.getElementById(id)
+                 ).then(canvas => {
+          img.push(canvas.toDataURL('image/png'));
+          if(i==3){
+            let pdf = new jsPDF('p', 'pt', 'letter',1);
+            pdf.addImage(img[0], 'PNG', 0, 0, 612, 792,'','FAST');
+            pdf.addPage();
+            pdf.addImage(img[1], 'PNG', 0, 0, 612, 792,'','FAST');
+            pdf.addPage();
+            pdf.addImage(img[2], 'PNG', 0, 0, 612, 792,'','FAST');
+            pdf.save("attestation_final.pdf");
+            this.eventClickTelecharger = false;
+          }
+        });
+      }
+    }
     telechargerParTypeCopies(){
       let q = 1;
       if(this.estPhaseUne){
@@ -211,12 +230,7 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
         this.print(q,"attestation_phase1_test",0);
       }
       if(this.estCopieDelegataire){
-        this.typeCopie = this.typeDeCopies[1];
-        this.print(q,"attestation_"+this.typeCopie,1);
-        this.typeCopie = this.typeDeCopies[2];
-        this.print(q,"attestation_"+this.typeCopie,2);
-        this.typeCopie = this.typeDeCopies[3];
-        this.print(q,"attestation_"+this.typeCopie,3);
+        this.printAll();
       }
       
     }

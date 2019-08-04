@@ -46,3 +46,12 @@ body{
     color:$white-color;
     font-weight: bold;
 }
+
+.requis::after{
+        content: "\*";
+        color:red;
+        margin-left: 0.4em;
+}
+.invalid-feedback{
+    display: inline;
+}

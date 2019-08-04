@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col-12">
+<mdb-card>
+    <mdb-card-header><h3>Inscrire un utilisateur</h3></mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+<form #formulaire="ngForm" >
+  <div class="row">
+    <div class="col col-4">
+    <div class="form-group">
+        <label class="requis" for="idPrenom">Nom</label>
+        <input type="text" id="idPrenom" [(ngModel)]="userRegister.name" 
+        name="nom" class="form-control" #nom="ngModel" required>
+        <app-champ-obligatoire [modele]="nom"></app-champ-obligatoire>
+    </div>
+    </div>
+    <div class="col col-4">
+    <div class="form-group">
+        <label class="requis" for="email">Email</label>
+        <input type="text" name="email" 
+        [(ngModel)]="userRegister.email" #email="ngModel"  class="form-control" required>
+        <app-champ-obligatoire [modele]="email"></app-champ-obligatoire>
+    </div>
+    </div>
+    <div class="col col-4">
+    <div class="form-group">
+        <label class="requis" for="password">Mot de passe</label>
+        <input type="password" name="password" 
+        [(ngModel)]="userRegister.password" class="form-control" #password="ngModel" required>
+        <app-champ-obligatoire [modele]="password"></app-champ-obligatoire>
+    </div>
+    </div>
+</div>
+</form>
+</mdb-card-text>
+</mdb-card-body>
+<mdb-car-footer>
+    <div class="col offset-8 col-4">
+        <div class="form-group" style="float:right;padding-bottom: 10px">
+            <button [disabled]="loading || !formulaire.valid" 
+            class="btn bg-color-green"
+            (click)="enregistrer()">Enregistrer</button>
+            <img *ngIf="loading" class="pl-3" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </div>
+    </div>
+</mdb-car-footer>
+</mdb-card>
+</div>
+<div class="col-12">
+    <mdb-card>
+        <mdb-card-header><h3>Utilisateurs</h3></mdb-card-header>
+        <mdb-card-body>
+          <mdb-card-text>
+          <table class="table table-bordered">
+            <tr>
+              <th class="">Nom</th><th>Email</th>
+            </tr>
+            <ng-template ngFor let-user [ngForOf]="users">
+                <tr>
+                    <td>
+                        {{user.name}}
+                    </td>
+                    <td>
+                      {{user.email}}
+                    </td>
+                  </tr>
+            </ng-template>
+            
+          </table>
+   </mdb-card-text>
+   </mdb-card-body>
+   </mdb-card>
+</div>
+
+</div>

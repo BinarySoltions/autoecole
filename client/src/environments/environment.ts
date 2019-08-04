@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'http://localhost:8080/auto.api/public/api/'
+  apiEndpoint: 'http://localhost:8000/api/'
+  //apiEndpoint: 'http://localhost:8080/auto.api/public/api/'
+  //apiEndpoint: 'http://localhost:8080/api.auto/public/api/'
 };
 
 /*

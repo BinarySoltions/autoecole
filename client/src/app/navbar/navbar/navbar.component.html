@@ -10,7 +10,10 @@
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{baseUrl}}{{'url.eleve' | translate}}">{{'menu.eleve' | translate}}</a>
+          <a class="nav-link" routerLink="{{'url.eleve' | translate}}">{{'menu.eleve' | translate}}</a>
+        </li>
+        <li *ngIf="currentUser" class="nav-item">
+          <a class="nav-link" href="#" (click)="logout()">Déconnexion</a>
         </li>
         <!-- <li class="nav-item">
           <a class="nav-link" href="/module">Module</a>
@@ -25,9 +28,10 @@
               {{'menu.parametre' | translate}}
           </button>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="{{baseUrl}}phase">Phase et module</a>
-            <a class="dropdown-item" href="{{baseUrl}}personne">Personne responsable</a>
-            <a class="dropdown-item" href="{{baseUrl}}ecole">École</a>
+            <a class="dropdown-item" routerLink="phase">Phase et module</a>
+            <a class="dropdown-item" routerLink="personne">Personne responsable</a>
+            <a class="dropdown-item" routerLink="ecole">École</a>
+            <a routerLink="register" class="dropdown-item">S'inscrire</a>
           </div>
         </div>
     </div>

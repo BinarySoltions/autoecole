@@ -9,18 +9,27 @@ import { PhaseModuleComponent } from './phase/module/phase-module/phase-module.c
 import { PersonneResponsableAffichageComponent } from './personne-responsable/affichage/personne-responsable-affichage/personne-responsable-affichage.component';
 import { DetailComponent } from './eleve/detail/detail.component';
 import { GenererComponent } from './attestation/generer/generer.component';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { AuthGuardService } from './auth/services/auth-guard.service';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
-  { path: 'eleves', component: EleveAffichageComponent },
-  { path: 'eleve' , component: EleveSaisieComponent},
-  { path: 'attestation' , component: AttestationComponent},
-  { path: 'attestation/:id' , component: GenererComponent},
-  { path: 'eleve/:id' , component: EleveSaisieComponent},
-  { path: 'eleve/detail/:id' , component: DetailComponent},
-  { path: 'ecole' , component: EcoleSaisieComponent},
-  { path: 'module' , component: AjouterModuleComponent},
-  { path: 'phase' , component: PhaseModuleComponent},
-  { path: 'personne' , component: PersonneResponsableAffichageComponent}
+  { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
+  { path: 'eleves', component: EleveAffichageComponent, canActivate: [AuthGuardService]},
+  { path: 'eleve' , component: EleveSaisieComponent, canActivate: [AuthGuardService]},
+  { path: 'attestation' , component: AttestationComponent, canActivate: [AuthGuardService]},
+  { path: 'attestation/:id' , component: GenererComponent, canActivate: [AuthGuardService]},
+  { path: 'eleve/:id' , component: EleveSaisieComponent, canActivate: [AuthGuardService]},
+  { path: 'eleve/detail/:id' , component: DetailComponent, canActivate: [AuthGuardService]},
+  { path: 'ecole' , component: EcoleSaisieComponent, canActivate: [AuthGuardService]},
+  { path: 'module' , component: AjouterModuleComponent, canActivate: [AuthGuardService]},
+  { path: 'phase' , component: PhaseModuleComponent, canActivate: [AuthGuardService]},
+  { path: 'personne' , component: PersonneResponsableAffichageComponent, canActivate: [AuthGuardService]},
+  { path: 'login' , component: LoginComponent},
+  { path: 'register' , component: RegisterComponent, canActivate: [AuthGuardService]},
+  // otherwise redirect to home
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

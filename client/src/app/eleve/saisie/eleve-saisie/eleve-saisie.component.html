@@ -53,6 +53,42 @@
         <input type="text" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone_autre" class="form-control" placeholder="champ telephone autre">
     </div>
 </div>
+<div class="row">
+    <div class="md-form col col-4  none-border-top">
+        <label for="numero">Date de naissance</label>
+      <!-- <input type="text" aria-label="" [(ngModel)]="eleveModele.date_naissance" class="form-control" placeholder="date de naissance"> -->
+      <div class="form-group">
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" pattern="0000-00-00"
+                   name="dateNaissance" [(ngModel)]="eleveModele.date_naissance" ngbDatepicker #d="ngbDatepicker">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                  <i class="far fa-calendar-alt"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="md-form col col-4  none-border-top">
+        <label for="telephone">Email</label>
+        <input type="text" aria-label="" [(ngModel)]="eleveModele.email" class="form-control" placeholder="email">
+    </div>
+    <div class="md-form col col-4  none-border-top">
+        <label for="telephoneAutre">Date d'inscription</label>
+        <!-- <input type="text" aria-label="" [(ngModel)]="eleveModele.date_inscription" class="form-control" placeholder="date d'inscription"> -->
+        <div class="form-group">
+            <div class="input-group">
+              <input class="form-control" placeholder="yyyy-mm-dd" pattern="0000-00-00"
+                     name="dateInscription" [(ngModel)]="eleveModele.date_inscription" ngbDatepicker #d="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                    <i class="far fa-calendar-alt"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+      </div>
+</div>
 </mdb-card-text>
 </mdb-card-body>
 <mdb-card-footer class="text-muted">

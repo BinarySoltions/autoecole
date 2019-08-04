@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule,NO_ERRORS_SCHEMA } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
@@ -48,6 +48,13 @@ import { AjouterModuleComponent } from './module/ajouter-module/ajouter-module.c
 import { DetailComponent } from './eleve/detail/detail.component';
 import { GenererComponent } from './attestation/generer/generer.component';
 import { DialogConfirmerComponent } from './partage/dialog-confirmer/dialog-confirmer.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { JwtInterceptorService } from './auth/services/jwt-interceptor.service';
+import { ErrorInterceptorService } from './auth/services/error-interceptor.service';
+import { fakeBackendProvider } from './auth/services/fack-backend-interceptor.service';
+import { ChampObligatoireComponent } from './champ-obligatoire/champ-obligatoire.component';
 
 
 @NgModule({
@@ -73,7 +80,11 @@ import { DialogConfirmerComponent } from './partage/dialog-confirmer/dialog-conf
     AjouterModuleComponent,
     DetailComponent,
     GenererComponent,
-    DialogConfirmerComponent
+    DialogConfirmerComponent,
+    HomeComponent,
+    LoginComponent,
+    RegisterComponent,
+    ChampObligatoireComponent
   ],
   imports: [
     BrowserModule,
@@ -105,7 +116,10 @@ import { DialogConfirmerComponent } from './partage/dialog-confirmer/dialog-conf
   MatProgressSpinnerModule
   ],
   schemas:[ NO_ERRORS_SCHEMA],
-  providers: [EleveService, { provide: 'BASE_URL', useFactory: getBaseUrl }],
+  providers: [EleveService, { provide: 'BASE_URL', useFactory: getBaseUrl },
+  { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
