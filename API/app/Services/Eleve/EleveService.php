@@ -65,6 +65,12 @@ class EleveService implements IEleveService
         $eleve->prenom = $request->prenom;
         $eleve->nom = $request->nom;
         $eleve->numero_contrat = $request->numero_contrat;
+        if($request->date_inscription)
+            $eleve->date_inscription = date('Y-m-d', strtotime($request->date_inscription));
+        if($request->date_naissance)
+            $eleve->date_naissance = date('Y-m-d', strtotime($request->date_naissance));
+        $eleve->email = $request->email;
+        $eleve->numero_permis = $request->numero_permis;
         
         $adresse->numero = $request->adresse['numero'];
         $adresse->rue = $request->adresse['rue'];

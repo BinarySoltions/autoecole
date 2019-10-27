@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import core from 'src/app/core/core.json';
 import lien from 'src/app/core/lien.json';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,6 +9,9 @@ import { EleveService } from 'src/app/service/eleve/eleve.service';
 import { ToastrService } from 'ngx-toastr';
 import {_} from 'underscore';
 import { TranslateService } from '@ngx-translate/core';
+import { NgForm } from '@angular/forms';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { MatMonthView } from '@angular/material';
 
 @Component({
   selector: 'app-eleve-saisie',
@@ -24,6 +27,8 @@ export class EleveSaisieComponent implements OnInit {
   model:any;
 
   baseUrl:any;
+  @ViewChild('formulaire') formulaire:NgForm;
+
   constructor(private router:Router, 
         private serviceEleve:EleveService,
         private activatedRoute: ActivatedRoute,
@@ -50,20 +55,35 @@ export class EleveSaisieComponent implements OnInit {
       this.action = "Modifier";
       this.serviceEleve.obtenirEleveById(id).subscribe(eleve=>{
         this.eleveModele = eleve;
+        this.initialiserDate();
       });
     }else{
       this.action = "Ajouter";
     }
   }
- 
+  initialiserDate(){
+    this.eleveModele.date_naissance = !this.eleveModele.date_naissance?null:this.obtenirDate(new Date(this.eleveModele.date_naissance));
+    this.eleveModele.date_inscription = !this.eleveModele.date_inscription?null:this.obtenirDate(new Date(this.eleveModele.date_inscription));
+  }
+  obtenirDate(value:Date):NgbDate{
+    let local = value.toLocaleDateString();
+    let tabDate = local.split('/');
+    return new NgbDate(Number(tabDate[2]),
+      Number(tabDate[0]),
+      Number(tabDate[1]));
+  }
   public enregistrer(){
+    this.formaterDate();
     this.serviceEleve.ajouterEleve(this.eleveModele).subscribe((eleve)=>{
       this.eleveModele.id = eleve.id;
       this.toastr.success("L'élève a été ajouté avec succés!", "Sauvegarde d'un élève", {timeOut: 5000});
       this.fermer();
     });
   }
-
+  formaterDate(){
+    this.eleveModele.date_inscription = !this.eleveModele.date_inscription?null:_.values(this.eleveModele.date_inscription).join('-');
+    this.eleveModele.date_naissance = !this.eleveModele.date_naissance?null:_.values(this.eleveModele.date_naissance).join('-');
+  }
   public fermer(){
     this.router.navigate(['/eleves']);
   }

@@ -140,6 +140,7 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
     if(id){
       this.serviceEleve.obtenirEleveById(id).subscribe(eleve=>{
         this.eleve = eleve;
+        this.numeroPermis = this.eleve.numero_permis?this.eleve.numero_permis:"";
         this.attestation.eleve_id = eleve.id;
         this.initialiserPhases(eleve);
       });

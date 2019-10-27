@@ -1,4 +1,4 @@
-import { Component,EventEmitter, OnInit, AfterViewInit, Input, Output } from '@angular/core';
+import { Component,EventEmitter, OnInit, AfterViewInit, Input, Output, ViewChild } from '@angular/core';
 import { Module } from 'src/app/entite/module.entity';
 import { ModuleService } from 'src/app/service/module/module.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -6,6 +6,7 @@ import { EleveService } from 'src/app/service/eleve/eleve.service';
 import { Eleve } from 'src/app/entite/eleve.entity';
 import {_} from 'underscore';
 import { ToastrService } from 'ngx-toastr';
+import { NgForm } from '@angular/forms';
 
 export class ModuleModel{
   id_module:number;
@@ -27,6 +28,7 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
 
   @Input() listeEleves:any;
   @Output() estAjouterModule = new EventEmitter<any>();
+  @ViewChild('formulaire') formulaire:NgForm;
 
   constructor(private serviceModule:ModuleService,
     private translate:TranslateService,
@@ -74,5 +76,9 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
       }
     });
     this.moduleModel.eleves = [];
+  }
+  validerEleves(){
+    let ct = this.moduleModel.eleves?this.moduleModel.eleves.length:0;
+    return ct;
   }
 }

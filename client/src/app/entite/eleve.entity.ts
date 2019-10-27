@@ -10,8 +10,9 @@ export class Eleve implements Deserializable{
     nom:string;
     numero_contrat:string;
     email:string;
-    date_naissance:Date;
-    date_inscription:Date;
+    date_naissance:any;
+    date_inscription:any;
+    numero_permis:string;
     adresse:Adresse;
     coordonnee:Coordonnee;
     modules:Module[];

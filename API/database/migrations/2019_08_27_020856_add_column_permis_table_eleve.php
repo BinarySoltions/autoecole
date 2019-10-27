@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnDateInscriptionTableEleve extends Migration
+class AddColumnPermisTableEleve extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,7 @@ class AddColumnDateInscriptionTableEleve extends Migration
     public function up()
     {
         Schema::table('eleve', function (Blueprint $table) {
-            $table->date('date_inscription')->nullable(); 
-            $table->date('date_naissance')->nullable();
-            $table->string('email')->nullable();
+            $table->string('numero_permis')->nullable();
         });
     }
 

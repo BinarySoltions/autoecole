@@ -49,7 +49,7 @@ body{
 
 .requis::after{
         content: "\*";
-        color:red;
+        color:red !important;
         margin-left: 0.4em;
 }
 .invalid-feedback{
