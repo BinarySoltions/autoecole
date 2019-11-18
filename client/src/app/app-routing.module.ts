@@ -13,6 +13,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuardService } from './auth/services/auth-guard.service';
 import { RegisterComponent } from './register/register.component';
+import { ContratComponent } from './contrat/contrat.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'personne' , component: PersonneResponsableAffichageComponent, canActivate: [AuthGuardService]},
   { path: 'login' , component: LoginComponent},
   { path: 'register' , component: RegisterComponent, canActivate: [AuthGuardService]},
+  { path: 'contrat' , component: ContratComponent},
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
 ];

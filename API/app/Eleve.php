@@ -33,4 +33,9 @@ class Eleve extends Model
     public function attestation(){
         return $this->hasOne('App\Attestation');
     }
+
+    public function payements(){
+        return $this->belongsToMany('App\Payement')
+        ->orderBy('payement.date_payement');
+    }
 }

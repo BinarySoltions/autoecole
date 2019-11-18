@@ -8,14 +8,18 @@
    <div class="col col-12">
       <label class="requis">{{'label.nom' | translate}} et {{'label.prenom' | translate}}</label>
    </div>
- <div class="md-form input-group col col-12 none-border-top">
-  <input type="text" maxlength="50" #nom="ngModel" name="nom" aria-label="Nom" [(ngModel)]="eleveModele.nom" class="form-control" placeholder="nom" required>
-  <input type="text" maxlength="50" #prenom="ngModel" name="prenom" aria-label="Prenom" [(ngModel)]="eleveModele.prenom" class="form-control" placeholder="prenom" required>
+ <div class="form-align-h col col-12 none-border-top">
+    <mat-form-field>
+  <input matInput type="text" maxlength="50" #nom="ngModel" name="nom" aria-label="Nom" [(ngModel)]="eleveModele.nom" placeholder="nom" required>
+  </mat-form-field>
+  <mat-form-field>
+  <input matInput type="text" maxlength="50" #prenom="ngModel" name="prenom" aria-label="Prenom" [(ngModel)]="eleveModele.prenom" placeholder="prenom" required>
+</mat-form-field>
 </div>
-<div class="md-form input-group col col-6 none-border-top">
+<div class="col col-6 none-border-top">
     <app-champ-obligatoire [modele]="nom"></app-champ-obligatoire>
   </div>
-  <div class="md-form input-group col col-6 none-border-top">
+  <div class="col col-6 none-border-top">
       <app-champ-obligatoire [modele]="prenom"></app-champ-obligatoire>
     </div>
 </div>
@@ -23,10 +27,17 @@
     <div class="col col-12">
         <label class="requis">{{'label.adresse' | translate}} ({{'label.numero_rue_app' | translate}})</label>
      </div>
-    <div class="md-form input-group col col-12  none-border-top">
-        <input type="text" maxlength="50" #adresseNumero="ngModel" name="adresseNumero" aria-label="Numero" [(ngModel)]="eleveModele.adresse.numero" class="form-control col-3" placeholder="numero" required>
-        <input type="text" maxlength="50" #rue="ngModel" name="rue" aria-label="Rue" [(ngModel)]="eleveModele.adresse.rue" class="form-control col-6" placeholder="rue" required>
-        <input type="text" maxlength="10" name="app" aria-label="App" [(ngModel)]="eleveModele.adresse.appartement" class="form-control col-3" placeholder="app">
+    <div class="form-align-h col col-12  none-border-top">
+      <mat-form-field>
+        <input matInput type="text" maxlength="50" #adresseNumero="ngModel" name="adresseNumero" aria-label="Numero" [(ngModel)]="eleveModele.adresse.numero" class="col-3" placeholder="Numéro" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" maxlength="50" #rue="ngModel" name="rue" aria-label="Rue" [(ngModel)]="eleveModele.adresse.rue" class="col-6" placeholder="rue" required>
+      </mat-form-field>
+      <mat-form-field>
+          <input matInput type="text" maxlength="10" name="app" aria-label="App" [(ngModel)]="eleveModele.adresse.appartement" class="col-3" placeholder="app">
+      </mat-form-field>
+        
       </div>
       <div class="md-form input-group col col-4 none-border-top">
           <app-champ-obligatoire [modele]="adresseNumero"></app-champ-obligatoire>
@@ -36,80 +47,104 @@
           </div>
 </div>
 <div class="row">
-  <div class="md-form col col-4  none-border-top">
+  <div class="form-align-v col col-4  none-border-top">
       <label for="municipalite" class="requis">{{'label.municipalite' | translate}}</label>
-      <input type="text" maxlength="50" #municipalite="ngModel" name="municipalite" aria-label="Municipalite" [(ngModel)]="eleveModele.adresse.municipalite" class="form-control requis" placeholder="municipalite" required>
+      <mat-form-field>
+          <input matInput type="text" maxlength="50" #municipalite="ngModel" name="municipalite" aria-label="Municipalite" [(ngModel)]="eleveModele.adresse.municipalite" class="requis" placeholder="Municipalité" required>
+      </mat-form-field>
+      
       <app-champ-obligatoire [modele]="municipalite"></app-champ-obligatoire>
     </div>
-  <div class="md-form col col-4">
+  <div class="form-align-v col col-4">
       <label for="province">{{'label.province' | translate}}</label>
-      <select name="province" class="browser-default custom-select" [(ngModel)]="eleveModele.adresse.province">
-        <option selected>{{'label.selectionner' | translate}}</option>
+      <mat-form-field>
+          <mat-label>province</mat-label>
+          <select matNativeControl  name="province" [(ngModel)]="eleveModele.adresse.province">
         <option *ngFor="let province of listeProvinces" [value]="province.value">{{province.label}}</option>
-    </select>
+          </select>
+        </mat-form-field>
   </div>
-  <div class="md-form col col-4  none-border-top">
+  <div class="form-align-v col col-4  none-border-top">
       <label for="codePostal" class="requis">{{'label.code_postal' | translate}}</label>
-      <input type="text" maxlength="10" #codePostal="ngModel" name="codePostal" aria-label="Code postal" [(ngModel)]="eleveModele.adresse.code_postal" class="form-control" placeholder="champ code postal" required>
+      <mat-form-field>
+          <input matInput type="text" maxlength="10" #codePostal="ngModel" name="codePostal" aria-label="Code postal" [(ngModel)]="eleveModele.adresse.code_postal"  placeholder="code postal" required>
+      </mat-form-field>
+      
       <app-champ-obligatoire [modele]="codePostal"></app-champ-obligatoire>
     </div>
 </div>
 <div class="row">
-    <div class="md-form col col-4  none-border-top">
+    <div class="form-align-v col col-4  none-border-top">
         <label for="numero" class="requis">{{'label.numero_contrat' | translate}}</label>
-      <input type="text" #numero="ngModel" name="numero" aria-label="" [(ngModel)]="eleveModele.numero_contrat" class="form-control" placeholder="champ numero contrat" required>
+        <mat-form-field>
+            <input matInput type="text" #numero="ngModel" name="numero" aria-label="" [(ngModel)]="eleveModele.numero_contrat" placeholder="champ numero contrat" required>
+        </mat-form-field>
       <app-champ-obligatoire [modele]="numero"></app-champ-obligatoire>
     </div>
-    <div class="md-form col col-4  none-border-top">
+    <div class="form-align-v col col-4  none-border-top">
         <label for="telephone">{{'label.telephone' | translate}}</label>
-        <input type="text" maxlength="13" name="telephone" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone" class="form-control" placeholder="champ telephone">
-    </div>
-    <div class="md-form col col-4  none-border-top">
+        <mat-form-field>
+            <input matInput type="text" maxlength="13" name="telephone" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone"  placeholder="champ telephone">
+   </mat-form-field>
+          </div>
+    <div class="form-align-v col col-4  none-border-top">
         <label for="telephoneAutre">{{'label.telephone_autre' | translate}}</label>
-        <input type="text" maxlength="13" name="telephoneAutre" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone_autre" class="form-control" placeholder="champ telephone autre">
-    </div>
+        <mat-form-field>
+            <input matInput type="text" maxlength="13" name="telephoneAutre" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone_autre" placeholder="champ telephone autre">
+    </mat-form-field>
+          </div>
 </div>
 <div class="row">
-    <div class="md-form col col-4  none-border-top">
-        <label for="dateNaissance">Date de naissance</label>
-      <!-- <input type="text" aria-label="" [(ngModel)]="eleveModele.date_naissance" class="form-control" placeholder="date de naissance"> -->
-      <div class="form-group">
-          <div class="input-group">
-            <input class="form-control" placeholder="yyyy-mm-dd" 
-                   name="dateNaissance" [(ngModel)]="eleveModele.date_naissance" ngbDatepicker #d="ngbDatepicker">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
-                  <i class="far fa-calendar-alt"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-    </div>
-    <div class="md-form col col-4  none-border-top">
-        <label for="email">Email</label>
-        <input type="text" maxlength="50" name="email" aria-label="" [(ngModel)]="eleveModele.email" class="form-control" placeholder="email">
-    </div>
-    <div class="md-form col col-4  none-border-top">
-        <label for="dateInscription">Date d'inscription</label>
-        <!-- <input type="text" aria-label="" [(ngModel)]="eleveModele.date_inscription" class="form-control" placeholder="date d'inscription"> -->
-        <div class="form-group">
-            <div class="input-group">
-              <input class="form-control" placeholder="yyyy-mm-dd" 
-                     name="dateInscription" [(ngModel)]="eleveModele.date_inscription" ngbDatepicker #e="ngbDatepicker">
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary calendar" (click)="e.toggle()" type="button">
-                    <i class="far fa-calendar-alt"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-      </div>
-</div>
-<div class="row">
-  <div class="md-form col col-4  none-border-top">
+  <div class="form-align-v col col-4  none-border-top">
       <label for="permis">Permis de conduire</label>
-      <input type="text" maxlength="13" name="permis" aria-label="" [(ngModel)]="eleveModele.numero_permis" class="form-control" placeholder="numéro de permis">
-      </div>
+      <mat-form-field>
+          <input matInput type="text" maxlength="13" name="permis" aria-label="" [(ngModel)]="eleveModele.numero_permis" placeholder="numéro de permis">
+      </mat-form-field>
+        </div>
+      <div class="form-align-v col col-4  none-border-top">
+        <label for="email">Email</label>
+        <mat-form-field>
+            <input matInput type="text" maxlength="50" name="email" aria-label="" [(ngModel)]="eleveModele.email" placeholder="email">
+    </mat-form-field>
+          </div>
+    <div class="form-align-v col col-4  none-border-top">
+      <label for="email">Frais d'inscription </label>
+      <mat-form-field>
+          <input matInput type="text" maxlength="50" name="fraisInscription" aria-label="" [(ngModel)]="eleveModele.frais_inscription" placeholder="frais d'inscription">
+  </mat-form-field>
+        </div>
+</div>
+<div class="row">
+    <div class="col col-4  none-border-top form-align-v">
+        <label for="dateNaissance">Date de naissance</label>
+              <mat-form-field floatLabel="never">
+                  <input matInput  [matDatepicker]="picker"
+                  name="dateNaissance" [(ngModel)]="eleveModele.date_naissance"
+                   placeholder="yyyy-mm-dd">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+    </div>
+    <div class="col col-4  none-border-top form-align-v">
+      <label for="dateInscription">Date d'inscription</label>
+            <mat-form-field floatLabel="never">
+                <input matInput  [matDatepicker]="pickerInscription"
+                name="dateInscription" [(ngModel)]="eleveModele.date_inscription"
+                 placeholder="yyyy-mm-dd">
+                <mat-datepicker-toggle matSuffix [for]="pickerInscription"></mat-datepicker-toggle>
+                <mat-datepicker #pickerInscription></mat-datepicker>
+              </mat-form-field>
+  </div>
+  <div class="col col-4  none-border-top form-align-v">
+    <label for="dateContrat">Date du contrat</label>
+          <mat-form-field floatLabel="never">
+              <input matInput  [matDatepicker]="pickerContrat"
+              name="dateContrat" [(ngModel)]="eleveModele.date_contrat"
+               placeholder="yyyy-mm-dd">
+              <mat-datepicker-toggle matSuffix [for]="pickerContrat"></mat-datepicker-toggle>
+              <mat-datepicker #pickerContrat></mat-datepicker>
+            </mat-form-field>
+</div>
 </div>
 </form>
 </mdb-card-text>

@@ -1,0 +1,220 @@
+<mdb-card>
+  <mdb-card-header><h3>Paramètres d'un contrat</h3></mdb-card-header>
+  <mdb-card-body>
+    <mdb-card-text>
+      <div class="row">
+        <div class="col-4">
+          <ul>
+            <li>
+              <a [ngClass]="{'active':activeContent == PC.FORMATION}" (click)="activerContent(PC.FORMATION)">Formation</a>
+            </li>
+            <li>
+                <a [ngClass]="{'active':activeContent == PC.PAYEMENT}" (click)="activerContent(PC.PAYEMENT)">Payement</a>
+              </li>
+              <li>
+                  <a [ngClass]="{'active':activeContent == PC.CONDITION}" (click)="activerContent(PC.CONDITION)">Condition</a>
+                </li>
+          </ul>
+        </div>
+        <div class="col-8 bg-color-pc">
+          <div class="row" *ngIf="activeContent == PC.FORMATION">
+            <div class="col col-12">
+<h3 class="no-margin-top pc-header">Description formation</h3>
+ <editor
+   initialValue="<p>This is the initial content of the editor</p>"
+   [init]="{
+        height: 400,
+        menubar: false,
+        content_style: '.tox-toolbar { background-color: #f1f1f1 !important; }',
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar:
+          'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | removeformat | help',
+        entity_encoding:'numeric'
+      }"
+      [(ngModel)]="parametres.descriptionFormation"
+   >
+ </editor>
+
+ <h3 class="pc-header">Coût de la formation</h3>
+ <editor
+   initialValue="<p>This is the initial content of the editor</p>"
+   [init]="{
+        height: 250,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar:
+          'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | removeformat | help',
+        entity_encoding:'numeric'
+      }"
+      [(ngModel)]="parametres.coutFormation"
+   >
+ </editor>
+</div>
+</div>
+<div class="row" *ngIf="activeContent == PC.PAYEMENT">
+    <div class="col col-12">
+ <h3 class="pc-header no-margin-top">Modalité payement (partie une)</h3>
+ <editor
+   initialValue="<p>This is the initial content of the editor</p>"
+   [init]="{
+        height: 250,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar:
+          'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | removeformat | help',
+        entity_encoding:'numeric'
+      }"
+      [(ngModel)]="parametres.modalitePayementUn"
+   >
+ </editor>
+
+ <h3 class="pc-header">Modalité payement (partie deux)</h3>
+ <editor
+   initialValue="<p>This is the initial content of the editor</p>"
+   [init]="{
+        height: 250,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar:
+          'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | removeformat | help',
+        entity_encoding:'numeric'
+      }"
+      [(ngModel)]="parametres.modalitePayementDeux"
+   >
+ </editor>
+ <h3 class="pc-header">Modalité payement (partie trois)</h3>
+ <editor
+   initialValue="<p>This is the initial content of the editor</p>"
+   [init]="{
+        height: 250,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar:
+          'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | removeformat | help',
+        entity_encoding:'numeric'
+      }"
+      [(ngModel)]="parametres.modalitePayementTrois"
+   >
+ </editor>
+</div>
+</div>
+<div class="row" *ngIf="activeContent == PC.CONDITION">
+    <div class="col col-12">
+ <h3 class="pc-header no-margin-top">Acceptation condition (partie une)</h3>
+ <editor
+   initialValue="<p>This is the initial content of the editor</p>"
+   [init]="{
+        height: 250,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar:
+          'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | removeformat | help',
+        entity_encoding:'numeric'
+      }"
+      [(ngModel)]="parametres.acceptationConditionUn"
+   >
+ </editor>
+
+ <h3 class="pc-header">Acceptation condition (anglais)</h3>
+ <editor
+   initialValue="<p>This is the initial content of the editor</p>"
+   [init]="{
+        height: 250,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar:
+          'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | removeformat | help',
+        entity_encoding:'numeric'
+      }"
+      [(ngModel)]="parametres.acceptationConditionAnglais"
+   >
+ </editor>
+ <h3 class="pc-header">Acceptation condition (partie 2)</h3>
+ <editor
+   initialValue="<p>This is the initial content of the editor</p>"
+   [init]="{
+        height: 250,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar:
+          'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | removeformat | help',
+        entity_encoding:'numeric'
+      }"
+      [(ngModel)]="parametres.acceptationConditionDeux"
+   >
+ </editor>
+ <h3 class="pc-header">Acceptation condition (partie 3)</h3>
+ <editor
+   initialValue="<p>This is the initial content of the editor</p>"
+   [init]="{
+        height: 250,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar:
+          'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | removeformat | help',
+        entity_encoding:'numeric'
+      }"
+      [(ngModel)]="parametres.acceptationConditionTrois"
+   >
+ </editor>
+ </div>
+ </div>
+</div>
+</div>
+ </mdb-card-text>
+ </mdb-card-body>
+ </mdb-card>

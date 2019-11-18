@@ -3,7 +3,7 @@ import { NgModule,NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
-import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
 import {MatDialogModule} from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -38,8 +38,11 @@ import { AttestationComponent } from './attestation/attestation/attestation.comp
 
 import {NgxMaskModule, IConfig} from 'ngx-mask'
 import { NgxSpinnerModule } from 'ngx-spinner';
+import {MatDatepickerModule} from '@angular/material/datepicker'
+import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 
 import { ToastrModule } from 'ngx-toastr';
+import { EditorModule } from '@tinymce/tinymce-angular';
 // import ngx-translate and the http loader
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -55,7 +58,25 @@ import { JwtInterceptorService } from './auth/services/jwt-interceptor.service';
 import { ErrorInterceptorService } from './auth/services/error-interceptor.service';
 import { fakeBackendProvider } from './auth/services/fack-backend-interceptor.service';
 import { ChampObligatoireComponent } from './champ-obligatoire/champ-obligatoire.component';
+import { ContratComponent } from './contrat/contrat.component';
+import { EcoleConduiteComponent } from './contrat/ecole-conduite/ecole-conduite.component';
+import { MotoConduiteComponent } from './contrat/moto-conduite/moto-conduite.component';
+import { EleveInfoComponent } from './contrat/eleve-info/eleve-info.component';
+import { DescriptionFormationComponent } from './contrat/description-formation/description-formation.component';
+import { CoutFormationComponent } from './contrat/cout-formation/cout-formation.component';
+import { ParametresContratComponent } from './parametres-contrat/parametres-contrat.component';
 
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'YYYY-MM-DD',
+  },
+  display: {
+    dateInput: 'YYYY-MM-DD',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'MM/DD/YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @NgModule({
   declarations: [
@@ -84,7 +105,14 @@ import { ChampObligatoireComponent } from './champ-obligatoire/champ-obligatoire
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    ChampObligatoireComponent
+    ChampObligatoireComponent,
+    ContratComponent,
+    EcoleConduiteComponent,
+    MotoConduiteComponent,
+    EleveInfoComponent,
+    DescriptionFormationComponent,
+    CoutFormationComponent,
+    ParametresContratComponent
   ],
   imports: [
     BrowserModule,
@@ -113,12 +141,22 @@ import { ChampObligatoireComponent } from './champ-obligatoire/champ-obligatoire
   NgxMaskModule.forRoot(),
   NgxSpinnerModule,
   MatDialogModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  EditorModule,
+  MatDatepickerModule,
+  MatNativeDateModule
   ],
   schemas:[ NO_ERRORS_SCHEMA],
   providers: [EleveService, { provide: 'BASE_URL', useFactory: getBaseUrl },
   { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
+  { provide: MAT_DATE_LOCALE, useValue: 'fr' },
+  {
+    provide: DateAdapter,
+    useClass: MomentDateAdapter,
+    deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+  },
+  {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ],
   bootstrap: [AppComponent]
 })

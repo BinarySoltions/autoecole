@@ -12,7 +12,9 @@ export class Eleve implements Deserializable{
     email:string;
     date_naissance:any;
     date_inscription:any;
+    date_contrat:any;
     numero_permis:string;
+    frais_inscription:number;
     adresse:Adresse;
     coordonnee:Coordonnee;
     modules:Module[];

@@ -72,6 +72,10 @@ Route::get('attestation/{id}','AttestationController@show');
 
 //get attestation
 Route::get('attestations','AttestationController@index');
+//store payement
+Route::post('payer','PayementController@store');
+//get payement
+Route::get('payements','PayementController@index');
 
 
 

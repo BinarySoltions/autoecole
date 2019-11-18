@@ -6,6 +6,7 @@
 @import '~@swimlane/ngx-datatable/release/index.css';
 @import '~@swimlane/ngx-datatable/release/themes/material.css';
 @import '~@swimlane/ngx-datatable/release/assets/icons.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 $green-color: #28a745;
 $light-gray-color:lightgray;
@@ -54,4 +55,20 @@ body{
 }
 .invalid-feedback{
     display: inline;
+}
+.mat-form-field-flex{
+    border:1px solid $light-gray-color;
+    border-top-color: transparent;
+    padding: 0 10px;
+}
+.form-align-v{
+    display: flex;
+    flex-direction: column;
+}
+.form-align-h{
+    display: flex;
+    align-items: stretch;
+}
+.form-align-h>*{
+    flex-grow: 1;
 }

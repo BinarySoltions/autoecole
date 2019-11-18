@@ -12,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { NgForm } from '@angular/forms';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { MatMonthView } from '@angular/material';
+import moment from 'moment';
 
 @Component({
   selector: 'app-eleve-saisie',
@@ -64,13 +65,10 @@ export class EleveSaisieComponent implements OnInit {
   initialiserDate(){
     this.eleveModele.date_naissance = !this.eleveModele.date_naissance?null:this.obtenirDate(new Date(this.eleveModele.date_naissance));
     this.eleveModele.date_inscription = !this.eleveModele.date_inscription?null:this.obtenirDate(new Date(this.eleveModele.date_inscription));
+    this.eleveModele.date_contrat = !this.eleveModele.date_contrat?null:this.obtenirDate(new Date(this.eleveModele.date_contrat));
   }
-  obtenirDate(value:Date):NgbDate{
-    let local = value.toLocaleDateString();
-    let tabDate = local.split('/');
-    return new NgbDate(Number(tabDate[2]),
-      Number(tabDate[0]),
-      Number(tabDate[1]));
+  obtenirDate(value:Date):any{
+    return moment(value).format();
   }
   public enregistrer(){
     this.formaterDate();
@@ -81,8 +79,9 @@ export class EleveSaisieComponent implements OnInit {
     });
   }
   formaterDate(){
-    this.eleveModele.date_inscription = !this.eleveModele.date_inscription?null:_.values(this.eleveModele.date_inscription).join('-');
-    this.eleveModele.date_naissance = !this.eleveModele.date_naissance?null:_.values(this.eleveModele.date_naissance).join('-');
+    this.eleveModele.date_inscription = !this.eleveModele.date_inscription?null:this.eleveModele.date_inscription.format('YYYY-MM-DD');
+    this.eleveModele.date_naissance = !this.eleveModele.date_naissance?null:this.eleveModele.date_naissance.format('YYYY-MM-DD');
+    this.eleveModele.date_contrat = !this.eleveModele.date_contrat?null:this.eleveModele.date_contrat.format('YYYY-MM-DD');
   }
   public fermer(){
     this.router.navigate(['/eleves']);

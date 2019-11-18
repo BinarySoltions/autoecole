@@ -1,0 +1,59 @@
+<!-- <h1>TinyMCE 5 Angular Demo</h1>
+ <editor
+   initialValue="<p>This is the initial content of the editor</p>"
+   [init]="{
+        height: 500,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar:
+          'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | removeformat | help',
+        entity_encoding:'numeric'
+      }"
+      [(ngModel)]="descriptionFormation"
+   >
+ </editor> -->
+ <app-parametres-contrat></app-parametres-contrat>
+<div>
+  <table>
+    <tr>
+      <td class="w-50 c-padding-right">
+        <app-ecole-conduite></app-ecole-conduite>
+      </td>
+      <td class="w-50 c-padding-left" align="bottom">
+        <table class="w-100" style="margin-bottom:5px !important">
+          <tr>
+            <td class="w-100" style="border-bottom:1px solid">No de contrat/<em>Contract no. :</em></td>
+          </tr>
+        </table>
+        <app-moto-conduite></app-moto-conduite>
+      </td>
+    </tr>
+    <tr><!-- titre -->
+      <td colspan="2" align="center">
+        <strong>CONTRAT DE VENTE DES COURS OFFICIELS DE LA SAAQ / SALES CONTRACT FOR SAAQ’S OFFICIAL DRIVING COURSES </strong>
+      <br/>Formation théorique et pratique : tarif unitaire unique / Theoretical and practical instruction: Single unit rate
+      </td>
+    </tr>
+    <tr><!-- description formation -->
+      <td colspan="2">
+        <app-eleve-info></app-eleve-info>
+      </td>
+    </tr>
+    <tr><!-- description formation -->
+      <td colspan="2">
+        <app-description-formation [descriptionFormation]="descriptionFormation"></app-description-formation>
+      </td>
+    </tr>
+    <tr><!-- cout formation -->
+      <td colspan="2">
+        <app-cout-formation></app-cout-formation>
+      </td>
+    </tr>
+  </table>
+</div>
