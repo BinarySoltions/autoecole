@@ -12,5 +12,10 @@ export class PhaseDeuxAffichageComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  obtenirDate(value):any{
+    if(!(!value)){
+      return value.sans_objet?"S.O":null;
+    }
+    return null;
+  }
 }

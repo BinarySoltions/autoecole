@@ -7,11 +7,13 @@ import { Eleve } from 'src/app/entite/eleve.entity';
 import {_} from 'underscore';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
+import moment from 'moment';
 
 export class ModuleModel{
   id_module:number;
   eleves:number[];
-  date_complete:Date;
+  date_complete:any;
+  sans_objet:number;
 }
 @Component({
   selector: 'app-ajouter-module',
@@ -65,7 +67,7 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
   }
   ajouter(){
     this.moduleModel.eleves = _.pluck(this.moduleModel.eleves,'id');
-    this.moduleModel.date_complete = _.values(this.moduleModel.date_complete).join('-');
+    this.moduleModel.date_complete = !this.moduleModel.date_complete?null:moment(this.moduleModel.date_complete).format('YYYY-MM-DD');
     this.serviceModule.ajouterModuleEleves(this.moduleModel).subscribe(res=>{
       if(res.valid){
         this.estAjouterModule.emit(true);
@@ -80,5 +82,10 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
   validerEleves(){
     let ct = this.moduleModel.eleves?this.moduleModel.eleves.length:0;
     return ct;
+  }
+  changeSansObjet(value){
+    if(value){
+      this.moduleModel.date_complete = null;
+    }
   }
 }

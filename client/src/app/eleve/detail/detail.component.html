@@ -8,8 +8,8 @@
       <label class="">{{'label.nom' | translate}} et {{'label.prenom' | translate}}</label>
    </div>
  <div class="md-form input-group col col-12 none-border-top">
-  <input readonly type="text" aria-label="Nom" [(ngModel)]="eleveModele.nom" class="form-control" placeholder="nom">
-  <input readonly type="text" aria-label="Prenom" [(ngModel)]="eleveModele.prenom" class="form-control" placeholder="prenom">
+  <input readonly type="text" aria-label="Nom" [(ngModel)]="eleveModele.nom" class="form-control" >
+  <input readonly type="text" aria-label="Prenom" [(ngModel)]="eleveModele.prenom" class="form-control">
 </div>
 </div>
 <div class="row">
@@ -17,15 +17,15 @@
         <label class="">{{'label.adresse' | translate}} ({{'label.numero_rue_app' | translate}})</label>
      </div>
     <div class="md-form input-group col col-12  none-border-top">
-        <input readonly type="text" aria-label="Numero" [(ngModel)]="eleveModele.adresse.numero" class="form-control col-3" placeholder="numero">
-        <input readonly type="text" aria-label="Rue" [(ngModel)]="eleveModele.adresse.rue" class="form-control col-6" placeholder="rue">
-        <input readonly type="text" aria-label="App" [(ngModel)]="eleveModele.adresse.appartement" class="form-control col-3" placeholder="app">
+        <input readonly type="text" aria-label="Numero" [(ngModel)]="eleveModele.adresse.numero" class="form-control col-3">
+        <input readonly type="text" aria-label="Rue" [(ngModel)]="eleveModele.adresse.rue" class="form-control col-6">
+        <input readonly type="text" aria-label="App" [(ngModel)]="eleveModele.adresse.appartement" class="form-control col-3">
       </div>
 </div>
 <div class="row">
   <div class="md-form col col-4  none-border-top">
       <label for="municipalite">{{'label.municipalite' | translate}}</label>
-      <input readonly type="text" aria-label="Municipalite" [(ngModel)]="eleveModele.adresse.municipalite" class="form-control" placeholder="municipalite">
+      <input readonly type="text" aria-label="Municipalite" [(ngModel)]="eleveModele.adresse.municipalite" class="form-control">
   </div>
   <div class="md-form col col-4">
       <label for="province">{{'label.province' |translate}}</label>
@@ -33,44 +33,53 @@
   </div>
   <div class="md-form col col-4  none-border-top">
       <label for="codePostal">{{'label.code_postal' | translate}}</label>
-      <input readonly type="text" aria-label="Code postal" [(ngModel)]="eleveModele.adresse.code_postal" class="form-control" placeholder="champ code postal">
+      <input readonly type="text" aria-label="Code postal" [(ngModel)]="eleveModele.adresse.code_postal" class="form-control">
   </div>
 </div>
 <div class="row">
     <div class="md-form col col-4  none-border-top">
         <label for="numero">{{'label.numero_contrat' | translate}}</label>
-      <input readonly type="text" aria-label="" [(ngModel)]="eleveModele.numero_contrat" class="form-control" placeholder="champ numero contrat">
+      <input readonly type="text" aria-label="" [(ngModel)]="eleveModele.numero_contrat" class="form-control">
     </div>
     <div class="md-form col col-4  none-border-top">
         <label for="telephone">{{'label.telephone' | translate}}</label>
-        <input readonly type="text" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone" class="form-control" placeholder="champ telephone">
+        <input readonly type="text" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone" class="form-control">
     </div>
     <div class="md-form col col-4  none-border-top">
         <label for="telephoneAutre">{{'label.telephone_autre' | translate}}</label>
-        <input readonly type="text" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone_autre" class="form-control" placeholder="champ telephone autre">
+        <input readonly type="text" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone_autre" class="form-control">
     </div>
-</div>
-<div class="row">
-    <div class="md-form col col-4  none-border-top">
-        <label for="dateNaissance">Date de naissance</label>
-      <input readonly type="text" aria-label="" value="{{eleveModele.date_naissance | date:'yyyy-mm-dd'}}" class="form-control" placeholder="date de naissance">
-      
-    </div>
-    <div class="md-form col col-4  none-border-top">
-        <label for="email">Email</label>
-        <input type="text" readonly maxlength="50" name="email" aria-label="" [(ngModel)]="eleveModele.email" class="form-control" placeholder="email">
-    </div>
-    <div class="md-form col col-4  none-border-top">
-        <label for="dateInscription">Date d'inscription</label>
-        <input readonly type="text" aria-label="" value="{{eleveModele.date_inscription| date:'yyyy-mm-dd'}}" class="form-control" placeholder="date d'inscription">
-        
-      </div>
 </div>
 <div class="row">
   <div class="md-form col col-4  none-border-top">
       <label for="permis">Permis de conduire</label>
-      <input readonly type="text" maxlength="13" name="permis" aria-label="" [(ngModel)]="eleveModele.numero_permis" class="form-control" placeholder="numéro de permis">
+      <input readonly type="text" maxlength="13" name="permis" aria-label="" [(ngModel)]="eleveModele.numero_permis" class="form-control">
       </div>
+      <div class="md-form col col-4  none-border-top">
+        <label for="email">Email</label>
+        <input type="text" readonly maxlength="50" name="email" aria-label="" [(ngModel)]="eleveModele.email" class="form-control" >
+    </div>
+    <div class="md-form col col-4  none-border-top">
+      <label for="fraisInscription">Frais inscription ($ CAD)</label>
+      <input type="text" readonly maxlength="50" name="email" aria-label="" [(ngModel)]="eleveModele.frais_inscription" class="form-control" >
+  </div>
+</div>
+<div class="row">
+  <div class="md-form col col-4  none-border-top">
+      <label for="dateNaissance">Date de naissance</label>
+    <input readonly type="text" aria-label="" value="{{eleveModele.date_naissance | date:'yyyy-MM-dd'}}" class="form-control">
+    
+  </div>
+  <div class="md-form col col-4  none-border-top">
+      <label for="dateInscription">Date d'inscription</label>
+      <input readonly type="text" aria-label="" value="{{eleveModele.date_inscription| date:'yyyy-MM-dd'}}" class="form-control">
+      
+    </div>
+    <div class="md-form col col-4  none-border-top">
+      <label for="dateContrat">Date du contrat</label>
+      <input readonly type="text" aria-label="" value="{{eleveModele.date_contrat| date:'yyyy-MM-dd'}}" class="form-control">
+      
+    </div>
 </div>
 </mdb-card-text>
 </mdb-card-body>

@@ -45,11 +45,16 @@ export class DetailComponent implements OnInit {
     if(id){
       this.serviceEleve.obtenirEleveById(id).subscribe(eleve=>{
         this.eleveModele = eleve;
+       // this.initialiserDate();
         this.initialiserPhases(eleve);
       });
     }
   }
-
+  initialiserDate(){
+    this.eleveModele.date_contrat = !this.eleveModele.date_contrat?null:new Date(this.eleveModele.date_contrat);
+    this.eleveModele.date_inscription = !this.eleveModele.date_inscription?null:new Date(this.eleveModele.date_inscription);
+    this.eleveModele.date_naissance = !this.eleveModele.date_naissance?null:new Date(this.eleveModele.date_naissance);
+  }
   public fermer(){
    this.router.navigate(["/eleves"]);
   }

@@ -7,6 +7,17 @@
 @import '~@swimlane/ngx-datatable/release/themes/material.css';
 @import '~@swimlane/ngx-datatable/release/assets/icons.css';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '../node_modules/@angular/material/theming';
+
+@include mat-core();
+
+$custom-theme-primary: mat-palette($mat-green);
+$custom-theme-accent: mat-palette($mat-green, 800, 900, A100);
+$custom-theme-warn: mat-palette($mat-red);
+
+$custom-theme: mat-light-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
+
+@include angular-material-theme($custom-theme);
 
 $green-color: #28a745;
 $light-gray-color:lightgray;
@@ -71,4 +82,10 @@ body{
 }
 .form-align-h>*{
     flex-grow: 1;
+}
+.cdk-overlay-container{
+    z-index: 1200 !important;
+}
+.mat-focused{
+    color:$green-color !important;
 }

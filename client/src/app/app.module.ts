@@ -40,6 +40,7 @@ import {NgxMaskModule, IConfig} from 'ngx-mask'
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {MatDatepickerModule} from '@angular/material/datepicker'
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { ToastrModule } from 'ngx-toastr';
 import { EditorModule } from '@tinymce/tinymce-angular';
@@ -144,7 +145,8 @@ export const MY_FORMATS = {
   MatProgressSpinnerModule,
   EditorModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatCheckboxModule
   ],
   schemas:[ NO_ERRORS_SCHEMA],
   providers: [EleveService, { provide: 'BASE_URL', useFactory: getBaseUrl },

@@ -12,34 +12,33 @@
       <div class="modal-body">
             <form #formulaire="ngForm">
           <div class="row">
-              <div class="md-form col col-6  none-border-top">
+              <div class="col col-6 none-border-top form-align-v">
                   <label for="telephone">{{'module.nom' | translate }}</label>
-                  <select 
+                  <mat-form-field>
+                  <select matNativeControl
                   name="module"
                   aria-label="{{'module.nom' | translate }}"
                    [(ngModel)]="moduleModel.id_module" 
-                   class="form-control" 
                    placeholder="date completee" required>
                       <option  value="0">{{'label.selectionner' | translate}}</option>
                       <ng-template ngFor let-module [ngForOf]="listeModules" let-i="index">
                           <option [value]="module.id">{{module.nom}}</option>
                       </ng-template>
                     </select>
+                    </mat-form-field>
               </div>
-            <div class="md-form col col-6  none-border-top">
+            <div class="col col-6  none-border-top form-align-v" style="z-index:1200;">
               <label for="numero">{{'module.date_complete' | translate}}</label>
-              <div class="form-group">
-                  <div class="input-group">
-                    <input class="form-control" placeholder="yyyy-mm-dd" 
-                           name="dp" [(ngModel)]="moduleModel.date_complete" ngbDatepicker #d="ngbDatepicker" required>
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
-                          <i class="far fa-calendar-alt"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-             
+              <mat-form-field floatLabel="never">
+                <input matInput  [matDatepicker]="picker"
+                name="dateCompletee" [(ngModel)]="moduleModel.date_complete"
+                 placeholder="yyyy-mm-dd">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>  
+      </div>
+      <div class="col col-12 form-align-v  none-border-top">
+          <mat-checkbox (change)='changeSansObjet(moduleModel.sans_objet)'  name="sansObjet" [(ngModel)]="moduleModel.sans_objet">Sans objet (S.O)</mat-checkbox>
       </div>
       <div class="md-form col col-12  none-border-top">
           <label for="module">{{'module.eleves' | translate}}</label>

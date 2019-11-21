@@ -4,7 +4,8 @@ export class EleveModule implements Deserializable{
     id:number;
     eleve_id:number;
     module_id:number;
-    date_complete:Date;
+    date_complete:Date|null;
+    sans_objet:number;
     deserialize(obj: any): this {
         return Object.assign(this,obj);
     }

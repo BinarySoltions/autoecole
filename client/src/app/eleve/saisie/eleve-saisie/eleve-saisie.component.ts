@@ -79,9 +79,9 @@ export class EleveSaisieComponent implements OnInit {
     });
   }
   formaterDate(){
-    this.eleveModele.date_inscription = !this.eleveModele.date_inscription?null:this.eleveModele.date_inscription.format('YYYY-MM-DD');
-    this.eleveModele.date_naissance = !this.eleveModele.date_naissance?null:this.eleveModele.date_naissance.format('YYYY-MM-DD');
-    this.eleveModele.date_contrat = !this.eleveModele.date_contrat?null:this.eleveModele.date_contrat.format('YYYY-MM-DD');
+    this.eleveModele.date_inscription = !this.eleveModele.date_inscription?null:moment(this.eleveModele.date_inscription).format('YYYY-MM-DD');
+    this.eleveModele.date_naissance = !this.eleveModele.date_naissance?null:moment(this.eleveModele.date_naissance).format('YYYY-MM-DD');
+    this.eleveModele.date_contrat = !this.eleveModele.date_contrat?null:moment(this.eleveModele.date_contrat).format('YYYY-MM-DD');
   }
   public fermer(){
     this.router.navigate(['/eleves']);

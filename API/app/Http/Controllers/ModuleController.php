@@ -69,8 +69,8 @@ class ModuleController extends Controller
         return PhaseResource::Collection($modules);
     }
      public function store_module_eleve(Request $request){
-        
-        $request->date_complete = date('Y-m-d', strtotime($request->date_complete));
+        if($request->date_complete)
+            $request->date_complete = date('Y-m-d', strtotime($request->date_complete));
 
         //retrieve data
         $module = Eleve::whereIn('id',$request->eleves)
@@ -81,7 +81,8 @@ class ModuleController extends Controller
         $valid = true;
         //update
         foreach($module as $md){
-            $res = $md->modules()->updateExistingPivot($request->id_module,['date_complete' => $request->date_complete]);
+            $res = $md->modules()->updateExistingPivot($request->id_module,
+            ['date_complete' => $request->date_complete,'sans_objet'=> $request->sans_objet]);
             if(!$res){
                 $valid = false;
             }

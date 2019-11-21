@@ -26,7 +26,7 @@ class Eleve extends Model
         return $this->belongsToMany('App\Module','eleve_module','eleve_id','module_id')
         ->orderBy('module.numero')
         ->as('eleve_module')
-        ->withPivot('date_complete')
+        ->withPivot('date_complete','sans_objet')
         ->withTimestamps();
     }
 
