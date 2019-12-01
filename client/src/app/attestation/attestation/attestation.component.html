@@ -271,7 +271,7 @@
         <td colspan="2" class="no-border" style="height:20px"></td>
       </tr>
       <tr>
-        <td class="no-border" rowspan="2" width="200px"><img style="width:335px" src="assets/logo_pconduite.JPG" alt="logo" />
+        <td class="no-border" rowspan="2" width="200px"><img style="width:335px" src="assets/logo_pconduite.jpg" alt="logo" />
         </td>
         <td class="no-border padding-0" align="right" width="50%"
           style="text-align:bottom;font-weight:bold;font-size:30px">
@@ -517,7 +517,8 @@
             <ng-template ngFor let-module [ngForOf]="phaseUne.modules">
               <tr>
                 <td class="border-left font-label border-right bg-color-white border-bottom centrer">{{module.nom}}</td>
-                <td class="border-right font-label bg-color-white border-bottom centrer" colspan="3">{{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}</td>
+                <td class="border-right font-label bg-color-white border-bottom centrer" colspan="3">
+                  {{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}{{obtenirDate(module?.eleve_module)}}</td>
               </tr>
             </ng-template>
           </table>
@@ -604,7 +605,8 @@
                   <ng-template ngFor let-module [ngForOf]="phaseDeux.modules">
                     <tr>
                       <td class="border-left border-right font-label bg-color-white border-bottom centrer">{{module.nom}}</td>
-                      <td class="border-right bg-color-white font-label border-bottom centrer" colspan="3">{{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}</td>
+                      <td class="border-right bg-color-white font-label border-bottom centrer" colspan="3">
+                        {{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}{{obtenirDate(module?.eleve_module)}}</td>
                     </tr>
                   </ng-template>
                   <tr>
@@ -638,7 +640,8 @@
                   <ng-template ngFor let-module [ngForOf]="phaseTrois.modules">
                     <tr>
                       <td class="border-left font-label border-right bg-color-white border-bottom centrer">{{module.nom}}</td>
-                      <td class="border-right font-label bg-color-white border-bottom centrer" colspan="3">{{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}</td>
+                      <td class="border-right font-label bg-color-white border-bottom centrer" colspan="3">
+                        {{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}{{obtenirDate(module?.eleve_module)}}</td>
                     </tr>
                   </ng-template>
                   </table>
@@ -664,7 +667,8 @@
                   <ng-template ngFor let-module [ngForOf]="phaseQuatre.modules">
                     <tr>
                       <td class="border-left font-label border-right bg-color-white border-bottom centrer">{{module.nom}}</td>
-                      <td class="border-right font-label bg-color-white border-bottom centrer" colspan="3">{{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}</td>
+                      <td class="border-right font-label bg-color-white border-bottom centrer" colspan="3">
+                        {{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}{{obtenirDate(module?.eleve_module)}}</td>
                     </tr>
                   </ng-template>
                   

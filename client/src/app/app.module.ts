@@ -3,7 +3,7 @@ import { NgModule,NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
-import { MatFormFieldModule, MatInputModule, MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter, MatExpansionModule } from '@angular/material';
 import {MatDialogModule} from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -66,6 +66,8 @@ import { EleveInfoComponent } from './contrat/eleve-info/eleve-info.component';
 import { DescriptionFormationComponent } from './contrat/description-formation/description-formation.component';
 import { CoutFormationComponent } from './contrat/cout-formation/cout-formation.component';
 import { ParametresContratComponent } from './parametres-contrat/parametres-contrat.component';
+import { PayementComponent } from './payement/payement.component';
+import { GabaritFactureComponent } from './payement/gabarit-facture/gabarit-facture.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -113,7 +115,9 @@ export const MY_FORMATS = {
     EleveInfoComponent,
     DescriptionFormationComponent,
     CoutFormationComponent,
-    ParametresContratComponent
+    ParametresContratComponent,
+    PayementComponent,
+    GabaritFactureComponent
   ],
   imports: [
     BrowserModule,
@@ -146,7 +150,8 @@ export const MY_FORMATS = {
   EditorModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatExpansionModule
   ],
   schemas:[ NO_ERRORS_SCHEMA],
   providers: [EleveService, { provide: 'BASE_URL', useFactory: getBaseUrl },

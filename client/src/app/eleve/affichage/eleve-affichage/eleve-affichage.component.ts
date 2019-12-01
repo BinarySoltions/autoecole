@@ -52,13 +52,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
   }
   ngOnInit() { 
     this.spinner.show(undefined, { fullScreen: true });
- 
-    setTimeout(() => {
-        /** spinner ends after 5 seconds */
-        this.spinner.hide();
-    }, 5000);
-   this.obtenirEleves();
-   
+    this.obtenirEleves();
   }
 
   ngAfterViewInit() {
@@ -78,7 +72,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
       this.mdbTable.setDataSource(this.elements);
       this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
-      //this.spinner.hide();
+      this.spinner.hide();
     });
   }
   searchItems(value) {
@@ -110,6 +104,9 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
 }
 public attestationEleve(value){
   this.router.navigate(["attestation/"+value]);
+}
+public payementEleve(value){
+  this.router.navigate(["eleve/payements/"+value]);
 }
 public supprimerEleve(value,index){
   this.idEleveASupprimer = value;

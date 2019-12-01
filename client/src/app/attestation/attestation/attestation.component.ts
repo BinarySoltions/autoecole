@@ -285,4 +285,10 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
       this.ecole.adresse.province = "";
       this.ecole.adresse.code_postal = "";
     }
+    obtenirDate(value):any{
+      if(!(!value)){
+        return value.sans_objet?"S.O":null;
+      }
+      return null;
+    }
 }

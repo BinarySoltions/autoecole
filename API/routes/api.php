@@ -75,7 +75,7 @@ Route::get('attestations','AttestationController@index');
 //store payement
 Route::post('payer','PayementController@store');
 //get payement
-Route::get('payements','PayementController@index');
+Route::get('payements/{id}','PayementController@index');
 
 
 

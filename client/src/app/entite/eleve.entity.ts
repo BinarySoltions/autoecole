@@ -3,6 +3,7 @@ import { Adresse } from './adresse.entity';
 import { Coordonnee } from './coordonnee.entity';
 import { Phase } from './phase.entity';
 import { Module } from './module.entity';
+import { Payement } from '../payement/payement.model';
 
 export class Eleve implements Deserializable{
     id:number;
@@ -18,6 +19,7 @@ export class Eleve implements Deserializable{
     adresse:Adresse;
     coordonnee:Coordonnee;
     modules:Module[];
+    payements:Payement[];
 
     deserialize(obj: any): this {
         Object.assign(this, obj);
@@ -25,6 +27,9 @@ export class Eleve implements Deserializable{
         this.coordonnee = new Coordonnee().deserialize(obj.coordonnee);
         obj.modules.foreach(module =>{
             this.modules.push(new Module().deserialize(module));
+        });
+        obj.payements.foreach(payement =>{
+            this.payements.push(new Payement().deserialize(payement));
         });
         return this;
     }

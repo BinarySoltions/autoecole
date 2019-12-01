@@ -14,6 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuardService } from './auth/services/auth-guard.service';
 import { RegisterComponent } from './register/register.component';
 import { ContratComponent } from './contrat/contrat.component';
+import { PayementComponent } from './payement/payement.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'attestation/:id' , component: GenererComponent, canActivate: [AuthGuardService]},
   { path: 'eleve/:id' , component: EleveSaisieComponent, canActivate: [AuthGuardService]},
   { path: 'eleve/detail/:id' , component: DetailComponent, canActivate: [AuthGuardService]},
+  { path: 'eleve/payements/:id' , component: PayementComponent, canActivate: [AuthGuardService]},
   { path: 'ecole' , component: EcoleSaisieComponent, canActivate: [AuthGuardService]},
   { path: 'module' , component: AjouterModuleComponent, canActivate: [AuthGuardService]},
   { path: 'phase' , component: PhaseModuleComponent, canActivate: [AuthGuardService]},

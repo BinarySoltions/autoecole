@@ -35,7 +35,7 @@ class Eleve extends Model
     }
 
     public function payements(){
-        return $this->belongsToMany('App\Payement')
+        return $this->hasMany('App\Payement')
         ->orderBy('payement.date_payement');
     }
 }

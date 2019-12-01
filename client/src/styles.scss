@@ -87,5 +87,22 @@ body{
     z-index: 1200 !important;
 }
 .mat-focused{
-    color:$green-color !important;
+   // color:$green-color !important;
+}
+.size-30 > div{
+    padding: .25rem .5rem !important;
+    cursor: pointer;
+    &:hover{
+        background-color: #57a86a;
+    }
+}
+.size-btn-m{
+    width: 130px !important;
+}
+.el-align-centre{
+    display: flex;
+    align-items: center;
+}
+.flex-end{
+    align-items: flex-end;
 }

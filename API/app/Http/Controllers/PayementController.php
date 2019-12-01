@@ -8,6 +8,9 @@ use App\Http\Requests;
 use App\Http\Resources\PayementResource;
 use App\Payement;
 use App\Eleve;
+use App\Http\Resources\EleveResource;
+use App\Adresse;
+use App\Coordonnee;
 
 class PayementController extends Controller
 {
@@ -16,11 +19,11 @@ class PayementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $payements = Payement::with('eleve')
-        ->orderBy('created_at','desc')->get();
-        return PayementResource::Collection($payements);
+        $eleves = Eleve::with('adresse','coordonnee','payements')
+        ->find($id);
+        return  new EleveResource($eleves); 
     }
      /**
      * Store a newly created resource in storage.
@@ -38,7 +41,7 @@ class PayementController extends Controller
 
             
         $payement->save();
-        return $this->index();
+        return $this->index($payement->eleve_id);
     }
 
 }
