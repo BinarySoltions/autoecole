@@ -108,6 +108,9 @@ public attestationEleve(value){
 public payementEleve(value){
   this.router.navigate(["eleve/payements/"+value]);
 }
+public contratEleve(value){
+  this.router.navigate(["eleve/contrat/"+value]);
+}
 public supprimerEleve(value,index){
   this.idEleveASupprimer = value;
   this.indexASupprimer = index;

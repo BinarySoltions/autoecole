@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
+import { throwError, Observable } from 'rxjs';
+import { HttpErrorResponse, HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { ParametresContrat } from 'src/app/parametres-contrat/parametres-contrat.component';
 import { catchError } from 'rxjs/operators';
-import { Payement } from './payement.model';
-import { Eleve } from '../entite/eleve.entity';
-import { TotalPayement } from './total/total.component';
+
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -13,31 +12,27 @@ const httpOptions = {
   })
 };
 @Injectable({
-  providedIn: 'root' 
+  providedIn: 'root'
 })
-export class PayementService {
+export class ContratService {
 
   readonly apiUrl = environment.apiEndpoint;
 
+  constructor(private http:HttpClient) { }
 
-  constructor(private http: HttpClient) { }
-
-  obtnenirPayements(id:number): Observable<Eleve> {
-    return this.http.get<Eleve>(this.apiUrl + 'payements/'+id);
+  obtenirParametresContrat():Observable<ParametresContrat>{
+    return this.http.get<ParametresContrat>(this.apiUrl+'parametres/contrat');
   }
 
-  ajouterPayement(payement:Payement):Observable<Eleve>{
-    return this.http.post<Eleve>(this.apiUrl+'payer',payement,httpOptions)
+  AjouterParametresContrat(param:ParametresContrat):Observable<ParametresContrat>{
+    return this.http.post<ParametresContrat>(this.apiUrl+'parametre/contrat',param,httpOptions)
     .pipe(catchError(this.handleError));
-  }
-  obtnenirTotalPayementsByDates(totalPayement:TotalPayement): Observable<TotalPayement> {
-    return this.http.post<TotalPayement>(this.apiUrl + 'payements',totalPayement,httpOptions);
   }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
-     // console.error('An error occurred:', error.error.message);
+      //console.error('An error occurred:', error.error.message);
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,

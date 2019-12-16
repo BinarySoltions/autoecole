@@ -1,0 +1,39 @@
+<mdb-card>
+    <mdb-card-header><h3>Exporter registre par trimestre</h3></mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+              <div class="row">
+                  <div class="col col-9  none-border-top">
+          <mat-radio-group
+          aria-labelledby="example-radio-group-label"
+          class="example-radio-group"
+          [(ngModel)]="trimestre">
+          <mat-radio-button class="example-radio-button" [value]="'1'">
+            Premier trimestre 
+          </mat-radio-button>
+          <mat-radio-button class="example-radio-button"   [value]="'2'">
+              Deuxième trimestre 
+          </mat-radio-button>
+          <mat-radio-button class="example-radio-button"  [value]="'3'">
+                Troisième trimestre 
+          </mat-radio-button>
+          <mat-radio-button class="example-radio-button"  [value]="'4'">
+                  Quatrième trimestre 
+          </mat-radio-button>
+        </mat-radio-group>
+        </div>
+        <div class="col col-3 el-align-centre">
+            <button type="button" 
+            class="btn bg-color-green size-btn-m"
+             (click)="exporter()"
+             style="margin-right:10px;" >
+                <i class="fas fa-save"></i>&nbsp;Exporter
+              </button>
+        </div>
+        </div>
+</mdb-card-text>
+</mdb-card-body>
+</mdb-card>
+<ngx-spinner>
+    <p class="loading">Loading Awesomeness...</p>
+  </ngx-spinner>

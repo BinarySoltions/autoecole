@@ -1,10 +1,10 @@
-<table border="1" class="w-100">
+<table border="1" class="w-100 margin-bottom">
     <tr>
       <th colspan="4" class="contrat-title-header">
-        2 - DESCRIPTION DES FORMATIONS / INSTRUCTION DESCRIPTION  
+        2 - DESCRIPTION DES FORMATIONS /<em>INSTRUCTION DESCRIPTION</em>  
       </th>
     </tr>
   <tr>
-    <td [innerHTML]="descriptionFormation"></td>
+    <td [innerHTML]="descriptionFormation | safeHtml" class="no-bottom-space"></td>
   </tr>
 </table>

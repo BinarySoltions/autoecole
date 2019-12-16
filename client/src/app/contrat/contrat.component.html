@@ -1,59 +1,48 @@
-<!-- <h1>TinyMCE 5 Angular Demo</h1>
- <editor
-   initialValue="<p>This is the initial content of the editor</p>"
-   [init]="{
-        height: 500,
-        menubar: false,
-        plugins: [
-          'advlist autolink lists link image charmap print preview anchor',
-          'searchreplace visualblocks code fullscreen',
-          'insertdatetime media table paste code help wordcount'
-        ],
-        toolbar:
-          'undo redo | formatselect | bold italic backcolor | \
-          alignleft aligncenter alignright alignjustify | \
-          bullist numlist outdent indent | removeformat | help',
-        entity_encoding:'numeric'
-      }"
-      [(ngModel)]="descriptionFormation"
-   >
- </editor> -->
- <app-parametres-contrat></app-parametres-contrat>
-<div>
-  <table>
+<mat-card class="w-100">
+    <mat-card-header class="car-header">
+      <mat-card-title><h3>Contrat</h3></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <center>
+<div id="1pdf" style="width:auto;height: auto;padding: 40px 20px;">
+  <table style="width:100%;">
     <tr>
-      <td class="w-50 c-padding-right">
-        <app-ecole-conduite></app-ecole-conduite>
+      <td class="w-50 no-border">
+        <app-ecole-conduite [ecole]="ecole"></app-ecole-conduite>
       </td>
-      <td class="w-50 c-padding-left" align="bottom">
+      <td class="w-50 c-padding-left no-border" align="bottom">
         <table class="w-100" style="margin-bottom:5px !important">
           <tr>
-            <td class="w-100" style="border-bottom:1px solid">No de contrat/<em>Contract no. :</em></td>
+            <td class="w-100 no-border" style="border-bottom:1px solid !important">No de contrat / <em>Contract no. :</em> {{eleve.numero_contrat}}</td>
           </tr>
         </table>
         <app-moto-conduite></app-moto-conduite>
       </td>
     </tr>
     <tr><!-- titre -->
-      <td colspan="2" align="center">
+      <td colspan="2" align="center" class="no-border">
         <strong>CONTRAT DE VENTE DES COURS OFFICIELS DE LA SAAQ / SALES CONTRACT FOR SAAQ’S OFFICIAL DRIVING COURSES </strong>
       <br/>Formation théorique et pratique : tarif unitaire unique / Theoretical and practical instruction: Single unit rate
       </td>
     </tr>
     <tr><!-- description formation -->
-      <td colspan="2">
-        <app-eleve-info></app-eleve-info>
+      <td colspan="2" class="no-border">
+        <app-eleve-info [eleve]="eleve"></app-eleve-info>
       </td>
     </tr>
     <tr><!-- description formation -->
-      <td colspan="2">
-        <app-description-formation [descriptionFormation]="descriptionFormation"></app-description-formation>
+      <td colspan="2" class="no-border">
+        <app-description-formation [descriptionFormation]="parametres.description_formation"></app-description-formation>
       </td>
     </tr>
     <tr><!-- cout formation -->
-      <td colspan="2">
-        <app-cout-formation></app-cout-formation>
+      <td colspan="2" class="no-border">
+        <app-cout-formation [coutFormation]="parametres.cout_formation"></app-cout-formation>
       </td>
     </tr>
   </table>
 </div>
+</center>
+<button type="button" class="btn bg-color-green" (click)="imprimer()" data-dismiss="modal">Imprimer</button>
+    </mat-card-content>
+    </mat-card>

@@ -44,4 +44,18 @@ class PayementController extends Controller
         return $this->index($payement->eleve_id);
     }
 
+    public function totalPayement(Request $request)
+    {
+        $payement = Payement::whereDate('date_payement','>=',$request->dateDebut)
+                    ->whereDate('date_payement','<=',$request->dateFin)
+                    ->select('montant')->sum('montant');
+        
+        return response()->json([
+                        'montant' => $payement,
+                        'dateDebut' => $request->dateDebut,
+                        'dateFin'=> $request->dateFin
+                    ]);
+        
+    }
+
 }

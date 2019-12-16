@@ -34,10 +34,14 @@
         toolbar:
           'undo redo | formatselect | bold italic backcolor | \
           alignleft aligncenter alignright alignjustify | \
-          bullist numlist outdent indent | removeformat | help',
-        entity_encoding:'numeric'
+          bullist numlist outdent indent|styleselect | removeformat | help',
+        entity_encoding:'numeric',
+        style_formats: [
+                {title:'Indent', selector:'p', styles:{'padding-left':'5px'}}
+                ],
+        style_formats_merge: true
       }"
-      [(ngModel)]="parametres.descriptionFormation"
+      [(ngModel)]="parametres.description_formation"
    >
  </editor>
 
@@ -58,7 +62,7 @@
           bullist numlist outdent indent | removeformat | help',
         entity_encoding:'numeric'
       }"
-      [(ngModel)]="parametres.coutFormation"
+      [(ngModel)]="parametres.cout_formation"
    >
  </editor>
 </div>
@@ -82,7 +86,7 @@
           bullist numlist outdent indent | removeformat | help',
         entity_encoding:'numeric'
       }"
-      [(ngModel)]="parametres.modalitePayementUn"
+      [(ngModel)]="parametres.modalite_payement_un"
    >
  </editor>
 
@@ -103,7 +107,7 @@
           bullist numlist outdent indent | removeformat | help',
         entity_encoding:'numeric'
       }"
-      [(ngModel)]="parametres.modalitePayementDeux"
+      [(ngModel)]="parametres.modalite_payement_deux"
    >
  </editor>
  <h3 class="pc-header">Modalité payement (partie trois)</h3>
@@ -123,7 +127,7 @@
           bullist numlist outdent indent | removeformat | help',
         entity_encoding:'numeric'
       }"
-      [(ngModel)]="parametres.modalitePayementTrois"
+      [(ngModel)]="parametres.modalite_payement_trois"
    >
  </editor>
 </div>
@@ -147,7 +151,7 @@
           bullist numlist outdent indent | removeformat | help',
         entity_encoding:'numeric'
       }"
-      [(ngModel)]="parametres.acceptationConditionUn"
+      [(ngModel)]="parametres.acceptation_condition_un"
    >
  </editor>
 
@@ -168,7 +172,7 @@
           bullist numlist outdent indent | removeformat | help',
         entity_encoding:'numeric'
       }"
-      [(ngModel)]="parametres.acceptationConditionAnglais"
+      [(ngModel)]="parametres.acceptation_condition_anglais"
    >
  </editor>
  <h3 class="pc-header">Acceptation condition (partie 2)</h3>
@@ -188,7 +192,7 @@
           bullist numlist outdent indent | removeformat | help',
         entity_encoding:'numeric'
       }"
-      [(ngModel)]="parametres.acceptationConditionDeux"
+      [(ngModel)]="parametres.acceptation_condition_deux"
    >
  </editor>
  <h3 class="pc-header">Acceptation condition (partie 3)</h3>
@@ -208,7 +212,7 @@
           bullist numlist outdent indent | removeformat | help',
         entity_encoding:'numeric'
       }"
-      [(ngModel)]="parametres.acceptationConditionTrois"
+      [(ngModel)]="parametres.acceptation_condition_trois"
    >
  </editor>
  </div>
@@ -217,4 +221,21 @@
 </div>
  </mdb-card-text>
  </mdb-card-body>
+ <mdb-card-footer class="text-muted">
+  <div class="row">
+    <div class="col col-12" style="text-align:right">
+        <button type="button" 
+        class="btn bg-color-green"
+         (click)="enregistrer()"
+         style="margin-right:10px;">
+            <i class="fas fa-save"></i>&nbsp;{{'label.enregistrer' | translate}}
+          </button>
+        <button type="button" class="btn btn-secondary" (click)="fermer()">
+          <i class="fas fa-ban"></i>&nbsp;{{'label.fermer' | translate}}</button>
+    </div>
+  </div>
+  </mdb-card-footer>
  </mdb-card>
+ <ngx-spinner>
+  <p class="loading">Loading Awesomeness...</p>
+</ngx-spinner>

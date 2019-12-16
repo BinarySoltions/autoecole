@@ -1,5 +1,7 @@
 td{
-  font-size: 12px !important;
+  font-size: 14px !important;
+  font-weight: 500;
+  color: black;
 }
 .w-100{
   width: 100% !important;
@@ -8,28 +10,90 @@ td{
   width: 45% !important; 
 }
 .c-padding-right{
-  padding-right: 15px;
+  padding-right: 10px;
 }
 .c-padding-left{
-  padding-left: 15px;
+  padding-left: 10px;
 }
 .h-row{
-  height: 15px !important;
+  height: 7.5px !important;
 }
 .h-s{
-  height: 5px !important;  
+  height: 1px !important;  
 }
 .no-bottom{
   border-bottom-color: transparent !important;
 }
 .row-spacing{
   border-collapse:separate; 
-  border-spacing:0 15px; 
+  border-spacing:0 8px; 
 }
 .no-border-right{
   border-right-color: transparent !important;
 }
+.no-border{
+  border-color: transparent !important;
+}
 .contrat-title-header{
   background-color: #cccccc;
-  padding: 0 15px;
+  padding: 0 5px;
+  border-bottom: 1px solid black; 
+  font-size: 20px;
+}
+.no-bottom-space {
+//  padding: 0 1rem;
+}
+.no-bottom-space > p{
+  margin-bottom: 5px !important;
+}
+.contrat-title-cell{
+  background-color: #cecece;
+  font-weight: bold;
+}
+td{
+  padding-left: 8px;
+  padding-right: 8px;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+.border-bold{
+  border: 1.5px solid black !important;
+}
+.border-normal{
+  border: 1px solid black !important;
+}
+.border-bottom{
+  border-bottom: 1px solid black !important;
+}
+.border-top{
+  border-top: 1px solid black !important;
+}
+.border-bottom>td{
+  border-bottom: 1px solid black !important;
+}
+.no-border-left{
+  border-left-color: transparent!important;
+}
+.no-border-top > td{
+  border-top-color: transparent;
+}
+.input-w-80{
+  width: 100px;
+  height: 30px;
+  text-align: right;
+  border:transparent;
+  padding-right: 5px;
+}
+.chk-size-8{
+ width: 8px;
+ height: 8px;
+}
+.padding-bottom > td{
+  padding-bottom: 15px !important;
+}
+.padding-top > td{
+  padding-top: 15px !important;
+}
+.margin-bottom{
+  margin-bottom: 15px !important;
 }

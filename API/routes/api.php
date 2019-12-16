@@ -55,11 +55,18 @@ Route::get('eleves_seulement','EleveController@seulement');
 Route::get('eleve/{id}','EleveController@show');
 //get eleve
 Route::delete('eleve/{id}','EleveController@destroy');
+//export registre
+Route::post('exporter_registre','EleveController@export');
 
 //create ecole
 Route::post('ecole','EcoleController@store');
 //get ecole
 Route::get('ecoles','EcoleController@index');
+
+//create parametre contrat
+Route::post('parametre/contrat','ParametreContratController@store');
+//get parametre contrat
+Route::get('parametres/contrat','ParametreContratController@index');
 
 //get personne responsable
 Route::get('personnes','PersonneResponsableController@index');
@@ -76,6 +83,8 @@ Route::get('attestations','AttestationController@index');
 Route::post('payer','PayementController@store');
 //get payement
 Route::get('payements/{id}','PayementController@index');
+//get payement
+Route::post('payements','PayementController@totalPayement');
 
 
 

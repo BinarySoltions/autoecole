@@ -110,4 +110,26 @@ class EleveController extends Controller
             'valid' => $valid
             ]);
     }
+    public function export(Request $request)
+    {
+        if($request){
+            $valeurSup = $request->trimestre*3;
+            $valeurInf = $valeurSup+3;
+            $dateInf = date("Y-m-d", strtotime("-".$valeurInf." months"));
+            $dateSup = date("Y-m-d", strtotime("-".$valeurSup." months"));
+
+        $eleves = Eleve::leftJoin('adresse', 'eleve.id', '=', 'adresse.eleve_id')
+        ->leftJoin('coordonnee', 'eleve.id', '=', 'coordonnee.eleve_id')
+        ->leftJoin('attestation', 'eleve.id', '=', 'attestation.eleve_id')
+        ->whereDate('date_inscription','<=',$dateSup)
+        ->whereDate('date_inscription','>',$dateInf)
+        ->select('eleve.date_inscription','eleve.nom','eleve.prenom',
+        'adresse.numero as numero_adresse','adresse.rue','adresse.municipalite','adresse.code_postal',
+        'eleve.email','coordonnee.telephone','eleve.date_naissance','eleve.numero_permis','eleve.numero_contrat as numero_contrat_theorie'
+        ,'eleve.numero_contrat as numero_contrat_pratique','attestation.numero')
+        ->get();
+        return  new EleveResource($eleves);    
+        }
+        
+    }
 }

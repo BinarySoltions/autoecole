@@ -3,7 +3,7 @@ import { NgModule,NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
-import { MatFormFieldModule, MatInputModule, MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter, MatExpansionModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter, MatExpansionModule, MatCardModule, MatRadioModule } from '@angular/material';
 import {MatDialogModule} from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -68,6 +68,9 @@ import { CoutFormationComponent } from './contrat/cout-formation/cout-formation.
 import { ParametresContratComponent } from './parametres-contrat/parametres-contrat.component';
 import { PayementComponent } from './payement/payement.component';
 import { GabaritFactureComponent } from './payement/gabarit-facture/gabarit-facture.component';
+import { SafeHtmlPipe } from './pipe/safe-html.pipe';
+import { TotalComponent } from './payement/total/total.component';
+import { ExporterRegistreComponent } from './exporter-registre/exporter-registre.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -117,7 +120,10 @@ export const MY_FORMATS = {
     CoutFormationComponent,
     ParametresContratComponent,
     PayementComponent,
-    GabaritFactureComponent
+    GabaritFactureComponent,
+    SafeHtmlPipe,
+    TotalComponent,
+    ExporterRegistreComponent
   ],
   imports: [
     BrowserModule,
@@ -151,7 +157,9 @@ export const MY_FORMATS = {
   MatDatepickerModule,
   MatNativeDateModule,
   MatCheckboxModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatCardModule,
+  MatRadioModule 
   ],
   schemas:[ NO_ERRORS_SCHEMA],
   providers: [EleveService, { provide: 'BASE_URL', useFactory: getBaseUrl },

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Eleve } from 'src/app/entite/eleve.entity';
 
 @Component({
   selector: 'app-eleve-info',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['../contrat.component.scss']
 })
 export class EleveInfoComponent implements OnInit {
-
+  @Input() eleve:Eleve;
   constructor() { }
 
   ngOnInit() {

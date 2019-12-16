@@ -42,7 +42,10 @@ export class EleveService {
     return this.http.delete<{valid:boolean}>(this.apiUrl + 'eleve/' + id)
     .pipe(catchError(this.handleError));
   }
-
+  obtenirElevesParTrimestre(trimestre:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'exporter_registre', trimestre, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
