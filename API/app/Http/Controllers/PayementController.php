@@ -48,7 +48,8 @@ class PayementController extends Controller
     {
         $payement = Payement::whereDate('date_payement','>=',$request->dateDebut)
                     ->whereDate('date_payement','<=',$request->dateFin)
-                    ->select('montant')->sum('montant');
+                    ->select(DB::raw('SUM(montant) as montant, type'))
+                    ->groupBy('type')->get();
         
         return response()->json([
                         'montant' => $payement,

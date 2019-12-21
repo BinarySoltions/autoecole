@@ -20,7 +20,7 @@
         Total d’heures de cours théoriques / <em>Total number of hours of theoretical modules</em> : 
     </td>
     <td class="no-border-bottom no-border-left">
-      <input class="input-w-80 border-normal" type="number" value="23"/> heures / <em>hours</em>
+      <input class="input-w-80 border-normal" type="number" [(ngModel)]="heureTheorique"/> heures / <em>hours</em>
     </td>
   </tr>
   <tr class="no-border-top">
@@ -28,7 +28,7 @@
           Total d’heures de sorties sur la route ou cours pratiques / <em>Total number of hours of on-the-road sessions or practical courses</em> : 
     </td>
     <td class="no-border-bottom no-border-left">
-      <input class="input-w-80 border-normal" type="number" value="23"/> heures / <em>hours</em>
+      <input class="input-w-80 border-normal" type="number" [(ngModel)]="heurePratique"/> heures / <em>hours</em>
     </td>
   </tr>
   <tr class="no-border-top">
@@ -36,7 +36,7 @@
           Total d’heures / <em>Total numbers of hours</em> : 
     </td>
     <td class="no-border-bottom no-border-left">
-      <input  class="input-w-80 border-bottom" type="number" value="23"/>
+      <input  class="input-w-80 border-bottom" type="number" [disabled]="true" [value]="obtenirHeuresTotales()"/>
     </td>
   </tr>
   <tr class="no-border-top padding-bottom">
@@ -44,7 +44,7 @@
           Taux horaire / <em>Hourly rate</em> : 
     </td>
     <td class="no-border-bottom no-border-left">
-      <input class="input-w-80 border-bottom" type="number" value="23"/>$
+      <input class="input-w-80 border-bottom" type="number" [disabled]="true" [value]="obtenirTauxHoraire()"/>$
     </td>
   </tr>
   <tr class="no-border-top">
@@ -52,7 +52,7 @@
           Prix total avant taxes / <em>Total training cost before taxes</em> : 
     </td>
     <td class="no-border-bottom no-border-left">
-      <input class="input-w-80 border-bold" type="number" value="23"/>$
+      <input class="input-w-80 border-bold" type="number" [disabled]="true" [value]="obtenirMontantHorsTaxes()"/>$
     </td>
   </tr>
   <tr class="no-border-top padding-top">
@@ -60,7 +60,7 @@
           T.P.S. / <em>G.S.T.</em> : (No. T.P.S. / <em>G.S.T. no. </em> ):
     </td>
     <td class="no-border-bottom no-border-left padding-top">
-      <input class="input-w-80 border-bottom" type="number" value="23"/>$
+      <input class="input-w-80 border-bottom" type="number" [disabled]="true" [value]="obtenirTPS()"/>$
     </td>
   </tr>
   <tr class="no-border-top padding-bottom">
@@ -68,7 +68,7 @@
           T.V.Q. / <em>Q.S.T.</em> : (No. T.V.Q. / <em>Q.S.T. no. </em> ):
     </td>
     <td class="no-border-bottom no-border-left">
-      <input class="input-w-80 border-bottom" type="number" value="23"/>$
+      <input class="input-w-80 border-bottom" type="number" [disabled]="true" [value]="obtenirTVQ()"/>$
     </td>
   </tr>
   <tr class="no-border-top">
@@ -76,10 +76,10 @@
           Prix total après taxes / <em>Total training cost after taxes</em> : 
     </td>
     <td class="no-border-bottom no-border-left">
-      <input class="input-w-80 border-bold" type="number" value=""/>$
+      <input class="input-w-80 border-bold" type="number" [disabled]="true" [value]="coutFormation"/>$
     </td>
   </tr>
   <tr class="no-border-top padding-top">
-      <td colspan="3" [innerHTML]="coutFormation | safeHtml" class="no-bottom-space border-bottom"></td>
+      <td colspan="3" [innerHTML]="loiCoutFormation | safeHtml" class="no-bottom-space border-bottom"></td>
     </tr>
 </table>

@@ -100,4 +100,10 @@ class AuthController extends Controller
         $users = User::orderBy('name')->get();
         return UserResource::Collection($users);
     }
+    public function refus()
+    {
+        return response()->json([
+            'message' => 'Unauthorized'
+        ], 401);
+    }
 }

@@ -7,10 +7,37 @@ import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None,
 })
 export class CoutFormationComponent implements OnInit {
-  @Input() coutFormation;
+  @Input() loiCoutFormation;
+  @Input() coutFormation: number;
+  TPS = 9.975;
+  TVQ = 5;
+  heurePratique = 15;
+  heureTheorique = 24;
   constructor() { }
 
   ngOnInit() {
+  }
+  obtenirHeuresTotales(){
+    const t = this.heurePratique + this.heureTheorique;
+    return t;
+  }
+  obtenirTauxHoraire(){
+    const t = this.heurePratique + this.heureTheorique;
+    const m = this.coutFormation/t;
+    return Number(m.toFixed(2));
+  }
+  obtenirMontantHorsTaxes(){
+    const m = this.coutFormation/(1+0.05+0.09975);
+    return Number(m.toFixed(2));
+  }
+
+  obtenirTVQ(){
+    const m = this.obtenirMontantHorsTaxes()*this.TVQ/100;
+    return Number(m.toFixed(2));
+  }
+  obtenirTPS(){
+    const m = this.obtenirMontantHorsTaxes()*this.TPS/100;
+    return Number(m.toFixed(2));
   }
 
 }

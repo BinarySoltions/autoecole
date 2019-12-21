@@ -37,7 +37,7 @@
     </tr>
     <tr><!-- cout formation -->
       <td colspan="2" class="no-border">
-        <app-cout-formation [coutFormation]="parametres.cout_formation"></app-cout-formation>
+        <app-cout-formation [loiCoutFormation]="parametres.cout_formation" [coutFormation]="eleve?.frais_inscription"></app-cout-formation>
       </td>
     </tr>
   </table>

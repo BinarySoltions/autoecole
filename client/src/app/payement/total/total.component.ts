@@ -7,7 +7,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class TotalPayement{
   dateDebut:any;
   dateFin:any;
+  type:string;
+  montant:TotalTypePayement[];
+}
+export class TotalTypePayement{
   montant:number;
+  type:string;
 }
 @Component({
   selector: 'app-total',
@@ -41,7 +46,13 @@ export class TotalComponent implements OnInit {
         this.transactions.push(<TotalPayement>res);
         this.dataSource = new MatTableDataSource<TotalPayement>(this.transactions);
         this.spinner.hide();
+      } else {
+        this.spinner.hide();
       }
     })
   };
+  public getTotalCost(montant:TotalTypePayement[]=[]): number 
+  {
+    return montant.map(m=>Number(m.montant)).reduce((accumulator, currentValue) => accumulator + currentValue);
+  }
 }

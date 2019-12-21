@@ -49,8 +49,17 @@
     </ng-container>
   <!-- Cost Column -->
   <ng-container matColumnDef="montant">
-    <th mat-header-cell *matHeaderCellDef> Montant total </th>
-    <td mat-cell *matCellDef="let transaction"> {{transaction.montant | currency}} </td>
+    <th mat-header-cell *matHeaderCellDef align="center"> Montant total par type de payement </th>
+    <td mat-cell *matCellDef="let transaction" align="center"> 
+      <table width="50%">
+        <tr *ngFor="let m of transaction?.montant">
+          <td align="right">{{m.type}} :</td>
+          <td align="right">{{m.montant | currency}}</td>
+        </tr>
+        <tr><td align="right">Total :</td><td align="right">{{getTotalCost(transaction?.montant) | currency}} </td></tr>
+      </table>
+      
+    </td>
     <!-- <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td> -->
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

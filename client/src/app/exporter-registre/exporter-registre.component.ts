@@ -26,7 +26,12 @@ export class ExporterRegistreComponent implements OnInit {
     this.serviceEleve.obtenirElevesParTrimestre(trimestre)
     .subscribe(res => {
       if(res){
-        this.exportExcelService.exportAsExcelFile(res,"test_export");
+        const titre = Number(this.trimestre) === 1?"registre_inscription_"+new Date().getFullYear()+"_"+this.trimestre+"er":
+        "registre_inscription_"+new Date().getFullYear()+"_"+this.trimestre+"eme";
+        const json = res.length > 0 ? res : null;
+        this.exportExcelService.exportAsExcelFile(json,titre);
+        this.spinner.hide();
+      } else {
         this.spinner.hide();
       }
     });

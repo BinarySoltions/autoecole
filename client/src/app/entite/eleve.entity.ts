@@ -21,7 +21,6 @@ export class Eleve implements Deserializable{
     coordonnee:Coordonnee;
     modules:Module[];
     payements:Payement[];
-    attestation:Attestation;
 
     deserialize(obj: any): this {
         Object.assign(this, obj);
@@ -33,7 +32,6 @@ export class Eleve implements Deserializable{
         obj.payements.foreach(payement =>{
             this.payements.push(new Payement().deserialize(payement));
         });
-        this.attestation = new Attestation().deserialize(obj.attestation);
         return this;
     }
 }

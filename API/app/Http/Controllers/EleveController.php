@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Services\Eleve\IEleveService;
@@ -112,23 +112,35 @@ class EleveController extends Controller
     }
     public function export(Request $request)
     {
-        if($request){
-            $valeurSup = $request->trimestre*3;
-            $valeurInf = $valeurSup+3;
-            $dateInf = date("Y-m-d", strtotime("-".$valeurInf." months"));
-            $dateSup = date("Y-m-d", strtotime("-".$valeurSup." months"));
+        if($request)
+        {
+            $annee = date("Y");
+            if($request->trimestre == 1)
+            {
+                $dateInf = date("Y-m-d",strtotime($annee."-01-01"));
+                $dateSup = date("Y-m-d",strtotime($annee."-03-31"));
+            } else if($request->trimestre == 2){
+                $dateInf = date("Y-m-d",strtotime($annee."-04-01"));
+                $dateSup = date("Y-m-d",strtotime($annee."-06-30"));
+            } else if($request->trimestre == 3){
+                $dateInf = date("Y-m-d",strtotime($annee."-07-01"));
+                $dateSup = date("Y-m-d",strtotime($annee."-09-30"));
+            } else if($request->trimestre == 4){
+                $dateInf = date("Y-m-d",strtotime($annee."-10-01"));
+                $dateSup = date("Y-m-d",strtotime($annee."-12-31"));
+            }
+           
 
         $eleves = Eleve::leftJoin('adresse', 'eleve.id', '=', 'adresse.eleve_id')
         ->leftJoin('coordonnee', 'eleve.id', '=', 'coordonnee.eleve_id')
         ->leftJoin('attestation', 'eleve.id', '=', 'attestation.eleve_id')
         ->whereDate('date_inscription','<=',$dateSup)
-        ->whereDate('date_inscription','>',$dateInf)
-        ->select('eleve.date_inscription','eleve.nom','eleve.prenom',
-        'adresse.numero as numero_adresse','adresse.rue','adresse.municipalite','adresse.code_postal',
-        'eleve.email','coordonnee.telephone','eleve.date_naissance','eleve.numero_permis','eleve.numero_contrat as numero_contrat_theorie'
-        ,'eleve.numero_contrat as numero_contrat_pratique','attestation.numero')
-        ->get();
-        return  new EleveResource($eleves);    
+        ->whereDate('date_inscription','>=',$dateInf)
+        ->select(DB::raw('DATE_FORMAT(eleve.date_inscription, "%Y-%m-%d") as date_inscription'),
+        'eleve.nom','eleve.prenom','adresse.numero as numero_adresse','adresse.rue','adresse.municipalite',
+        'adresse.code_postal','eleve.email','coordonnee.telephone',
+        DB::raw('DATE_FORMAT(eleve.date_naissance, "%Y-%m-%d") as date_naissance'),'eleve.numero_permis','eleve.numero_contrat as numero_contrat_theorie','eleve.numero_contrat as numero_contrat_pratique','attestation.numero')->get();
+        return  new EleveResource($eleves);
         }
         
     }
