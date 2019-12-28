@@ -9,8 +9,8 @@ import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 export class CoutFormationComponent implements OnInit {
   @Input() loiCoutFormation;
   @Input() coutFormation: number;
-  TPS = 9.975;
-  TVQ = 5;
+  TPS = 5;
+  TVQ = 9.975;
   heurePratique = 15;
   heureTheorique = 24;
   constructor() { }

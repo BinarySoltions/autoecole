@@ -10,56 +10,65 @@
       </div>
       <div class="modal-body">
 <!-- pdf facture -->
-<div id="1pdf" style="width:auto;height: 792px;padding: 30px 20px;">
-  <div class="row" style="margin-bottom:50px">
-      <div class="offset-1 col-4 form-align-v" style="padding-top:20px">
+<div id="1pdf" style="width:auto;height: 792px;padding: 30px 20px;font-weight: 500;">
+  <table class="" style="margin-bottom:50px">
+    <tr>
+      <td width="20%">
+        <div class="" style="padding:20px 20px 0 20px">
           <img style="width:150px" src="assets/logo_pconduite.jpg" alt="logo" />
       </div>
-      <div class="col-4 form-align-v el-align-centre" style="padding-top:20px;font-size: 12px !important">
-        <h6>{{ecole.raison_social}} {{ecole.nom}}</h6>
-        <span *ngIf="ecole.adresse">{{ecole.adresse.numero}}
-            <span *ngIf="ecole.adresse">, {{ecole.adresse.rue}}</span>
-            <span *ngIf="ecole.adresse">, #{{ecole.adresse.appartement}}</span>
-            <span *ngIf="ecole.adresse">, {{ecole.adresse.code_postal}}</span>
-            <span *ngIf="ecole.adresse">, {{ecole.adresse.municipalite}}, {{ecole.adresse.province}}</span>
-        </span>
-        
-        <span><i class="fas fa-phone"></i> : 438-387-6644 </span>
-      </div>
-      <div class="col-2" style="padding-top:20px">
+      </td>
+      <td width="50%" align="center">
+        <div class="" style="padding-top:20px;font-size: 12px !important">
+          <h6>{{ecole.raison_social}} {{ecole.nom}}</h6>
+          <span *ngIf="ecole.adresse">{{ecole.adresse.numero}}
+              <span *ngIf="ecole.adresse">, {{ecole.adresse.rue}}</span>
+              <span *ngIf="ecole.adresse">, #{{ecole.adresse.appartement}}</span>
+              <span *ngIf="ecole.adresse">, {{ecole.adresse.code_postal}}</span>
+              <span *ngIf="ecole.adresse">, {{ecole.adresse.municipalite}}, {{ecole.adresse.province}}</span>
+          </span>
+          <br/>
+          <span><i class="fas fa-phone"></i> : 438-387-6644 </span>
+        </div>
+      </td>
+      <td align="center">
+        <div style="padding-top:20px">
           <h4>Facture</h4>
        
-  </div>
-  
-</div>
-<div class="row" style="margin-bottom:50px;font-size: 12px !important">
-  <div class="offset-1 col-4 form-align-v">
-      <h6>Facturé à</h6>
-    <span>{{eleve.nom}} {{eleve.prenom}}</span>
-    <span *ngIf="eleve.adresse">{{eleve.adresse.numero}}
-        <span *ngIf="eleve.adresse">, {{eleve.adresse.rue}}</span>
-        <span *ngIf="eleve.adresse">, #{{eleve.adresse.appartement}}</span>
-        <span *ngIf="eleve.adresse">, {{eleve.adresse.code_postal}}</span>
-        <span *ngIf="eleve.adresse">, {{eleve.adresse.municipalite}}, {{eleve.adresse.province}}</span>
-    </span>
-    
-    <span *ngIf="eleve.coordonnee" ><i class="fas fa-phone"></i> : {{eleve.coordonnee.telephone}}</span>
-  </div>
-  <div class="col-4 form-align-v flex-end">
-      <span>No de facture :</span>
-      <span>Date :</span>
-      <span>Coût de la formation :</span>
-      <span *ngIf="totalPaye">Total payé :</span>
-    </div>
-  <div class="col-3 form-align-v">
-      <span>{{dateDuJour|date:'hhmmss'}}</span>
-      <span>{{dateDuJour|date:'yyyy-MM-dd'}}</span>
-    <span>{{eleve.frais_inscription | currency}}</span>
-    <span *ngIf="totalPaye">{{totalPaye | currency}}</span>
-  </div>
-</div>
-<div class="row">
-  <div class="col offset-1 col-10">
+      </div>
+      </td>
+    </tr>
+  </table><!--end-->
+<table class="" style="margin-bottom:50px;font-size: 12px !important">
+  <tr>
+    <td width="30%" align="left">
+        <h6>Facturé à</h6>
+      <span>{{eleve.nom}} {{eleve.prenom}}</span>
+      <span *ngIf="eleve.adresse">{{eleve.adresse.numero}}
+          <span *ngIf="eleve.adresse">, {{eleve.adresse.rue}}</span>
+          <span *ngIf="eleve.adresse">, #{{eleve.adresse.appartement}}</span>
+          <span *ngIf="eleve.adresse">, {{eleve.adresse.code_postal}}</span>
+          <span *ngIf="eleve.adresse">, {{eleve.adresse.municipalite}}, {{eleve.adresse.province}}</span>
+      </span>
+      <br/>
+      <span *ngIf="eleve.coordonnee" ><i class="fas fa-phone"></i> : {{eleve.coordonnee.telephone}}</span>
+    </td>
+    <td align="right">
+        <span>No de facture : </span><br/>
+        <span>Date :</span> <br/>
+        <span>Coût de la formation :</span><br/>
+        <span *ngIf="totalPaye">Total payé :</span><br/>
+    </td>
+    <td align="left">
+        <span>{{dateDuJour|date:'hhmmss'}}</span><br/>
+        <span>{{dateDuJour|date:'yyyy-MM-dd'}}</span><br/>
+      <span>{{eleve.frais_inscription | currency}}</span><br/>
+      <span *ngIf="totalPaye">{{totalPaye | currency}}</span><br/>
+    </td>
+  </tr>
+</table><!--end-->
+
+  <div class="">
   <table border="1" width="100%" style="font-size: 12px !important">
     <tr>
     <th style="text-align:center">Type de payement</th><th style="text-align:center">Date payement</th><th width="100px" style="text-align:right;padding-right: 10px">Montant</th>
@@ -70,7 +79,6 @@
   <tr><td  colspan="2" align="right" style="border-color:transparent">TPS : </td><td style="border-color:transparent;text-align:right;padding-right: 10px" >{{obtenirTPS()|currency}}</td></tr>
   <tr><td  colspan="2" align="right" style="border-color:transparent"> Total : </td><td style="border-color:transparent;text-align:right;padding-right: 10px">{{obtenirTotalAvecTaxes()|currency}}</td></tr>
   </table>
-</div>
 </div>
 </div>
 <!-- fin pdf -->

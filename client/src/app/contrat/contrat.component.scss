@@ -3,6 +3,12 @@ td{
   font-weight: 500;
   color: black;
 }
+td{
+  padding-left: 8px;
+  padding-right: 8px;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
 .w-100{
   width: 100% !important;
 }
@@ -34,6 +40,9 @@ td{
 .no-border{
   border-color: transparent !important;
 }
+.border-right{
+  border-right-color: black !important;
+}
 .contrat-title-header{
   background-color: #cccccc;
   padding: 0 5px;
@@ -50,12 +59,7 @@ td{
   background-color: #cecece;
   font-weight: bold;
 }
-td{
-  padding-left: 8px;
-  padding-right: 8px;
-  border-right: 1px solid black;
-  border-left: 1px solid black;
-}
+
 .border-bold{
   border: 1.5px solid black !important;
 }
@@ -72,7 +76,10 @@ td{
   border-bottom: 1px solid black !important;
 }
 .no-border-left{
-  border-left-color: transparent!important;
+  border-left-color: transparent !important;
+}
+.border-left{
+  border-left-color: black !important;
 }
 .no-border-top > td{
   border-top-color: transparent;
@@ -96,4 +103,8 @@ td{
 }
 .margin-bottom{
   margin-bottom: 15px !important;
+}
+.bg-color-transparent{
+  background-color: transparent !important;
+  color: black;
 }

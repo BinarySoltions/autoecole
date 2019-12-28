@@ -30,8 +30,8 @@ export class PayementComponent implements OnInit,AfterViewInit {
   displayedColumns: string[] = ['type', 'date_payement', 'montant','choix'];
   dataSource = new MatTableDataSource<Payement>(this.transactions);
   selection = new SelectionModel<Payement>(true, []);
-  TPS = 9.975;
-  TVQ = 5;
+  TPS = 5;
+  TVQ = 9.975;
   payementsPDF : Payement[];
   numeroFacture = "";
   dateDuJour = new Date();

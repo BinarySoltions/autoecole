@@ -71,7 +71,12 @@ import { GabaritFactureComponent } from './payement/gabarit-facture/gabarit-fact
 import { SafeHtmlPipe } from './pipe/safe-html.pipe';
 import { TotalComponent } from './payement/total/total.component';
 import { ExporterRegistreComponent } from './exporter-registre/exporter-registre.component';
-
+import { NumeroComponent } from './contrat/numero/numero.component';
+import { ModalitePayementComponent } from './contrat/modalite-payement/modalite-payement.component';
+import { AcceptationConditionComponent } from './contrat/acceptation-condition/acceptation-condition.component';
+import { DateVersementComponent } from './contrat/modalite-payement/date-versement/date-versement.component';
+import { ResiliationComponent } from './contrat/resiliation/resiliation.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 export const MY_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -123,7 +128,12 @@ export const MY_FORMATS = {
     GabaritFactureComponent,
     SafeHtmlPipe,
     TotalComponent,
-    ExporterRegistreComponent
+    ExporterRegistreComponent,
+    NumeroComponent,
+    ModalitePayementComponent,
+    AcceptationConditionComponent,
+    DateVersementComponent,
+    ResiliationComponent
   ],
   imports: [
     BrowserModule,
@@ -159,7 +169,8 @@ export const MY_FORMATS = {
   MatCheckboxModule,
   MatExpansionModule,
   MatCardModule,
-  MatRadioModule 
+  MatRadioModule,
+  PdfViewerModule
   ],
   schemas:[ NO_ERRORS_SCHEMA],
   providers: [EleveService, { provide: 'BASE_URL', useFactory: getBaseUrl },

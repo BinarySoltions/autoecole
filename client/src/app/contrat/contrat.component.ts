@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { EcoleService } from '../service/ecole/ecole.service';
 import { EleveService } from '../service/eleve/eleve.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-contrat',
@@ -28,14 +29,20 @@ export class ContratComponent implements OnInit {
   ecole = new Ecole();
   actionGenerer: boolean;
   totalPaye = 0;
+  versement = 0;
+  dateVersion: Date;
+
   constructor(private serviceContrat:ContratService, private activatedRoute:ActivatedRoute,
     private router:Router, 
     private toastr: ToastrService,
     private translate:TranslateService,
     private serviceEcole:EcoleService,
-    private serviceEleve:EleveService) { }
+    private serviceEleve:EleveService,
+    private spinner:NgxSpinnerService) { }
 
   ngOnInit() {
+    this.dateVersion = new Date();
+    this.dateVersion.setMonth(0);
     this.idEleve = +this.activatedRoute.snapshot.paramMap.get('id');
     this.obtenirParametresContrat();
     this.initialiserEcole();
@@ -43,6 +50,8 @@ export class ContratComponent implements OnInit {
     this.serviceEleve.obtenirEleveById(this.idEleve).subscribe(res=>{
       if(res){
         this.eleve = res;
+        const v = this.eleve.frais_inscription/3;
+        this.versement = Number(v.toFixed(2));
       }
     });
     this.serviceEcole.obtenirEcole().subscribe(res=>{
@@ -88,8 +97,49 @@ export class ContratComponent implements OnInit {
       pdf.save(filename);
     });
   }
+  public printAll() {
+    this.spinner.show(undefined, { fullScreen: true });
+    var img = [];
+    for(let i = 1; i< 6; i++){
+      const id = `${i}pdf`;
+      html2canvas(document.getElementById(id)
+               ).then(canvas => {
+        img.push(canvas.toDataURL('image/png'));
+        if(i==5){
+          let pdf = new jsPDF('p', 'pt', 'letter',2);
+          pdf.addImage(img[0], 'PNG', 0, 0, 612, 792,'','FAST');
+          pdf.addPage();
+          pdf.addImage(img[1], 'PNG', 0, 0, 612, 550,'','FAST');
+          pdf.addPage();
+          pdf.addImage(img[2], 'PNG', 0, 0, 612, 592,'','FAST');
+          pdf.addPage();
+          pdf.addImage(img[3], 'PNG', 0, 0, 612, 792,'','FAST');
+          pdf.addPage();
+          pdf.addImage(img[4], 'PNG', 0, 0, 612, 700,'','FAST');
+         // pdf.save("contrat-"+this.eleve.numero_contrat+".pdf");
+          this.spinner.hide();
+          var uri = pdf.output('dataurlstring');
+          this.openDataUriWindow(uri,"contrat-"+this.eleve.numero_contrat);
+        }
+      });
+    }
+  }
   imprimer(){
-    this.print(1,"facture",1);
+    //this.print(1,"facture",1);
+    this.printAll();
+  }
+  openDataUriWindow(url,filename) {
+    var html = '<html><head><title>' +
+        filename + '</title>' +
+        '<style>html, body { padding: 0; margin: 0; } iframe { width: 100%; height: 100%; border: 0;}  </style>' +
+        '</head><body>' +
+        '<iframe src="' + url + '"></iframe>' +
+        '</body></html>';
+    var a = window.open();
+    a.document.write(html);
+}
+  fermer(){
+    this.router.navigate(['/eleves']);
   }
   public initialiserEleve(){
     this.eleve = new Eleve();

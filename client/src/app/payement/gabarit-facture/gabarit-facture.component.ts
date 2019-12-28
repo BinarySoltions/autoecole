@@ -7,6 +7,7 @@ import * as html2canvas from "html2canvas";
 import * as $ from 'jquery';
 import { Coordonnee } from 'src/app/entite/coordonnee.entity';
 import { AdresseEcole, Adresse } from 'src/app/entite/adresse.entity';
+import { PayementService } from '../payement.service';
 
 @Component({
   selector: 'app-gabarit-facture',
@@ -19,11 +20,11 @@ export class GabaritFactureComponent implements OnInit,OnChanges {
   @Input('payementsPDF') payementsPDF : Payement[];
   @Input('totalPaye') totalPaye:any;
   @Input('eventClickGenerer') eventClickGenerer:any;
-  TPS = 9.975;
-  TVQ = 5;
+  TPS = 5;
+  TVQ = 9.975;
   numeroFacture = "";
   dateDuJour = new Date();
-  constructor() { }
+  constructor(private servicePayement:PayementService) { }
 
   ngOnInit() {
     this.initialiserEcole();
@@ -65,12 +66,35 @@ export class GabaritFactureComponent implements OnInit,OnChanges {
     html2canvas(document.getElementById(id)
              ).then(canvas => {
       let pdf = new jsPDF('p', 'pt', 'letter',1);
-      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 612, 792,'','FAST');
-      pdf.save(filename);
+      pdf.addImage(canvas.toDataURL('image/png',1), 'PNG', 0, 0, 612, 792,'','FAST');
+      //pdf.save(filename);
+      //pdf.output('dataurlnewwindow',filename);
+      var uri = pdf.output('dataurlstring');
+      this.openDataUriWindow(uri,filename);
     });
   }
+  openDataUriWindow(url,filename) {
+    var html = '<html><head><title>' +
+        filename + '</title>' +
+        '<style>html, body { padding: 0; margin: 0; } iframe { width: 100%; height: 100%; border: 0;}  </style>' +
+        '</head><body>' +
+        '<iframe src="' + url + '"></iframe>' +
+        '</body></html>';
+    var a = window.open();
+    a.document.write(html);
+}
   imprimer(){
-    this.print(1,"facture",1);
+   this.print(1,"facture",1);
+  }
+  printTest(){
+    let htmlComplex = document.getElementById("1pdf").outerHTML;
+     let res = htmlComplex.replace(/_ngcontent-[a-z]+[-][a-z]+[0-9]+=[?\\]?\"[?\\]?\"/g,"");
+     let html = res.replace(/<!--[a-zA-Z"-\]\[}={ \n]+>/g,"");
+    this.servicePayement.genererPDF({Html:html}).subscribe((response)=>{
+
+      let file = new Blob([response], { type: 'application/pdf' });            
+      //var fileURL = URL.createObjectURL(file);
+     })
   }
   public initialiserEleve(){
     this.eleve = new Eleve();

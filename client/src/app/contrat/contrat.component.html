@@ -3,7 +3,7 @@
       <mat-card-title><h3>Contrat</h3></mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <center>
+        <center style="font-weight: 500;"> 
 <div id="1pdf" style="width:auto;height: auto;padding: 40px 20px;">
   <table style="width:100%;">
     <tr>
@@ -11,11 +11,7 @@
         <app-ecole-conduite [ecole]="ecole"></app-ecole-conduite>
       </td>
       <td class="w-50 c-padding-left no-border" align="bottom">
-        <table class="w-100" style="margin-bottom:5px !important">
-          <tr>
-            <td class="w-100 no-border" style="border-bottom:1px solid !important">No de contrat / <em>Contract no. :</em> {{eleve.numero_contrat}}</td>
-          </tr>
-        </table>
+        <app-numero-contrat [numero]="eleve?.numero_contrat"></app-numero-contrat>
         <app-moto-conduite></app-moto-conduite>
       </td>
     </tr>
@@ -35,14 +31,107 @@
         <app-description-formation [descriptionFormation]="parametres.description_formation"></app-description-formation>
       </td>
     </tr>
+  </table>
+  <table class="w-100">
+      <tr><td class="no-border">Version {{dateVersion | date:'yyyy-MM'}}</td></tr>
+    </table>
+</div>
+<div id="2pdf" style="width:auto;height: auto;padding: 40px 20px;">
+  <table style="width:100%;">
+    <tr>
+      <td colspan="2" class="no-border">
+          <app-numero-contrat [numero]="eleve?.numero_contrat"></app-numero-contrat>
+      </td>
+    </tr>
     <tr><!-- cout formation -->
       <td colspan="2" class="no-border">
         <app-cout-formation [loiCoutFormation]="parametres.cout_formation" [coutFormation]="eleve?.frais_inscription"></app-cout-formation>
       </td>
     </tr>
-  </table>
+    </table>
+    <table class="w-100">
+      <tr><td class="no-border">Version {{dateVersion | date:'yyyy-MM'}}</td></tr>
+    </table>
 </div>
+<div id="3pdf" style="width:auto;height: auto;padding: 40px 20px;">
+  <table style="width:100%;">
+      <tr>
+          <td class="no-border">
+              <app-numero-contrat [numero]="eleve?.numero_contrat"></app-numero-contrat>
+          </td>
+        </tr>
+    <tr>
+      <td class="no-border">
+        <app-modalite-payement [modalitePayementUn]="parametres.modalite_payement_un"
+        [modalitePayementDeux]="parametres.modalite_payement_deux"
+        [modalitePayementTrois]="parametres.modalite_payement_trois"
+        [numeroContrat]="eleve.numero_contrat"
+        [versement]="versement" [dateDebut]="eleve.date_contrat"
+        ></app-modalite-payement>
+      </td>
+    </tr>
+    </table>
+    <table class="w-100">
+      <tr><td class="no-border">Version {{dateVersion | date:'yyyy-MM'}}</td></tr>
+    </table>
+    </div>
+    <div id="4pdf" style="width:auto;height: auto;padding: 40px 20px;">
+      <table style="width:100%;">
+          <tr>
+              <td class="no-border">
+                  <app-numero-contrat [numero]="eleve?.numero_contrat"></app-numero-contrat>
+              </td>
+            </tr>
+        <tr>
+          <td class="no-border">
+            <app-acceptation-condition [loiConditionUne]="parametres.acceptation_condition_un"
+            [loiConditionENG]="parametres.acceptation_condition_anglais"
+            [loiConditionDeux]="parametres.acceptation_condition_deux"
+            [loiConditionTrois]="parametres.acceptation_condition_trois"
+            ></app-acceptation-condition>
+          </td>
+        </tr>
+        </table>
+        <table class="w-100">
+          <tr><td class="no-border">Version {{dateVersion | date:'yyyy-MM'}}</td></tr>
+        </table>
+    </div>
+    <div id="5pdf" style="width:auto;height: auto;padding: 40px 20px;">
+        <table style="width:100%;">
+            <tr>
+                <td class="w-50 no-border">
+                  <app-ecole-conduite [ecole]="ecole"></app-ecole-conduite>
+                </td>
+                <td class="w-50 c-padding-left no-border" align="bottom">
+                  <app-numero-contrat [numero]="eleve?.numero_contrat"></app-numero-contrat>
+                  <app-moto-conduite></app-moto-conduite>
+                </td>
+              </tr>
+              <tr><!-- titre -->
+                <td colspan="2" align="center" class="no-border">
+                  <strong>CONTRAT DE VENTE DES COURS OFFICIELS DE LA SAAQ / SALES CONTRACT FOR SAAQ’S OFFICIAL DRIVING COURSES </strong>
+                <br/>Formation théorique et pratique : tarif unitaire unique / Theoretical and practical instruction: Single unit rate
+                </td>
+              </tr>
+          <tr>
+              <td colspan="2" class="no-border">
+                <app-resiliation></app-resiliation>
+              </td>
+            </tr>
+          </table>
+          <table class="w-100">
+            <tr><td class="no-border">Version {{dateVersion | date:'yyyy-MM'}}</td></tr>
+          </table>
+          </div>
 </center>
-<button type="button" class="btn bg-color-green" (click)="imprimer()" data-dismiss="modal">Imprimer</button>
+<table class="w-100">
+  <tr>
+    <td align="right" style="border-color:transparent !important;"><button type="button" class="btn bg-color-green" style="margin-right:15px" (click)="imprimer()" data-dismiss="modal">Imprimer</button><button type="button" class="btn btn-secondary" (click)="fermer()" data-dismiss="modal">Fermer</button></td>
+  </tr>
+
+</table>
     </mat-card-content>
     </mat-card>
+    <ngx-spinner>
+        <p class="loading">Loading Awesomeness...</p>
+      </ngx-spinner>
