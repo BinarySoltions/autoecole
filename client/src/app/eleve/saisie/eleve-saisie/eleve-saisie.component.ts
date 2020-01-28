@@ -1,6 +1,4 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import core from 'src/app/core/core.json';
-import lien from 'src/app/core/lien.json';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Eleve } from 'src/app/entite/eleve.entity';
 import { Adresse } from 'src/app/entite/adresse.entity';
@@ -10,8 +8,6 @@ import { ToastrService } from 'ngx-toastr';
 import {_} from 'underscore';
 import { TranslateService } from '@ngx-translate/core';
 import { NgForm } from '@angular/forms';
-import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { MatMonthView } from '@angular/material';
 import moment from 'moment';
 
 @Component({
@@ -63,11 +59,12 @@ export class EleveSaisieComponent implements OnInit {
     }
   }
   initialiserDate(){
-    this.eleveModele.date_naissance = !this.eleveModele.date_naissance?null:this.obtenirDate(new Date(this.eleveModele.date_naissance));
-    this.eleveModele.date_inscription = !this.eleveModele.date_inscription?null:this.obtenirDate(new Date(this.eleveModele.date_inscription));
-    this.eleveModele.date_contrat = !this.eleveModele.date_contrat?null:this.obtenirDate(new Date(this.eleveModele.date_contrat));
+    this.eleveModele.date_naissance = !this.eleveModele.date_naissance?null:this.obtenirDate(this.eleveModele.date_naissance);
+    this.eleveModele.date_inscription = !this.eleveModele.date_inscription?null:this.obtenirDate(this.eleveModele.date_inscription);
+    this.eleveModele.date_contrat = !this.eleveModele.date_contrat?null:this.obtenirDate(this.eleveModele.date_contrat);
+    this.eleveModele.date_fin_permis = !this.eleveModele.date_fin_permis?null:this.obtenirDate(this.eleveModele.date_fin_permis);
   }
-  obtenirDate(value:Date):any{
+  obtenirDate(value:any):any{
     return moment(value).format();
   }
   public enregistrer(){
@@ -82,6 +79,7 @@ export class EleveSaisieComponent implements OnInit {
     this.eleveModele.date_inscription = !this.eleveModele.date_inscription?null:moment(this.eleveModele.date_inscription).format('YYYY-MM-DD');
     this.eleveModele.date_naissance = !this.eleveModele.date_naissance?null:moment(this.eleveModele.date_naissance).format('YYYY-MM-DD');
     this.eleveModele.date_contrat = !this.eleveModele.date_contrat?null:moment(this.eleveModele.date_contrat).format('YYYY-MM-DD');
+    this.eleveModele.date_fin_permis = !this.eleveModele.date_fin_permis?null:moment(this.eleveModele.date_fin_permis).format('YYYY-MM-DD');
   }
   public fermer(){
     this.router.navigate(['/eleves']);

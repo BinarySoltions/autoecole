@@ -200,10 +200,10 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
                ).then(canvas => {
         let pdf = new jsPDF('p', 'pt', 'letter',1);
         pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 612, 792,'','FAST');
-        //pdf.save(filename);
+        pdf.save(filename);
         this.eventClickTelecharger = false;
-        var uri = pdf.output('dataurlstring');
-        this.openDataUriWindow(uri,"attestation_final.pdf");
+        // var uri = pdf.output('dataurlstring');
+        // this.openDataUriWindow(uri,"attestation_final.pdf");
       });
     }
     public printAll() {
@@ -220,10 +220,10 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
             pdf.addImage(img[1], 'PNG', 0, 0, 612, 792,'','FAST');
             pdf.addPage();
             pdf.addImage(img[2], 'PNG', 0, 0, 612, 792,'','FAST');
-            //pdf.save("attestation_final.pdf");
+            pdf.save("attestation_final.pdf");
             this.eventClickTelecharger = false;
-            var uri = pdf.output('dataurlstring');
-            this.openDataUriWindow(uri,"attestation_final.pdf");
+            // var uri = pdf.output('dataurlstring');
+            // this.openDataUriWindow(uri,"attestation_final.pdf");
           }
         });
       }

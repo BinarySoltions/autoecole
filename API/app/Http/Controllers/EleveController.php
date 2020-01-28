@@ -144,4 +144,33 @@ class EleveController extends Controller
         }
         
     }
+    public function search($term)
+    {
+        if(!$term)
+            return null;
+
+        $eleves = Eleve::with('adresse','coordonnee','modules')
+        ->where('prenom', 'like', '%' . $term . '%')
+        ->orWhere('nom', 'like', '%' . $term . '%')
+        ->orderBy('created_at','desc')->get();
+        return EleveResource::Collection($eleves);
+    }
+    public function notify()
+    {
+        $dateInf = date("Y-m-d");
+        $dateSup = date("Y-m-d",strtotime("+30 days"));
+        $eleves = Eleve::with('adresse','coordonnee','modules')
+        ->where(function($query) use ($dateInf, $dateSup)
+        {
+            $query->whereDate('date_fin_permis','<=',$dateSup)
+            ->whereDate('date_fin_permis','>=',$dateInf);
+        })
+        ->orWhere(function($query) use ($sender, $receiver)
+        {
+            $query->whereDate('date_fin_contrat','<=',$dateSup)
+            ->whereDate('date_fin_contrat','>=',$dateInf);
+        })
+        ->orderBy('created_at','desc')->get();
+        return EleveResource::Collection($eleves);
+    }
 }

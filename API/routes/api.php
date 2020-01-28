@@ -58,6 +58,10 @@ Route::get('eleves_seulement','EleveController@seulement')->middleware('auth:api
 Route::get('eleve/{id}','EleveController@show')->middleware('auth:api');
 //get eleve
 Route::delete('eleve/{id}','EleveController@destroy')->middleware('auth:api');
+//ger search eleves
+Route::get('recherche/{term}','EleveController@search')->middleware('auth:api');
+//get expire eleves
+Route::get('expiration','EleveController@notify')->middleware('auth:api');
  
 //create ecole
 Route::post('ecole','EcoleController@store')->middleware('auth:api');

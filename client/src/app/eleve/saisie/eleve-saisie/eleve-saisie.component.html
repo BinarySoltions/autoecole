@@ -149,6 +149,18 @@
             </mat-form-field>
 </div>
 </div>
+<div class="row">
+  <div class="col col-4  none-border-top form-align-v">
+      <label for="dateNaissance">Date de fin du permis</label>
+            <mat-form-field floatLabel="never">
+                <input matInput  [matDatepicker]="pickerPermis"
+                name="dateFinPermis" [(ngModel)]="eleveModele.date_fin_permis"
+                 placeholder="yyyy-mm-dd">
+                <mat-datepicker-toggle matSuffix [for]="pickerPermis"></mat-datepicker-toggle>
+                <mat-datepicker #pickerPermis></mat-datepicker>
+              </mat-form-field>
+  </div>
+  </div>
 </form>
 </mdb-card-text>
 </mdb-card-body>

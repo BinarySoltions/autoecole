@@ -54,6 +54,7 @@ export class DetailComponent implements OnInit {
     this.eleveModele.date_contrat = !this.eleveModele.date_contrat?null:new Date(this.eleveModele.date_contrat);
     this.eleveModele.date_inscription = !this.eleveModele.date_inscription?null:new Date(this.eleveModele.date_inscription);
     this.eleveModele.date_naissance = !this.eleveModele.date_naissance?null:new Date(this.eleveModele.date_naissance);
+    this.eleveModele.date_fin_permis = !this.eleveModele.date_fin_permis?null:new Date(this.eleveModele.date_fin_permis);
   }
   public fermer(){
    this.router.navigate(["/eleves"]);

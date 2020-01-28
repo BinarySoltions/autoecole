@@ -77,6 +77,8 @@ import { AcceptationConditionComponent } from './contrat/acceptation-condition/a
 import { DateVersementComponent } from './contrat/modalite-payement/date-versement/date-versement.component';
 import { ResiliationComponent } from './contrat/resiliation/resiliation.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { RechercheComponent } from './recherche/recherche.component';
+import { GabaritEleveComponent } from './eleve/affichage/gabarit-eleve/gabarit-eleve.component';
 export const MY_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -133,7 +135,9 @@ export const MY_FORMATS = {
     ModalitePayementComponent,
     AcceptationConditionComponent,
     DateVersementComponent,
-    ResiliationComponent
+    ResiliationComponent,
+    RechercheComponent,
+    GabaritEleveComponent
   ],
   imports: [
     BrowserModule,

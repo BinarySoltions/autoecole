@@ -67,10 +67,10 @@ export class GabaritFactureComponent implements OnInit,OnChanges {
              ).then(canvas => {
       let pdf = new jsPDF('p', 'pt', 'letter',1);
       pdf.addImage(canvas.toDataURL('image/png',1), 'PNG', 0, 0, 612, 792,'','FAST');
-      //pdf.save(filename);
-      //pdf.output('dataurlnewwindow',filename);
-      var uri = pdf.output('dataurlstring');
-      this.openDataUriWindow(uri,filename);
+      pdf.save(filename);
+      // //pdf.output('dataurlnewwindow',filename);
+      // var uri = pdf.output('dataurlstring');
+      // this.openDataUriWindow(uri,filename);
     });
   }
   openDataUriWindow(url,filename) {

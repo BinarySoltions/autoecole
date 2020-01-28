@@ -15,6 +15,8 @@ export class Eleve implements Deserializable{
     date_naissance:any;
     date_inscription:any;
     date_contrat:any;
+    date_fin_permis:any;
+    date_fin_contrat:any;
     numero_permis:string;
     frais_inscription:number;
     adresse:Adresse;

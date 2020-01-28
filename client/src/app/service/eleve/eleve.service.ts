@@ -46,6 +46,12 @@ export class EleveService {
     return this.http.post<any>(this.apiUrl + 'exporter_registre', trimestre, httpOptions)
       .pipe(catchError(this.handleError));
   }
+  rechercherEleves(term): Observable<Eleve[]> {
+    return this.http.get<Eleve[]>(this.apiUrl + 'recherche/'+term);
+  }
+  obtenirElevesExpires(): Observable<Eleve[]> {
+    return this.http.get<Eleve[]>(this.apiUrl + 'expiration/');
+  }
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

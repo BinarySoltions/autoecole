@@ -14,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { EcoleService } from '../service/ecole/ecole.service';
 import { EleveService } from '../service/eleve/eleve.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import moment from 'moment';
 
 @Component({
   selector: 'app-contrat',
@@ -30,7 +31,7 @@ export class ContratComponent implements OnInit {
   actionGenerer: boolean;
   totalPaye = 0;
   versement = 0;
-  dateVersion: Date;
+  dateVersion: any;
 
   constructor(private serviceContrat:ContratService, private activatedRoute:ActivatedRoute,
     private router:Router, 
@@ -41,8 +42,8 @@ export class ContratComponent implements OnInit {
     private spinner:NgxSpinnerService) { }
 
   ngOnInit() {
-    this.dateVersion = new Date();
-    this.dateVersion.setMonth(0);
+    this.dateVersion = moment("2019-01-01").format("YYYY-MM-DD");
+    //this.dateVersion.setMonth(0);
     this.idEleve = +this.activatedRoute.snapshot.paramMap.get('id');
     this.obtenirParametresContrat();
     this.initialiserEcole();
@@ -116,10 +117,10 @@ export class ContratComponent implements OnInit {
           pdf.addImage(img[3], 'PNG', 0, 0, 612, 792,'','FAST');
           pdf.addPage();
           pdf.addImage(img[4], 'PNG', 0, 0, 612, 700,'','FAST');
-         // pdf.save("contrat-"+this.eleve.numero_contrat+".pdf");
+          pdf.save("contrat-"+this.eleve.numero_contrat+".pdf");
           this.spinner.hide();
-          var uri = pdf.output('dataurlstring');
-          this.openDataUriWindow(uri,"contrat-"+this.eleve.numero_contrat);
+          // var uri = pdf.output('dataurlstring');
+          // this.openDataUriWindow(uri,"contrat-"+this.eleve.numero_contrat);
         }
       });
     }
