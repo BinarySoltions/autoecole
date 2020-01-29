@@ -6,6 +6,7 @@ import { AuthenticationService } from 'src/app/auth/services/authentication.serv
 import { User } from 'src/app/auth/user.model';
 import { NotificationComponent } from 'src/app/notification/notification.component';
 import { EleveService } from 'src/app/service/eleve/eleve.service';
+import { PartageService } from 'src/app/service/partage.service';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class NavbarComponent implements OnInit {
     @Inject('BASE_URL') baseUrl: string,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private serviceEleve:EleveService) { 
+    private serviceEleve:EleveService,
+    private partageService:PartageService) { 
       this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.translate.setDefaultLang('fr');
     this.baseUrl = baseUrl;
@@ -30,6 +32,9 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.obtenirElevesExpires();
+    this.partageService.nombreCourant.subscribe(n=>{
+      this.estNotifie = n;
+    })
   }
 
 logout() {
@@ -39,6 +44,6 @@ logout() {
 obtenirElevesExpires() {    
   this.serviceEleve.obtenirElevesExpires().subscribe(res=>{
     this.estNotifie  = !res? 0 : res.length;
-  })
+  });
 }
 }

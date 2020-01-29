@@ -10,6 +10,7 @@ import { Module } from 'src/app/entite/module.entity';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import {_} from 'underscore';
+import { PartageService } from 'src/app/service/partage.service';
 
 
 
@@ -43,7 +44,8 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
     private router: Router,
     private translate:TranslateService,
     private spinner:NgxSpinnerService,
-    private toastr:ToastrService) {
+    private toastr:ToastrService,
+    private partageService:PartageService) {
       this.translate.setDefaultLang('fr');
    }
 
@@ -53,6 +55,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
   ngOnInit() { 
     this.spinner.show(undefined, { fullScreen: true });
     this.obtenirEleves();
+    this.obtenirElevesExpires();
   }
 
   ngAfterViewInit() {
@@ -152,5 +155,11 @@ evenementAjouterModule(value){
   if(value){
     this.obtenirEleves();
   }
+}
+obtenirElevesExpires() {    
+  this.serviceEleve.obtenirElevesExpires().subscribe(res=>{
+    const n  = !res? 0 : res.length;
+    this.partageService.nouveauNombre(n);
+  })
 }
 }

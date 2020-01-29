@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { EleveService } from '../service/eleve/eleve.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PartageService } from '../service/partage.service';
 
 @Component({
   selector: 'app-notification',
@@ -12,7 +13,8 @@ export class NotificationComponent implements OnInit {
   listeEleves: import("c:/laravel/client/src/app/entite/eleve.entity").Eleve[];
   titre = "Élèves en cours d'expiration";
   constructor(private serviceEleve: EleveService,
-    private spinner:NgxSpinnerService) { }
+    private spinner:NgxSpinnerService,
+    private partageService:PartageService) { }
 
   ngOnInit() {
     this.obtenirElevesExpires();
@@ -22,6 +24,7 @@ export class NotificationComponent implements OnInit {
     this.serviceEleve.obtenirElevesExpires().subscribe(res=>{
       this.listeEleves = res;
       this.estNotifie  = !this.listeEleves ? 0 : this.listeEleves.length;
+      this.partageService.nouveauNombre(this.estNotifie);
       this.spinner.hide();
     })
   }
