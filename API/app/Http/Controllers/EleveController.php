@@ -157,15 +157,15 @@ class EleveController extends Controller
     }
     public function notify()
     {
-        $dateInf = date("Y-m-d");
-        $dateSup = date("Y-m-d",strtotime("+30 days"));
+        $dateInf = date("Y-m-d",strtotime("-30 days"));
+        $dateSup = date("Y-m-d");
         $eleves = Eleve::with('adresse','coordonnee','modules')
         ->where(function($query) use ($dateInf, $dateSup)
         {
             $query->whereDate('date_fin_permis','<=',$dateSup)
             ->whereDate('date_fin_permis','>=',$dateInf);
         })
-        ->orWhere(function($query) use ($sender, $receiver)
+        ->orWhere(function($query) use ($dateInf, $dateSup)
         {
             $query->whereDate('date_fin_contrat','<=',$dateSup)
             ->whereDate('date_fin_contrat','>=',$dateInf);

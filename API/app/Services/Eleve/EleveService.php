@@ -34,8 +34,12 @@ class EleveService implements IEleveService
             $eleve->date_inscription = date('Y-m-d', strtotime($request->date_inscription));
         if($request->date_naissance)
             $eleve->date_naissance = date('Y-m-d', strtotime($request->date_naissance));
-        if($request->date_contrat)
+        if($request->date_contrat){
             $eleve->date_contrat = date('Y-m-d', strtotime($request->date_contrat));
+            $eleve->date_fin_contrat = date('Y-m-d', strtotime("+18 months",strtotime($eleve->date_contrat)));
+        }
+        if($request->date_fin_permis)
+            $eleve->date_fin_permis = date('Y-m-d', strtotime($request->date_fin_permis));
         $eleve->email = $request->email;
         $eleve->numero_permis = $request->numero_permis;
         $eleve->frais_inscription = $request->frais_inscription;
@@ -78,8 +82,12 @@ class EleveService implements IEleveService
             $eleve->date_inscription = date('Y-m-d', strtotime($request->date_inscription));
         if($request->date_naissance)
             $eleve->date_naissance = date('Y-m-d', strtotime($request->date_naissance));
-        if($request->date_contrat)
+        if($request->date_contrat){
             $eleve->date_contrat = date('Y-m-d', strtotime($request->date_contrat));
+            $eleve->date_fin_contrat = date('Y-m-d', strtotime("+18 months",strtotime($eleve->date_contrat)));
+        }
+        if($request->date_fin_permis)
+            $eleve->date_fin_permis = date('Y-m-d', strtotime($request->date_fin_permis));
         $eleve->email = $request->email;
         $eleve->numero_permis = $request->numero_permis;
         $eleve->frais_inscription = $request->frais_inscription;
@@ -109,7 +117,18 @@ class EleveService implements IEleveService
     }
 
     public function obtenirListeEleves(){
+        $dateJour = date('Y-m-d');
         $eleves = Eleve::with('adresse','coordonnee','modules')
+        ->where(function($query) use ($dateJour)
+        {
+            $query->whereDate('date_fin_permis','>=',$dateJour)
+            ->orwhereNull('date_fin_permis');
+        })
+        ->orWhere(function($query) use ($dateJour)
+        {
+            $query->whereDate('date_fin_contrat','>=',$dateJour)
+            ->orwhereNull('date_fin_contrat');
+        })
         ->orderBy('created_at','desc')->get();
         return EleveResource::Collection($eleves);
     }

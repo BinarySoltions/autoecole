@@ -16,6 +16,8 @@ import { RegisterComponent } from './register/register.component';
 import { ContratComponent } from './contrat/contrat.component';
 import { PayementComponent } from './payement/payement.component';
 import { ParametresContratComponent } from './parametres-contrat/parametres-contrat.component';
+import { RechercheComponent } from './recherche/recherche.component';
+import { NotificationComponent } from './notification/notification.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
@@ -34,6 +36,8 @@ const routes: Routes = [
   { path: 'login' , component: LoginComponent},
   { path: 'register' , component: RegisterComponent, canActivate: [AuthGuardService]},
   { path: 'eleve/contrat/:id' , component: ContratComponent},
+  { path: 'recherche' , component: RechercheComponent, canActivate: [AuthGuardService]},
+  { path: 'notification' , component: NotificationComponent, canActivate: [AuthGuardService]},
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
 ];

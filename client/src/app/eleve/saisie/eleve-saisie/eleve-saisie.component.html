@@ -142,7 +142,7 @@
     <label for="dateContrat">Début du contrat</label>
           <mat-form-field floatLabel="never">
               <input matInput  [matDatepicker]="pickerContrat"
-              name="dateContrat" [(ngModel)]="eleveModele.date_contrat"
+              name="dateContrat" [(ngModel)]="eleveModele.date_contrat" (dateChange)="obtenirFinContrat($event)"
                placeholder="yyyy-mm-dd">
               <mat-datepicker-toggle matSuffix [for]="pickerContrat"></mat-datepicker-toggle>
               <mat-datepicker #pickerContrat></mat-datepicker>
@@ -151,15 +151,25 @@
 </div>
 <div class="row">
   <div class="col col-4  none-border-top form-align-v">
-      <label for="dateNaissance">Date de fin du permis</label>
+      <label for="dateNaissance">Fin du permis</label>
             <mat-form-field floatLabel="never">
-                <input matInput  [matDatepicker]="pickerPermis"
-                name="dateFinPermis" [(ngModel)]="eleveModele.date_fin_permis"
+                <input matInput  [matDatepicker]="pickerFinPermis"
+                name="dateFinPermis" [(ngModel)]="eleveModele.date_fin_permis" 
                  placeholder="yyyy-mm-dd">
-                <mat-datepicker-toggle matSuffix [for]="pickerPermis"></mat-datepicker-toggle>
-                <mat-datepicker #pickerPermis></mat-datepicker>
+                <mat-datepicker-toggle matSuffix [for]="pickerFinPermis"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFinPermis></mat-datepicker>
               </mat-form-field>
   </div>
+  <div class="col col-4  none-border-top form-align-v">
+    <label for="dateFinContrat">Fin du contrat</label>
+          <mat-form-field floatLabel="never">
+              <input matInput  [matDatepicker]="pickerFinContrat" 
+              name="dateFinContrat" [(ngModel)]="eleveModele.date_fin_contrat"
+               placeholder="yyyy-mm-dd" disabled>
+              <mat-datepicker-toggle matSuffix [for]="pickerFinContrat"></mat-datepicker-toggle>
+              <mat-datepicker #pickerFinContrat></mat-datepicker>
+            </mat-form-field>
+</div>
   </div>
 </form>
 </mdb-card-text>

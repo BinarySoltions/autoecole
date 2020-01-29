@@ -50,7 +50,7 @@ export class EleveService {
     return this.http.get<Eleve[]>(this.apiUrl + 'recherche/'+term);
   }
   obtenirElevesExpires(): Observable<Eleve[]> {
-    return this.http.get<Eleve[]>(this.apiUrl + 'expiration/');
+    return this.http.get<Eleve[]>(this.apiUrl + 'expiration');
   }
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

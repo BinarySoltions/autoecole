@@ -79,6 +79,7 @@ import { ResiliationComponent } from './contrat/resiliation/resiliation.componen
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { RechercheComponent } from './recherche/recherche.component';
 import { GabaritEleveComponent } from './eleve/affichage/gabarit-eleve/gabarit-eleve.component';
+import { NotificationComponent } from './notification/notification.component';
 export const MY_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -137,7 +138,8 @@ export const MY_FORMATS = {
     DateVersementComponent,
     ResiliationComponent,
     RechercheComponent,
-    GabaritEleveComponent
+    GabaritEleveComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,

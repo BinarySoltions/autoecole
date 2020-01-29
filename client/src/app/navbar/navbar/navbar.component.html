@@ -4,7 +4,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <div class="col col-8">
+      <div class="col col-7">
       <ul class="navbar-nav">
         <li class="nav-item active">
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -12,8 +12,14 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="{{'url.eleve' | translate}}">{{'menu.eleve' | translate}}</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="recherche">Recherche</a>
+        </li>
         <li *ngIf="currentUser" class="nav-item">
           <a class="nav-link" href="#" (click)="logout()">Déconnexion</a>
+        </li>
+        <li class="nav-item" *ngIf="estNotifiable">
+          <a class="nav-link" href="#"  data-toggle="modal" data-target="#notificationModal"><i class="fas fa-bell"></i></a>
         </li>
         <!-- <li class="nav-item">
           <a class="nav-link" href="/module">Module</a>
@@ -23,7 +29,14 @@
         </li> -->
       </ul>
     </div>
-      <div class="dropdown col col-4" style="text-align:right">
+    <div class="col col-2" *ngIf="estNotifie">
+        <a class="nav-link" routerLink="notification"><i class="fas fa-bell color-text"></i>
+          <sup><span style="font-weight: bold;color: black;">{{estNotifie}}</span></sup></a>
+    </div>
+    <div class="col col-2" *ngIf="!estNotifie">
+      <i class="far fa-bell"></i>
+  </div>
+      <div class="dropdown col col-3" style="text-align:right">
           <button type="button" class="btn bg-color-green dropdown-toggle" data-toggle="dropdown">
               {{'menu.parametre' | translate}}
           </button>
@@ -37,4 +50,9 @@
         </div>
     </div>
   </nav>
-  
+  <!-- notification-->
+
+      <div style="display: none;">
+        <app-notification #notification></app-notification>
+      </div>
+   

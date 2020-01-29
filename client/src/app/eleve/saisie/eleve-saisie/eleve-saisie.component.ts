@@ -63,6 +63,7 @@ export class EleveSaisieComponent implements OnInit {
     this.eleveModele.date_inscription = !this.eleveModele.date_inscription?null:this.obtenirDate(this.eleveModele.date_inscription);
     this.eleveModele.date_contrat = !this.eleveModele.date_contrat?null:this.obtenirDate(this.eleveModele.date_contrat);
     this.eleveModele.date_fin_permis = !this.eleveModele.date_fin_permis?null:this.obtenirDate(this.eleveModele.date_fin_permis);
+    this.eleveModele.date_fin_contrat = !this.eleveModele.date_fin_contrat?null:this.obtenirDate(this.eleveModele.date_fin_contrat);
   }
   obtenirDate(value:any):any{
     return moment(value).format();
@@ -84,7 +85,13 @@ export class EleveSaisieComponent implements OnInit {
   public fermer(){
     this.router.navigate(['/eleves']);
   }
-
+  obtenirFinContrat(valeur){
+    if(valeur) {
+      this.eleveModele.date_fin_contrat = moment(valeur.value.format('YYYY-MM-DD')).add(18,'M').format('YYYY-MM-DD');
+    } else {
+      this.eleveModele.date_fin_contrat = null;
+    }
+  }
   public initialiserEleveModele(){
     this.eleveModele = new Eleve();
     this.eleveModele.prenom ="";

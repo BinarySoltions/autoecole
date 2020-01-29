@@ -23,6 +23,7 @@ export class GabaritEleveComponent implements OnInit, AfterViewInit,OnChanges {
   champ:any=core;
   lien:any=lien;
   @Input() listeEleves:Eleve[];
+  @Input() titre:string;
   
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
