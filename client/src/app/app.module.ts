@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from "@angular/material/icon";
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+// import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
@@ -76,7 +76,6 @@ import { ModalitePayementComponent } from './contrat/modalite-payement/modalite-
 import { AcceptationConditionComponent } from './contrat/acceptation-condition/acceptation-condition.component';
 import { DateVersementComponent } from './contrat/modalite-payement/date-versement/date-versement.component';
 import { ResiliationComponent } from './contrat/resiliation/resiliation.component';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { RechercheComponent } from './recherche/recherche.component';
 import { GabaritEleveComponent } from './eleve/affichage/gabarit-eleve/gabarit-eleve.component';
 import { NotificationComponent } from './notification/notification.component';
@@ -155,7 +154,7 @@ export const MY_FORMATS = {
     MatButtonModule,
     MatIconModule,
     ToastrModule.forRoot(),
-    NgxDatatableModule,
+    // NgxDatatableModule,
     NgMultiSelectDropDownModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
@@ -176,7 +175,6 @@ export const MY_FORMATS = {
   MatExpansionModule,
   MatCardModule,
   MatRadioModule,
-  PdfViewerModule
   ],
   schemas:[ NO_ERRORS_SCHEMA],
   providers: [EleveService, { provide: 'BASE_URL', useFactory: getBaseUrl },

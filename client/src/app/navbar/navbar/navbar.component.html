@@ -6,20 +6,23 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <div class="col col-7">
       <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="lienActif = lien.HOME" 
+          [ngClass]="{'active':lienActif == lien.HOME}">Home </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="{{'url.eleve' | translate}}">{{'menu.eleve' | translate}}</a>
+          <a class="nav-link"  (click)="lienActif = lien.ELEVE" 
+          routerLink="{{'url.eleve' | translate}}" [ngClass]="{'active':lienActif == lien.ELEVE}">{{'menu.eleve' | translate}}
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="recherche">Recherche</a>
+          <a class="nav-link" routerLink="recherche" (click)="lienActif = lien.RECHERCHE"
+          [ngClass]="{'active':lienActif == lien.RECHERCHE}">Recherche
+          </a>
         </li>
         <li *ngIf="currentUser" class="nav-item">
-          <a class="nav-link" href="#" (click)="logout()">Déconnexion</a>
-        </li>
-        <li class="nav-item" *ngIf="estNotifiable">
-          <a class="nav-link" href="#"  data-toggle="modal" data-target="#notificationModal"><i class="fas fa-bell"></i></a>
+          <a class="nav-link" href="#" (click)="logout()">Déconnexion
+          </a>
         </li>
         <!-- <li class="nav-item">
           <a class="nav-link" href="/module">Module</a>
@@ -30,7 +33,7 @@
       </ul>
     </div>
     <div class="col col-2" *ngIf="estNotifie">
-        <a class="nav-link" routerLink="notification"><i class="fas fa-bell color-text"></i>
+        <a class="nav-link" routerLink="notification" (click)="lienActif = lien.ELEVE"><i class="fas fa-bell color-text"></i>
           <sup><span style="font-weight: bold;color: black;">{{estNotifie}}</span></sup></a>
     </div>
     <div class="col col-2" *ngIf="!estNotifie">

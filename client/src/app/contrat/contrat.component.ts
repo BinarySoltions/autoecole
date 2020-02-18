@@ -6,7 +6,7 @@ import { Ecole } from '../entite/ecole.entity';
 import { AdresseEcole, Adresse } from '../entite/adresse.entity';
 import { Coordonnee } from '../entite/coordonnee.entity';
 import jsPDF from 'jspdf';
-import * as html2canvas from "html2canvas";
+import * as  html2canvas from "html2canvas";
 import * as $ from 'jquery';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -98,9 +98,42 @@ export class ContratComponent implements OnInit {
       pdf.save(filename);
     });
   }
+  promisePage(id){
+      var element = document.getElementById(id);
+        return html2canvas(element);
+  }
+  public printAll2() {
+    this.spinner.show(undefined, { fullScreen: true });
+    var img = [];
+    var screens = [];
+    for(let i = 1; i< 6; i++){
+      const id = `${i}pdf`;
+      screens.push(this.promisePage(id));
+    }
+    Promise.all(screens).then(sc =>{
+      let pdf = new jsPDF('p', 'pt', 'letter',2);
+          pdf.addImage(sc[0].toDataURL('image/png'), 'PNG', 0, 0, 612, 792,'','FAST');
+          setInterval(() => {}, 5000);
+          pdf.addPage();
+          pdf.addImage(sc[1].toDataURL('image/png'), 'PNG', 0, 0, 612, 550,'','FAST');
+          setInterval(() => {}, 5000);
+          pdf.addPage();
+          pdf.addImage(sc[2].toDataURL('image/png'), 'PNG', 0, 0, 612, 592,'','FAST');
+          setInterval(() => {}, 5000);
+          pdf.addPage();
+          pdf.addImage(sc[3].toDataURL('image/png'), 'PNG', 0, 0, 612, 792,'','FAST');
+          setInterval(() => {}, 5000);
+          pdf.addPage();
+          pdf.addImage(sc[4].toDataURL('image/png'), 'PNG', 0, 0, 612, 700,'','FAST');
+          setInterval(() => {}, 5000);
+          pdf.save("contrat-"+this.eleve.numero_contrat+".pdf");
+          this.spinner.hide();
+    })
+  }
   public printAll() {
     this.spinner.show(undefined, { fullScreen: true });
     var img = [];
+    var screens = [];
     for(let i = 1; i< 6; i++){
       const id = `${i}pdf`;
       html2canvas(document.getElementById(id)
@@ -109,14 +142,19 @@ export class ContratComponent implements OnInit {
         if(i==5){
           let pdf = new jsPDF('p', 'pt', 'letter',2);
           pdf.addImage(img[0], 'PNG', 0, 0, 612, 792,'','FAST');
+          setInterval(() => {}, 5000);
           pdf.addPage();
           pdf.addImage(img[1], 'PNG', 0, 0, 612, 550,'','FAST');
+          setInterval(() => {}, 5000);
           pdf.addPage();
           pdf.addImage(img[2], 'PNG', 0, 0, 612, 592,'','FAST');
+          setInterval(() => {}, 5000);
           pdf.addPage();
           pdf.addImage(img[3], 'PNG', 0, 0, 612, 792,'','FAST');
+          setInterval(() => {}, 5000);
           pdf.addPage();
           pdf.addImage(img[4], 'PNG', 0, 0, 612, 700,'','FAST');
+          setInterval(() => {}, 5000);
           pdf.save("contrat-"+this.eleve.numero_contrat+".pdf");
           this.spinner.hide();
           // var uri = pdf.output('dataurlstring');

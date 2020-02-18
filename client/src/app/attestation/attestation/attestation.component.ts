@@ -200,6 +200,7 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
                ).then(canvas => {
         let pdf = new jsPDF('p', 'pt', 'letter',1);
         pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 612, 792,'','FAST');
+        setInterval(() => {}, 5000);
         pdf.save(filename);
         this.eventClickTelecharger = false;
         // var uri = pdf.output('dataurlstring');
@@ -216,10 +217,13 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
           if(i==3){
             let pdf = new jsPDF('p', 'pt', 'letter',1);
             pdf.addImage(img[0], 'PNG', 0, 0, 612, 792,'','FAST');
+            setInterval(() => {}, 2000);
             pdf.addPage();
             pdf.addImage(img[1], 'PNG', 0, 0, 612, 792,'','FAST');
+            setInterval(() => {}, 2000);
             pdf.addPage();
             pdf.addImage(img[2], 'PNG', 0, 0, 612, 792,'','FAST');
+            setInterval(() => {}, 2000);
             pdf.save("attestation_final.pdf");
             this.eventClickTelecharger = false;
             // var uri = pdf.output('dataurlstring');

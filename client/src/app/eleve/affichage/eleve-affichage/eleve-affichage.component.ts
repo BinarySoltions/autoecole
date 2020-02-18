@@ -68,13 +68,15 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
   }
   obtenirEleves(){
     this.serviceEleve.obtenirEleves().subscribe((result)=>{
-      this.elements = result;
-      this.listeEleves  = result.filter(eleve=>{
-        return _.extend(eleve, {'nomcomplet':eleve.nom+', '+eleve.prenom}) ;
-      });
-      this.mdbTable.setDataSource(this.elements);
-      this.elements = this.mdbTable.getDataSource();
-      this.previous = this.mdbTable.getDataSource();
+      if (result) {
+        this.elements = result;
+        this.listeEleves  = result.filter(eleve=>{
+          return _.extend(eleve, {'nomcomplet':eleve.nom+', '+eleve.prenom}) ;
+        });
+        this.mdbTable.setDataSource(this.elements);
+        this.elements = this.mdbTable.getDataSource();
+        this.previous = this.mdbTable.getDataSource();
+      }
       this.spinner.hide();
     });
   }

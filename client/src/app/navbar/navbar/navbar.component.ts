@@ -8,7 +8,11 @@ import { NotificationComponent } from 'src/app/notification/notification.compone
 import { EleveService } from 'src/app/service/eleve/eleve.service';
 import { PartageService } from 'src/app/service/partage.service';
 
-
+enum Lien{
+  HOME = 1,
+  ELEVE = 2,
+  RECHERCHE = 3
+}
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -19,6 +23,8 @@ export class NavbarComponent implements OnInit {
   currentUser:User;
   nombreElevesExpires: any;
   estNotifie: number;
+  lien = Lien;
+  lienActif = this.lien.HOME;
   constructor(private translate:TranslateService,
     @Inject('BASE_URL') baseUrl: string,
     private router: Router,
@@ -38,6 +44,7 @@ export class NavbarComponent implements OnInit {
   }
 
 logout() {
+    this.lienActif = this.lien.HOME;
     this.authenticationService.logout();
     this.router.navigate(['/login']);
 }
