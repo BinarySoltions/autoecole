@@ -91,6 +91,17 @@ Route::get('payements/{id}','PayementController@index')->middleware('auth:api');
 //get payement
 Route::post('payements','PayementController@totalPayement')->middleware('auth:api');
 
+//post test
+Route::post('pass','EleveController@pass')->middleware('auth:api');
+//post test
+Route::get('obtenirExamen/{id}','EleveController@getTest')->middleware('auth:api');
+//post test
+Route::post('enregistrerExamen','EleveController@updateTest')->middleware('auth:api');
+//get test
+Route::get('examen/{numero}','ExamenController@show');
+//post test
+Route::post('examen','ExamenController@store');
+
 
 
 

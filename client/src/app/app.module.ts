@@ -3,7 +3,7 @@ import { NgModule,NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
-import { MatFormFieldModule, MatInputModule, MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter, MatExpansionModule, MatCardModule, MatRadioModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter, MatExpansionModule, MatCardModule, MatRadioModule, MatPaginatorModule, MatPaginatorIntl } from '@angular/material';
 import {MatDialogModule} from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -79,6 +79,14 @@ import { ResiliationComponent } from './contrat/resiliation/resiliation.componen
 import { RechercheComponent } from './recherche/recherche.component';
 import { GabaritEleveComponent } from './eleve/affichage/gabarit-eleve/gabarit-eleve.component';
 import { NotificationComponent } from './notification/notification.component';
+import { ExamenComponent } from './examen/examen.component';
+import { RowGridComponent } from './examen/row-grid/row-grid.component';
+import { LastRowGridComponent } from './examen/last-row-grid/last-row-grid.component';
+import { BeginComponent } from './examen/begin/begin.component';
+import { getDutchPaginatorIntl } from './french-paginator-intl';
+import { AjouterExamenComponent } from './ajouter-examen/ajouter-examen.component';
+import { AdminComponent } from './examen/admin/admin.component';
+import { SessionFinieComponent } from './examen/session-finie/session-finie.component';
 export const MY_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -138,7 +146,14 @@ export const MY_FORMATS = {
     ResiliationComponent,
     RechercheComponent,
     GabaritEleveComponent,
-    NotificationComponent
+    NotificationComponent,
+    ExamenComponent,
+    RowGridComponent,
+    LastRowGridComponent,
+    BeginComponent,
+    AjouterExamenComponent,
+    AdminComponent,
+    SessionFinieComponent
   ],
   imports: [
     BrowserModule,
@@ -175,6 +190,7 @@ export const MY_FORMATS = {
   MatExpansionModule,
   MatCardModule,
   MatRadioModule,
+  MatPaginatorModule,
   ],
   schemas:[ NO_ERRORS_SCHEMA],
   providers: [EleveService, { provide: 'BASE_URL', useFactory: getBaseUrl },
@@ -187,6 +203,7 @@ export const MY_FORMATS = {
     deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
   },
   {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() },
   ],
   bootstrap: [AppComponent]
 })

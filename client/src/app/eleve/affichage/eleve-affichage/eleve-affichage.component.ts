@@ -59,12 +59,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
-
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-
-    this.cdRef.detectChanges();
+   
   }
   obtenirEleves(){
     this.serviceEleve.obtenirEleves().subscribe((result)=>{
@@ -73,34 +68,12 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
         this.listeEleves  = result.filter(eleve=>{
           return _.extend(eleve, {'nomcomplet':eleve.nom+', '+eleve.prenom}) ;
         });
-        this.mdbTable.setDataSource(this.elements);
-        this.elements = this.mdbTable.getDataSource();
-        this.previous = this.mdbTable.getDataSource();
+       
       }
       this.spinner.hide();
     });
   }
-  searchItems(value) {
-    const prev = this.mdbTable.getDataSource();
-    this.searchText=value;
-    if (!this.searchText) {
-      this.mdbTable.setDataSource(this.previous);
-      this.elements = this.mdbTable.getDataSource();
-    }
-
-    if (this.searchText) {
-      this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
-      this.mdbTable.setDataSource(prev);
-    }
-
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-
-    this.mdbTable.searchDataObservable(this.searchText).subscribe(() => {
-      this.mdbTablePagination.calculateFirstItemIndex();
-      this.mdbTablePagination.calculateLastItemIndex();
-    });
-  }
+ 
  public editerEleve(value){
    this.router.navigate([lien.url.ajout_eleve+"/"+value]);
  }
@@ -120,18 +93,7 @@ public supprimerEleve(value,index){
   this.idEleveASupprimer = value;
   this.indexASupprimer = index;
 }
-confirmerSuppression(value){
-  if(value){
-    this.serviceEleve.supprimerEleveById(this.idEleveASupprimer).subscribe(res=>{
-      if(res.valid){
-        this.elements.splice(this.indexASupprimer,1);
-        this.mdbTable.setDataSource(this.elements);
-        this.elements = this.mdbTable.getDataSource();
-        this.toastr.success("L'élève a été supprimé avec succes!","Infrormation");
-      }
-    })
-  }
-}
+
  public ajouterEleve(){
    this.router.navigate([lien.url.ajout_eleve]);
  }

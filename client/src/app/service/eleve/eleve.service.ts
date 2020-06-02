@@ -52,6 +52,27 @@ export class EleveService {
   obtenirElevesExpires(): Observable<Eleve[]> {
     return this.http.get<Eleve[]>(this.apiUrl + 'expiration');
   }
+
+  ajouterExamens(eleve:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'pass', eleve, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+  verifierExamen(numero): Observable<any>{
+    return this.http.get<Eleve[]>(this.apiUrl + 'examen/'+numero);
+  }
+  soumettreExamen(examen): Observable<any>{
+    return this.http.post<any>(this.apiUrl + 'examen', examen, httpOptions)
+    .pipe(catchError(this.handleError));
+  }
+
+  obtenirExamen(id): Observable<any>{
+    return this.http.get<Eleve[]>(this.apiUrl + 'obtenirExamen/'+id);
+  }
+  modifierExamen(examen): Observable<any>{
+    return this.http.post<any>(this.apiUrl + 'enregistrerExamen', examen, httpOptions)
+    .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

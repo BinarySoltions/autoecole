@@ -38,4 +38,9 @@ class Eleve extends Model
         return $this->hasMany('App\Payement')
         ->orderBy('payement.date_payement');
     }
+
+    public function examens(){
+        return $this->hasMany('App\Examen')
+        ->orderBy('examens.date_examen');
+    }
 }

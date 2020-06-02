@@ -18,6 +18,10 @@ import { PayementComponent } from './payement/payement.component';
 import { ParametresContratComponent } from './parametres-contrat/parametres-contrat.component';
 import { RechercheComponent } from './recherche/recherche.component';
 import { NotificationComponent } from './notification/notification.component';
+import { ExamenComponent } from './examen/examen.component';
+import { BeginComponent } from './examen/begin/begin.component';
+import { AdminComponent } from './examen/admin/admin.component';
+import { SessionFinieComponent } from './examen/session-finie/session-finie.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
@@ -38,6 +42,10 @@ const routes: Routes = [
   { path: 'eleve/contrat/:id' , component: ContratComponent},
   { path: 'recherche' , component: RechercheComponent, canActivate: [AuthGuardService]},
   { path: 'notification' , component: NotificationComponent, canActivate: [AuthGuardService]},
+  { path: 'examen' , component: BeginComponent},
+  { path: 'examen/:numero/:langue' , component: BeginComponent},
+  { path: 'imprimer-examen/:id' , component: AdminComponent, canActivate: [AuthGuardService]},
+  { path: 'session-terminer' , component: SessionFinieComponent},
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
 ];

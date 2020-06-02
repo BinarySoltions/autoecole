@@ -10,6 +10,7 @@ import { Module } from 'src/app/entite/module.entity';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import {_} from 'underscore';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 
 @Component({
@@ -25,11 +26,10 @@ export class GabaritEleveComponent implements OnInit, AfterViewInit,OnChanges {
   @Input() listeEleves:Eleve[];
   @Input() titre:string;
   
-  @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
-  @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('row') row: ElementRef;
   elements: Eleve[]=[];
-  headElements = ['Nom', 'Prénom', 'Adresse','Téléphone','Module','Action'];
+  headElements1 = ['nom', 'prenom','coordonnee.telephone','attestation.resultat_phase_une','modules','id'];
+  dataSource: MatTableDataSource<Eleve>;
 
   searchText: string = '';
   previous: Eleve[]=[];
@@ -37,7 +37,16 @@ export class GabaritEleveComponent implements OnInit, AfterViewInit,OnChanges {
   maxVisibleItems: number = 20;
   idEleveASupprimer : number;
   indexASupprimer :number;
-  
+  private paginator: MatPaginator;
+  private sort: MatSort;
+
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+  }
+
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+  }
   constructor(private serviceEleve:EleveService,
     private cdRef: ChangeDetectorRef,
     private router: Router,
@@ -47,51 +56,24 @@ export class GabaritEleveComponent implements OnInit, AfterViewInit,OnChanges {
       this.translate.setDefaultLang('fr');
    }
 
-  @HostListener('input') oninput() {
-    this.mdbTablePagination.searchText = this.searchText;
-  }
+
   ngOnInit() { 
+    //this.dataSource.paginator = this.paginator;
+    //this.dataSource.sort = this.sort;
   }
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     this.obtenirEleves(this.listeEleves);
   }
   ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
-
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-
-    this.cdRef.detectChanges();
   }
   obtenirEleves(result){
     if (result) {
       this.elements = result;
-      this.mdbTable.setDataSource(this.elements);
-      this.elements = this.mdbTable.getDataSource();
-      this.previous = this.mdbTable.getDataSource();
+      this.dataSource = new MatTableDataSource(this.elements);
+      this.setDataSourceAttributes();
     } 
   }
-  searchItems(value) {
-    const prev = this.mdbTable.getDataSource();
-    this.searchText=value;
-    if (!this.searchText) {
-      this.mdbTable.setDataSource(this.previous);
-      this.elements = this.mdbTable.getDataSource();
-    }
-
-    if (this.searchText) {
-      this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
-      this.mdbTable.setDataSource(prev);
-    }
-
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-
-    this.mdbTable.searchDataObservable(this.searchText).subscribe(() => {
-      this.mdbTablePagination.calculateFirstItemIndex();
-      this.mdbTablePagination.calculateLastItemIndex();
-    });
-  }
+ 
  public editerEleve(value){
    this.router.navigate([lien.url.ajout_eleve+"/"+value]);
  }
@@ -107,6 +89,9 @@ public payementEleve(value){
 public contratEleve(value){
   this.router.navigate(["eleve/contrat/"+value]);
 }
+examenEleve(value){
+  this.router.navigate(["imprimer-examen/"+value]);
+}
 public supprimerEleve(value,index){
   this.idEleveASupprimer = value;
   this.indexASupprimer = index;
@@ -116,8 +101,7 @@ confirmerSuppression(value){
     this.serviceEleve.supprimerEleveById(this.idEleveASupprimer).subscribe(res=>{
       if(res.valid){
         this.elements.splice(this.indexASupprimer,1);
-        this.mdbTable.setDataSource(this.elements);
-        this.elements = this.mdbTable.getDataSource();
+        this.obtenirEleves(this.elements);
         this.toastr.success("L'élève a été supprimé avec succes!","Infrormation");
       }
     })
@@ -134,6 +118,9 @@ confirmerSuppression(value){
    });
    let resultatArray = Array.from(mapModule.keys()).sort(this.compare);
    let resultat = mapModule.get(resultatArray[0]);
+   if(resultat && Number(resultat)){
+     resultat = "Théorie "+resultat;
+   }
   return resultat;
  }
   compare(a, b){
@@ -142,5 +129,36 @@ confirmerSuppression(value){
 
   return 0;
 }
-
+applyFilter(event: Event) {
+  if(event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();  
+  }
+  
+  if (this.dataSource.paginator) {
+    this.dataSource.paginator.firstPage();
+  }
+}
+setDataSourceAttributes() {
+  if (this.paginator) {
+  this.dataSource.paginator = this.paginator;
+  }
+  if (this.sort) {
+  this.dataSource.sort = this.sort;
+  this.dataSource.sortingDataAccessor = (item, property) => {
+    if (property.includes('.')) return item[property.split('.')[0]]?property.split('.').reduce((o,i)=>o[i], item):item[property.split('.')[0]];
+    return item[property];
+ };
+  }
+  if (this.paginator && this.sort) {
+    this.applyFilter(null);
+  }
+}
+attestationValide(row):any{
+  if(row.attestation && row.attestation.resultat_phase_une){
+    return row.attestation.resultat_phase_une;
+  } else {
+    return false;
+  }
+}
 }

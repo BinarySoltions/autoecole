@@ -6,23 +6,16 @@
   <div class="col offset-4 col-4">
   <form class="form-align-h">
     <input class="form-control" style="border-bottom-right-radius: 0; border-top-right-radius: 0;" maxlength="20" minlength="3" type="text" [(ngModel)]="term" placeholder="ex : prénom ou nom" name="search">
-    <button class="form-control" style="border-bottom-left-radius: 0; border-top-left-radius: 0;" type="button" class="btn bg-color-green" (click)="rechercher()"><i class="fa fa-search"></i></button>
+    <button class="form-control" style="border-bottom-left-radius: 0; border-top-left-radius: 0;" type="button" class="btn bg-color-green" (click)="rechercher()" [disabled]="!term"><i class="fa fa-search"></i></button>
   </form>
 </div>
 </div>
     </mdb-card-text>
   </mdb-card-body>
 </mdb-card>
-<mat-accordion>
-  <mat-expansion-panel [expanded]="panelOpenState === true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Résultat de la recherche
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <app-gabarit-eleve [titre]="titre" [listeEleves]="listeEleves"></app-gabarit-eleve>
-  </mat-expansion-panel>
-</mat-accordion>
+
+<app-gabarit-eleve [titre]="titre" [listeEleves]="listeEleves"></app-gabarit-eleve>
+  
 <ngx-spinner>
   <p class="loading">Loading Awesomeness...</p>
 </ngx-spinner>

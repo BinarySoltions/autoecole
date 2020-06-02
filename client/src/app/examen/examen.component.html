@@ -1,0 +1,106 @@
+<div> 
+  <mdb-card>
+    <mdb-card-header><h3>{{'examen.title' | translate}}</h3></mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+        <form>
+          <div class="row">
+                  <div class="col col-12 push-right">
+                    <button type="button" 
+        class="btn bg-color-green"
+         (click)="soumettre()"
+         style="margin-right:10px;" [disabled]="!formulaire.valid">
+            <i class="fas fa-save"></i>&nbsp;{{'examen.submit' | translate}}
+          </button>
+                  </div>
+                </div>
+                
+        </form>
+        </mdb-card-text>
+        </mdb-card-body>
+        </mdb-card>
+  
+</div>
+<div id="1pdf"  #pdf style="background-color: white;padding: 40px 60px;font-family: Arial, Helvetica, sans-serif; font-size:20px;">
+<div>
+  <form #formulaire="ngForm">
+  <table class="table-no-border" style="border:0px solid transparent !important;margin-bottom: 50px;">
+    <tr><td style="text-align: left;" colspan="3"><img src="assets/SAAQ_logo.jpg" width="200px"/></td></tr>
+    <tr>
+      <td colspan="3" style="text-align: right;width: 100%;font-size: 20px;margin-bottom: 20px;"><b>{{'examen.title' | translate}}</b><br/>{{'examen.subtitle' | translate}}</td>
+    </tr>
+    <tr><td style="text-align: left;width: 100px;"><b>{{'examen.test_num' | translate}}</b></td><td  style="text-align: left;"><input name="testNumber" [(ngModel)]="examenReponses.numeroTest" type="text" style="border: 0;border-bottom: 1px solid black;width: 400px;height:25px;" required></td><td style="width: 100px;"></td></tr>
+    <tr><td style="text-align: left;width:200px;"><b>{{'examen.name' | translate}}</b></td><td style="text-align: left;"><input name="fullname" [(ngModel)]="examenReponses.nomComplet" type="text" style="border: 0;border-bottom: 1px solid black;width: 400px;height:25px;" required></td><td style="width: 100px;"></td></tr>
+    <tr><td style="text-align: left;width: 100px;"><b>{{'examen.school' | translate}}</b></td><td style="text-align: left;"><input name="school" [(ngModel)]="examenReponses.nomEcole" type="text" style="border: 0;border-bottom: 1px solid black;width: 400px;height:25px;" required></td><td style="width: 100px;"></td></tr>
+    <tr><td style="text-align: left;width: 100px;"><b>{{'examen.date' | translate}}</b></td><td style="text-align: left;"><input name="date" [(ngModel)]="examenReponses.date" type="text" style="border: 0;border-bottom: 1px solid black;width: 400px;height:25px;" required></td><td style="width: 100px;"></td></tr>
+    <tr><td colspan="3" style="text-align: left;width: 100%;">
+      <span style="float: left;"><b>{{'examen.retaking_test' | translate}} </b><input name="unefois" [(ngModel)]="examenReponses.reprise.uneFois" type="checkbox"><span>&nbsp;</span>{{'examen.first' | translate}}<span> - </span><input name="2fois" [(ngModel)]="examenReponses.reprise.deuxFois" type="checkbox"><span>&nbsp;</span>{{'examen.second' | translate}}
+    </span>
+      <span  style="float: right;">     
+    <b>{{'examen.third' | translate}}</b><input name="nfois" [(ngModel)]="examenReponses.reprise.nFois" type="text" style="border: 0;border-bottom: 1px solid black;width: 40px;height:25px;"> <b>{{'examen.third_suffix' | translate}}</b>&nbsp;&nbsp;&nbsp;&nbsp; </span>
+    </td></tr>
+  </table>
+</form>
+  <h3><b>{{'examen.instructions' | translate}}</b></h3>
+  <ul>
+    <li>{{'examen.i_one' | translate}}</li>
+    <li><span [innerHTML]="'examen.i_two' | translate"></span></li>
+    <li><span [innerHTML]="'examen.i_three' | translate"></span></li>
+    <li>{{'examen.i_four' | translate}}</li>
+  </ul>
+  <p>{{'examen.success' | translate}}</p>
+</div>
+<div>
+  <h2><b>{{'examen.answer_grid' | translate}}</b></h2>
+  <table>
+    <tr>
+      <th  style="width: 5%;border-top:0px transparent !important;border-left:0px transparent !important;background-color: transparent;"></th>
+      <th   style="width: 10%;">A</th>
+      <th   style="width: 10%;">B</th>
+      <th  style="width: 10%;">C</th>
+      <th  style="width: 10%;">(D)</th>
+      <th  style="width: 5%;border-top: 0px solid transparent !important;border-right:0px solid #000 !important;background-color: transparent;"></th>
+      <th  style="width: 5%;border-top: 0px solid transparent !important;border-left:0px solid #000 !important;background-color: transparent;"></th>
+      <th  style="width: 10%;">A</th>
+      <th  style="width: 10%;">B</th>
+      <th  style="width: 10%;">C</th>
+      <th  style="width: 10%;">(D)</th>
+    </tr>
+    <!--ligne 1-->
+    <tr row-grid [number]="[1,13]" [reponse]="examenReponses.q1" [reponsePlus]="examenReponses.q13"></tr>
+    <!--ligne 2-->
+    <tr row-grid [number]="[2,14]" [reponse]="examenReponses.q2" [reponsePlus]="examenReponses.q14"></tr>
+    <!--ligne 3-->
+    <tr row-grid [number]="[3,15]" [reponse]="examenReponses.q3" [reponsePlus]="examenReponses.q15"></tr>
+    <!--ligne 4-->
+    <tr row-grid [number]="[4,16]" [reponse]="examenReponses.q4" [reponsePlus]="examenReponses.q16"></tr>
+    <!--ligne 5-->
+    <tr row-grid [number]="[5,17]" [reponse]="examenReponses.q5" [reponsePlus]="examenReponses.q17"></tr>
+    <!--ligne 6-->
+    <tr row-grid [number]="[6,18]" [reponse]="examenReponses.q6" [reponsePlus]="examenReponses.q18"></tr>
+    <!--ligne 7-->
+    <tr row-grid [number]="[7,19]" [reponse]="examenReponses.q7" [reponsePlus]="examenReponses.q19"></tr>
+    <!--ligne 8-->
+    <tr row-grid [number]="[8,20]" [reponse]="examenReponses.q8" [reponsePlus]="examenReponses.q20"></tr>
+    <!--ligne 9-->
+    <tr row-grid [number]="[9,21]" [reponse]="examenReponses.q9" [reponsePlus]="examenReponses.q21"></tr>
+    <!--ligne 10-->
+    <tr row-grid [number]="[10,22]" [reponse]="examenReponses.q10" [reponsePlus]="examenReponses.q22"></tr>
+    <!--ligne 11-->
+    <tr row-grid [number]="[11,23]" [reponse]="examenReponses.q11" [reponsePlus]="examenReponses.q23"></tr>
+    <!--ligne 12-->
+    <tr last-row-grid [number]="[12,24]" [reponse]="examenReponses.q12" [reponsePlus]="examenReponses.q24"></tr>
+  </table>
+</div>
+</div>
+<div class="row" style="background-color: white; padding-bottom: 40px;">
+  <div class="col col-12 push-right">
+    <button type="button" 
+class="btn bg-color-green"
+(click)="soumettre()"
+style="margin-right:10px;" [disabled]="!formulaire.valid">
+<i class="fas fa-save"></i>&nbsp;{{'examen.submit' | translate}}
+</button>
+  </div>
+</div>
+<div style="height: 200px;"></div>

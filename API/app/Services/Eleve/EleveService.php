@@ -118,7 +118,7 @@ class EleveService implements IEleveService
 
     public function obtenirListeEleves(){
         $dateJour = date('Y-m-d');
-        $eleves = Eleve::with('adresse','coordonnee','modules')
+        $eleves = Eleve::with('adresse','coordonnee','modules','attestation','examens')
         ->where(function($query) use ($dateJour)
         {
             $query->whereDate('date_fin_permis','>=',$dateJour)

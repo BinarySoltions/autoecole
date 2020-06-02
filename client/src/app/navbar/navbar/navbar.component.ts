@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, Input } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit {
   estNotifie: number;
   lien = Lien;
   lienActif = this.lien.HOME;
+  @Input() isExamen = false;
   constructor(private translate:TranslateService,
     @Inject('BASE_URL') baseUrl: string,
     private router: Router,

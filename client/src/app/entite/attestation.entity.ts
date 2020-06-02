@@ -8,6 +8,8 @@ export class Attestation implements Deserializable{
     numero:string;
     signature_responsable:Date;
     signature_eleve:Date;
+    resultat_phase_une:number;
+    resultat_final:number;
     eleve:Eleve;
     ecole:Ecole;
     personne_responsable:PersonneResponsable;

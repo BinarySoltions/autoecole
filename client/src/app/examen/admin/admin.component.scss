@@ -1,0 +1,25 @@
+
+th, td{
+    text-align: center;
+    padding: 10px 5px;
+}
+th{
+    border: 1px solid black;
+    background-color: rgb(236, 234, 234);
+}
+td{
+    border: 1px solid #a8a4a4;
+}
+tbody tr:nth-child(odd) {
+   background-color: transparent !important; 
+}
+.table-no-border>tbody>tr>td{
+    border: 0px solid transparent !important;
+}
+.tr-border-bottom>td{
+    border-bottom: 1px solid black !important;
+}
+input{
+    width: 16px;
+    height: 16px;
+}

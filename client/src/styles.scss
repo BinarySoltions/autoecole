@@ -110,11 +110,23 @@ body{
 .nav-link{
     color: $green-color !important;
 }
-.nav-link:hover,:active{
+.nav-link:hover{
     color:green !important;
     font-weight: bold;
 }
 .active{
     color:green !important;
     font-weight: bold;  
+}
+.mat-sort-header-arrow{
+    color:black  !important;
+    font-weight: bold;  
+}
+tbody tr:nth-child(odd)
+{
+  background-color: rgba(0,0,0,.03);;
+}
+tbody tr:hover
+{
+  background-color: rgba(0,0,0,.03);;
 }

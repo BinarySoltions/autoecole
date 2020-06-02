@@ -7,10 +7,12 @@ use App\Http\Requests;
 use App\Services\Eleve\IEleveService;
 use App\Services\Eleve\EleveRequete;
 use App\Http\Resources\EleveResource;
+use App\Http\Resources\ExamenResource;
 use App\Eleve;
 use App\Adresse;
 use App\Coordonnee;
 use App\Module;
+use App\Examen;
 
 class EleveController extends Controller
 {
@@ -149,7 +151,7 @@ class EleveController extends Controller
         if(!$term)
             return null;
 
-        $eleves = Eleve::with('adresse','coordonnee','modules')
+        $eleves = Eleve::with('adresse','coordonnee','modules','attestation')
         ->where('prenom', 'like', '%' . $term . '%')
         ->orWhere('nom', 'like', '%' . $term . '%')
         ->orderBy('created_at','desc')->get();
@@ -159,7 +161,7 @@ class EleveController extends Controller
     {
         $dateSup = date("Y-m-d",strtotime("60 days"));
         $dateInf = date("Y-m-d");
-        $eleves = Eleve::with('adresse','coordonnee','modules')
+        $eleves = Eleve::with('adresse','coordonnee','modules','attestation')
         ->where(function($query) use ($dateInf, $dateSup)
         {
             $query->whereDate('date_fin_permis','<=',$dateSup)
@@ -172,5 +174,52 @@ class EleveController extends Controller
         })
         ->orderBy('created_at','desc')->get();
         return EleveResource::Collection($eleves);
+    }
+
+    public function pass(Request $request)
+    {
+       
+        if($request){
+          $arr_obj = $request->all();
+          DB::table('examens')->insert($arr_obj);
+            return response()->json([
+                'isValid' => true
+            ]);
+        } else {
+            return response()->json([
+                'isValid' => false
+            ]);
+        }
+    } 
+
+    public function getTest($id)
+    {
+        $eleves = Examen::where('eleve_id','=',$id)
+        ->orderBy('created_at','desc')->first();
+        return  new ExamenResource($eleves); 
+    }
+
+    public function updateTest(Request $request)
+    {
+        if($request) {
+            $examen = Examen::where('eleve_id','=',$request->id)
+            ->where('actif','=',1)
+            ->first();
+            if($examen){
+                $examen->resultat = $request->resultat;
+                $examen->save();
+                return response()->json([
+                    'isValid' => true
+                ]);
+            } else {
+                return response()->json([
+                    'isValid' => false
+                ]);
+            }
+        } else {
+            return response()->json([
+                'isValid' => false
+            ]);
+        }
     }
 }

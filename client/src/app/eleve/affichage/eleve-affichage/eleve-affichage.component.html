@@ -5,19 +5,13 @@
         <mdb-card-body>
           <mdb-card-text>
     <div class="row">
-      <div class="col col-4 mx-auto">
-        <div class="md-form">
-          <input type="text"
-           class="form-control" 
-           #search 
-           [(ngModel)]="searchText" 
-           (keyup)="searchItems(search.value)" 
-           id="search-input"
-           placeholder="{{'label.rechercher' | translate}}"
-                 mdbInput>
-        </div>
-      </div>
-      <div class="col col-8 push-right">
+      
+      <div class="col col-12 push-right">
+        <button type="button" style="margin-right:10px"
+        color="primary"  class=" btn bg-color-green" 
+        data-toggle="modal" data-target="#examenModal">
+            <i class="fas fa-plus"></i>	&nbsp;Ajouter examen
+          </button>
           <button type="button" style="margin-right:10px"
           color="primary"  class=" btn bg-color-green" 
           data-toggle="modal" data-target="#basicExampleModal">
@@ -28,90 +22,13 @@
           </button>
       </div>
     </div>
-    <div class="row" style="margin-top:20px">
-      <div class="col col-12">
-      <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1">
-        <thead class="sticky-top">
-        <tr>
-          <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="elements" [sortBy]="headElements[i]"
-              scope="col">{{head | titlecase}}
-            <mdb-icon fas icon="sort"></mdb-icon>
-          </th>
-        </tr>
-        </thead>
-        <tbody #row>
-        <tr mdbTableCol (rowCreated)="onRowCreate($event)" (rowRemoved)="onRowRemove($event)"
-            *ngFor="let el of elements; let i = index">
-          <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
-              scope="row">{{el.nom}}</th>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
-              class="red-text">{{el.prenom}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-            {{el.adresse.numero}},{{el.adresse.rue}},{{el.adresse.code_postal}}
-          </td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-            {{el.coordonnee.telephone}}
-          </td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
-            >
-            {{determinerPhase(el.modules)}}
-          </td>
-          <td  *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-            <div class="dropdown col col-4" style="text-align:right">
-              <button type="button" class="btn bg-color-green dropdown-toggle" data-toggle="dropdown">
-                <i class="fas fa-list"></i>
-              </button>
-              <div class="dropdown-menu row">
-                <!-- <a class="dropdown-item" routerLink="phase">Phase et module</a>
-                <a class="dropdown-item" routerLink="personne">Personne responsable</a>
-                <a class="dropdown-item" routerLink="ecole">École</a>
-                <a routerLink="register" class="dropdown-item">S'inscrire</a> -->
-             <div class="col col-12 size-30 form-align-h">
-
-             
-            <div title="Modifier" class="btn dropdown-item bg-color-green" (click)="editerEleve(el.id)" style="margin-right:10px">
-                <i class="fas fa-pen"></i>
-            </div>
-            <div style="margin-right:10px" title="Contrat" class="btn dropdown-item bg-color-green" (click)="contratEleve(el.id)">
-                <i class="fas fa-file-contract"></i>
-            </div>
-            <div style="margin-right:10px" title="Payement" class="btn dropdown-item bg-color-green" (click)="payementEleve(el.id)">
-              <i class="fas fa-dollar-sign"></i>
-          </div>
-          <div style="margin-right:10px" title="Afficher" class="btn dropdown-item bg-color-green" (click)="detailEleve(el.id)">
-            <i class="fas fa-eye"></i>
-          </div>
-          <div style="margin-right:10px" title="Attestation" class="btn dropdown-item bg-color-green" (click)="attestationEleve(el.id)">
-              <i class="fas fa-file-contract"></i>
-          </div>
-          <div title="Supprimer" 
-          class="btn dropdown-item bg-color-green" 
-          (click)="supprimerEleve(el.id,i)"
-          data-toggle="modal" data-target="#confirmerModal">
-              <i class="fas fa-trash-alt"></i>
-        </div>
-          </div>
-          </div>
-        </div>
-          </td>
-        </tr>
-        </tbody>
-        <tfoot class="grey lighten-6 w-100">
-  
-        <tr>
-          <td colspan="6">
-            <mdb-table-pagination [tableEl]="tableEl" paginationAlign="" [searchDataSource]="elements"></mdb-table-pagination>
-          </td>
-        </tr>
-        </tfoot>
-      </table>
-      </div>
-    </div>
+ 
     </mdb-card-text>
     </mdb-card-body>
     </mdb-card>
-  <app-dialog-confirmer (estConfirmer)="confirmerSuppression($event)"></app-dialog-confirmer>
+    <app-gabarit-eleve  [listeEleves]="listeEleves"></app-gabarit-eleve>
   <app-ajouter-module [listeEleves]="listeEleves" (estAjouterModule)="evenementAjouterModule($event)"></app-ajouter-module>
+  <app-ajouter-examen [listeEleves]="listeEleves" (estAjouterModule)="evenementAjouterModule($event)"></app-ajouter-examen>
   <ngx-spinner>
       <p class="loading">Loading Awesomeness...</p>
     </ngx-spinner>

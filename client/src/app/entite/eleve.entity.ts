@@ -23,11 +23,14 @@ export class Eleve implements Deserializable{
     coordonnee:Coordonnee;
     modules:Module[];
     payements:Payement[];
+    attestation:any;
+    examens:any;
 
     deserialize(obj: any): this {
         Object.assign(this, obj);
         this.adresse = new Adresse().deserialize(obj.adresse);
         this.coordonnee = new Coordonnee().deserialize(obj.coordonnee);
+        //this.attestation = new Attestation().deserialize(obj.attestation);
         obj.modules.foreach(module =>{
             this.modules.push(new Module().deserialize(module));
         });
