@@ -54,7 +54,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
   }
   ngOnInit() { 
     this.spinner.show(undefined, { fullScreen: true });
-    this.obtenirEleves();
+    this.obtenirElevesLimites(100);
     this.obtenirElevesExpires();
   }
 
@@ -70,8 +70,20 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
         });
        
       }
+    });
+  }
+  obtenirElevesLimites(limit){
+    this.serviceEleve.obtenirElevesLimites(limit).subscribe((result)=>{
+      if (result) {
+        this.elements = result;
+        this.listeEleves  = result.filter(eleve=>{
+          return _.extend(eleve, {'nomcomplet':eleve.nom+', '+eleve.prenom}) ;
+        });
+       
+      }
       this.spinner.hide();
     });
+    this.obtenirEleves();
   }
  
  public editerEleve(value){
@@ -126,4 +138,19 @@ obtenirElevesExpires() {
     this.partageService.nouveauNombre(n);
   })
 }
+estSupprimeEleve(value){
+  this.idEleveASupprimer = value;
+}
+confirmerSuppression(value){
+  if(value){
+    this.serviceEleve.supprimerEleveById(this.idEleveASupprimer).subscribe(res=>{
+      if(res.valid){
+        this.listeEleves = this.listeEleves.filter(e=>e.id != this.idEleveASupprimer);
+        this.obtenirEleves();
+        this.toastr.success("L'élève a été supprimé avec succes!","Infrormation");
+      }
+    })
+  }
+}
+
 }

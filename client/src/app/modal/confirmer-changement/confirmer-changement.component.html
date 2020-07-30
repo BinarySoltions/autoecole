@@ -1,0 +1,28 @@
+<!-- Modal -->
+<div class="modal fade" id="confirmerChangementModal" tabindex="-1" role="dialog" aria-labelledby="confirmerChangementModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmerChangementModalLabel">Attention</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="fermer()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+           Vos données ne sont pas sauvegardées! Voulez vous quitter?
+</div>
+<div class="modal-footer">
+    <div class="col col-12" style="text-align:right">
+        <button  type="button"  class="btn bg-color-green" (click)="ok()" data-dismiss="modal">
+            <i class="fas fa-ok"></i>	&nbsp;OK
+          </button>
+      <button type="button" class="btn btn-secondary" (click)="fermer()"
+         data-dismiss="modal"
+         style="margin-left:10px"><i class="fas fa-ban"></i>	&nbsp;Annuler</button>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  

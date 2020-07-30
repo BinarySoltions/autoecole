@@ -23,6 +23,7 @@ export class AdminComponent implements OnInit,OnDestroy {
   eventClickTelecharger: boolean;
   @ViewChild('pdf') pdf: ElementRef;
   hideTest: boolean;
+  eleveId: any;
 
   constructor(private translate: TranslateService,private route:Router,private router:ActivatedRoute,
     private serviceEleve:EleveService, private toastr: ToastrService,) {
@@ -39,8 +40,9 @@ export class AdminComponent implements OnInit,OnDestroy {
   }
 
   obtenirExam(val){
-    this.serviceEleve.obtenirExamen(val).subscribe(r=>{
+    this.serviceEleve.obtenirExamenById(val).subscribe(r=>{
       if(r){
+        this.eleveId = r.eleve_id;
         this.examenReponses = <ExamenModel>JSON.parse(r.resultat);
         this.translate.setDefaultLang(r.langue);
       }else {
@@ -82,4 +84,7 @@ export class AdminComponent implements OnInit,OnDestroy {
     });
   }
 
+  reourner(){
+    this.route.navigate(['liste-examen',this.eleveId])
+  }
 }

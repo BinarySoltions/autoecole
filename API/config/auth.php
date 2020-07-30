@@ -98,5 +98,10 @@ return [
             'expire' => 60,
         ],
     ],
-
+    
+    'socialite' => [
+        'drivers' => [
+            'google',
+        ],
+    ],
 ];

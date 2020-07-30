@@ -1,6 +1,12 @@
  
- <mdb-card>
-    <mdb-card-header><h3>{{action}} - {{'titre.eleve' | translate}}</h3></mdb-card-header>
+<mdb-card>
+    <mdb-card-header>
+      <div class="row">
+        <app-breadcrumbs [url]="'eleves'"></app-breadcrumbs> <div style="text-align: center;width: 100%;">
+          <h3>{{action}} - {{'titre.eleve' | translate}}</h3>
+        </div>
+      </div>
+      </mdb-card-header>
     <mdb-card-body>
       <mdb-card-text>
         <form #formulaire="ngForm">

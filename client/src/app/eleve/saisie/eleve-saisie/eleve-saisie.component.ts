@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Eleve } from 'src/app/entite/eleve.entity';
 import { Adresse } from 'src/app/entite/adresse.entity';
@@ -9,13 +9,14 @@ import {_} from 'underscore';
 import { TranslateService } from '@ngx-translate/core';
 import { NgForm } from '@angular/forms';
 import moment from 'moment';
+import { PeutEtreDeactivate } from 'src/app/service/changement-guard.service';
 
 @Component({
   selector: 'app-eleve-saisie',
   templateUrl: './eleve-saisie.component.html',
   styleUrls: ['./eleve-saisie.component.scss']
 })
-export class EleveSaisieComponent implements OnInit {
+export class EleveSaisieComponent implements OnInit,PeutEtreDeactivate {
 
   listeProvinces : any;
   eleveModele:Eleve;
@@ -35,6 +36,10 @@ export class EleveSaisieComponent implements OnInit {
          this.translate.setDefaultLang('fr');
           this.baseUrl = baseUrl;
          }
+  @HostListener('window:beforeunload')
+  estPropre(): boolean | import("rxjs").Observable<boolean> {
+    return !this.formulaire.form.dirty;
+  }
 
   ngOnInit() {
     this.initialiserEleveModele();

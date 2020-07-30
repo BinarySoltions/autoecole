@@ -4,6 +4,7 @@ namespace App\Services\Eleve;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Resources\EleveResource;
 use App\Eleve;
@@ -29,7 +30,16 @@ class EleveService implements IEleveService
         //save eleve
         $eleve->prenom = $request->prenom;
         $eleve->nom = $request->nom;
-        $eleve->numero_contrat = $request->numero_contrat;
+        $eleve_existant = DB::select('SELECT numero_contrat FROM eleve WHERE numero_contrat LIKE :numero_contrat ORDER by numero_contrat * 1 DESC limit 1', ['numero_contrat' => '%-'.date("Y")]);
+        $numero_contrat = '001-'.date("Y");
+        if($eleve_existant){
+            $array = \explode("-",$eleve_existant[0]->numero_contrat);
+            $incr = $array[0]*1 + 1;
+            $numero_contrat = $incr.'-'.date("Y");
+        }
+
+        $eleve->numero_contrat = $numero_contrat;
+
         if($request->date_inscription)
             $eleve->date_inscription = date('Y-m-d', strtotime($request->date_inscription));
         if($request->date_naissance)

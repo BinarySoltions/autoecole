@@ -6,6 +6,7 @@ import { AuthenticationService } from './auth/services/authentication.service';
 import { ExamenComponent } from './examen/examen.component';
 import { BeginComponent } from './examen/begin/begin.component';
 import { SessionFinieComponent } from './examen/session-finie/session-finie.component';
+import { InscriptionComponent } from './eleve/inscription/inscription.component';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +32,10 @@ logout() {
 
 onActivate(value){
     this.isExamen = false;
-    if(value instanceof ExamenComponent || value instanceof BeginComponent || value instanceof SessionFinieComponent){
+    if(value instanceof ExamenComponent || 
+        value instanceof BeginComponent || 
+        value instanceof SessionFinieComponent || 
+        value instanceof InscriptionComponent){
         this.isExamen = true;
     }
 }

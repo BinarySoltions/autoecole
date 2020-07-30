@@ -86,5 +86,32 @@
         "answer_grid":"Choix de réponses",
         "start":"Commencer",
         "submit":"Soumettre"
+    },
+    "eleve":{
+        "titre":"S'inscrire",
+        "nom_complet":"Nom et Prénom",
+        "nom":"Nom",
+        "prenom":"Prénom",
+        "adresse":"Adresse (Numéro, rue, app)",
+        "numero":"Numéro",
+        "rue":"Rue",
+        "app":"App",
+        "municipalite":"Municipalité",
+        "province":"Province",
+        "code_postal":"Code postal",
+        "numero_contrat":"Numéro de contrat",
+        "telephone":"Téléphone",
+        "telephone_autre":"Téléphone autre",
+        "permis":"Permis de conduire",
+        "email":"Adresse de courriel",
+        "cout":"Coût de la formation",
+        "DDN":"Date de naissance",
+        "date_inscription":"Date d'inscription",
+        "debut_contrat":"Début du contrat",
+        "date_expiration_permis":"Date d'expiration permis",
+        "date_expiration_contrat":"Date d'expiration contrat",
+        "merci":"Merci pour votre inscription",
+        "inscrire":"S'inscrire à nouveau",
+        "langue":"Langue"
     }
 }

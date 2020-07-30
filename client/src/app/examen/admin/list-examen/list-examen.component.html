@@ -1,0 +1,47 @@
+<mdb-card>
+    <mdb-card-header><h3>Liste des examens</h3></mdb-card-header>
+
+ 
+  <mdb-card-body>
+    <mdb-card-text>
+      <div class="row">
+        <div class="col col-lg">
+          <h4 *ngIf="elements">{{obtenirNomComplet()}}</h4>
+        </div>
+        
+      </div>
+<div class="row">
+<div class="col col-lg">
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="numero">
+      <th class="bg-color-green" mat-header-cell *matHeaderCellDef mat-sort-header> Numéro contrat </th>
+      <td mat-cell *matCellDef="let row"> {{row?.numero}} </td>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container matColumnDef="date_examen">
+      <th class="bg-color-green" mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+      <td mat-cell *matCellDef="let row"> {{row?.date_examen}} </td>
+    </ng-container>
+   
+    <ng-container matColumnDef="id">
+      <th  class="bg-color-green" width="100" mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let row"> 
+        <div title="Modifier" class="btn dropdown-item bg-color-green" (click)="editerExamen(row.id)" style="margin-right:10px">
+          <i class="fas fa-pen"></i>
+      </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="headElements1"></tr>
+    <tr mat-row *matRowDef="let row; columns: headElements1;">
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+</div>
+</mdb-card-text>
+</mdb-card-body>
+</mdb-card>

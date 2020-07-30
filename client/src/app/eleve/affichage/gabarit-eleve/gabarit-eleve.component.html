@@ -1,9 +1,8 @@
 
 
     <mdb-card>
-      <div *ngIf="titre">
-        <mdb-card-header><h3>{{titre}}</h3></mdb-card-header>
-      </div>
+        <mdb-card-header><h3 *ngIf="titre">{{titre}}</h3></mdb-card-header>
+
      
       <mdb-card-body>
         <mdb-card-text>
@@ -86,12 +85,12 @@
           <div style="margin-right:10px" title="Attestation" class="btn dropdown-item bg-color-green" (click)="attestationEleve(row.id)">
               <i class="fas fa-file-contract"></i>
           </div>
-          <div style="margin-right:10px" title="Examen" class="btn dropdown-item bg-color-green" (click)="examenEleve(row.id)">
+          <div style="margin-right:10px" title="Examen" class="btn dropdown-item bg-color-green" (click)="examenEleve(row)">
             <i class="fas fa-clipboard"></i>
         </div>
           <div title="Supprimer" 
           class="btn dropdown-item bg-color-green" 
-          (click)="supprimerEleve(row.id,i)"
+          (click)="supprimerEleve(row.id)"
           data-toggle="modal" data-target="#confirmerModal">
               <i class="fas fa-trash-alt"></i>
         </div>
@@ -105,10 +104,9 @@
         </tr>
       </table>
     
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[20,50, 100]"></mat-paginator>
     </div>
   </div>
   </mdb-card-text>
   </mdb-card-body>
   </mdb-card>
-<app-dialog-confirmer (estConfirmer)="confirmerSuppression($event)"></app-dialog-confirmer>

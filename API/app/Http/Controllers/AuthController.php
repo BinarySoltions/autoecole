@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\User;
 use App\Http\Resources\UserResource;
+use Socialite;
+use Illuminate\Support\Facades\URL;
 
 class AuthController extends Controller
 {
@@ -49,21 +51,46 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-            'remember_me' => 'boolean'
-        ]);
-        $credentials = request(['email', 'password']);
-        if(!Auth::attempt($credentials))
-            return response()->json([
-                'message' => 'Unauthorized'
-            ], 401);
-        $user = $request->user();
+        if($request->from == 'google'){
+            $request->validate([
+                'email' => 'required|string|email',
+                'remember_me' => 'boolean'
+            ]); 
+            $credentials = request(['email']);
+            if(!$this->validateUser($request)){
+                return response()->json([
+                    'message' => 'Unauthorized'
+                ], 401);
+            }
+            $is_valid_user = User::where('email','=',$request->email)->get();
+            if(!$is_valid_user){
+                return response()->json([
+                    'message' => 'Unauthorized'
+                ], 401);
+            }
+            
+            $user =$is_valid_user[0];
+            
+        } else {
+            $request->validate([
+                'email' => 'required|string|email',
+                'password' => 'required|string',
+                'remember_me' => 'boolean'
+            ]);
+            $credentials = request(['email', 'password']);
+            if(!Auth::attempt($credentials)){
+                return response()->json([
+                    'message' => 'Unauthorized'
+                ], 401);
+            }
+            $user = $request->user();
+        }
+        
+        
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
-        if ($request->remember_me)
-            $token->expires_at = Carbon::now()->addWeeks(1);
+        
+        $token->expires_at = Carbon::now()->addMinutes(5);
         $token->save();
         return response()->json([
             'access_token' => $tokenResult->accessToken,
@@ -92,7 +119,10 @@ class AuthController extends Controller
      * @return [json] user object
      */
     public function user(Request $request)
-    {
+    { 
+        return response()->json([
+            'message' => 'dieng'
+        ], 401);
         return response()->json($request->user());
     }
 
@@ -105,5 +135,23 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Unauthorized'
         ], 401);
+    }
+    public function validateUser(Request $request){
+        $client_id_google = \Config::get('values.client_id_google');
+        $http = new \GuzzleHttp\Client([
+            'verify' => 'C:\laravel\API\public\cacert.pem'
+        ]);
+      
+        $client = new \Google_Client(['client_id' => $client_id_google ]);  // Specify the CLIENT_ID of the app that accesses the backend
+        $client->setHttpClient($http);
+        $payload = $client->verifyIdToken($request->idToken);
+        return response()->json([
+            'message' => $payload
+        ]);
+        if ($payload) {
+           return true;
+        } else {
+            return false;
+        }
     }
 }

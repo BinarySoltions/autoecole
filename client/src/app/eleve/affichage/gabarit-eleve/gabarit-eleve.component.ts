@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, ElementRef, HostListener, ChangeDetectorRef, AfterViewInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, ElementRef, HostListener, ChangeDetectorRef, AfterViewInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { EleveService } from 'src/app/service/eleve/eleve.service';
 import { Eleve } from 'src/app/entite/eleve.entity';
 import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstrap-md';
@@ -11,6 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import {_} from 'underscore';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+declare var $: any;
 
 
 @Component({
@@ -25,6 +26,7 @@ export class GabaritEleveComponent implements OnInit, AfterViewInit,OnChanges {
   lien:any=lien;
   @Input() listeEleves:Eleve[];
   @Input() titre:string;
+  @Output() estSupprimeEleve = new EventEmitter<number>();
   
   @ViewChild('row') row: ElementRef;
   elements: Eleve[]=[];
@@ -89,25 +91,14 @@ public payementEleve(value){
 public contratEleve(value){
   this.router.navigate(["eleve/contrat/"+value]);
 }
-examenEleve(value){
-  this.router.navigate(["imprimer-examen/"+value]);
+examenEleve(row){
+    this.router.navigate(["liste-examen/"+row.id]);
 }
-public supprimerEleve(value,index){
+public supprimerEleve(value){
   this.idEleveASupprimer = value;
-  this.indexASupprimer = index;
+  $("#confirmerModal").modal('show');
+  this.estSupprimeEleve.emit(this.idEleveASupprimer);
 }
-confirmerSuppression(value){
-  if(value){
-    this.serviceEleve.supprimerEleveById(this.idEleveASupprimer).subscribe(res=>{
-      if(res.valid){
-        this.elements.splice(this.indexASupprimer,1);
-        this.obtenirEleves(this.elements);
-        this.toastr.success("L'élève a été supprimé avec succes!","Infrormation");
-      }
-    })
-  }
-}
-
 
  determinerPhase(modules:Module[]):string{
    let mapModule = new Map;
@@ -157,6 +148,14 @@ setDataSourceAttributes() {
 attestationValide(row):any{
   if(row.attestation && row.attestation.resultat_phase_une){
     return row.attestation.resultat_phase_une;
+  } else {
+    return false;
+  }
+}
+
+validerExamen(row):any{
+  if(row && row.examens && row.examens.length> 0){
+    return true;
   } else {
     return false;
   }

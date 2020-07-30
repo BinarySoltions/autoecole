@@ -43,7 +43,7 @@
   <tr>
     <td width="30%" align="left">
         <h6>Facturé à</h6>
-      <span>{{eleve.nom}} {{eleve.prenom}}</span>
+      <span>{{eleve.nom}} {{eleve.prenom}}</span><br/>
       <span *ngIf="eleve.adresse">{{eleve.adresse.numero}}
           <span *ngIf="eleve.adresse">, {{eleve.adresse.rue}}</span>
           <span *ngIf="eleve.adresse">, #{{eleve.adresse.appartement}}</span>
@@ -75,8 +75,8 @@
   </tr>
   <tr  *ngFor="let payementPDF of payementsPDF"><td align="center">{{payementPDF.type}}</td><td align="center">{{payementPDF.date_payement}}</td><td style="text-align:right;padding-right: 10px">{{obtenirMontantHorsTaxes(payementPDF)|currency}}</td></tr>
   <tr><td colspan="2" align="right" style="border-color:transparent">Sous Total : </td><td style="border-color:transparent;text-align:right;padding-right: 10px">{{obtenirTotalHorsTaxes()|currency}}</td></tr>
-  <tr><td  colspan="2" align="right" style="border-color:transparent">TVQ : </td><td style="border-color:transparent;text-align:right;padding-right: 10px">{{obtenirTVQ()|currency}}</td></tr>
-  <tr><td  colspan="2" align="right" style="border-color:transparent">TPS : </td><td style="border-color:transparent;text-align:right;padding-right: 10px" >{{obtenirTPS()|currency}}</td></tr>
+  <tr><td  colspan="2" align="right" style="border-color:transparent">TVQ (no. 1224768920 TQ0001) :</td><td style="border-color:transparent;text-align:right;padding-right: 10px">{{obtenirTVQ()|currency}}</td></tr>
+  <tr><td  colspan="2" align="right" style="border-color:transparent">TPS (no. 7052 7727 RT0001) :</td><td style="border-color:transparent;text-align:right;padding-right: 10px" >{{obtenirTPS()|currency}}</td></tr>
   <tr><td  colspan="2" align="right" style="border-color:transparent"> Total : </td><td style="border-color:transparent;text-align:right;padding-right: 10px">{{obtenirTotalAvecTaxes()|currency}}</td></tr>
   </table>
 </div>

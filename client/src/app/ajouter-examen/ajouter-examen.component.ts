@@ -55,9 +55,10 @@ export class AjouterExamenComponent implements OnInit ,AfterViewInit {
  
   ajouter(){
     let request = [];
+    const dateNow = moment().format('YYYY-MM-DD');
     this.elevesSelectionnes.forEach(e=>{
       let el  = this.listeEleves.find(e1=>e1.id == e.id);
-      request.push({eleve_id:el.id,numero:el.numero_contrat});
+      request.push({eleve_id:el.id,numero:el.numero_contrat,created_at:dateNow});
     });
     this.serviceEleve.ajouterExamens(request).subscribe(res=>{
       if(res.isValid){

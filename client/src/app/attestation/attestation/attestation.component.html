@@ -235,7 +235,13 @@
     }
   </style>
 <mdb-card>
-    <mdb-card-header><h3>Attestation</h3></mdb-card-header>
+    <mdb-card-header>
+      <div class="row">
+        <app-breadcrumbs [url]="'eleves'"></app-breadcrumbs> <div style="text-align: center;width: 100%;">
+          <h3>Attestation</h3>
+        </div>
+      </div>
+    </mdb-card-header>
     <mdb-card-body>
       <mdb-card-text>
   <div class="row">
@@ -746,6 +752,9 @@
       </tr>
     </table>
     <table class="resize-100 no-border">
+      <tr>
+        <td align="center" class="no-border font-weight-bold font-label" *ngIf="typeCopie">Formulaire prescrit par l'AQTr pour la réussite du cours de conduite dans une école reconnue.</td>
+      </tr>
       <tr>
         <td align="center" class="no-border font-weight-bold font-label" style="color:red;margin-bottom: 10px;height: 30px; text-align: top;">{{typeCopie}}</td>
       </tr>

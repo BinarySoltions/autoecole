@@ -26,9 +26,10 @@
     </mdb-card-text>
     </mdb-card-body>
     </mdb-card>
-    <app-gabarit-eleve  [listeEleves]="listeEleves"></app-gabarit-eleve>
+    <app-gabarit-eleve  [listeEleves]="listeEleves"  (estSupprimeEleve)="estSupprimeEleve($event)"></app-gabarit-eleve>
   <app-ajouter-module [listeEleves]="listeEleves" (estAjouterModule)="evenementAjouterModule($event)"></app-ajouter-module>
   <app-ajouter-examen [listeEleves]="listeEleves" (estAjouterModule)="evenementAjouterModule($event)"></app-ajouter-examen>
+  <app-dialog-confirmer (estConfirmer)="confirmerSuppression($event)" ></app-dialog-confirmer>
   <ngx-spinner>
       <p class="loading">Loading Awesomeness...</p>
     </ngx-spinner>

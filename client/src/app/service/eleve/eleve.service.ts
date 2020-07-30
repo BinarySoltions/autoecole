@@ -29,6 +29,9 @@ export class EleveService {
   obtenirEleves(): Observable<Eleve[]> {
     return this.http.get<Eleve[]>(this.apiUrl + 'eleves');
   }
+  obtenirElevesLimites(limit): Observable<Eleve[]> {
+    return this.http.get<Eleve[]>(this.apiUrl + 'eleves/'+limit);
+  }
 
   obtenirElevesUniquement(): Observable<Eleve[]> {
     return this.http.get<Eleve[]>(this.apiUrl + 'eleves_seulement');
@@ -36,6 +39,10 @@ export class EleveService {
 
   ajouterEleve(eleve: Eleve): Observable<Eleve> {
     return this.http.post<Eleve>(this.apiUrl + 'eleve', eleve, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+  inscrireEleve(eleve: Eleve): Observable<Eleve> {
+    return this.http.post<Eleve>(this.apiUrl + 'inscrire', eleve, httpOptions)
       .pipe(catchError(this.handleError));
   }
   supprimerEleveById(id: number): Observable<{valid:boolean}> {
@@ -67,6 +74,10 @@ export class EleveService {
 
   obtenirExamen(id): Observable<any>{
     return this.http.get<Eleve[]>(this.apiUrl + 'obtenirExamen/'+id);
+  }
+
+  obtenirExamenById(id): Observable<any>{
+    return this.http.get<Eleve[]>(this.apiUrl + 'obtenirExamenById/'+id);
   }
   modifierExamen(examen): Observable<any>{
     return this.http.post<any>(this.apiUrl + 'enregistrerExamen', examen, httpOptions)

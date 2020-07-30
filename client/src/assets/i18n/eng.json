@@ -1,4 +1,8 @@
 {
+    "label":{
+        "enregistrer":"Save",
+        "fermer":"Close"
+    },
     "examen":{
         "title":"Class 5 Learner’s Licence Test",
         "subtitle":"Answer Sheet",
@@ -20,5 +24,32 @@
         "answer_grid":"Answer Grid",
         "start":"Start",
         "submit":"Submit"
+    },
+    "eleve":{
+        "titre":"Subscribe",
+        "nom_complet":"Last name and Fisrt name",
+        "nom":"Last name",
+        "prenom":"Fisrt name",
+        "adresse":"Address (Number, street, apt)",
+        "numero":"Number",
+        "rue":"Street",
+        "app":"Apt",
+        "municipalite":"City",
+        "province":"State",
+        "code_postal":"Postal code",
+        "numero_contrat":"Contract number",
+        "telephone":"Phone number",
+        "telephone_autre":"Other phone number",
+        "permis":"Licence driver number",
+        "email":"Email",
+        "cout":"Trainning fees",
+        "DDN":"Date of birth",
+        "date_inscription":"Date subscription",
+        "debut_contrat":"Beginning of contract",
+        "date_expiration_permis":"End of licence driver",
+        "date_expiration_contrat":"End of contrat",
+        "merci":"Thank you for your subscription!",
+        "inscrire":"Subscribe again",
+        "langue":"Language"
     }
 }

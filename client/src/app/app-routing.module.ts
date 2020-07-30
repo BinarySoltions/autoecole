@@ -22,6 +22,9 @@ import { ExamenComponent } from './examen/examen.component';
 import { BeginComponent } from './examen/begin/begin.component';
 import { AdminComponent } from './examen/admin/admin.component';
 import { SessionFinieComponent } from './examen/session-finie/session-finie.component';
+import { ListExamenComponent } from './examen/admin/list-examen/list-examen.component';
+import { InscriptionComponent } from './eleve/inscription/inscription.component';
+import { ChangementGuardService } from './service/changement-guard.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
@@ -29,7 +32,7 @@ const routes: Routes = [
   { path: 'eleve' , component: EleveSaisieComponent, canActivate: [AuthGuardService]},
   { path: 'attestation' , component: AttestationComponent, canActivate: [AuthGuardService]},
   { path: 'attestation/:id' , component: GenererComponent, canActivate: [AuthGuardService]},
-  { path: 'eleve/:id' , component: EleveSaisieComponent, canActivate: [AuthGuardService]},
+  { path: 'eleve/:id' , component: EleveSaisieComponent, canActivate: [AuthGuardService],canDeactivate:[ChangementGuardService]},
   { path: 'eleve/detail/:id' , component: DetailComponent, canActivate: [AuthGuardService]},
   { path: 'eleve/payements/:id' , component: PayementComponent, canActivate: [AuthGuardService]},
   { path: 'ecole' , component: EcoleSaisieComponent, canActivate: [AuthGuardService]},
@@ -46,6 +49,8 @@ const routes: Routes = [
   { path: 'examen/:numero/:langue' , component: BeginComponent},
   { path: 'imprimer-examen/:id' , component: AdminComponent, canActivate: [AuthGuardService]},
   { path: 'session-terminer' , component: SessionFinieComponent},
+  { path: 'liste-examen/:id' , component: ListExamenComponent, canActivate: [AuthGuardService]},
+  { path: 'inscription' , component: InscriptionComponent},
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
 ];

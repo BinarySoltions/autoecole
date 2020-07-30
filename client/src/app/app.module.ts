@@ -1,10 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule,NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import {MatTableModule} from '@angular/material/table';
-import {MatSortModule} from '@angular/material/sort';
-import { MatFormFieldModule, MatInputModule, MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter, MatExpansionModule, MatCardModule, MatRadioModule, MatPaginatorModule, MatPaginatorIntl } from '@angular/material';
-import {MatDialogModule} from '@angular/material/dialog';
+
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {MatButtonModule} from '@angular/material/button';
@@ -13,7 +11,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -38,9 +36,7 @@ import { AttestationComponent } from './attestation/attestation/attestation.comp
 
 import {NgxMaskModule, IConfig} from 'ngx-mask'
 import { NgxSpinnerModule } from 'ngx-spinner';
-import {MatDatepickerModule} from '@angular/material/datepicker'
-import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 import { ToastrModule } from 'ngx-toastr';
 import { EditorModule } from '@tinymce/tinymce-angular';
@@ -87,18 +83,27 @@ import { getDutchPaginatorIntl } from './french-paginator-intl';
 import { AjouterExamenComponent } from './ajouter-examen/ajouter-examen.component';
 import { AdminComponent } from './examen/admin/admin.component';
 import { SessionFinieComponent } from './examen/session-finie/session-finie.component';
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'YYYY-MM-DD',
-  },
-  display: {
-    dateInput: 'YYYY-MM-DD',
-    monthYearLabel: 'MMMM YYYY',
-    dateA11yLabel: 'MM/DD/YYYY',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
+import { ListExamenComponent } from './examen/admin/list-examen/list-examen.component';
+import { InscriptionComponent } from './eleve/inscription/inscription.component';
+import {CookieService} from 'ngx-cookie-service';
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { ConfirmerChangementComponent } from './modal/confirmer-changement/confirmer-changement.component';
+import { SocialLoginModule,AuthServiceConfig} from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+} from 'angularx-social-login';
+import { environment } from 'src/environments/environment';
+import { AngularMaterialModule } from './angular-material/angular-material/angular-material.module';
 
+
+export const config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider(
+      environment.clientIDG
+    ),
+  }
+]);
 @NgModule({
   declarations: [
     AppComponent,
@@ -153,21 +158,19 @@ export const MY_FORMATS = {
     BeginComponent,
     AjouterExamenComponent,
     AdminComponent,
-    SessionFinieComponent
+    SessionFinieComponent,
+    ListExamenComponent,
+    InscriptionComponent,
+    BreadcrumbsComponent,
+    ConfirmerChangementComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    MatTableModule,
-    MatSortModule,
-    MatFormFieldModule, 
-    MatInputModule,
     BrowserAnimationsModule,
     MDBBootstrapModule,
-    MatButtonModule,
-    MatIconModule,
     ToastrModule.forRoot(),
     // NgxDatatableModule,
     NgMultiSelectDropDownModule.forRoot(),
@@ -181,29 +184,19 @@ export const MY_FORMATS = {
   NgbModule,NgbPaginationModule, NgbAlertModule,
   NgxMaskModule.forRoot(),
   NgxSpinnerModule,
-  MatDialogModule,
-  MatProgressSpinnerModule,
   EditorModule,
-  MatDatepickerModule,
-  MatNativeDateModule,
-  MatCheckboxModule,
-  MatExpansionModule,
-  MatCardModule,
-  MatRadioModule,
-  MatPaginatorModule,
+  SocialLoginModule,
+  AngularMaterialModule,
   ],
   schemas:[ NO_ERRORS_SCHEMA],
   providers: [EleveService, { provide: 'BASE_URL', useFactory: getBaseUrl },
   { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
-  { provide: MAT_DATE_LOCALE, useValue: 'fr' },
+  CookieService,
   {
-    provide: DateAdapter,
-    useClass: MomentDateAdapter,
-    deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-  },
-  {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
-  { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() },
+    provide: AuthServiceConfig,
+    useFactory: provideConfig,
+  }
   ],
   bootstrap: [AppComponent]
 })
@@ -216,4 +209,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 export function getBaseUrl() {
   return document.getElementsByTagName('base')[0].href;
+}
+
+export function provideConfig() {
+  return config;
 }

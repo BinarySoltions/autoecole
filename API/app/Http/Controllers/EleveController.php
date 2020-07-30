@@ -31,6 +31,23 @@ class EleveController extends Controller
         return $this->serviceEleve->obtenirListeEleves();
     }
 
+    public function partialStudents($limit)
+    {
+        $dateJour = date('Y-m-d');
+        $eleves = Eleve::with('adresse','coordonnee','modules','attestation','examens')
+        ->where(function($query) use ($dateJour)
+        {
+            $query->whereDate('date_fin_permis','>=',$dateJour)
+            ->orwhereNull('date_fin_permis');
+        })
+        ->orWhere(function($query) use ($dateJour)
+        {
+            $query->whereDate('date_fin_contrat','>=',$dateJour)
+            ->orwhereNull('date_fin_contrat');
+        })
+        ->orderBy('created_at','desc')->take($limit)->get();
+        return EleveResource::Collection($eleves);
+    }
     public function seulement()
     {
         return $this->serviceEleve->obtenirListeElevesSeulement();
@@ -194,17 +211,21 @@ class EleveController extends Controller
 
     public function getTest($id)
     {
-        $eleves = Examen::where('eleve_id','=',$id)
-        ->orderBy('created_at','desc')->first();
+        $eleves = Examen::with('eleve')->where('eleve_id','=',$id)->orderBy('created_at','desc')->get();
+        
+        return  ExamenResource::Collection($eleves);
+    }
+    
+    public function getTestById($id)
+    {
+        $eleves = Examen::find($id);
         return  new ExamenResource($eleves); 
     }
 
     public function updateTest(Request $request)
     {
         if($request) {
-            $examen = Examen::where('eleve_id','=',$request->id)
-            ->where('actif','=',1)
-            ->first();
+            $examen = Examen::find($request->id);
             if($examen){
                 $examen->resultat = $request->resultat;
                 $examen->save();

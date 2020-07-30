@@ -6,4 +6,10 @@ export class User {
     name: string;
     access_token: string;
     remember_me:boolean=true;
+    idSocial:string;
+    image:string;
+    provider:string;
+    token?:string;
+    idToken?:string;
+    from?:string;
 }

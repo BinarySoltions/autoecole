@@ -194,7 +194,7 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
      }
     public print(quality = 1,filename:string,i) {
       this.eventClickTelecharger = true;
-      filename  = filename+'.pdf';
+      filename  = filename + this.eleve.numero_contrat+"_"+this.eleve.prenom+this.eleve.nom+".pdf";
       const id = `${i}pdf`;
       html2canvas(document.getElementById(id)
                ).then(canvas => {
@@ -224,7 +224,7 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
             pdf.addPage();
             pdf.addImage(img[2], 'PNG', 0, 0, 612, 792,'','FAST');
             setInterval(() => {}, 2000);
-            pdf.save("attestation_final.pdf");
+            pdf.save("attestation_final_"+this.eleve.numero_contrat+"_"+this.eleve.prenom+this.eleve.nom+".pdf");
             this.eventClickTelecharger = false;
             // var uri = pdf.output('dataurlstring');
             // this.openDataUriWindow(uri,"attestation_final.pdf");
@@ -246,7 +246,7 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
       let q = 1;
       if(this.estPhaseUne){
         this.typeCopie = this.typeDeCopies[0];
-        this.print(q,"attestation_phase1_test",0);
+        this.print(q,"attestation_phase1_",0);
       }
       if(this.estCopieDelegataire){
         this.printAll();

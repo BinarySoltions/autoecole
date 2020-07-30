@@ -11,8 +11,8 @@
                 </mat-form-field>
                 </div>
                 <div class="col col-3">
-                  <mat-radio-group aria-label="Langue" name="langue" [(ngModel)] = "langue">
-                    <mat-radio-button name="langue" value="fr" (change)="radioChange($event)" [checked]="'true'">FR</mat-radio-button>
+                  <mat-radio-group aria-label="Langue" name="langue" [(ngModel)] = "langue" required>
+                    <mat-radio-button name="langue" value="fr" (change)="radioChange($event)" checked>FR</mat-radio-button>
                     <mat-radio-button name="langue" value="eng" (change)="radioChange($event)">ENG</mat-radio-button>
                   </mat-radio-group>
                   </div>
