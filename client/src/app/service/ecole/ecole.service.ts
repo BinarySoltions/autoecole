@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { Ecole } from 'src/app/entite/ecole.entity';
 import { catchError } from 'rxjs/operators';
+import { SharedServiceModule } from 'src/app/shared/shared/shared-service.module';
 
 
 const httpOptions = {
@@ -14,7 +15,7 @@ const httpOptions = {
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: SharedServiceModule
 })
 export class EcoleService {
   readonly apiUrl = environment.apiEndpoint;

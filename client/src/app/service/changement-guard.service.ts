@@ -3,12 +3,13 @@ import { Observable } from 'rxjs';
 import { CanDeactivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { ShowModalService } from './show-modal.service';
 import { ConfirmerChangementComponent } from '../modal/confirmer-changement/confirmer-changement.component';
+import { SharedServiceModule } from '../shared/shared/shared-service.module';
 export interface PeutEtreDeactivate{
   estPropre():boolean | Observable<boolean>;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: SharedServiceModule
 })
 export class ChangementGuardService implements  CanDeactivate<PeutEtreDeactivate>{
 

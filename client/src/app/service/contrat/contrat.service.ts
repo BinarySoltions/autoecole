@@ -4,6 +4,7 @@ import { HttpErrorResponse, HttpHeaders, HttpClient } from '@angular/common/http
 import { environment } from 'src/environments/environment';
 import { ParametresContrat } from 'src/app/parametres-contrat/parametres-contrat.component';
 import { catchError } from 'rxjs/operators';
+import { SharedServiceModule } from 'src/app/shared/shared/shared-service.module';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -12,7 +13,7 @@ const httpOptions = {
   })
 };
 @Injectable({
-  providedIn: 'root'
+  providedIn: SharedServiceModule
 })
 export class ContratService {
 

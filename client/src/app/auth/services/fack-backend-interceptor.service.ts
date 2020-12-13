@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { mergeMap, materialize, delay, dematerialize } from 'rxjs/operators';
+import { SharedServiceModule } from 'src/app/shared/shared/shared-service.module';
 
 // array in local storage for registered users
 let users = JSON.parse(localStorage.getItem('users')) || [];
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: SharedServiceModule
 })
 export class FackBackendInterceptorService implements HttpInterceptor {
 

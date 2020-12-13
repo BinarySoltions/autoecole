@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, Input, AfterViewInit } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
@@ -18,7 +18,7 @@ enum Lien{
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit,AfterViewInit {
   baseUrl:any;
   currentUser:User;
   nombreElevesExpires: any;
@@ -26,6 +26,7 @@ export class NavbarComponent implements OnInit {
   lien = Lien;
   lienActif = this.lien.HOME;
   @Input() isExamen = false;
+  isLogged: User;
   constructor(private translate:TranslateService,
     @Inject('BASE_URL') baseUrl: string,
     private router: Router,
@@ -35,13 +36,14 @@ export class NavbarComponent implements OnInit {
       this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.translate.setDefaultLang('fr');
     this.baseUrl = baseUrl;
+    this.isLogged = this.authenticationService.currentUserValue;
+  }
+  ngAfterViewInit(): void {
+    this.obtenirElevesExpires();
   }
 
   ngOnInit() {
-    this.obtenirElevesExpires();
-    this.partageService.nombreCourant.subscribe(n=>{
-      this.estNotifie = n;
-    })
+   
   }
 
 logout() {
@@ -49,9 +51,24 @@ logout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
 }
-obtenirElevesExpires() {    
+obtenirElevesExpires() { 
+  if(this.isLogged) {
   this.serviceEleve.obtenirElevesExpires().subscribe(res=>{
-    this.estNotifie  = !res? 0 : res.length;
+    setTimeout(() => {
+      this.estNotifie  = !res? 0 : res.length;
+  },0);
+   
   });
+
+  this.partageService.nombreCourant.subscribe(n=>{
+    this.estNotifie = n;
+    setTimeout(() => {
+      this.estNotifie = n;
+  },0);
+  });
+}}
+
+checkLogin(){
+  return this.authenticationService.currentUserValue;
 }
 }

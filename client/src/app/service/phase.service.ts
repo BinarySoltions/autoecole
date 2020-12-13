@@ -4,6 +4,7 @@ import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { Phase } from '../entite/phase.entity';
 import { catchError } from 'rxjs/operators';
+import { SharedServiceModule } from '../shared/shared/shared-service.module';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -13,7 +14,7 @@ const httpOptions = {
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: SharedServiceModule
 })
 export class PhaseService {
   readonly apiUrl = environment.apiEndpoint;

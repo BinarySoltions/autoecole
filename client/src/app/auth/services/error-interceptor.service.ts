@@ -3,9 +3,10 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/c
 import { Observable, throwError } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import { catchError } from 'rxjs/operators';
+import { SharedServiceModule } from 'src/app/shared/shared/shared-service.module';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: SharedServiceModule
 })
 export class ErrorInterceptorService implements HttpInterceptor{
 

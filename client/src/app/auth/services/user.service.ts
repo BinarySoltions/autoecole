@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../user.model';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { SharedServiceModule } from 'src/app/shared/shared/shared-service.module';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: SharedServiceModule
 })
 export class UserService {
 

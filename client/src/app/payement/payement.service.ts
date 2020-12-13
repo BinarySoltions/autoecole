@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { Payement } from './payement.model';
 import { Eleve } from '../entite/eleve.entity';
 import { TotalPayement } from './total/total.component';
+import { SharedServiceModule } from '../shared/shared/shared-service.module';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -21,7 +22,7 @@ const httpOptions2 = {
 };
 
 @Injectable({
-  providedIn: 'root' 
+  providedIn: SharedServiceModule
 })
 export class PayementService {
 

@@ -9,6 +9,7 @@ use App\User;
 use App\Http\Resources\UserResource;
 use Socialite;
 use Illuminate\Support\Facades\URL;
+use Google_Client;
 
 class AuthController extends Controller
 {
@@ -63,7 +64,7 @@ class AuthController extends Controller
                 ], 401);
             }
             $is_valid_user = User::where('email','=',$request->email)->get();
-            if(!$is_valid_user){
+            if(!is_array($is_valid_user)){
                 return response()->json([
                     'message' => 'Unauthorized'
                 ], 401);
@@ -90,7 +91,7 @@ class AuthController extends Controller
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
         
-        $token->expires_at = Carbon::now()->addMinutes(5);
+        $token->expires_at = Carbon::now()->addMonths(4);
         $token->save();
         return response()->json([
             'access_token' => $tokenResult->accessToken,
@@ -138,12 +139,12 @@ class AuthController extends Controller
     }
     public function validateUser(Request $request){
         $client_id_google = \Config::get('values.client_id_google');
-        $http = new \GuzzleHttp\Client([
-            'verify' => 'C:\laravel\API\public\cacert.pem'
-        ]);
+        // $http = new \GuzzleHttp\Client([
+        //     'verify' => 'C:\laravel\API\public\cacert.pem'
+        // ]);
       
         $client = new \Google_Client(['client_id' => $client_id_google ]);  // Specify the CLIENT_ID of the app that accesses the backend
-        $client->setHttpClient($http);
+        //$client->setHttpClient($http);
         $payload = $client->verifyIdToken($request->idToken);
         return response()->json([
             'message' => $payload

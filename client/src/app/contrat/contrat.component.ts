@@ -126,7 +126,7 @@ export class ContratComponent implements OnInit {
           pdf.addPage();
           pdf.addImage(sc[4].toDataURL('image/png'), 'PNG', 0, 0, 612, 700,'','FAST');
           setInterval(() => {}, 5000);
-          pdf.save("contrat-"+this.eleve.numero_contrat+".pdf");
+          pdf.save("contrat_"+this.eleve.numero_contrat+"_"+this.eleve.prenom+"_"+this.eleve.nom+".pdf");
           this.spinner.hide();
     })
   }
@@ -155,7 +155,7 @@ export class ContratComponent implements OnInit {
           pdf.addPage();
           pdf.addImage(img[4], 'PNG', 0, 0, 612, 700,'','FAST');
           setInterval(() => {}, 5000);
-          pdf.save("contrat-"+this.eleve.numero_contrat+".pdf");
+          pdf.save("contrat-"+this.eleve.numero_contrat+"_"+this.eleve.prenom+"_"+this.eleve.nom+".pdf");
           this.spinner.hide();
           // var uri = pdf.output('dataurlstring');
           // this.openDataUriWindow(uri,"contrat-"+this.eleve.numero_contrat);

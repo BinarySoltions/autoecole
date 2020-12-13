@@ -8,6 +8,7 @@ import { ModuleModel } from 'src/app/module/ajouter-module/ajouter-module.compon
 import { Eleve } from 'src/app/entite/eleve.entity';
 import { Phase } from 'src/app/entite/phase.entity';
 import { PhaseModel } from 'src/app/phase/module/phase-module/phase-module.component';
+import { SharedServiceModule } from 'src/app/shared/shared/shared-service.module';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -17,7 +18,7 @@ const httpOptions = {
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: SharedServiceModule
 })
 export class ModuleService {
 

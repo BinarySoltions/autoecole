@@ -5,6 +5,7 @@ import { MatDialogModule, MatProgressSpinnerModule, MatDatepickerModule, MatNati
   MatSortModule,MatFormFieldModule, MatInputModule, MatButtonModule,MatIconModule, MatPaginatorIntl, MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS, MatRadioModule, } from '@angular/material';
 import { getDutchPaginatorIntl } from 'src/app/french-paginator-intl';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { LayoutModule } from '@angular/cdk/layout';
 
 export const MY_FORMATS = {
   parse: {
@@ -40,6 +41,7 @@ export const MY_FORMATS = {
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    LayoutModule,
   ],
   providers:[
     { provide: MAT_DATE_LOCALE, useValue: 'fr' },

@@ -4,9 +4,10 @@ import { User } from '../user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
+import { SharedServiceModule } from 'src/app/shared/shared/shared-service.module';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: SharedServiceModule
 })
 export class AuthenticationService {
   readonly apiUrl = environment.apiEndpoint;

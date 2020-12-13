@@ -30,16 +30,14 @@ class EleveService implements IEleveService
         //save eleve
         $eleve->prenom = $request->prenom;
         $eleve->nom = $request->nom;
-        $eleve_existant = DB::select('SELECT numero_contrat FROM eleve WHERE numero_contrat LIKE :numero_contrat ORDER by numero_contrat * 1 DESC limit 1', ['numero_contrat' => '%-'.date("Y")]);
-        $numero_contrat = '001-'.date("Y");
+        $eleve_existant = DB::select('SELECT numero_contrat FROM eleve  ORDER by numero_contrat * 1 DESC limit 1');
         if($eleve_existant){
             $array = \explode("-",$eleve_existant[0]->numero_contrat);
-            $incr = $array[0]*1 + 1;
+            $incr = intval($array[0]) + 1;
             $numero_contrat = $incr.'-'.date("Y");
+            $eleve->numero_contrat = $numero_contrat;
         }
-
-        $eleve->numero_contrat = $numero_contrat;
-
+        
         if($request->date_inscription)
             $eleve->date_inscription = date('Y-m-d', strtotime($request->date_inscription));
         if($request->date_naissance)
@@ -132,11 +130,11 @@ class EleveService implements IEleveService
         ->where(function($query) use ($dateJour)
         {
             $query->whereDate('date_fin_permis','>=',$dateJour)
-            ->orwhereNull('date_fin_permis');
+            ->whereDate('date_fin_contrat','>=',$dateJour);
         })
         ->orWhere(function($query) use ($dateJour)
         {
-            $query->whereDate('date_fin_contrat','>=',$dateJour)
+            $query->whereNull('date_fin_permis')
             ->orwhereNull('date_fin_contrat');
         })
         ->orderBy('created_at','desc')->get();

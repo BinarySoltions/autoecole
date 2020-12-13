@@ -5,6 +5,7 @@ import { Attestation } from 'src/app/entite/attestation.entity';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AttestationModel } from 'src/app/attestation/attestation/attestation.component';
+import { SharedServiceModule } from 'src/app/shared/shared/shared-service.module';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -14,7 +15,7 @@ const httpOptions = {
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: SharedServiceModule
 })
 export class AttestationService {
 

@@ -61,7 +61,7 @@ export class GabaritFactureComponent implements OnInit,OnChanges {
   }
 
   public print(quality = 1,filename:string,i) {
-    filename  = filename+'.pdf';
+    filename  = filename+"_"+this.eleve.prenom+this.eleve.nom+"_"+this.eleve.numero_contrat+'.pdf';
     const id = `${i}pdf`;
     html2canvas(document.getElementById(id)
              ).then(canvas => {

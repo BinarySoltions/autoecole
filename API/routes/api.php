@@ -35,7 +35,6 @@ Route::group([
  Route::post('exporter_registre','EleveController@export')->middleware('auth:api');
 //get users
 Route::get('users','AuthController@users')->middleware('auth:api');
-
 //create module
 Route::post('module','ModuleController@store')->middleware('auth:api');
 
@@ -49,8 +48,12 @@ Route::post('phase','PhaseController@store')->middleware('auth:api');
 Route::get('phases','PhaseController@index')->middleware('auth:api');
 //create eleve
 Route::post('eleve','EleveController@store')->middleware('auth:api');
+Route::post('inscrire','EleveController@store');
 //get all eleves
 Route::get('eleves','EleveController@index')->middleware('auth:api');
+
+//get all eleves
+Route::get('eleves/{limit}','EleveController@partialStudents')->middleware('auth:api');
 
 //get all eleves
 Route::get('eleves_seulement','EleveController@seulement')->middleware('auth:api');
@@ -95,6 +98,8 @@ Route::post('payements','PayementController@totalPayement')->middleware('auth:ap
 Route::post('pass','EleveController@pass')->middleware('auth:api');
 //post test
 Route::get('obtenirExamen/{id}','EleveController@getTest')->middleware('auth:api');
+//post test
+Route::get('obtenirExamenById/{id}','EleveController@getTestById')->middleware('auth:api');
 //post test
 Route::post('enregistrerExamen','EleveController@updateTest')->middleware('auth:api');
 //get test

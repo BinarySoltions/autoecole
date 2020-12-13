@@ -56,7 +56,7 @@ export class ExamenComponent implements OnInit,OnChanges {
     let request = {numero:this.numeroIdentification,resultat:content,date_examen:dateNow,langue:this.langue};
     this.serviceEleve.soumettreExamen(request).subscribe(r=>{
       if(r.isValid){
-        this.route.navigate(['session-terminer']);
+        this.route.navigate(['public/session-terminer']);
       }
     })
   }

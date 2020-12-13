@@ -1,7 +1,8 @@
-import { Injectable, ElementRef } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { SharedServiceModule } from '../shared/shared/shared-service.module';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: SharedServiceModule
 })
 export class ShowModalService {
   private modals: any[] = [];

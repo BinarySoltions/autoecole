@@ -176,7 +176,7 @@ class EleveController extends Controller
     }
     public function notify()
     {
-        $dateSup = date("Y-m-d",strtotime("60 days"));
+        $dateSup = date("Y-m-d",strtotime("120 days"));
         $dateInf = date("Y-m-d");
         $eleves = Eleve::with('adresse','coordonnee','modules','attestation')
         ->where(function($query) use ($dateInf, $dateSup)

@@ -62,8 +62,8 @@
     },
     
     "url":{
-        "eleve":"eleves",
-        "ajout_eleve":"eleve"
+        "eleve":"/eleves",
+        "ajout_eleve":"/eleve"
     },
     "examen":{
         "title":"Examen préalable à l'obtention du permis d'apprenti conducteur (classe 5)",
@@ -110,7 +110,7 @@
         "debut_contrat":"Début du contrat",
         "date_expiration_permis":"Date d'expiration permis",
         "date_expiration_contrat":"Date d'expiration contrat",
-        "merci":"Merci pour votre inscription",
+        "merci":"Merci pour votre inscription et bienvenue!",
         "inscrire":"S'inscrire à nouveau",
         "langue":"Langue"
     }

@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { PersonneResponsable } from 'src/app/entite/personne-responsable.entity';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { SharedServiceModule } from 'src/app/shared/shared/shared-service.module';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -13,7 +14,7 @@ const httpOptions = {
   })
 };
 @Injectable({
-  providedIn: 'root'
+  providedIn: SharedServiceModule
 })
 export class PersonneResponsableService {
 

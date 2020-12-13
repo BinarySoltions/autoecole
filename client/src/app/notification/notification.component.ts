@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { EleveService } from '../service/eleve/eleve.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PartageService } from '../service/partage.service';
+import { AuthenticationService } from '../auth/services/authentication.service';
 
 @Component({
   selector: 'app-notification',
@@ -14,10 +15,13 @@ export class NotificationComponent implements OnInit {
   titre = "Élèves en cours d'expiration";
   constructor(private serviceEleve: EleveService,
     private spinner:NgxSpinnerService,
-    private partageService:PartageService) { }
+    private partageService:PartageService,
+    private authenticationService: AuthenticationService,) { }
 
   ngOnInit() {
-    this.obtenirElevesExpires();
+    if(this.authenticationService && this.authenticationService.currentUserValue){
+      this.obtenirElevesExpires();
+    }
   }
   obtenirElevesExpires() {    
     this.spinner.show(undefined, { fullScreen: true });

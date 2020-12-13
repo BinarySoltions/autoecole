@@ -25,7 +25,6 @@ export class InscriptionComponent implements OnInit {
   action:string;
   model:any;
 
-  baseUrl:any;
   @ViewChild('formulaire') formulaire:NgForm;
   cookiePremiereInscription:any;
   languages: { value: string; label: string; }[];
@@ -35,11 +34,9 @@ export class InscriptionComponent implements OnInit {
         private serviceEleve:EleveService,
         private activatedRoute: ActivatedRoute,
         private toastr: ToastrService,
-        @Inject('BASE_URL') baseUrl: string,
         private translate:TranslateService,
         private cookieService:CookieService) {
          this.translate.setDefaultLang('fr');
-          this.baseUrl = baseUrl;
           this.cookiePremiereInscription = this.cookieService.get('subscribe-student');
          }
 
@@ -98,7 +95,7 @@ export class InscriptionComponent implements OnInit {
     this.eleveModele.date_fin_permis = !this.eleveModele.date_fin_permis?null:moment(this.eleveModele.date_fin_permis).format('YYYY-MM-DD');
   }
   public fermer(){
-    this.router.navigate(['/#']);
+    this.router.navigate(['/']);
   }
   obtenirFinContrat(valeur){
     if(valeur) {

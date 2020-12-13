@@ -48,7 +48,7 @@ export class BeginComponent implements OnInit,OnDestroy {
       }
       this.spinner.hide();
     })
-    this.route.navigate(['examen',this.numeroIdentification,this.langue]);
+    this.route.navigate(['public/examen',this.numeroIdentification,this.langue]);
   }
 
 }

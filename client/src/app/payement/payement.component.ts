@@ -54,6 +54,7 @@ export class PayementComponent implements OnInit,AfterViewInit {
    
     this.types = [
       { value: 'Liquide', label: 'Liquide' },
+      { value: 'Interac', label: 'Interac' },
       { value: 'Chèque', label: 'Chèque' },
       { value: 'Carte', label: 'Carte' }
       ];

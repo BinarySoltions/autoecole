@@ -50,7 +50,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
    }
 
   @HostListener('input') oninput() {
-    this.mdbTablePagination.searchText = this.searchText;
+    //this.mdbTablePagination.searchText = this.searchText;
   }
   ngOnInit() { 
     this.spinner.show(undefined, { fullScreen: true });
@@ -66,7 +66,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
       if (result) {
         this.elements = result;
         this.listeEleves  = result.filter(eleve=>{
-          return _.extend(eleve, {'nomcomplet':eleve.nom+', '+eleve.prenom}) ;
+          return _.extend(eleve, {'nomcomplet':eleve.nom+', '+eleve.prenom+', '+eleve.numero_contrat}) ;
         });
        
       }
@@ -77,7 +77,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
       if (result) {
         this.elements = result;
         this.listeEleves  = result.filter(eleve=>{
-          return _.extend(eleve, {'nomcomplet':eleve.nom+', '+eleve.prenom}) ;
+          return _.extend(eleve, {'nomcomplet':eleve.nom+', '+eleve.prenom+', '+eleve.numero_contrat}) ;
         });
        
       }
