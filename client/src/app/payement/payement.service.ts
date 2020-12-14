@@ -11,7 +11,8 @@ const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-  })
+  }),
+  responseType: 'text' as 'json'
 };
 const httpOptions2 = {
   headers: new HttpHeaders({
@@ -42,9 +43,11 @@ export class PayementService {
   obtnenirTotalPayementsByDates(totalPayement:TotalPayement): Observable<TotalPayement> {
     return this.http.post<TotalPayement>(this.apiUrl + 'payements',totalPayement,httpOptions);
   }
-  genererPDF(html:any):Observable<any>{
-    return this.http.post<any>("http://localhost:51033/api/generateReport",html,httpOptions2);
+  genererPDF(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'printPayment', req, httpOptions)
+      .pipe(catchError(this.handleError));
   }
+ 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

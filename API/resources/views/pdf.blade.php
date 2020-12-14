@@ -108,9 +108,7 @@ tr>.border-left{
 .resize-h-30{
     height:30px;
 }
-.resize-10{
-    width:70% !important;
-}
+
 td.trait{
     border-right:1px solid #000;
     height:1px !important;

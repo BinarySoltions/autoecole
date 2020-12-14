@@ -84,7 +84,21 @@ export class GabaritFactureComponent implements OnInit,OnChanges {
     a.document.write(html);
 }
   imprimer(){
-   this.print(1,"facture",1);
+   //this.print(1,"facture",1);
+   let req = {id:this.eleve.id,payments:this.payementsPDF.map(x=>x.id)}
+    this.servicePayement.genererPDF(req).subscribe(response=>{
+      let a = response.split("\r\n\r\n")
+      const byteCharacters = atob(a[1]);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      let file = new Blob([byteArray], { type: 'application/pdf' });            
+      var fileURL = URL.createObjectURL(file);
+      var tab = window.open(fileURL,'_blank');
+      setTimeout(()=>tab.document.title = 'facture',1000);
+    });
   }
   printTest(){
     let htmlComplex = document.getElementById("1pdf").outerHTML;

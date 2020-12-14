@@ -1,8 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests;
 use App\Services\Eleve\IEleveService;
 use App\Services\Eleve\EleveRequete;
@@ -13,6 +14,12 @@ use App\Adresse;
 use App\Coordonnee;
 use App\Module;
 use App\Examen;
+use App\Ecole;
+use App\AdresseEcole;
+use App\Payement;
+use Elibyy\TCPDF\Facades\TCPDF;
+use App\MYPDF;
+
 
 class EleveController extends Controller
 {
@@ -28,6 +35,25 @@ class EleveController extends Controller
      */
     public function index()
     {
+        $eleves = Eleve::with('adresse','coordonnee','payements')
+        ->find(217);
+        $ecole = Ecole::with('adresse')->first();
+        $totalPaye = 10;
+        //set_time_limit(600);
+        //print_r($eleves->payements);
+        $view = \View::make('pdftest',
+        ['eleve' => $eleves,'ecole' => $ecole,'payementsPDF' => $eleves->payements,'totalPaye' => $totalPaye,'dateDuJour' => date('Y-m-d')]);
+        $html = $view->render();
+        echo $html;
+        $pdf = new MYPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
+        // Set font
+        //$pdf::SetFont('helvetica', 'B', 20);
+        // Title
+        $pdf::SetHeaderData('/images/logo_pconduite.jpg', 100, 'PDF_HEADER_TITLE', "PDF_HEADER_STRING");
+        //$pdf::SetMargins(PDF_MARGIN_LEFT, 0, PDF_MARGIN_RIGHT);
+        $pdf::AddPage();
+        $pdf::writeHTML($html, true, false, true, false, '');
+        $pdf::Output('C:\Users\Ousmane\Documents\hello_world.pdf','F');
         return $this->serviceEleve->obtenirListeEleves();
     }
 
@@ -242,5 +268,38 @@ class EleveController extends Controller
                 'isValid' => false
             ]);
         }
+    }
+
+    public function printPayment(Request $request)
+    {
+        $eleves = Eleve::with('adresse','coordonnee','payements')
+        ->find($request->id);
+        $ecole = Ecole::with('adresse')->first();
+        $totalPaye = 10;
+        //set_time_limit(600);
+        //print_r($eleves->payements);
+        $ids = $request->payments;
+      
+        $payements = $eleves->payements->filter(function ($value, $key) use($ids) {
+            return  in_array($value['id'], $ids);
+        });
+       
+        $view = \View::make('pdftest',
+        ['eleve' => $eleves,'ecole' => $ecole,'payementsPDF' => $payements,'totalPaye' => $totalPaye,'dateDuJour' => date('Y-m-d')]);
+        $html = $view->render();
+       
+        $pdf = new MYPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
+        // Set font
+        //$pdf::SetFont('helvetica', 'B', 20);
+        // Title
+        $pdf::SetHeaderData('/images/logo_pconduite.jpg', 100, 'PDF_HEADER_TITLE', "PDF_HEADER_STRING");
+        //$pdf::SetMargins(PDF_MARGIN_LEFT, 0, PDF_MARGIN_RIGHT);
+        $pdf::AddPage();
+        $pdf::writeHTML($html, true, false, true, false, '');
+        $result =  $pdf::Output('hello_world.pdf','E');
+        return  $result;
+        return response()->json([
+            'result' => $result
+        ]);
     }
 }
