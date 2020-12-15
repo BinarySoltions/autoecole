@@ -1,10 +1,11 @@
-<div id="1pdf" style="width:100%;height: 792px;font-weight: 500;">
+<div id="1pdf" style="width:100%;height: 792px;font-weight: 500;font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+    line-height: 1.5;">
   <table cellspacing="0" cellpadding="1" class="" style="width:100%;margin-bottom:50px">
     <tr>
       <td width="20%" align="center">
         <div class="" >
         <br/>
-          <img style="width:150px" src="/images/logo_pconduite.jpg" alt="logo" />
+          <img style="width:150px" src="{{url('/images/logo_pconduite.jpg')}}" alt="logo" />
       </div>
       </td>
       <td width="50%" align="center" style="padding-top:0px;">
@@ -36,11 +37,10 @@
       </td>
     </tr>
   </table><!--end-->
-<table cellspacing="0" cellpadding="1" class="" style="width:100%;margin:50px 0px;font-size: 12px !important">
+<table cellspacing="0" cellpadding="1" class="" style="width:100%;margin:50px 0px;">
   <tr><th width="50%"><h4>Facturé à</h4></th><th></th><th></th></tr>
 <tr>
-    <td  align="left">
-      <span>{{$eleve->nom}} {{$eleve->prenom}}</span><br/>
+    <td  align="left"><span>{{$eleve->nom}} {{$eleve->prenom}}</span><br/>
       @if (isset($eleve->adresse))
       <span>{{$eleve->adresse->numero}}
         @if (isset($eleve->adresse->rue))
@@ -70,9 +70,8 @@
         <span>Coût de la formation :</span><br/>
         <span *ngIf="totalPaye">Total payé :</span>
     </td>
-    <td align="left">
-        <span>{{$dateDuJour}}</span><br/>
-        <span>{{$dateDuJour}}</span><br/>
+    <td align="left"><span>{{date("Hms")}}</span><br/>
+    <span>{{$dateDuJour}}</span><br/>
       <span>{{$eleve->frais_inscription }}</span><br/>
       <span >${{$totalPaye }}</span><br/>
       <br/>
@@ -80,7 +79,7 @@
   </tr>
 </table>
 <div class="" style="width:100%;margin:20px 0px">
-  <table cellspacing="0" cellpadding="4" border="1" width="100%" style="font-size: 12px !important">
+  <table cellspacing="0" cellpadding="4" border="1" style="border-color:#313233" width="100%">
     <tr>
     <th style="width:40%;text-align:center">Type de payement</th><th style="width:40%;text-align:center">Date payement</th><th style="width:20%;text-align:right;">Montant</th>
   </tr>
@@ -105,10 +104,6 @@
         </table>
       </td>
   </tr>
-  <!-- <tr style="border:0px solid white"><td colspan="2" align="right" style="border:0px solid white">Sous Total : </td><td style="border:0px solid white;text-align:right;padding-right: 10px">{{$totalPaye}}</td></tr>
-  <tr style="border:0px solid white"><td  colspan="2" align="right" style="border:0px solid white">TVQ (no. 1224768920 TQ0001) :</td><td style="border:0px solid white;text-align:right;padding-right: 10px">{{$totalPaye}}</td></tr>
-  <tr style="border:0px solid white"><td  colspan="2" align="right" style="border:0px solid white">TPS (no. 7052 7727 RT0001) :</td><td style="border:0px solid white;text-align:right;padding-right: 10px" >{{$totalPaye}}</td></tr>
-  <tr style="border:0px solid white"><td  colspan="2" align="right" style="border:0px solid white"> Total : </td><td style="border:0px solid white;text-align:right;padding-right: 10px">{{$totalPaye}}</td></tr> -->
   </table>
 </div>
 </div>
