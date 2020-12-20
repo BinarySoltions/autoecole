@@ -12,7 +12,13 @@ const httpOptions = {
     'Access-Control-Allow-Origin': '*',
   })
 };
-
+const httpOptions2 = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  }),
+  'responseType'  : 'text' as 'json'
+};
 @Injectable({
   providedIn: SharedServiceModule
 })
@@ -84,7 +90,10 @@ export class EleveService {
     return this.http.post<any>(this.apiUrl + 'enregistrerExamen', examen, httpOptions)
     .pipe(catchError(this.handleError));
   }
-  
+  genererExamenPDF(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'printExam', req, httpOptions2)
+      .pipe(catchError(this.handleError));
+  }
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

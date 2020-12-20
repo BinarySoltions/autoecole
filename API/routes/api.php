@@ -67,6 +67,8 @@ Route::get('recherche/{term}','EleveController@search')->middleware('auth:api');
 Route::get('expiration','EleveController@notify')->middleware('auth:api');
 //get expire eleves
 Route::post('printPayment','EleveController@printPayment')->middleware('auth:api');
+//get expire eleves
+Route::post('printExam','EleveController@printExam')->middleware('auth:api');
  
 //create ecole
 Route::post('ecole','EcoleController@store')->middleware('auth:api');

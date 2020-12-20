@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -281,8 +282,33 @@ class EleveController extends Controller
         $pdf::writeHTML($html, true, false, true, false, '');
         $result =  $pdf::Output('hello_world.pdf','E');
         return  $result;
-        return response()->json([
-            'result' => $result
-        ]);
+    }
+
+    public function printExam(Request $request)
+    {
+        $id = $request->id;
+        $eleves = Examen::find($id);
+        $lang = $eleves->langue;
+        if( $lang == "eng"){
+            $lang ="en";
+        }
+            
+        App::setLocale($lang);
+        $examenReponse = json_decode($eleves->resultat);
+        $view = \View::make('pExam',
+        ['examenReponses' =>  $examenReponse]);
+        $html = $view->render();
+        if(isset($html)){
+            $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
+            // Set font
+                //$pdf::SetFont('helvetica', '', 10);
+            // Title
+            //$pdf::SetHeaderData('/images/logo_pconduite.jpg', 100, 'PDF_HEADER_TITLE', "PDF_HEADER_STRING");
+            //$pdf::SetMargins(PDF_MARGIN_LEFT, 0, PDF_MARGIN_RIGHT);
+            $pdf::AddPage();
+            $pdf::writeHTML($html, true, false, true, false, '');
+            $result =  $pdf::Output('hello_world.pdf','E');
+            return  $result;
+        } 
     }
 }

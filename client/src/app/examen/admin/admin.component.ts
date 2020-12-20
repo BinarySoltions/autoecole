@@ -66,7 +66,20 @@ export class AdminComponent implements OnInit,OnDestroy {
     
   }
  imprimer(){
-  this.print(1,'test_examen',1);
+  //this.print(1,'test_examen',1);
+  let req = {id:this.idExamen};
+  this.serviceEleve.genererExamenPDF(req).subscribe(response=>{
+    let a = response.split("\r\n\r\n")
+    const byteCharacters = atob(a[1]);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    let file = new Blob([byteArray], { type: 'application/pdf' });       
+    var fileURL = URL.createObjectURL(file);
+    var tab = window.open(fileURL,'_blank');
+  });
  }
   print(quality = 1,filename:string,i) {
     this.eventClickTelecharger = true;

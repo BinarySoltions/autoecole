@@ -11,15 +11,14 @@ const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-  }),
-  responseType: 'text' as 'json'
+  })
 };
 const httpOptions2 = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
   }),
-  'responseType'  : 'arraybuffer' as 'json'
+  responseType: 'text' as 'json'
 };
 
 @Injectable({
@@ -44,7 +43,7 @@ export class PayementService {
     return this.http.post<TotalPayement>(this.apiUrl + 'payements',totalPayement,httpOptions);
   }
   genererPDF(req:any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'printPayment', req, httpOptions)
+    return this.http.post<any>(this.apiUrl + 'printPayment', req, httpOptions2)
       .pipe(catchError(this.handleError));
   }
  
