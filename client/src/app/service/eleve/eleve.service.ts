@@ -94,6 +94,10 @@ export class EleveService {
     return this.http.post<any>(this.apiUrl + 'printExam', req, httpOptions2)
       .pipe(catchError(this.handleError));
   }
+  genererContratPDF(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'printContrat', req, httpOptions2)
+      .pipe(catchError(this.handleError));
+  }
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

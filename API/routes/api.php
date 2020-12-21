@@ -65,10 +65,12 @@ Route::delete('eleve/{id}','EleveController@destroy')->middleware('auth:api');
 Route::get('recherche/{term}','EleveController@search')->middleware('auth:api');
 //get expire eleves
 Route::get('expiration','EleveController@notify')->middleware('auth:api');
-//get expire eleves
+//print payment
 Route::post('printPayment','EleveController@printPayment')->middleware('auth:api');
-//get expire eleves
+//print exam
 Route::post('printExam','EleveController@printExam')->middleware('auth:api');
+//post contrat
+Route::post('printContrat','EleveController@printContrat')->middleware('auth:api');
  
 //create ecole
 Route::post('ecole','EcoleController@store')->middleware('auth:api');

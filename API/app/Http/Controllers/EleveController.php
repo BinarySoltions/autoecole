@@ -18,9 +18,10 @@ use App\Examen;
 use App\Ecole;
 use App\AdresseEcole;
 use App\Payement;
+use App\ParametreContrat;
 use Elibyy\TCPDF\Facades\TCPDF;
 use App\MYPDF;
-
+use MYPDF as GlobalMYPDF;
 
 class EleveController extends Controller
 {
@@ -268,7 +269,7 @@ class EleveController extends Controller
         $totalPaye = $totalPaye + $p->montant;
        }
 
-        $view = \View::make('pfacture',
+        $view = View::make('pfacture',
         ['eleve' => $eleves,'ecole' => $ecole,'payementsPDF' => $payements,'totalPaye' => $totalPaye,'dateDuJour' => date('Y-m-d')]);
         $html = $view->render();
        
@@ -295,7 +296,7 @@ class EleveController extends Controller
             
         App::setLocale($lang);
         $examenReponse = json_decode($eleves->resultat);
-        $view = \View::make('pExam',
+        $view = View::make('pExam',
         ['examenReponses' =>  $examenReponse]);
         $html = $view->render();
         if(isset($html)){
@@ -307,6 +308,49 @@ class EleveController extends Controller
             //$pdf::SetMargins(PDF_MARGIN_LEFT, 0, PDF_MARGIN_RIGHT);
             $pdf::AddPage();
             $pdf::writeHTML($html, true, false, true, false, '');
+            $result =  $pdf::Output('hello_world.pdf','E');
+            return  $result;
+        } 
+    }
+
+    public function printContrat(Request $request)
+    {
+        $eleve = Eleve::with('adresse','coordonnee')
+        ->find($request->id);
+        $ecole = Ecole::with('adresse')->first();
+        $parametre_contrat = ParametreContrat::first();
+        $dateVersion =  date( "Y-m-d", strtotime( "2019-01-01" ) );
+        $view = View::make('contrat.pcontrat',
+        ['eleve' =>  $eleve,'ecole'=>$ecole,'parametres'=>$parametre_contrat,'dateVersion'=>$dateVersion]);
+        $html = $view->render();
+        if(isset($html)){
+            $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
+            $pdf::setHeaderCallback(function($pdf) {
+
+                $html = '<div><img src="./images/logo_pconduite.jpg"  width="90" alt=""></div>';
+                $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+        
+            });
+            $pdf::setFooterCallback(function($pdf) {
+                $dateVersion =  date( "Y-m-d", strtotime( "2019-01-01" ) );
+                $html = '<div style="font-size:9px;">Version '.$dateVersion.'</div>';
+                $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+        
+            });
+           // $pdf = new MYPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
+            // Set font
+            //$pdf::SetFont('helvetica', '', 9);
+            // Title
+            //$pdf::setPrintHeader(true);
+            //$pdf::setPrintFooter(true);
+           
+            $pdf::SetMargins(10, 17, 10);
+            $pdf::SetHeaderMargin(5);
+            $pdf::SetFooterMargin(10);
+            //$pdf::SetMargins(PDF_MARGIN_LEFT, 0, PDF_MARGIN_RIGHT);
+            $pdf::AddPage();
+            $pdf::writeHTML($html, true, false, true, false, '');
+            $pdf::lastPage();
             $result =  $pdf::Output('hello_world.pdf','E');
             return  $result;
         } 

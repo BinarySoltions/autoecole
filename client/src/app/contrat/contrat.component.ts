@@ -165,7 +165,20 @@ export class ContratComponent implements OnInit {
   }
   imprimer(){
     //this.print(1,"facture",1);
-    this.printAll();
+    //this.printAll();
+    let req = {id:this.eleve.id};
+    this.serviceEleve.genererContratPDF(req).subscribe(response=>{
+      let a = response.split("\r\n\r\n")
+      const byteCharacters = atob(a[1]);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      let file = new Blob([byteArray], { type: 'application/pdf' });       
+      var fileURL = URL.createObjectURL(file);
+      var tab = window.open(fileURL,'_blank');
+    });
   }
   openDataUriWindow(url,filename) {
     var html = '<html><head><title>' +
