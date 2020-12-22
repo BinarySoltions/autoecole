@@ -5,6 +5,6 @@
       </th>
     </tr>
   <tr>
-    <td class="no-bottom-space" colspan="4" style="font-size: 7.5px;">{!! $descriptionFormation !!}</td>
+    <td class="no-bottom-space" colspan="4" style="font-size: 7px;">{!! $descriptionFormation !!}</td>
   </tr>
 </table>

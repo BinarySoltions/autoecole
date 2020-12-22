@@ -325,15 +325,26 @@ class EleveController extends Controller
         $html = $view->render();
         if(isset($html)){
             $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
-            $pdf::setHeaderCallback(function($pdf) {
+            $numero = $eleve->numero_contrat;
+            $pdf::setHeaderCallback(function($pdf) use($numero) {
 
-                $html = '<div><img src="./images/logo_pconduite.jpg"  width="90" alt=""></div>';
+                $html = '<style>.sb {
+                    border-bottom: 1px solid black;
+                    border-image: url("/images/droite.png");
+                  }</style><table class="w-100" style="font-size:7px"><tr><td style="width:10px"></td>
+                  <td style="width:98%"><table><tr><td class="w-100 sb" style="width:100%">No de contrat / <em>Contract no. :</em>'.$numero.'</td></tr></table></td>
+                  </tr>
+</table>';
                 $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+                
         
             });
             $pdf::setFooterCallback(function($pdf) {
                 $dateVersion =  date( "Y-m-d", strtotime( "2019-01-01" ) );
-                $html = '<div style="font-size:9px;">Version '.$dateVersion.'</div>';
+                $html = '<table class="w-100" style="font-size:7px"><tr><td style="width:10px"></td>
+                <td style="width:98%"><table><tr><td class="w-100 sb" style="width:100%">Version '.$dateVersion.'</td></tr></table></td>
+                </tr>
+</table>';
                 $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
         
             });
@@ -344,7 +355,7 @@ class EleveController extends Controller
             //$pdf::setPrintHeader(true);
             //$pdf::setPrintFooter(true);
            
-            $pdf::SetMargins(10, 17, 10);
+            $pdf::SetMargins(10, 11, 10);
             $pdf::SetHeaderMargin(5);
             $pdf::SetFooterMargin(10);
             //$pdf::SetMargins(PDF_MARGIN_LEFT, 0, PDF_MARGIN_RIGHT);

@@ -34,10 +34,12 @@
         toolbar:
           'undo redo | formatselect | bold italic backcolor | \
           alignleft aligncenter alignright alignjustify | \
-          bullist numlist outdent indent|styleselect | removeformat | help',
+          bullist numlist outdent indent|styleselect |table tabledelete | \
+          tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol | removeformat | help',
         entity_encoding:'numeric',
         style_formats: [
-                {title:'Indent', selector:'p', styles:{'padding-left':'5px'}}
+                {title:'Indent', selector:'p', styles:{'padding-left':'5px'}},
+                {title:'MarginB', selector:'p', styles:{'margin-bottom':'2px'}}
                 ],
         style_formats_merge: true
       }"

@@ -42,7 +42,8 @@ class ParametreContratController extends Controller
 
         if(!$parametre_contrat)
             $parametre_contrat = new ParametreContrat;
-
+        //$df = preg_replace('/<p[^>]*>/', '', $request->description_formation);
+       // $df = preg_replace('/<\/p>/', '<br />', $df);
         $parametre_contrat->description_formation =  $request->description_formation;
         $parametre_contrat->cout_formation =  $request->cout_formation;
         $parametre_contrat->modalite_payement_un =  $request->modalite_payement_un;
