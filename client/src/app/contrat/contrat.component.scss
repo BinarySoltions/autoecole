@@ -111,3 +111,6 @@ td{
   background-color: transparent !important;
   color: black;
 }
+.no-border-table > table tbody tr td {
+  border-style:none !important;
+}

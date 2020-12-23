@@ -181,23 +181,23 @@
 
   .sr {
     border-right: 1px solid black;
-    border-image: url('/images/droite.png');
+    border-image: url('<?php echo url('/images/droite.png');?>');
   }
 
   .sbr {
     border-right: 1px solid black;
     border-bottom: 1px solid black;
-    border-image: url('/images/droite.png');
+    border-image: url('<?php echo url('/images/droite.png');?>');
   }
 
   .sb {
     border-bottom: 1px solid black;
-    border-image: url('/images/droite.png');
+    border-image: url('<?php echo url('/images/droite.png');?>');
   }
 
   .s {
     border: 1px solid black;
-    border-image: url('/images/droite.png');
+    border-image: url('<?php echo url('/images/droite.png');?>');
   }
 
   .w-input {
@@ -260,7 +260,7 @@
     </tr>
     <tr>
       <!-- titre -->
-      <td colspan="2" style="height: 164px;">
+      <td colspan="2" style="height: 205px;">
 
       </td>
     </tr>
@@ -277,7 +277,8 @@
       <!-- cout formation -->
       <td colspan="2">
         <!-- <app-cout-formation [loiCoutFormation]="parametres.cout_formation" [coutFormation]="eleve?.frais_inscription"></app-cout-formation> -->
-        @include('contrat.loiCoutFormation',['loiCoutFormation'=>$parametres->cout_formation,'eleve'=>$eleve])
+        @include('contrat.loiCoutFormation',['loiCoutFormation'=>$parametres->cout_formation,
+        'eleve'=>$eleve,'nbTheorique'=>$nbTheorique,'nbPratique'=>$nbPratique])
       </td>
     </tr>
   </table>
@@ -300,6 +301,65 @@
         [eleve]="eleve"
         [versement]="versement" [dateDebut]="eleve.date_contrat"
         ></app-modalite-payement> -->
+      </td>
+    </tr>
+  </table>
+
+  <table style="width:100%;">
+    <tr>
+      <td style="height: 40px;">
+        <!-- <app-numero-contrat [numero]="eleve?.numero_contrat"></app-numero-contrat> -->
+      </td>
+    </tr>
+    <tr>
+      <td>
+      @include('contrat.acceptationCondition',['loiConditionUne'=>$parametres->acceptation_condition_un,
+        'loiConditionENG'=>$parametres->acceptation_condition_anglais,'loiConditionDeux'=>$parametres->acceptation_condition_deux,
+        'loiConditionTrois'=>$parametres->acceptation_condition_trois,'dateVersion'=>$dateVersion])
+        <!-- <app-acceptation-condition [loiConditionUne]="parametres.acceptation_condition_un" [loiConditionENG]="parametres.acceptation_condition_anglais" [loiConditionDeux]="parametres.acceptation_condition_deux" [loiConditionTrois]="parametres.acceptation_condition_trois"></app-acceptation-condition> -->
+      </td>
+    </tr>
+  </table>
+  <table style="width:100%;">
+  <tr>
+      <td style="height: 50px;">
+        <!-- <app-numero-contrat [numero]="eleve?.numero_contrat"></app-numero-contrat> -->
+      </td>
+    </tr>
+    <tr>
+      <td class="w-50">
+        <!-- <app-ecole-conduite [ecole]="ecole"></app-ecole-conduite> -->
+        @include('contrat.ecoleConduite',['ecole'=>$ecole])
+      </td>
+      <td class="w-50 c-padding-left" align="bottom">
+        <!-- <app-numero-contrat [numero]="eleve?.numero_contrat"></app-numero-contrat>
+        <app-moto-conduite></app-moto-conduite> -->
+        @include('contrat.motoConduite')
+      </td>
+    </tr>
+    <tr>
+      <!-- titre -->
+      <td style="height: 10px;">
+
+      </td>
+    </tr>
+    <tr>
+      <!-- titre -->
+      <td colspan="2" align="center">
+        <strong>CONTRAT DE VENTE DES COURS OFFICIELS DE LA SAAQ / SALES CONTRACT FOR SAAQ’S OFFICIAL DRIVING COURSES </strong>
+        <br />Formation théorique et pratique : tarif unitaire unique / Theoretical and practical instruction: Single unit rate
+      </td>
+    </tr>
+    <tr>
+      <!-- titre -->
+      <td style="height: 10px;">
+
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" >
+        <!-- <app-resiliation></app-resiliation> -->
+        @include('contrat.resiliation')
       </td>
     </tr>
   </table>

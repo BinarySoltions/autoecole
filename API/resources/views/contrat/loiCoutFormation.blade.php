@@ -11,13 +11,13 @@
                     <td colspan="3" style="padding-top:5px;">Type de formation / <em>Type of training</em> (Sélectionnez un cours / <em>Select a course</em>) </td>
                 </tr>
                 <tr>
-                    <td class="" style="width: 30%;"><strong><img src="/images/checked.png" width="5"> Automobile / <em>Automobile</em> </strong></td>
-                    <td class="" style="width: 45%;"><strong><img src="/images/unchecked.png" width="5"> Cyclomoteur / <em>Moped and Motorized Scooter</em> </strong></td>
+                    <td class="" style="width: 30%;"><strong><img src="{{url('/images/checked.png')}}" width="5"> Automobile / <em>Automobile</em> </strong></td>
+                    <td class="" style="width: 45%;"><strong><img src="{{url('/images/unchecked.png')}}" width="5"> Cyclomoteur / <em>Moped and Motorized Scooter</em> </strong></td>
                     <td class="" style="width: 25%;"></td>
                 </tr>
                 <tr>
-                    <td align="left" style="width: 30%;"><strong><img src="/images/unchecked.png" width="5"> Motocyclette / <em>Motorcycle</em> </strong></td>
-                    <td align="left" style="width: 45%;"><strong><img src="/images/unchecked.png" width="5"> Motocyclette à trois roues / <em>Three-Wheeled Motorcycle</em></strong></td>
+                    <td align="left" style="width: 30%;"><strong><img src="{{url('/images/unchecked.png')}}" width="5"> Motocyclette / <em>Motorcycle</em> </strong></td>
+                    <td align="left" style="width: 45%;"><strong><img src="{{url('/images/unchecked.png')}}" width="5"> Motocyclette à trois roues / <em>Three-Wheeled Motorcycle</em></strong></td>
                     <td style="width: 25%;"></td>
                 </tr>
                 <tr >
@@ -25,14 +25,14 @@
                     </td>
                     <td >
                         <!-- <input class="input-w-80 border-normal" type="number" [(ngModel)]="heureTheorique" /> heures / <em>hours</em> -->
-                        @include('contrat.input',['class'=>'s w-input','value'=>'24','value_two'=>'<span>heures / <em>hours</em></span>'])
+                        @include('contrat.input',['class'=>'s w-input','value'=>$nbTheorique,'value_two'=>'<span>heures / <em>hours</em></span>'])
                     </td>
                 </tr>
                 <tr >
                     <td colspan="2" >Total d’heures de sorties sur la route ou cours pratiques / <em>Total number of hours of on-the-road sessions or practical courses</em> :
                     </td>
                     <td >
-                        @include('contrat.input',['class'=>'s w-input','value'=>'15','value_two'=>'<span>heures / <em>hours</em></span>'])
+                        @include('contrat.input',['class'=>'s w-input','value'=>$nbPratique,'value_two'=>'<span>heures / <em>hours</em></span>'])
                     </td>
                 </tr>
                 <tr >
@@ -40,7 +40,7 @@
                     </td>
                     <td >
                         <!-- <input class="input-w-80 border-bottom bg-color-transparent" type="number" [disabled]="true" [value]="obtenirHeuresTotales()" /> -->
-                        @include('contrat.input',['class'=>'sb w-input','value'=>'39','value_two'=>''])
+                        @include('contrat.input',['class'=>'sb w-input','value'=>$nbTheorique+$nbPratique,'value_two'=>''])
                     </td>
                 </tr>
                 <tr >
@@ -48,7 +48,7 @@
                     </td>
                     <td >
                         <!-- <input class="input-w-80 border-bottom bg-color-transparent" type="number" [disabled]="true" [value]="obtenirTauxHoraire()" />$ -->
-                        @include('contrat.input',['class'=>'sb w-input','value'=>'17.41','value_two'=>'$'])
+                        @include('contrat.input',['class'=>'sb w-input','value'=>number_format($eleve->frais_inscription/($nbTheorique+$nbPratique),2),'value_two'=>'$'])
                     </td>
                 </tr>
                 <tr >

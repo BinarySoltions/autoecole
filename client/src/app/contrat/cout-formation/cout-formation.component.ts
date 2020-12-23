@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-cout-formation',
@@ -9,6 +9,7 @@ import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 export class CoutFormationComponent implements OnInit {
   @Input() loiCoutFormation;
   @Input() coutFormation: number;
+  @Output() heuresEvent = new EventEmitter<any>();
   TPS = 5;
   TVQ = 9.975;
   heurePratique = 15;
@@ -24,6 +25,7 @@ export class CoutFormationComponent implements OnInit {
   obtenirTauxHoraire(){
     const t = this.heurePratique + this.heureTheorique;
     const m = this.coutFormation/t;
+    this.heuresEvent.emit({heurePratique:this.heurePratique,heureTheorique:this.heureTheorique});
     return Number(m.toFixed(2));
   }
   obtenirMontantHorsTaxes(){

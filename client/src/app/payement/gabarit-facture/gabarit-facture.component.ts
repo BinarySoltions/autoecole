@@ -8,6 +8,7 @@ import * as $ from 'jquery';
 import { Coordonnee } from 'src/app/entite/coordonnee.entity';
 import { AdresseEcole, Adresse } from 'src/app/entite/adresse.entity';
 import { PayementService } from '../payement.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-gabarit-facture',
@@ -24,7 +25,7 @@ export class GabaritFactureComponent implements OnInit,OnChanges {
   TVQ = 9.975;
   numeroFacture = "";
   dateDuJour = new Date();
-  constructor(private servicePayement:PayementService) { }
+  constructor(private servicePayement:PayementService,private spinner:NgxSpinnerService) { }
 
   ngOnInit() {
     this.initialiserEcole();
@@ -85,6 +86,7 @@ export class GabaritFactureComponent implements OnInit,OnChanges {
 }
   imprimer(){
    //this.print(1,"facture",1);
+   this.spinner.show(undefined, { fullScreen: true });
    let req = {id:this.eleve.id,payments:this.payementsPDF.map(x=>x.id)}
     this.servicePayement.genererPDF(req).subscribe(response=>{
       let a = response.split("\r\n\r\n")
@@ -97,6 +99,7 @@ export class GabaritFactureComponent implements OnInit,OnChanges {
       let file = new Blob([byteArray], { type: 'application/pdf' });       
       var fileURL = URL.createObjectURL(file);
       var tab = window.open(fileURL,'_blank');
+      this.spinner.hide();
     });
   }
   printTest(){

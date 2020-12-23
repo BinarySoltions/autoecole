@@ -1,5 +1,8 @@
-<table class="w-100" style="margin-bottom:5px !important">
+<table class="w-100">
   <tr>
-    <td class="w-100 border-bottom">No de contrat / <em>Contract no. :</em> {{$numero}}</td>
+    <td class="w-100 sb">No de contrat / <em>Contract no. :</em> {{$numero}}</td>
+  </tr>
+  <tr>
+    <td class="w-100" style="height: 3px;"></td>
   </tr>
 </table>

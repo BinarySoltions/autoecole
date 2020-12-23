@@ -32,6 +32,8 @@ export class ContratComponent implements OnInit {
   totalPaye = 0;
   versement = 0;
   dateVersion: any;
+  heurePratique: any;
+  heureTheorique: any;
 
   constructor(private serviceContrat:ContratService, private activatedRoute:ActivatedRoute,
     private router:Router, 
@@ -163,10 +165,17 @@ export class ContratComponent implements OnInit {
       });
     }
   }
+
+  heuresEvent(event){
+    this.heurePratique = event.heurePratique;
+    this.heureTheorique = event.heureTheorique;
+  }
+
   imprimer(){
     //this.print(1,"facture",1);
     //this.printAll();
-    let req = {id:this.eleve.id};
+    this.spinner.show(undefined, { fullScreen: true });
+    let req = {id:this.eleve.id,heurePratique:this.heurePratique,heureTheorique:this.heureTheorique};
     this.serviceEleve.genererContratPDF(req).subscribe(response=>{
       let a = response.split("\r\n\r\n")
       const byteCharacters = atob(a[1]);
@@ -178,6 +187,7 @@ export class ContratComponent implements OnInit {
       let file = new Blob([byteArray], { type: 'application/pdf' });       
       var fileURL = URL.createObjectURL(file);
       var tab = window.open(fileURL,'_blank');
+      this.spinner.hide();
     });
   }
   openDataUriWindow(url,filename) {

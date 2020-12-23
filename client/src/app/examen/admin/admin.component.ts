@@ -7,6 +7,7 @@ import jsPDF from 'jspdf';
 import * as html2canvas from "html2canvas";
 import { ToastrService } from 'ngx-toastr';
 import { ReponseModel, ExamenModel } from 'src/app/modele/examen-model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class AdminComponent implements OnInit,OnDestroy {
   eleveId: any;
 
   constructor(private translate: TranslateService,private route:Router,private router:ActivatedRoute,
-    private serviceEleve:EleveService, private toastr: ToastrService,) {
+    private serviceEleve:EleveService, private toastr: ToastrService,private spinner:NgxSpinnerService,) {
     this.translate.setDefaultLang('fr');
    }
 
@@ -68,6 +69,7 @@ export class AdminComponent implements OnInit,OnDestroy {
  imprimer(){
   //this.print(1,'test_examen',1);
   let req = {id:this.idExamen};
+  this.spinner.show(undefined, { fullScreen: true });
   this.serviceEleve.genererExamenPDF(req).subscribe(response=>{
     let a = response.split("\r\n\r\n")
     const byteCharacters = atob(a[1]);
@@ -79,6 +81,7 @@ export class AdminComponent implements OnInit,OnDestroy {
     let file = new Blob([byteArray], { type: 'application/pdf' });       
     var fileURL = URL.createObjectURL(file);
     var tab = window.open(fileURL,'_blank');
+    this.spinner.hide();
   });
  }
   print(quality = 1,filename:string,i) {

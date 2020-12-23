@@ -321,7 +321,10 @@ class EleveController extends Controller
         $parametre_contrat = ParametreContrat::first();
         $dateVersion =  date( "Y-m-d", strtotime( "2019-01-01" ) );
         $view = View::make('contrat.pcontrat',
-        ['eleve' =>  $eleve,'ecole'=>$ecole,'parametres'=>$parametre_contrat,'dateVersion'=>$dateVersion]);
+        ['eleve' =>  $eleve,'ecole'=>$ecole,
+        'parametres'=>$parametre_contrat,
+        'dateVersion'=>$dateVersion, 'nbTheorique'=>$request->heureTheorique
+        , 'nbPratique'=>$request->heurePratique]);
         $html = $view->render();
         if(isset($html)){
             $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
