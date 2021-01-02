@@ -19,9 +19,10 @@ use App\Ecole;
 use App\AdresseEcole;
 use App\Payement;
 use App\ParametreContrat;
+use App\Attestation;
+use App\PersonneResponsable;
 use Elibyy\TCPDF\Facades\TCPDF;
 use App\MYPDF;
-use MYPDF as GlobalMYPDF;
 
 class EleveController extends Controller
 {
@@ -369,4 +370,63 @@ class EleveController extends Controller
             return  $result;
         } 
     }
+
+    public function printAttestation(Request $request)
+    {
+        $eleve = Eleve::with('adresse','coordonnee','modules')
+        ->find($request->id);
+        $ecole = Ecole::with('adresse')->first();
+        $attestation = Attestation::where('eleve_id','=',$request->id)->first();
+        $personnes = PersonneResponsable::orderBy('created_at','desc')->get();
+        $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
+        $numero = $attestation->numero;
+        define('K_TCPDF_CALLS_IN_HTML',true);
+        $params = $pdf::serializeTCPDFtagParameters(array($numero, 'C128C', '', '', '', 10, 0.50, array('position'=>'C', 'border'=>false, 'padding'=>0, 'fgcolor'=>array(0,0,0), 'bgcolor'=>array(255,255,255), 'text'=>false, 'font'=>'helvetica', 'fontsize'=>7), 'N'));
+        $view = View::make('attestation.pattestation',
+        ['eleve' =>  $eleve,'ecole'=>$ecole,'params'=>$params,'attestation'=>$attestation,'personnes'=>$personnes]);
+        $html = $view->render();
+        if(isset($html)){
+           
+            $pdf::setHeaderCallback(function($pdf) use($numero) {
+
+                $html = '<style>.sb {
+                    border-bottom: 1px solid black;
+                    border-image: url("/images/droite.png");
+                  }</style><table class="w-100" style="font-size:7px" cellpadding="2"><tr><td><img src="/images/logo_pconduite.jpg" width="120" /></td>
+                  <td><table><tr><td class="w-100"  style="text-align:right;font-weight:bold;font-size:14px">
+                  Attestation de cours de conduite<br />pour la classe 5</td></tr></table></td>
+                  </tr>
+</table>';
+                $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+                
+        
+            });
+            $pdf::setFooterCallback(function($pdf) {
+                $copie =  "COPIE DU DÉLÉGATAIRE";
+                $html = '<table class="w-100" style="font-size:7px;font-weight:bolder"><tr>
+                <td align="center">Formulaire prescrit par l\'AQTr pour la réussite du cours de conduite dans une école reconnue.<br/><span style="color:red">'.$copie.'</span></td>
+                </tr>
+</table>';
+                $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+        
+            });
+           // $pdf = new MYPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
+            // Set font
+            //$pdf::SetFont('helvetica', '', 9);
+            // Title
+            //$pdf::setPrintHeader(true);
+            //$pdf::setPrintFooter(true);
+           
+            $pdf::SetMargins(10, 20, 10);
+            $pdf::SetHeaderMargin(5);
+            $pdf::SetFooterMargin(10);
+            //$pdf::SetMargins(PDF_MARGIN_LEFT, 0, PDF_MARGIN_RIGHT);
+            $pdf::AddPage();
+            $pdf::writeHTML($html, true, false, true, false, '');
+            $pdf::lastPage();
+            $result =  $pdf::Output('hello_world.pdf','E');
+            return  $result;
+        } 
+    }
+
 }

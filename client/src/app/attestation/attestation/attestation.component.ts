@@ -18,6 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { AttestationService } from 'src/app/service/attestation/attestation.service';
 import { Attestation } from 'src/app/entite/attestation.entity';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const observableGenerer = new Observable(subscriber => {
   subscriber.next();
@@ -82,7 +83,8 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
     private servicePersonneResponsable:PersonneResponsableService,
     private translate:TranslateService,
     private router:Router,
-    private serviceAttestation:AttestationService
+    private serviceAttestation:AttestationService,
+    private spinner:NgxSpinnerService
     ) { 
       this.translate.setDefaultLang('fr');
     }
@@ -168,9 +170,9 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
     this.phaseQuatre.nom = _.first(this.phaseQuatre.modules).phase.nom;
   }
   telecharger() {
-    this.eventClickTelecharger = true
+    //this.eventClickTelecharger = true
       this.sauvegarderAttestation();
-      this.telechargerParTypeCopies();
+      //this.telechargerParTypeCopies();
     
     }
     sauvegarderAttestation(){
@@ -185,7 +187,7 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
       this.attestation.numero = this.numeroAttestation;
       this.serviceAttestation.AjouterAttestation(this.attestation).subscribe(res=>{
         if(_.has(res,'id')){
-          
+          this.imprimer();
         }
       });
     }
@@ -309,4 +311,23 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
       }
       return null;
     }
+
+    imprimer(){
+      //this.print(1,"facture",1);
+      this.spinner.show(undefined, { fullScreen: true });
+      let req = {id:this.eleve.id}
+       this.serviceEleve.genererAttestationPDF(req).subscribe(response=>{
+         let a = response.split("\r\n\r\n")
+         const byteCharacters = atob(a[1]);
+         const byteNumbers = new Array(byteCharacters.length);
+         for (let i = 0; i < byteCharacters.length; i++) {
+           byteNumbers[i] = byteCharacters.charCodeAt(i);
+         }
+         const byteArray = new Uint8Array(byteNumbers);
+         let file = new Blob([byteArray], { type: 'application/pdf' });   
+         var fileURL = URL.createObjectURL(file);
+         var tab = window.open(fileURL,'fichier.pdf');
+         this.spinner.hide();
+       });
+     }
 }

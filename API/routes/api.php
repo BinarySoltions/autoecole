@@ -71,6 +71,8 @@ Route::post('printPayment','EleveController@printPayment')->middleware('auth:api
 Route::post('printExam','EleveController@printExam')->middleware('auth:api');
 //post contrat
 Route::post('printContrat','EleveController@printContrat')->middleware('auth:api');
+//post attestation
+Route::post('printAttestation','EleveController@printAttestation')->middleware('auth:api');
  
 //create ecole
 Route::post('ecole','EcoleController@store')->middleware('auth:api');
