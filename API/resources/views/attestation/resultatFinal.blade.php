@@ -12,22 +12,22 @@
                         J'atteste que le cours de conduite est :
                     </td>
                     <td class="font-label sb" style="width: 15%;">
-                        @if(isset($attestation->resultat_phase_une) && $attestation->resultat_final == 1)
-                        <img src="/images/checked.png" width="7">
+                        @if(isset($attestation->resultat_final) && $attestation->resultat_final == 1)
+                        <img src="{{url('/images/checked.png')}}" width="7">
                         @else
-                        <img src="/images/unchecked.png" width="7">
+                        <img src="{{url('/images/unchecked.png')}}" width="7">
                         @endif Réussie</td>
                     <td class=" font-label sb" style="width: 15%;">
-                        @if(isset($attestation->resultat_phase_une) && $attestation->resultat_final == 2)
-                        <img src="/images/checked.png" width="7">
+                        @if(isset($attestation->resultat_final) && $attestation->resultat_final == 2)
+                        <img src="{{url('/images/checked.png')}}" width="7">
                         @else
-                        <img src="/images/unchecked.png" width="7">
+                        <img src="{{url('/images/unchecked.png')}}" width="7">
                         @endif Échouée</td>
                     <td class=" font-label sb" style="width: 15%;">
-                        @if(isset($attestation->resultat_phase_une) && $attestation->resultat_final == 3)
-                        <img src="/images/checked.png" width="7">
+                        @if(isset($attestation->resultat_final) && $attestation->resultat_final == 3)
+                        <img src="{{url('/images/checked.png')}}" width="7">
                         @else
-                        <img src="/images/unchecked.png" width="7">
+                        <img src="{{url('/images/unchecked.png')}}" width="7">
                         @endif Incomplète</td>
                 </tr>
                 <tr>
@@ -35,7 +35,7 @@
                         Nom de la personne responsable :
                     </td>
                     <td colspan="3" class="font-label height-champ sb">
-                        @if(isset($personne) && isset($personne[0]->nom))
+                        @if(isset($personne) && isset($personne->nom))
                         {{$personne->nom}}
                         @endif
                     </td>
@@ -44,8 +44,7 @@
                     <td colspan="4">
                         <table border="0" cellpadding="3">
                             <tr class="">
-                                <td colspan="2" class="font-label">
-                                    Signature :
+                                <td colspan="2" class="font-label">Signature :
                                 </td>
                                 <td class="font-label">Date : </td>
                                 <td class=""></td>

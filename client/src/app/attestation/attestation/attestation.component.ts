@@ -177,15 +177,17 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
     }
     sauvegarderAttestation(){
       if(this.estPhaseUne){
-        this.attestation.phase_une = true;
+        //this.attestation.phase_une = true;
         this.attestation.resultat_phase_une = _.indexOf(this.resultat_phaseUne,true)+1;
         this.attestation.personne_responsable_id = this.personnePhase1.id;
       }else{
+       // this.attestation.phase_une = false;
         this.attestation.resultat_final = _.indexOf(this.resultat_final,true)+1;
         this.attestation.personne_responsable2_id = this.personneAutre.id;
       }
       this.attestation.numero = this.numeroAttestation;
-      this.serviceAttestation.AjouterAttestation(this.attestation).subscribe(res=>{
+      let req={phase_une:this.estPhaseUne,attestation:this.attestation}
+      this.serviceAttestation.AjouterAttestation(req).subscribe(res=>{
         if(_.has(res,'id')){
           this.imprimer();
         }
@@ -315,7 +317,7 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
     imprimer(){
       //this.print(1,"facture",1);
       this.spinner.show(undefined, { fullScreen: true });
-      let req = {id:this.eleve.id}
+      let req = {id:this.eleve.id,copie:this.estPhaseUne}
        this.serviceEleve.genererAttestationPDF(req).subscribe(response=>{
          let a = response.split("\r\n\r\n")
          const byteCharacters = atob(a[1]);
@@ -326,7 +328,15 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
          const byteArray = new Uint8Array(byteNumbers);
          let file = new Blob([byteArray], { type: 'application/pdf' });   
          var fileURL = URL.createObjectURL(file);
-         var tab = window.open(fileURL,'fichier.pdf');
+         var tempLink = document.createElement('a');
+         tempLink.style.display = 'none';
+         tempLink.href = fileURL;
+         tempLink.setAttribute('download', this.numeroAttestation+"_"+"attestation_final_"+this.eleve.prenom+this.eleve.nom+".pdf");
+         document.body.appendChild(tempLink);
+         tempLink.click();
+         document.body.removeChild(tempLink);
+         window.URL.revokeObjectURL(fileURL);
+         //var tab = window.open(fileURL,'fichier.pdf');
          this.spinner.hide();
        });
      }

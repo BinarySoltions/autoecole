@@ -27,7 +27,7 @@ export class AttestationService {
     return this.http.get<AttestationModel>(this.apiUrl+'attestation/'+id);
   }
 
-  AjouterAttestation(attestation:AttestationModel):Observable<AttestationModel>{
+  AjouterAttestation(attestation:any):Observable<AttestationModel>{
     return this.http.post<AttestationModel>(this.apiUrl+'attestation',attestation,httpOptions)
     .pipe(catchError(this.handleError));
   }

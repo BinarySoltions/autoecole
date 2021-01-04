@@ -96,7 +96,7 @@
     <table cellpadding="2">
         <tr>
             <td>
-                <table border="0" cellpadding="3">
+                <table border="0" cellpadding="4">
                     <tr>
                         <td style="background-color: lightgray; width:25%">
                             <?php $phaseUne = $eleve->modules->filter(function ($value, $key) {
@@ -109,7 +109,9 @@
                             $id = $attestation->personne_responsable_id;
                             $personneUne = $personnes->filter(function ($value, $key) use ($id) {
                                 return  $value->id == $id;
-                            }); ?>
+                            }); 
+                            $personneUne = $personneUne->first();
+                            ?>
                             @include('attestation.resultatPhaseUne',['attestation'=>$attestation,'personne'=>$personneUne])
                             @include('attestation.signature')
                         </td>
@@ -119,9 +121,11 @@
                             <?php $phaseDeux = $eleve->modules->filter(function ($value, $key) {
                                 return  $value['phase_id'] == 2;
                             }); ?>
+                            @if($isAll)
                             @include('attestation.phase',['modules'=>$phaseDeux,'phase'=>2])
                             <p class="font-weight-bold"><em>Théorie : 12 modules - 24 heures
                                     Pratique : 15 sorties - 15 heures</em></p>
+                            @endif
                         </td>
                         <td style="background-color: lightgray; width:10%">
                         </td>
@@ -129,15 +133,19 @@
                             <?php $phaseTrois = $eleve->modules->filter(function ($value, $key) {
                                 return  $value['phase_id'] == 3;
                             }); ?>
+                             @if($isAll)
                             @include('attestation.phase',['modules'=>$phaseTrois,'phase'=>3])
+                            @endif
                         </td>
                         <td style="background-color: lightgray; width:10%">
                         </td>
-                        <td style="background-color: lightgray; width:27.5%;">
+                        <td style="background-color: lightgray; width:27.5%;height:165px">
                             <?php $phaseQuatre = $eleve->modules->filter(function ($value, $key) {
                                 return  $value['phase_id'] == 4;
                             }); ?>
+                             @if($isAll)
                             @include('attestation.phase',['modules'=>$phaseQuatre,'phase'=>4])
+                            @endif
                         </td>
                     </tr>
                 </table>
@@ -160,10 +168,14 @@
                 <?php 
                  $id2 = $attestation->personne_responsable2_id;
                 $personne = $personnes->filter(function ($value, $key) use ($id2) {
-                    return  $value['id'] == $id2;
-                }); ?>
+                    return  $value->id == $id2;
+                }); 
+                $personne = $personne->first();
+                ?>
+                 @if($isAll)
                 @include('attestation.resultatFinal',['attestation'=>$attestation,'personne'=>$personne])
                 @include('attestation.signatureFinal')
+                @endif
             </td>
             <td style="width: 25%;">
             <table border="0">

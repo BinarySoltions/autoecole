@@ -98,6 +98,14 @@ export class GabaritFactureComponent implements OnInit,OnChanges {
       const byteArray = new Uint8Array(byteNumbers);
       let file = new Blob([byteArray], { type: 'application/pdf' });   
       var fileURL = URL.createObjectURL(file);
+      var tempLink = document.createElement('a');
+      tempLink.style.display = 'none';
+      tempLink.href = fileURL;
+      tempLink.setAttribute('download', "facture_"+this.eleve.prenom+this.eleve.nom+"_"+this.eleve.numero_contrat+'.pdf');
+      document.body.appendChild(tempLink);
+      tempLink.click();
+      document.body.removeChild(tempLink);
+      //window.URL.revokeObjectURL(fileURL);
       var tab = window.open(fileURL,'fichier.pdf');
       this.spinner.hide();
     });

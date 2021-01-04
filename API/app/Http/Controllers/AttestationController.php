@@ -48,25 +48,31 @@ class AttestationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $requests)
     {
+        $request = (object)$requests->attestation;
         $attestation = Attestation::where('eleve_id','=',$request->eleve_id)->first();
         if(!$attestation){
             $attestation = new Attestation();
             $attestation->eleve_id = $request->eleve_id;
             $attestation->ecole_id = $request->ecole_id;
         }
-        if($request->phase_une){
+        if($requests->phase_une){
             $attestation->numero = $request->numero;
             $attestation->resultat_phase_une = $request->resultat_phase_une;
             $attestation->signature_eleve_phase_une = date("Y-m-d H:i:s");
             $attestation->signature_ecole_phase_une = date("Y-m-d H:i:s");
             $attestation->personne_responsable_id = $request->personne_responsable_id;
         }else{
-            $attestation->resultat_final = $request->resultat_final;
+            if(isset($request->resultat_final)){
+                $attestation->resultat_final = $request->resultat_final;
+            }
             $attestation->signature_responsable = date("Y-m-d H:i:s");
             $attestation->signature_eleve = date("Y-m-d H:i:s");
-            $attestation->personne_responsable2_id = $request->personne_responsable2_id;
+            if(isset($request->personne_responsable2_id)){
+                $attestation->personne_responsable2_id = $request->personne_responsable2_id;
+            }
+            
         }
         $attestation->save();
         $att = Attestation::find($attestation->id);

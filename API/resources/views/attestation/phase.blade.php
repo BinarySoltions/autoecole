@@ -1,6 +1,6 @@
 <table border="1" cellpadding="2">
     <tr>
-        <th colspan="4" class="bg-color-black centrer">Phase {{$phase}}</th>
+        <th colspan="4" class="bg-color-black centrer font-weight-bold">Phase {{$phase}}</th>
     </tr>
     <tr>
         <td rowspan="2"  class="bg-color-green centrer font-weight-bold">Module</td>

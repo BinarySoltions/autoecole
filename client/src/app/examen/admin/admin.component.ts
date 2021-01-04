@@ -80,7 +80,15 @@ export class AdminComponent implements OnInit,OnDestroy {
     const byteArray = new Uint8Array(byteNumbers);
     let file = new Blob([byteArray], { type: 'application/pdf' });       
     var fileURL = URL.createObjectURL(file);
-    var tab = window.open(fileURL,'_blank');
+    var tempLink = document.createElement('a');
+    tempLink.style.display = 'none';
+    tempLink.href = fileURL;
+    tempLink.setAttribute('download', "examen_"+this.examenReponses.nomComplet+".pdf");
+    document.body.appendChild(tempLink);
+    tempLink.click();
+    document.body.removeChild(tempLink);
+    window.URL.revokeObjectURL(fileURL);
+    //var tab = window.open(fileURL,'_blank');
     this.spinner.hide();
   });
  }
