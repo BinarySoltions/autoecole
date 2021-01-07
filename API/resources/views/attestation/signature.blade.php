@@ -1,4 +1,4 @@
-<table border="1" cellpadding="2">
+<table border="1" cellpadding="0">
     <tr>
         <th class="bg-color-green font-label" align="left">
             Élève
@@ -6,10 +6,9 @@
     </tr>
     <tr>
         <td>
-            <table border="0" cellpadding="3">
+            <table border="0" cellpadding="5">
                 <tr class="">
-                    <td colspan="2" class="font-label">
-                        Signature :
+                    <td colspan="2" class="font-label">Signature :
                     </td>
                     <td class="font-label">Date : </td>
                     <td class=""></td>

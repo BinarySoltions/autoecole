@@ -1,4 +1,4 @@
-<table border="1" cellpadding="3">
+<table border="1" cellpadding="1">
     <tr>
         <th class="bg-color-green" style="text-align:center;font-weight:bolder">Numéro de l'école</th>
     </tr>

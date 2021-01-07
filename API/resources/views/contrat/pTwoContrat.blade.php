@@ -206,61 +206,40 @@
   }
 </style>
 <div id="1pdf" style="width:100%;background-color: white;font-family: Arial, Helvetica, sans-serif; font-size:7px;">
-  <table style="width:100%;">
+<table border="0" style="width:100%;">
     <tr>
-      <td style="height: 10px;">
+      <td colspan="2">
         <!-- <app-numero-contrat [numero]="eleve?.numero_contrat"></app-numero-contrat> -->
+        <!-- @include('contrat.numero',['numero'=>$eleve->numero_contrat]) -->
+      </td>
+    </tr>
+    <tr>
+      <!-- cout formation -->
+      <td colspan="2">
+        <!-- <app-cout-formation [loiCoutFormation]="parametres.cout_formation" [coutFormation]="eleve?.frais_inscription"></app-cout-formation> -->
+        @include('contrat.loiCoutFormation',['loiCoutFormation'=>$parametres->cout_formation,
+        'eleve'=>$eleve,'nbTheorique'=>$nbTheorique,'nbPratique'=>$nbPratique])
+      </td>
+    </tr>
+  </table>
+  <table border="0" style="width:100%;">
+    <tr>
+      <!-- titre -->
+      <td style="height: 10px;">
+
       </td>
     </tr>
     <tr>
       <td>
-      @include('contrat.acceptationCondition',['loiConditionUne'=>$parametres->acceptation_condition_un,
-        'loiConditionENG'=>$parametres->acceptation_condition_anglais,'loiConditionDeux'=>$parametres->acceptation_condition_deux,
-        'loiConditionTrois'=>$parametres->acceptation_condition_trois,'dateVersion'=>$dateVersion])
-        <!-- <app-acceptation-condition [loiConditionUne]="parametres.acceptation_condition_un" [loiConditionENG]="parametres.acceptation_condition_anglais" [loiConditionDeux]="parametres.acceptation_condition_deux" [loiConditionTrois]="parametres.acceptation_condition_trois"></app-acceptation-condition> -->
-      </td>
-    </tr>
-  </table>
-  <table style="width:100%;">
-  <tr>
-      <td style="height: 50px;">
-        <!-- <app-numero-contrat [numero]="eleve?.numero_contrat"></app-numero-contrat> -->
-      </td>
-    </tr>
-    <tr>
-      <td class="w-50">
-        <!-- <app-ecole-conduite [ecole]="ecole"></app-ecole-conduite> -->
-        @include('contrat.ecoleConduite',['ecole'=>$ecole])
-      </td>
-      <td class="w-50 c-padding-left" align="bottom">
-        <!-- <app-numero-contrat [numero]="eleve?.numero_contrat"></app-numero-contrat>
-        <app-moto-conduite></app-moto-conduite> -->
-        @include('contrat.motoConduite')
-      </td>
-    </tr>
-    <tr>
-      <!-- titre -->
-      <td style="height: 10px;">
-
-      </td>
-    </tr>
-    <tr>
-      <!-- titre -->
-      <td colspan="2" align="center">
-        <strong>CONTRAT DE VENTE DES COURS OFFICIELS DE LA SAAQ / SALES CONTRACT FOR SAAQ’S OFFICIAL DRIVING COURSES </strong>
-        <br />Formation théorique et pratique : tarif unitaire unique / Theoretical and practical instruction: Single unit rate
-      </td>
-    </tr>
-    <tr>
-      <!-- titre -->
-      <td style="height: 10px;">
-
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2" >
-        <!-- <app-resiliation></app-resiliation> -->
-        @include('contrat.resiliation')
+        @include('contrat.modalitePayement',['modalitePayementUn'=>$parametres->modalite_payement_un,
+        'modalitePayementDeux'=>$parametres->modalite_payement_deux,'modalitePayementTrois'=>$parametres->modalite_payement_trois,
+        'eleve'=>$eleve,'versement'=>number_format($eleve->frais_inscription/3,2)])
+        <!-- <app-modalite-payement [modalitePayementUn]="parametres.modalite_payement_un"
+        [modalitePayementDeux]="parametres.modalite_payement_deux"
+        [modalitePayementTrois]="parametres.modalite_payement_trois"
+        [eleve]="eleve"
+        [versement]="versement" [dateDebut]="eleve.date_contrat"
+        ></app-modalite-payement> -->
       </td>
     </tr>
   </table>

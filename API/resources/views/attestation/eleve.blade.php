@@ -1,4 +1,4 @@
-<table border="1" cellpadding="2">
+<table border="1" cellpadding="1">
     <tr>
         <th  class="bg-color-green" align="left">
             Identification de l'élève
@@ -7,25 +7,31 @@
     </tr>
     <tr>
         <td>
-            <table border="0" cellpadding="1">
+            <table border="0" cellpadding="0">
                 <tr class="">
                     <td colspan="3" class="font-label">
                         Nom, prénom
                     </td>
                 </tr>
                 <tr class="">
-                    <td colspan="3" class="sb">
-                        <span class="text-left font-label"> {{$eleve->nom}},&nbsp;{{$eleve->prenom}}</span>
+                    <td colspan="3" class="">
+                        <span class="text-left font-label">{{$eleve->nom}},&nbsp;{{$eleve->prenom}}</span>
                     </td>
 
                 </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table border="0" cellpadding="0">
                 <tr class="">
                     <td colspan="3" class="font-label">
                         Adresse (Numéro, rue, app)
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3" class="sb font-label">
+                    <td colspan="3" class="font-label">
                         @if(isset($eleve->adresse->numero))
                         {{$eleve->adresse->numero}}
                         @endif
@@ -37,36 +43,49 @@
                         @endif
                     </td>
                 </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table border="0" cellpadding="0">
                 <tr class="">
                     <td class=" font-label">
                         Municipalité
                     </td>
-                    <td class=" font-label">Province</td>
-                    <td class=" font-label ">Code postal</td>
+                    <td class=" font-label">
+                    Province</td>
+                    <td class=" font-label ">
+                    Code postal</td>
                 </tr>
                 <tr>
-                    <td class=" sb font-label">
-                    @if(isset($eleve->adresse->municipalite))
+                    <td class="font-label">@if(isset($eleve->adresse->municipalite))
                         {{$eleve->adresse->municipalite}}
                         @endif
                     </td>
-                    <td class="sb font-label">
-                    @if(isset($eleve->adresse->province))
-                        {{$eleve->adresse->province}}
+                    <td class="font-label">
+                    @if(isset($eleve->adresse->province)){{$eleve->adresse->province}}
                         @endif
                     </td>
-                    <td class="sb font-label">
-                    @if(isset($eleve->adresse->code_postal))
-                        {{$eleve->adresse->code_postal}}
-                        @endif
+                    <td class="font-label" align="left">
+                    @if(isset($eleve->adresse->code_postal)){{$eleve->adresse->code_postal}}
+                    @endif
                     </td>
                 </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table border="0" cellpadding="0">
                 <tr class="">
                     <td class="font-label sr">
                         Numéro de contrat
                     </td>
-                    <td class=" font-label sr ">Téléphone</td>
-                    <td class="font-label">Téléphone autre</td>
+                    <td class=" font-label sr ">
+                    Téléphone</td>
+                    <td class="font-label">
+                    Téléphone autre</td>
 
                 </tr>
                 <tr>
@@ -74,10 +93,10 @@
                         {{$eleve->numero_contrat}}
                     </td>
                     <td class="sr font-label">
-                        {{$eleve->coordonnee->telephone}}
+                    {{$eleve->coordonnee->telephone}}
                     </td>
                     <td class="font-label">
-                        {{$eleve->coordonnee->telephone_autre}}
+                    {{$eleve->coordonnee->telephone_autre}}
                     </td>
                 </tr>
             </table>

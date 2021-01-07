@@ -1,4 +1,4 @@
-<table border="1" cellpadding="2">
+<table border="1" cellpadding="1">
     <tr>
         <th  class="bg-color-green" align="left">
             Identification de l'école
@@ -7,25 +7,31 @@
     </tr>
     <tr>
         <td>
-            <table border="0"  cellpadding="1">
+            <table border="0"  cellpadding="0">
                 <tr class="">
                     <td colspan="3" class="font-label">
                         Raison sociale - Nom de l'école
                     </td>
                 </tr>
                 <tr class="">
-                    <td colspan="3" class="sb">
+                    <td colspan="3" class="">
                         <span class="text-left font-label"> {{$ecole->raison_social}}</span>
                     </td>
 
                 </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table border="0"  cellpadding="0">
                 <tr class="">
                     <td colspan="3" class="font-label">
                         Adresse (Numéro, rue, app)
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3" class="sb font-label">
+                    <td colspan="3" class="font-label">
                         @if(isset($ecole->adresse->numero))
                         {{$ecole->adresse->numero}}
                         @endif
@@ -37,30 +43,44 @@
                         @endif
                     </td>
                 </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table border="0"  cellpadding="0">
                 <tr class="">
                     <td class=" font-label">
                         Municipalité
                     </td>
-                    <td class=" font-label">Province</td>
-                    <td class=" font-label ">Code postal</td>
+                    <td class=" font-label">
+                    Province</td>
+                    <td class=" font-label ">
+                    Code postal</td>
                 </tr>
                 <tr>
-                    <td class=" sb font-label">
+                    <td class="font-label">
                     @if(isset($ecole->adresse->municipalite))
                         {{$ecole->adresse->municipalite}}
                         @endif
                     </td>
-                    <td class="sb font-label">
+                    <td class="font-label">
                     @if(isset($ecole->adresse->province))
                         {{$ecole->adresse->province}}
                         @endif
                     </td>
-                    <td class="sb font-label">
+                    <td class="font-label">
                     @if(isset($ecole->adresse->code_postal))
                         {{$ecole->adresse->code_postal}}
                         @endif
                     </td>
                 </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table border="0"  cellpadding="0">
                 <tr class="">
                     <td colspan="3" class="font-label">
                         Adresse de courriel

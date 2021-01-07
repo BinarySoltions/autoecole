@@ -206,61 +206,62 @@
   }
 </style>
 <div id="1pdf" style="width:100%;background-color: white;font-family: Arial, Helvetica, sans-serif; font-size:7px;">
-  <table style="width:100%;">
+  <table border="0" style="width:100%;">
     <tr>
-      <td style="height: 10px;">
-        <!-- <app-numero-contrat [numero]="eleve?.numero_contrat"></app-numero-contrat> -->
-      </td>
-    </tr>
-    <tr>
-      <td>
-      @include('contrat.acceptationCondition',['loiConditionUne'=>$parametres->acceptation_condition_un,
-        'loiConditionENG'=>$parametres->acceptation_condition_anglais,'loiConditionDeux'=>$parametres->acceptation_condition_deux,
-        'loiConditionTrois'=>$parametres->acceptation_condition_trois,'dateVersion'=>$dateVersion])
-        <!-- <app-acceptation-condition [loiConditionUne]="parametres.acceptation_condition_un" [loiConditionENG]="parametres.acceptation_condition_anglais" [loiConditionDeux]="parametres.acceptation_condition_deux" [loiConditionTrois]="parametres.acceptation_condition_trois"></app-acceptation-condition> -->
-      </td>
-    </tr>
-  </table>
-  <table style="width:100%;">
-  <tr>
-      <td style="height: 50px;">
-        <!-- <app-numero-contrat [numero]="eleve?.numero_contrat"></app-numero-contrat> -->
-      </td>
-    </tr>
-    <tr>
-      <td class="w-50">
+      <td class="w-50 margin-bottom">
         <!-- <app-ecole-conduite [ecole]="ecole"></app-ecole-conduite> -->
         @include('contrat.ecoleConduite',['ecole'=>$ecole])
       </td>
-      <td class="w-50 c-padding-left" align="bottom">
-        <!-- <app-numero-contrat [numero]="eleve?.numero_contrat"></app-numero-contrat>
-        <app-moto-conduite></app-moto-conduite> -->
+      <td class="c-padding-left " align="bottom">
+        <!-- <app-numero-contrat [numero]="eleve?.numero_contrat"></app-numero-contrat> -->
+        <!-- <app-moto-conduite></app-moto-conduite> -->
+        <!-- @include('contrat.numero',['numero'=>$eleve->numero_contrat]) -->
         @include('contrat.motoConduite')
       </td>
     </tr>
     <tr>
       <!-- titre -->
-      <td style="height: 10px;">
+      <td colspan="2" style="height: 10px;">
 
       </td>
     </tr>
     <tr>
       <!-- titre -->
-      <td colspan="2" align="center">
+      <td colspan="2" align="center" class="">
         <strong>CONTRAT DE VENTE DES COURS OFFICIELS DE LA SAAQ / SALES CONTRACT FOR SAAQ’S OFFICIAL DRIVING COURSES </strong>
         <br />Formation théorique et pratique : tarif unitaire unique / Theoretical and practical instruction: Single unit rate
       </td>
     </tr>
     <tr>
       <!-- titre -->
-      <td style="height: 10px;">
+      <td colspan="2" style="height: 10px;">
 
       </td>
     </tr>
     <tr>
-      <td colspan="2" >
-        <!-- <app-resiliation></app-resiliation> -->
-        @include('contrat.resiliation')
+      <!-- description formation -->
+      <td colspan="2" class="">
+        <!-- <app-eleve-info [eleve]="eleve"></app-eleve-info> -->
+        @include('contrat.eleveInfo',['eleve'=>$eleve])
+      </td>
+    </tr>
+    <tr>
+      <!-- titre -->
+      <td colspan="2" style="height: 10px;">
+
+      </td>
+    </tr>
+    <tr>
+      <!-- description formation -->
+      <td colspan="2" class="">
+        <!-- <app-description-formation [descriptionFormation]="parametres.description_formation"></app-description-formation> -->
+        @include('contrat.descriptionFormation',['descriptionFormation'=>$parametres->description_formation])
+      </td>
+    </tr>
+    <tr>
+      <!-- titre -->
+      <td colspan="2" style="height: 150px;">
+
       </td>
     </tr>
   </table>
