@@ -39,6 +39,10 @@ export class ModuleService {
     return this.http.post<Phase[]>(this.apiUrl+'module',phaseModule,httpOptions)
     .pipe(catchError(this.handleError));
   }
+
+  obtnenirSorties(): Observable<Module[]> {
+    return this.http.get<Module[]>(this.apiUrl + 'sorties');
+  }
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

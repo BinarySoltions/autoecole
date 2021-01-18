@@ -13,6 +13,6 @@
             </table>
         </td>
 
-        <td class="s" style="font-weight:bolder;width: 35%;min-width:150px;font-size:14px;letter-spacing: 3px;">{{$numero}}</td>
+        <td class="s" style="font-weight:bolder;width: 35%;min-width:150px;font-size:13px;letter-spacing: 3px;">{{$numero}}</td>
     </tr>
 </table>

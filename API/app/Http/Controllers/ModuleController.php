@@ -23,7 +23,11 @@ class ModuleController extends Controller
         $modules = Module::orderBy('numero')->get();
         return ModuleResource::Collection($modules);
     }
-
+    public function driving()
+    {
+        $modules = Module::where('type','P')->orderBy('numero')->get();
+        return ModuleResource::Collection($modules);
+    }
     /**
      * Show the form for creating a new resource.
      *

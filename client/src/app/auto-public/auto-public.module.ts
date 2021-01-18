@@ -15,9 +15,10 @@ import { ExamenComponent } from '../examen/examen.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AngularMaterialModule } from '../angular-material/angular-material/angular-material.module';
 import { NavbarPublicComponent } from './navbar-public/navbar-public.component';
+import { ReserveComponent } from '../reserve/reserve.component';
 
 @NgModule({
-  declarations: [AutoPublicComponent,BeginComponent,SessionFinieComponent,InscriptionComponent,ExamenComponent, NavbarPublicComponent,],
+  declarations: [AutoPublicComponent,BeginComponent,SessionFinieComponent,InscriptionComponent,ExamenComponent, NavbarPublicComponent, ReserveComponent,],
   imports: [
     FormsModule,
     CommonModule,

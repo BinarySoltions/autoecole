@@ -34,28 +34,28 @@
     <table border="0" cellpadding="2">
         <tr>
             <td style="text-align: left;width: 170px;padding-left:0px"><b>{{__('examen.test_num')}}</b></td>
-            <td style="text-align: left;" class="sb">
+            <td style="text-align: left;width: 350px;" class="sb">
                 {{$examenReponses->numeroTest}}
             </td>
             <td style="width: 100px;"></td>
         </tr>
         <tr>
             <td style="text-align: left;width:170px;"><b>{{__('examen.name')}}</b></td>
-            <td style="text-align: left;" class="sb">
+            <td style="text-align: left;width: 350px;" class="sb">
                 {{$examenReponses->nomComplet}}
             </td>
             <td style="width: 100px;"></td>
         </tr>
         <tr>
             <td style="text-align: left;width: 170px;"><b>{{__('examen.school')}}</b></td>
-            <td style="text-align: left;" class="sb">
+            <td style="text-align: left;width: 350px;" class="sb">
                 {{$examenReponses->nomEcole}}
             </td>
             <td style="width: 100px;"></td>
         </tr>
         <tr>
             <td style="text-align: left;width: 170px;"><b>{{__('examen.date')}}</b></td>
-            <td style="text-align: left;" class="sb">
+            <td style="text-align: left;width: 350px;" class="sb">
                 {{$examenReponses->date}}
             </td>
             <td style="width: 100px;"></td>

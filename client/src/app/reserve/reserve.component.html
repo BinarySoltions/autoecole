@@ -1,0 +1,99 @@
+<mdb-card>
+  <mdb-card-header> 
+    <div class="row">
+      <div><h3>{{'reservation.titre' | translate}}</h3></div>
+    </div>
+   </mdb-card-header>
+  <mdb-card-body>
+    <mdb-card-text>
+<form #formulaire="ngForm">
+  <div class="row">
+    <div class="col col-2">
+      <mat-form-field>
+        <mat-label>{{'eleve.langue' | translate}}</mat-label>
+        <select matNativeControl  name="langue" [(ngModel)]="lang" (change)="setLanguage()">
+      <option *ngFor="let language of languages" [value]="language.value">{{language.label}}</option>
+        </select>
+      </mat-form-field>
+    </div>
+  </div>
+<div class="row">
+  <div class="col col-lg-3">
+    <mat-form-field appearance="fill">
+      <mat-label>{{'module.nom' | translate }}</mat-label>
+    <select matNativeControl
+    name="module"
+    aria-label="{{'module.nom' | translate }}"
+     [(ngModel)]="eventDriving.noDriving" 
+     placeholder="date completee" required>
+        <option  value="0">{{'label.selectionner' | translate}}</option>
+        <ng-template ngFor let-module [ngForOf]="listeModules" let-i="index">
+            <option [value]="module.id" [disabled]="module.numero==23 || module.numero==24">{{module.nom}}</option>
+        </ng-template>
+      </select>
+      </mat-form-field>
+</div>
+  <div class="col col-lg-3">
+    <mat-form-field appearance="fill">
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker" name="date" [(ngModel)]="eventDriving.date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="col col-lg-3">
+    <mat-form-field class="w-time" appearance="fill" >
+      <mat-label>De</mat-label>
+      <select matNativeControl [(ngModel)]="eventDriving.startTime" name="startTime">
+        <ng-template ngFor let-time [ngForOf]="times" let-i="index">
+          <option [value]="time.value">{{time.label}}</option>
+      </ng-template>
+      </select>
+    </mat-form-field>
+    <mat-form-field class="w-time" appearance="fill" >
+      <mat-label>Au</mat-label>
+      <select matNativeControl [(ngModel)]="eventDriving.endTime" name="endTime">
+        <ng-template ngFor let-time [ngForOf]="times" let-i="index">
+          <option [value]="time.value">{{time.label}}</option>
+      </ng-template>
+      </select>
+    </mat-form-field>
+  </div>
+</div>
+<div class="row">
+  <div class="col col-lg-12">
+    <ng-template ngFor let-time [ngForOf]="times" let-i="index">
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" multiple vertical [value]="time.selected" (change)="changeGroup($event,time.element)">
+     
+      <mat-button-toggle *ngIf="i<times.length-1" [value]="time.element">{{time.element.label}} - {{times[i+1].element.label}}
+        
+      </mat-button-toggle>
+      <mat-button-toggle *ngIf="i<times.length-1" disabled>
+      <mat-form-field  class="w-place" appearance="fill" >
+        <mat-label>Places</mat-label>
+        <input matInput type="number" name="p{{i}}" [(ngModel)]="time.element.places" min="1" max="2">
+      </mat-form-field>
+    </mat-button-toggle>
+     
+    </mat-button-toggle-group>
+  </ng-template>
+  </div>
+</div>
+</form>
+    </mdb-card-text>
+  </mdb-card-body>
+  <mdb-card-footer class="text-muted">
+    <div class="row">
+    <div class="col col-lg-12" style="text-align:right">
+        <button type="button" 
+        class="btn bg-color-green"
+         (click)="enregistrer()"
+         style="margin-right:10px;" [disabled]="!formulaire.valid">
+            <i class="fas fa-save"></i>&nbsp;{{'label.enregistrer' | translate}}
+          </button>
+        <button type="button" class="btn btn-secondary" (click)="fermer()">
+          <i class="fas fa-ban"></i>&nbsp;{{'label.fermer' | translate}}</button>
+    </div>
+    </div>
+    </mdb-card-footer>
+</mdb-card>
