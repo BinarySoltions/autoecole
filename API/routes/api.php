@@ -40,8 +40,9 @@ Route::post('module','ModuleController@store')->middleware('auth:api');
 
 //get modules
 Route::get('modules','ModuleController@index')->middleware('auth:api');
-//get modules
+//get sortie
 Route::get('sorties','ModuleController@driving');
+Route::post('evenement','EleveController@saveEvent');
 //create eleve module
 Route::post('module_eleves','ModuleController@store_module_eleve')->middleware('auth:api');
 //create phase

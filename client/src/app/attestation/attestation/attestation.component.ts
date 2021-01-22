@@ -331,7 +331,8 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
          var tempLink = document.createElement('a');
          tempLink.style.display = 'none';
          tempLink.href = fileURL;
-         tempLink.setAttribute('download', this.numeroAttestation+"_"+"attestation_final_"+this.eleve.prenom+this.eleve.nom+".pdf");
+         let filename = this.estPhaseUne?"attestation_phase1_":"attestation_final_";
+         tempLink.setAttribute('download', this.numeroAttestation+"_"+filename+this.eleve.prenom+this.eleve.nom+".pdf");
          document.body.appendChild(tempLink);
          tempLink.click();
          document.body.removeChild(tempLink);

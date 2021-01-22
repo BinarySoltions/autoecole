@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ use App\Services\Eleve\IEleveService;
 use App\Services\Eleve\EleveRequete;
 use App\Http\Resources\EleveResource;
 use App\Http\Resources\ExamenResource;
+use App\Http\Resources\EvenementEleveResource;
 use App\Eleve;
 use App\Adresse;
 use App\Coordonnee;
@@ -23,6 +25,7 @@ use App\Payement;
 use App\ParametreContrat;
 use App\Attestation;
 use App\PersonneResponsable;
+use App\EvenementEleve;
 use Elibyy\TCPDF\Facades\TCPDF;
 use App\MYPDF;
 
@@ -506,5 +509,64 @@ class EleveController extends Controller
             $result =  $pdf::Output('hello_world.pdf', 'E');
             return  $result;
         }
+    }
+
+    public function saveEvent(Request $request){
+
+        try {
+            
+            $event = new EvenementEleve;
+            $event->numero = $request->numero;
+            $event->eleve_id = $request->eleve_id;
+            $event->nom_module = $request->nom_module;
+            $event->module_id = $request->module_id;
+            $event->place = $request->place;
+            $event->date = date('Y-m-d', strtotime($request->date));
+            $event->heure_debut = date('H:i', strtotime($request->heure_debut));
+            $event->heure_fin = date('H:i', strtotime($request->heure_fin));
+
+            $evtEle = EvenementEleve::whereDate('date','=',$event->date)
+            ->where('heure_debut','=',$event->heure_debut)
+            ->where('heure_fin','=',$event->heure_fin)->max('place');
+
+            if(!isset($evtEle)){
+                $evtEle = 0;
+            }
+            $event->place =  $evtEle+1;
+            $event->save();
+
+            $events = EvenementEleve::where('numero','=',$request->numero)->get();
+            return EvenementEleveResource::Collection($events);
+        } catch (Exception $e) {
+            if (strpos($e, '1062 Duplicate entry') !== false) {
+                return response()->json([
+                    'isValid' => false
+                ]);
+            }
+            
+        }
+        
+    }
+
+    public function places(Request $request){
+
+        try {
+            $event = new EvenementEleve;
+            $event->numero = $request->numero;
+            $event->eleve_id = $request->eleve_id;
+            $event->nom_module = $request->nom_module;
+            $event->module_id = $request->module_id;
+            $event->place = $request->place;
+            $event->date = date('Y-m-d', strtotime($request->date));
+            $event->heure_debut = date('H:i', strtotime($request->heure_debut));
+            $event->heure_fin = date('H:i', strtotime($request->heure_fin));
+            $event->save();
+
+            $events = EvenementEleve::where('numero',$request->numero)->get();
+            return EvenementEleveResource::Collection($events);
+        } catch (Exception $e) {
+            return $e;
+        }
+        
     }
 }
