@@ -67,7 +67,7 @@ import { ErrorInterceptorService } from 'src/app/auth/services/error-interceptor
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AutoComponent } from './auto.component';
 import { NavbarComponent } from '../navbar/navbar/navbar.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedServiceModule } from '../shared/shared/shared-service.module';
 
 export const config = new AuthServiceConfig([
@@ -135,6 +135,7 @@ export const config = new AuthServiceConfig([
   imports: [
     FormsModule,
     CommonModule,
+    ReactiveFormsModule,
     AutoRoutingModule,
     HttpClientModule,
     MDBBootstrapModule,

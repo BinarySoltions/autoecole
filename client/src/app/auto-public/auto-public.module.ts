@@ -2,7 +2,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AutoPublicRoutingModule } from './auto-public-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { AutoPublicComponent } from './auto-public.component';
 import { BeginComponent } from '../examen/begin/begin.component';
 import { SessionFinieComponent } from '../examen/session-finie/session-finie.component';
@@ -22,6 +22,7 @@ import { ReserveComponent } from '../reserve/reserve.component';
   imports: [
     FormsModule,
     CommonModule,
+    ReactiveFormsModule,
     AutoPublicRoutingModule,
     SharedServiceModule,
     MDBBootstrapModule,

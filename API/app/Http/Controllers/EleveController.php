@@ -24,6 +24,7 @@ use App\AdresseEcole;
 use App\Payement;
 use App\ParametreContrat;
 use App\Attestation;
+use App\Evenement;
 use App\PersonneResponsable;
 use App\EvenementEleve;
 use Elibyy\TCPDF\Facades\TCPDF;
@@ -548,24 +549,25 @@ class EleveController extends Controller
         
     }
 
-    public function places(Request $request){
-
+    public function savePlaces(Request $requests){
         try {
-            $event = new EvenementEleve;
-            $event->numero = $request->numero;
-            $event->eleve_id = $request->eleve_id;
-            $event->nom_module = $request->nom_module;
-            $event->module_id = $request->module_id;
-            $event->place = $request->place;
-            $event->date = date('Y-m-d', strtotime($request->date));
-            $event->heure_debut = date('H:i', strtotime($request->heure_debut));
-            $event->heure_fin = date('H:i', strtotime($request->heure_fin));
-            $event->save();
-
-            $events = EvenementEleve::where('numero',$request->numero)->get();
-            return EvenementEleveResource::Collection($events);
+            $data = [];
+            foreach($requests as $request){
+                $data[]=[
+                    'places'=>$request->places,
+                    'date'=>date('Y-m-d', strtotime($request->date)),
+                    'heure_debut'=> date('H:i', strtotime($request->heure_debut)),
+                    'heure_fin'=> date('H:i', strtotime($request->heure_fin))
+                ];   
+            }
+            Evenement::insert($data);
+            return response()->json([
+                'isValid' => true
+            ]);
         } catch (Exception $e) {
-            return $e;
+            return response()->json([
+                'isValid' => false
+            ]);
         }
         
     }

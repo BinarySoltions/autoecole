@@ -108,6 +108,11 @@ export class EleveService {
       .pipe(catchError(this.handleError));
   }
 
+  creerEvenements(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'evenements', req, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

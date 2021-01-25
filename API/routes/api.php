@@ -43,6 +43,7 @@ Route::get('modules','ModuleController@index')->middleware('auth:api');
 //get sortie
 Route::get('sorties','ModuleController@driving');
 Route::post('evenement','EleveController@saveEvent');
+Route::post('evenements','EleveController@savePlaces');
 //create eleve module
 Route::post('module_eleves','ModuleController@store_module_eleve')->middleware('auth:api');
 //create phase
