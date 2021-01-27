@@ -14,6 +14,7 @@ use App\Services\Eleve\EleveRequete;
 use App\Http\Resources\EleveResource;
 use App\Http\Resources\ExamenResource;
 use App\Http\Resources\EvenementEleveResource;
+use App\Http\Resources\EvenementResource;
 use App\Eleve;
 use App\Adresse;
 use App\Coordonnee;
@@ -552,23 +553,35 @@ class EleveController extends Controller
     public function savePlaces(Request $requests){
         try {
             $data = [];
-            foreach($requests as $request){
-                $data[]=[
-                    'places'=>$request->places,
-                    'date'=>date('Y-m-d', strtotime($request->date)),
-                    'heure_debut'=> date('H:i', strtotime($request->heure_debut)),
-                    'heure_fin'=> date('H:i', strtotime($request->heure_fin))
-                ];   
+            $result = $requests->all();
+           
+            foreach( $result as $request){
+                array_push($data,[
+                    'places'=> $request['places'],
+                    'date'=>date('Y-m-d', strtotime($request['date'])),
+                    'heure_debut'=> date('H:i', strtotime($request['heure_debut'])),
+                    'heure_fin'=> date('H:i', strtotime($request['heure_fin']))
+                ]);   
             }
+          
             Evenement::insert($data);
             return response()->json([
                 'isValid' => true
             ]);
         } catch (Exception $e) {
-            return response()->json([
-                'isValid' => false
-            ]);
+           return $e;
+            // return response()->json([
+            //     'isValid' => false
+            // ]);
         }
         
+    }
+
+    function getDatesHeures(Request $request){
+        $dateEnd = date('Y-m-d', strtotime($request->dateEnd));
+        $dateStart = date('Y-m-d', strtotime($request->dateStart));
+        $events = Evenement::whereDate('date','>=',$dateStart)
+        ->whereDate('date','<',$dateEnd)->get();
+        return EvenementResource::Collection($events);
     }
 }

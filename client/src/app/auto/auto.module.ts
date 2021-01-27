@@ -69,6 +69,7 @@ import { AutoComponent } from './auto.component';
 import { NavbarComponent } from '../navbar/navbar/navbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedServiceModule } from '../shared/shared/shared-service.module';
+import { ReserveAdminComponent } from '../eleve/reserve-admin/reserve-admin.component';
 
 export const config = new AuthServiceConfig([
   {
@@ -130,7 +131,8 @@ export const config = new AuthServiceConfig([
     AdminComponent,
     ListExamenComponent,
     BreadcrumbsComponent,
-    ConfirmerChangementComponent
+    ConfirmerChangementComponent,
+    ReserveAdminComponent
   ],
   imports: [
     FormsModule,

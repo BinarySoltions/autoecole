@@ -25,6 +25,7 @@ import { SessionFinieComponent } from 'src/app/examen/session-finie/session-fini
 import { ListExamenComponent } from 'src/app/examen/admin/list-examen/list-examen.component';
 import { InscriptionComponent } from 'src/app/eleve/inscription/inscription.component';
 import { AutoComponent } from './auto.component';
+import { ReserveAdminComponent } from '../eleve/reserve-admin/reserve-admin.component';
 
 const routes: Routes = [
   { path: '', component: AutoComponent, 
@@ -49,6 +50,7 @@ const routes: Routes = [
   { path: 'notification' , component: NotificationComponent, canActivate: [AuthGuardService]},
   { path: 'imprimer-examen/:id' , component: AdminComponent, canActivate: [AuthGuardService]},
   { path: 'liste-examen/:id' , component: ListExamenComponent, canActivate: [AuthGuardService]},
+  { path: 'reservation' , component: ReserveAdminComponent, canActivate: [AuthGuardService]},
   ] },
   
   // // otherwise redirect to home

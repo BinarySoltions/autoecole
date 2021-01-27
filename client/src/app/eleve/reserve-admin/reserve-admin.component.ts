@@ -1,23 +1,24 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import moment from 'moment';
 import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
-import { EleveService } from '../service/eleve/eleve.service';
-import moment from 'moment';
-import { ModuleService } from '../service/module/module.service';
+import { EvenementEleve, Evenement } from 'src/app/entite/evenement.entity';
 import { Module } from 'src/app/entite/module.entity';
-import { EvenementEleve,Evenement } from '../entite/evenement.entity';
-
-
+import { EleveService } from 'src/app/service/eleve/eleve.service';
+import { ModuleService } from 'src/app/service/module/module.service';
+import { List } from 'linqts';
+import { validEvents } from '@tinymce/tinymce-angular/editor/Events';
 
 @Component({
-  selector: 'app-reserve',
-  templateUrl: './reserve.component.html',
-  styleUrls: ['./reserve.component.scss']
+  selector: 'app-reserve-admin',
+  templateUrl: './reserve-admin.component.html',
+  styleUrls: ['./reserve-admin.component.scss']
 })
-export class ReserveComponent implements OnInit {
+export class ReserveAdminComponent implements OnInit {
+
   @ViewChild('formulaire') formulaire: NgForm;
 
   cookieTimeout: any;
@@ -28,15 +29,14 @@ export class ReserveComponent implements OnInit {
   events: EvenementEleve[] = [];
   listeModules: Module[] = [];
   times: { value: string; label: string; places: string; date: string }[];
-  timesEnd:{ value: string; label: string; places: string; date: string }[] = [];
   nTimes: any= ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00'];
   timesUser: { value: string; label: string; places: string; date: string }[] = [];
   pos: number;
-  eventsDateHeures:Evenement[]=[];
 
-
- 
-
+  startDate: any;
+  rangeDateTimes : {date:any;times:any;}[]=[];
+  eventsPlaces : List<Evenement> = new List<Evenement>([]);
+  dateNow = moment();
 
   constructor(private router: Router, private serviceEleve: EleveService,
     private activatedRoute: ActivatedRoute,
@@ -71,14 +71,11 @@ export class ReserveComponent implements OnInit {
     return moment(value).format();
   }
   public enregistrer() {
-    console.log(this.times);
+    console.log(this.eventsPlaces);
     if (!this.cookieTimeout) {
       this.formaterDate();
-      this.eventDriving.numero = "2020-2299";
-      this.eventDriving.eleve_id = 23;
-      this.eventDriving.place = 1;
-      this.eventDriving.nom_module = this.listeModules.find(m => m.id == this.eventDriving.module_id).nom;
-      this.serviceEleve.creerEvenementEleve(this.eventDriving).subscribe((evt) => {
+      console.log(this.eventsPlaces);
+      this.serviceEleve.creerEvenements(this.eventsPlaces.ToArray()).subscribe((evt) => {
 
         this.toastr.success("Merci / Thank's!", "Succes / Success", { timeOut: 5000 });
         // this.cookieTimeout = 'uurureurueureuredj';
@@ -106,50 +103,70 @@ export class ReserveComponent implements OnInit {
     var strTime = hours + ':' + '00';
     return strTime;
   }
-
+  changeGroup(value, ele) {
+    if(value.value && value.value.length > 0){
+      const val = value.value[0];
+      const pos = this.nTimes.indexOf(val.value);
+      const heure_fin = this.nTimes[pos + 1];
+      this.eventsPlaces.Add(<Evenement>{places:Number(val.places),date:val.date,heure_debut:val.value,heure_fin:heure_fin});
+    }else if(value.value){
+      this.eventsPlaces =  this.eventsPlaces.Where(x=> !this.validEvent(x,ele));
+      
+    }else{
+      this.eventsPlaces.First(x=>x.date===ele.date && x.heure_debut === ele.value).places = ele.places;
+    }
+  }
+validEvent(x,ele):boolean{
+  var r =  x.date === ele.date && x.heure_debut === ele.value;
+  return r;
+}
   weekendsDatesFilter = (d: any | null): boolean => {
     //console.log(d);
     const date = !!d ? d : moment();
     const day = date.day();
     // Prevent Saturday and Sunday from being selected.
     //return day !== 0 && day !== 6;
-    const dates = this.eventsDateHeures.map(e=>e.date);
-    return dates.indexOf(date.format('YYYY-MM-DD')) != -1;
+    return date.format('YYYY-MM-DD') != '2021-01-18';
   }
   onTimeChange(time) {
     this.pos = this.times.map(e => e.value).indexOf(time.target.value);
-    this.eventDriving.heure_fin = this.timesEnd[this.pos].value;
+    this.eventDriving.heure_fin = this.times[this.pos + 1].value;
   }
-  onModulesChange(event){
-    console.log(event.target.value);
-    let module = event.target.value;
-    const dateStart = moment().format('YYYY-MM-DD');
-    var dateEnd = null;
-    if(module.phase_id == 2){
-      dateEnd = moment().add('days',28).format('YYYY-MM-DD');
-    }else {
-      dateEnd = moment().add('days',56).format('YYYY-MM-DD');
-    }
-    let req = {dateStart:dateStart,dateEnd:dateEnd};
-    this.serviceEleve.obtenirEvenementDatesHeures(req).subscribe(r=>{
-      if(r){
-        this.times = [];
-        this.eventsDateHeures =  <Evenement[]>r;
+  isDisabled(value) {
+    return value === this.pos;
+  }
+  addEvent(date, n) {
+    console.log(date.value);
+    console.log(n);
+    if (n == 1) {
+      this.eventsPlaces = new List<Evenement>([]);
+      this.rangeDateTimes = [];
+      this.startDate = date.value;
+    } else if (n == 2) {
+      const dateFormat = date.value;
+      //Logic for getting rest of the dates between two dates("FromDate" to "EndDate")
+      var start = this.startDate;
+      while (start <= dateFormat) {
+        const date = start.format('YYYY-MM-DD');
+        this.times.forEach(t => { t.date = date; t.places = '2'; });
+        this.timesUser = JSON.parse(JSON.stringify(this.times));
+        this.rangeDateTimes.push({date:date,times:this.timesUser});
+        this.timesUser.forEach(x=>{
+          const val = x;
+          const pos = this.nTimes.indexOf(val.value);
+          const heure_fin = this.nTimes[pos + 1];
+          if(!!heure_fin){
+            this.eventsPlaces.Add(<Evenement>{places:Number(val.places),date:val.date,heure_debut:val.value,heure_fin:heure_fin});
+          }
+        });
+        
+        var newDate = start.add('days',1);
+        start = newDate;
       }
-    });
+      console.log(this.eventsPlaces);
+    }
+
   }
 
-  onDateChange(event){
-    this.times = [];
-    this.timesEnd = [];
-    const date = event.target.value.format('YYYY-MM-DD');
-    const dateHeures = this.eventsDateHeures.filter(x=>x.date === date).sort((a,b)=>a > b ? 1 : -1);
-    console.log(event.target.value);
-    dateHeures.forEach(x => {
-      var h = x.heure_debut.substring(0,5);
-      var hf = x.heure_fin.substring(0,5);
-      this.times.push({value:h,label:h,date:x.date,places:x.places.toString()})
-      this.timesEnd.push({value:hf,label:hf,date:x.date,places:x.places.toString()})
-    });
-  }
+
 }
