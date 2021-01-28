@@ -36,6 +36,7 @@
     "jquery": "^3.4.1",
     "jsbarcode": "^3.11.0",
     "jspdf": "^1.5.3",
+    "linqts": "^1.14.4",
     "moment": "^2.24.0",
     "ng-multiselect-dropdown": "0.2.4",
     "ngx-barcode": "^0.2.4",

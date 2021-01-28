@@ -110,10 +110,11 @@ export class ReserveComponent implements OnInit {
   weekendsDatesFilter = (d: any | null): boolean => {
     //console.log(d);
     const date = !!d ? d : moment();
-    const day = date.day();
+    const dateHeures = this.eventsDateHeures
+    .filter(x=>x.date === date.format('YYYY-MM-DD') && x.place === null);
     // Prevent Saturday and Sunday from being selected.
     //return day !== 0 && day !== 6;
-    const dates = this.eventsDateHeures.map(e=>e.date);
+    const dates = dateHeures.map(e=>e.date);
     return dates.indexOf(date.format('YYYY-MM-DD')) != -1;
   }
   onTimeChange(time) {
@@ -121,8 +122,8 @@ export class ReserveComponent implements OnInit {
     this.eventDriving.heure_fin = this.timesEnd[this.pos].value;
   }
   onModulesChange(event){
-    console.log(event.target.value);
-    let module = event.target.value;
+    this.eventDriving.date = null;
+    let module = this.listeModules.find(m => m.id == event.target.value);
     const dateStart = moment().format('YYYY-MM-DD');
     var dateEnd = null;
     if(module.phase_id == 2){
@@ -134,22 +135,28 @@ export class ReserveComponent implements OnInit {
     this.serviceEleve.obtenirEvenementDatesHeures(req).subscribe(r=>{
       if(r){
         this.times = [];
+        this.timesEnd = [];
         this.eventsDateHeures =  <Evenement[]>r;
       }
     });
   }
 
   onDateChange(event){
+    this.eventDriving.heure_debut = null;
+    this.eventDriving.heure_fin= null;
     this.times = [];
     this.timesEnd = [];
     const date = event.target.value.format('YYYY-MM-DD');
-    const dateHeures = this.eventsDateHeures.filter(x=>x.date === date).sort((a,b)=>a > b ? 1 : -1);
+    const dateHeures = this.eventsDateHeures
+    .filter(x=>x.date === date && x.place === null).sort((a,b)=>a > b ? 1 : -1);
     console.log(event.target.value);
     dateHeures.forEach(x => {
-      var h = x.heure_debut.substring(0,5);
-      var hf = x.heure_fin.substring(0,5);
-      this.times.push({value:h,label:h,date:x.date,places:x.places.toString()})
-      this.timesEnd.push({value:hf,label:hf,date:x.date,places:x.places.toString()})
+      if(x.place === null){
+        var h = x.heure_debut.substring(0,5);
+        var hf = x.heure_fin.substring(0,5);
+        this.times.push({value:h,label:h,date:x.date,places:x.places.toString()});
+        this.timesEnd.push({value:hf,label:hf,date:x.date,places:x.places.toString()});
+      }
     });
   }
 }

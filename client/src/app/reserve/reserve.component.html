@@ -28,7 +28,7 @@
      placeholder="date completee" required>
         <option  value="0">{{'label.selectionner' | translate}}</option>
         <ng-template ngFor let-module [ngForOf]="listeModules" let-i="index">
-            <option [value]="module" [disabled]="module.numero==23 || module.numero==24">{{module.nom}}</option>
+            <option [value]="module.id" [disabled]="module.numero==23 || module.numero==24">{{module.nom}}</option>
         </ng-template>
       </select>
       </mat-form-field>

@@ -272,7 +272,7 @@ class EleveController extends Controller
 
     public function printPayment(Request $request)
     {
-       
+
         // $client = new RestClient("MAYJHMOTDIOGMYMZLKZM", "OWNiZTIxNWZmZmFkYjQ5ODE1NGJhNWM3MTQ0MjI2");
         // //$client->setHttpClient($http);
         // $response = $client->messages->create(
@@ -449,7 +449,7 @@ class EleveController extends Controller
 
             $pdf::setHeaderCallback(function ($pdf) use ($numero) {
 
-                $html = '<table class="w-100" style="font-size:7px" cellpadding="2"><tr><td style="width:2%">  </td><td><img src="'.url('/images/logo_pconduite.jpg').'" width="110" /></td>
+                $html = '<table class="w-100" style="font-size:7px" cellpadding="2"><tr><td style="width:2%">  </td><td><img src="' . url('/images/logo_pconduite.jpg') . '" width="110" /></td>
                   <td style="width:72%;text-align:right;"><table><tr><td class="w-100"  style="text-align:right;font-weight:bold;font-size:14px">
                   Attestation de cours de conduite<br />pour la classe 5</td></tr></table></td>
                   <td style="width:2%">  </td>
@@ -506,17 +506,18 @@ class EleveController extends Controller
 
                 $pdf::writeHTML($html, true, false, true, false, '');
             }
-            
+
             $pdf::lastPage();
             $result =  $pdf::Output('hello_world.pdf', 'E');
             return  $result;
         }
     }
 
-    public function saveEvent(Request $request){
+    public function saveEvent(Request $request)
+    {
 
         try {
-            
+
             $event = new EvenementEleve;
             $event->numero = $request->numero;
             $event->eleve_id = $request->eleve_id;
@@ -527,61 +528,105 @@ class EleveController extends Controller
             $event->heure_debut = date('H:i', strtotime($request->heure_debut));
             $event->heure_fin = date('H:i', strtotime($request->heure_fin));
 
-            $evtEle = EvenementEleve::whereDate('date','=',$event->date)
-            ->where('heure_debut','=',$event->heure_debut)
-            ->where('heure_fin','=',$event->heure_fin)->max('place');
-
-            if(!isset($evtEle)){
-                $evtEle = 0;
+            $events = EvenementEleve::distinct()
+                ->select(
+                    'evenement_eleve.date',
+                    'evenement_eleve.heure_debut',
+                    'evenement_eleve.heure_fin',
+                    'evenement.places',
+                    DB::raw('max(evenement_eleve.place) as place')
+                )
+                ->leftJoin('evenement', function ($join) {
+                    $join->on('evenement.date', '=', 'evenement_eleve.date');
+                    $join->on('evenement.heure_debut', '=', 'evenement_eleve.heure_debut');
+                    $join->on('evenement.heure_fin', '=', 'evenement_eleve.heure_fin');
+                })
+                ->groupBy('evenement_eleve.date',
+                'evenement_eleve.heure_debut',
+                'evenement_eleve.heure_fin',
+                'evenement.places')
+                ->whereDate('evenement_eleve.date', '=', $event->date)
+                ->where('evenement_eleve.heure_debut', '=', $event->heure_debut)
+                ->where('evenement_eleve.heure_fin', '=', $event->heure_fin)->first();
+            $evtEle = 0;
+            $erreur = false;
+            if (isset($events)) {
+                if ($events->place < $events->places) {
+                    $evtEle = $events->place;
+                    $event->place =  $evtEle + 1;
+                    $event->save();
+                } else {
+                    $erreur = true;
+                }
+            } else {
+                $event->place =  $evtEle + 1;
+                $event->save();
             }
-            $event->place =  $evtEle+1;
-            $event->save();
 
-            $events = EvenementEleve::where('numero','=',$request->numero)->get();
+            if ($erreur) {
+                return response()->json([
+                    'isValid' => false
+                ]);
+            }
+            $events = EvenementEleve::where('numero', '=', $request->numero)->get();
             return EvenementEleveResource::Collection($events);
         } catch (Exception $e) {
+            return $e;
             if (strpos($e, '1062 Duplicate entry') !== false) {
                 return response()->json([
                     'isValid' => false
                 ]);
             }
-            
         }
-        
     }
 
-    public function savePlaces(Request $requests){
+    public function savePlaces(Request $requests)
+    {
         try {
             $data = [];
             $result = $requests->all();
-           
-            foreach( $result as $request){
-                array_push($data,[
-                    'places'=> $request['places'],
-                    'date'=>date('Y-m-d', strtotime($request['date'])),
-                    'heure_debut'=> date('H:i', strtotime($request['heure_debut'])),
-                    'heure_fin'=> date('H:i', strtotime($request['heure_fin']))
-                ]);   
+
+            foreach ($result as $request) {
+                array_push($data, [
+                    'places' => $request['places'],
+                    'date' => date('Y-m-d', strtotime($request['date'])),
+                    'heure_debut' => date('H:i', strtotime($request['heure_debut'])),
+                    'heure_fin' => date('H:i', strtotime($request['heure_fin']))
+                ]);
             }
-          
+
             Evenement::insert($data);
             return response()->json([
                 'isValid' => true
             ]);
         } catch (Exception $e) {
-           return $e;
+            return $e;
             // return response()->json([
             //     'isValid' => false
             // ]);
         }
-        
     }
 
-    function getDatesHeures(Request $request){
+    function getDatesHeures(Request $request)
+    {
         $dateEnd = date('Y-m-d', strtotime($request->dateEnd));
         $dateStart = date('Y-m-d', strtotime($request->dateStart));
-        $events = Evenement::whereDate('date','>=',$dateStart)
-        ->whereDate('date','<',$dateEnd)->get();
+        $events = Evenement::distinct()
+            ->select(
+                'evenement.date',
+                'evenement.heure_debut',
+                'evenement.heure_fin',
+                'evenement.places',
+                'evenement_eleve.place'
+            )
+            ->leftJoin('evenement_eleve', function ($join) {
+                $join->on('evenement.date', '=', 'evenement_eleve.date');
+                $join->on('evenement.heure_debut', '=', 'evenement_eleve.heure_debut');
+                $join->on('evenement.heure_fin', '=', 'evenement_eleve.heure_fin');
+                $join->on('evenement.places', '=', 'evenement_eleve.place');
+            })
+            ->whereDate('evenement.date', '>=', $dateStart)
+            ->whereDate('evenement.date', '<', $dateEnd)->get();
         return EvenementResource::Collection($events);
     }
 }

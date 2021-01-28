@@ -23,6 +23,7 @@ export class Evenement implements Deserializable{
     date:any;
     heure_debut:any;
     heure_fin:any;
+    place?:number;
     
     deserialize(obj: any): this {
         Object.assign(this,obj);
