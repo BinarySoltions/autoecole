@@ -23,6 +23,8 @@ export class ExamenComponent implements OnInit,OnChanges {
   @ViewChild('pdf') pdf: ElementRef;
   hideTest: boolean;
   examenReponses:ExamenModel = new ExamenModel();
+  pdfSrc: any;
+  index: number;
 
   constructor(private translate: TranslateService,private route:Router,private router:ActivatedRoute,
     private serviceEleve:EleveService) {
@@ -34,12 +36,24 @@ export class ExamenComponent implements OnInit,OnChanges {
   }
 
   ngOnInit() {
+    this.index = 1;
+   this.setUrl();
     this.translate.setDefaultLang(this.langue);
     // this.sub = this.router.params.subscribe(params =>{
     //   this.langue = params['lang'];
     //   this.numeroIdentification = params['numero'];
     //   this.translate.setDefaultLang(this.langue);
     // })
+  }
+  setUrl() {
+    this.pdfSrc = {
+      name: 'Angular 2',
+      description: 'An amazing Angular 2 pdf',
+      url: {
+        url: "/assets/Fr-Examen-C5-2020-10-21-GrandFormat-"+this.index+".pdf",
+        withCredentials: true
+        }
+      }
   }
 
   radioChange(choice){
@@ -75,5 +89,12 @@ export class ExamenComponent implements OnInit,OnChanges {
       // var uri = pdf.output('dataurlstring');
       // this.openDataUriWindow(uri,"attestation_final.pdf");
     });
+  }
+
+  next(){
+    this.index = this.index+1;
+    if(this.index <= 24){
+      this.setUrl();
+    }
   }
 }

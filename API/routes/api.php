@@ -107,6 +107,8 @@ Route::get('payements/{id}','PayementController@index')->middleware('auth:api');
 //get payement
 Route::post('payements','PayementController@totalPayement')->middleware('auth:api');
 
+Route::post('detailsPayements','PayementController@detailsPayements')->middleware('auth:api');
+
 //post test
 Route::post('pass','EleveController@pass')->middleware('auth:api');
 //post test

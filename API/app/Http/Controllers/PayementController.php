@@ -59,4 +59,21 @@ class PayementController extends Controller
         
     }
 
+    public function detailsPayements(Request $request)
+    {
+        $payement = Payement::distinct()
+        ->select(
+            DB::raw("CONCAT(eleve.prenom,' ',eleve.nom) as nom"),
+            'payement.montant',
+            'payement.type',
+            'payement.date_payement')
+            ->join('eleve','payement.eleve_id', '=', 'eleve.id')
+        ->whereDate('payement.date_payement','>=',$request->dateDebut)
+                    ->whereDate('payement.date_payement','<=',$request->dateFin)
+                    ->get();
+        
+        return response()->json($payement);
+        
+    }
+
 }

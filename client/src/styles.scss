@@ -130,3 +130,10 @@ tbody tr:hover
 {
   background-color: rgba(0,0,0,.03);;
 }
+
+.box-shadow {
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 1px 1px #888888;
+    margin-bottom: 16px;
+  }

@@ -14,6 +14,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   currentUser: User;
   currentUserSubscription: Subscription;
   users: User[] = [];
+  dateDebut:any;
+  dateFin:any;
 
   constructor(
       private authenticationService: AuthenticationService,
@@ -43,5 +45,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.userService.getAll().pipe(first()).subscribe(users => {
           this.users = users;
       });
+  }
+
+  datesEvent(value){
+      this.dateDebut = value.dateDebut;
+      this.dateFin = value.dateFin;
   }
 }

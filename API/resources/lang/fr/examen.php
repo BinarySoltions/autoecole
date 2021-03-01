@@ -9,7 +9,7 @@ return [
     'retaking_test'=>'Si examen de reprise :',
     'first'=>'1 fois',
     'second'=>'2 fois',
-    'third'=>'*Indiquer le nombre si plus de fois :',
+    'third'=>'*Indiquer le nombre si plus de 2 fois :',
     'third_suffix'=>'',
     'instructions'=>'Consignes',
     'i_one'=>'Inscrivez les renseignements demandés.',

@@ -46,7 +46,9 @@ export class PayementService {
     return this.http.post<any>(this.apiUrl + 'printPayment', req, httpOptions2)
       .pipe(catchError(this.handleError));
   }
- 
+  obtnenirDetailsPayements(totalPayement:TotalPayement): Observable<TotalPayement> {
+    return this.http.post<TotalPayement>(this.apiUrl + 'detailsPayements',totalPayement,httpOptions);
+  }
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

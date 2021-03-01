@@ -50,6 +50,23 @@
   </ul>
   <p>{{'examen.success' | translate}}</p>
 </div>
+<div class="box-shadow" style="min-height: 300px;">
+  <h3>Question : {{index}}/24</h3>
+  <pdf-viewer [src]="pdfSrc.url.url"
+              [render-text]="true"
+              [original-size]="false"
+              style="display: block;"
+  ></pdf-viewer>
+  <div class="col col-12 push-right">
+    <button type="button" 
+  class="btn bg-color-green"
+  (click)="next()"
+  style="margin-right:10px;">
+  <i class="fas fa-next"></i>&nbsp;Suivant
+  </button>
+  </div>
+</div>
+
 <div>
   <h2><b>{{'examen.answer_grid' | translate}}</b></h2>
   <table>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,14 +10,14 @@ import { Module } from 'src/app/entite/module.entity';
 import { EleveService } from 'src/app/service/eleve/eleve.service';
 import { ModuleService } from 'src/app/service/module/module.service';
 import { List } from 'linqts';
-import { validEvents } from '@tinymce/tinymce-angular/editor/Events';
+declare var $: any;
 
 @Component({
   selector: 'app-reserve-admin',
   templateUrl: './reserve-admin.component.html',
   styleUrls: ['./reserve-admin.component.scss']
 })
-export class ReserveAdminComponent implements OnInit {
+export class ReserveAdminComponent implements OnInit,AfterViewInit {
 
   @ViewChild('formulaire') formulaire: NgForm;
 
@@ -45,6 +45,9 @@ export class ReserveAdminComponent implements OnInit {
     private cookieService: CookieService, private serviceModule: ModuleService) {
     this.translate.setDefaultLang('fr');
     this.cookieTimeout = this.cookieService.get('subscribe-student');
+  }
+  ngAfterViewInit(): void {
+  
   }
 
   ngOnInit() {
