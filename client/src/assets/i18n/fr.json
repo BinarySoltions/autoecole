@@ -85,7 +85,8 @@
         "success":"Bon succès!",
         "answer_grid":"Choix de réponses",
         "start":"Commencer",
-        "submit":"Soumettre"
+        "submit":"Soumettre",
+        "next":"Suivant"
     },
     "eleve":{
         "titre":"S'inscrire",

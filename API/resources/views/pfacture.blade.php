@@ -72,7 +72,7 @@
     </td>
     <td align="left"><span>{{date("Hms")}}</span><br/>
     <span>{{$dateDuJour}}</span><br/>
-      <span>{{$eleve->frais_inscription }}</span><br/>
+      <span>${{$eleve->frais_inscription }}</span><br/>
       <span >${{$totalPaye }}</span><br/>
       <br/>
     </td>

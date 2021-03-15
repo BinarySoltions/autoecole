@@ -16,8 +16,6 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AngularMaterialModule } from '../angular-material/angular-material/angular-material.module';
 import { NavbarPublicComponent } from './navbar-public/navbar-public.component';
 import { ReserveComponent } from '../reserve/reserve.component';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [AutoPublicComponent,BeginComponent,SessionFinieComponent,InscriptionComponent,ExamenComponent, NavbarPublicComponent, ReserveComponent,],
@@ -36,7 +34,6 @@ import { BrowserModule } from '@angular/platform-browser';
           deps: [HttpClient]
       }
   }),
-  PdfViewerModule,
   ],
   schemas:[ NO_ERRORS_SCHEMA],
 })

@@ -23,7 +23,8 @@
         "success":"Good luck!",
         "answer_grid":"Answer Grid",
         "start":"Start",
-        "submit":"Submit"
+        "submit":"Submit",
+        "next":"Next"
     },
     "eleve":{
         "titre":"Subscribe",

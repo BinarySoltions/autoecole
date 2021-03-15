@@ -50,19 +50,17 @@
   </ul>
   <p>{{'examen.success' | translate}}</p>
 </div>
-<div class="box-shadow" style="min-height: 300px;">
+<div *ngIf="!examenReponses.reprise.uneFois && !examenReponses.reprise.deuxFois && !examenReponses.reprise.nFois" 
+class="box-shadow" style="min-height: 300px;">
   <h3>Question : {{index}}/24</h3>
-  <pdf-viewer [src]="pdfSrc.url.url"
-              [render-text]="true"
-              [original-size]="false"
-              style="display: block;"
-  ></pdf-viewer>
+  <canvas #myCanvas></canvas>
+ <!-- <img src="{{pdfSrc.url.url}}" /> -->
   <div class="col col-12 push-right">
     <button type="button" 
   class="btn bg-color-green"
   (click)="next()"
-  style="margin-right:10px;">
-  <i class="fas fa-next"></i>&nbsp;Suivant
+  style="margin-right:10px;" [disabled]="index == 24">
+  <i class="fas fa-next"></i>&nbsp;{{'examen.next' | translate}}
   </button>
   </div>
 </div>
