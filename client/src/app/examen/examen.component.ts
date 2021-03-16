@@ -30,6 +30,7 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
   private document: Document;
   @ViewChild('myCanvas') myCanvas: ElementRef<HTMLCanvasElement>;
   pdfTest : PDFDocumentProxy;
+  reprise = "";
 
   constructor(private translate: TranslateService,private route:Router,private router:ActivatedRoute,
     private serviceEleve:EleveService) {
@@ -37,6 +38,7 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
     pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`;
    }
   ngAfterViewInit(): void {
+    this.index = 1;
     this.pdfToImageDataURLAsync(this.pdfSrc.url.url).then((x)=>{
       this.pdfTest = x;
       this.getPage();
@@ -63,7 +65,7 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
       name: 'Angular 2',
       description: 'An amazing Angular 2 pdf',
       url: {
-        url: environment.pathPublic+"images/examen/"+this.langue+"/1-24.pdf",
+        url: environment.pathPublic+"images/examen/"+this.langue+"/"+this.reprise+"/1-24.pdf",
         url1: "/assets/Fr-Examen-C5-2020-10-21-GrandFormat-1-29.pdf",
         withCredentials: true
         }
@@ -142,5 +144,23 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
     const res = canvas.toDataURL();
     
     return res;
+  }
+
+  repriseEvent(event,value){
+    if(this.index > 1){
+      return;
+    }
+    this.reprise = "";
+    if(event == true){
+        this.reprise = value;
+    }else if(value == 3 && Number(event)>0){
+      this.reprise = event;
+    }
+      this.index = 1;
+      this.setUrl();
+      this.pdfToImageDataURLAsync(this.pdfSrc.url.url).then((x)=>{
+        this.pdfTest = x;
+        this.getPage();
+      });
   }
 }
