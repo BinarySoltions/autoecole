@@ -26,6 +26,8 @@ import { ListExamenComponent } from 'src/app/examen/admin/list-examen/list-exame
 import { InscriptionComponent } from 'src/app/eleve/inscription/inscription.component';
 import { AutoComponent } from './auto.component';
 import { ReserveAdminComponent } from '../eleve/reserve-admin/reserve-admin.component';
+import { ErreurSortieComponent } from '../erreur-sortie/erreur-sortie.component';
+import { NoteSortieComponent } from '../eleve/note-sortie/note-sortie.component';
 
 const routes: Routes = [
   { path: '', component: AutoComponent, 
@@ -51,6 +53,8 @@ const routes: Routes = [
   { path: 'imprimer-examen/:id' , component: AdminComponent, canActivate: [AuthGuardService]},
   { path: 'liste-examen/:id' , component: ListExamenComponent, canActivate: [AuthGuardService]},
   { path: 'reservation' , component: ReserveAdminComponent, canActivate: [AuthGuardService]},
+  { path: 'erreur-sortie' , component: ErreurSortieComponent, canActivate: [AuthGuardService]},
+  { path: 'eleve/note/:id' , component: NoteSortieComponent, canActivate: [AuthGuardService]},
   ] },
   
   // // otherwise redirect to home

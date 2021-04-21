@@ -5,7 +5,6 @@ import { EleveAffichageComponent } from 'src/app/eleve/affichage/eleve-affichage
 import { EleveSaisieComponent } from 'src/app/eleve/saisie/eleve-saisie/eleve-saisie.component';
 import { PhaseUneAffichageComponent } from 'src/app/eleve/phase/une/affichage/phase-une-affichage/phase-une-affichage.component';
 import { PhaseUneSaisieComponent } from 'src/app/eleve/phase/une/saisie/phase-une-saisie/phase-une-saisie.component';
-import { PhaseDeuxAffichageComponent } from 'src/app/eleve/phase/deux/affichage/phase-deux-affichage/phase-deux-affichage.component';
 import { PhaseDeuxSaisieComponent } from 'src/app/eleve/phase/deux/saisie/phase-deux-saisie/phase-deux-saisie.component';
 import { PhaseTroisAffichageComponent } from 'src/app/eleve/phase/trois/affichage/phase-trois-affichage/phase-trois-affichage.component';
 import { PhaseTroisSaisieComponent } from 'src/app/eleve/phase/trois/saisie/phase-trois-saisie/phase-trois-saisie.component';
@@ -71,6 +70,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedServiceModule } from '../shared/shared/shared-service.module';
 import { ReserveAdminComponent } from '../eleve/reserve-admin/reserve-admin.component';
 import { DetailPayementComponent } from '../payement/detail-payement/detail-payement.component';
+import { ErreurSortieComponent } from '../erreur-sortie/erreur-sortie.component';
+import { NoteSortieComponent } from '../eleve/note-sortie/note-sortie.component';
 
 export const config = new AuthServiceConfig([
   {
@@ -87,7 +88,6 @@ export const config = new AuthServiceConfig([
     EleveSaisieComponent,
     PhaseUneAffichageComponent,
     PhaseUneSaisieComponent,
-    PhaseDeuxAffichageComponent,
     PhaseDeuxSaisieComponent,
     PhaseTroisAffichageComponent,
     PhaseTroisSaisieComponent,
@@ -134,7 +134,9 @@ export const config = new AuthServiceConfig([
     BreadcrumbsComponent,
     ConfirmerChangementComponent,
     ReserveAdminComponent,
-    DetailPayementComponent
+    DetailPayementComponent,
+    ErreurSortieComponent,
+    NoteSortieComponent
   ],
   imports: [
     FormsModule,

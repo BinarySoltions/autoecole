@@ -72,6 +72,7 @@ class ModuleController extends Controller
         $modules = Phase::with('modules')->get(); 
         return PhaseResource::Collection($modules);
     }
+    
      public function store_module_eleve(Request $request){
         if($request->date_complete)
             $request->date_complete = date('Y-m-d', strtotime($request->date_complete));

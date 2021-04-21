@@ -94,6 +94,9 @@ public contratEleve(value){
 examenEleve(row){
     this.router.navigate(["liste-examen/"+row.id]);
 }
+noteEleve(row){
+  this.router.navigate(["eleve/note/"+row.id]);
+}
 public supprimerEleve(value){
   this.idEleveASupprimer = value;
   $("#confirmerModal").modal('show');

@@ -65,7 +65,7 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
       name: 'Angular 2',
       description: 'An amazing Angular 2 pdf',
       url: {
-        url: environment.pathPublic+"images/examen/"+this.langue+"/"+this.reprise+"/1-24.pdf",
+        url: environment.pathPublic+"images/examen/"+this.langue+"/"+this.reprise+"/1-27.pdf",
         url1: "/assets/Fr-Examen-C5-2020-10-21-GrandFormat-1-29.pdf",
         withCredentials: true
         }
@@ -109,7 +109,7 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
 
   next(){
     this.index = this.index+1;
-    if(this.index <= 24){
+    if(this.index <= 27){
       //this.setUrl();
       this.getPage();
     }
@@ -154,7 +154,7 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
     if(event == true){
         this.reprise = value;
     }else if(value == 3 && Number(event)>0){
-      this.reprise = event;
+      this.reprise = '3';
     }
       this.index = 1;
       this.setUrl();

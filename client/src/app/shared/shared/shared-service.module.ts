@@ -7,14 +7,20 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RowGridComponent } from 'src/app/examen/row-grid/row-grid.component';
 import { LastRowGridComponent } from 'src/app/examen/last-row-grid/last-row-grid.component';
 import { FormsModule } from '@angular/forms';
+import { PhaseDeuxAffichageComponent } from 'src/app/eleve/phase/deux/affichage/phase-deux-affichage/phase-deux-affichage.component';
+import { ModalNoteComponent } from 'src/app/modal-note/modal-note.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { ModalAccessComponent } from 'src/app/modal-access/modal-access.component';
+import { AngularMaterialModule } from 'src/app/angular-material/angular-material/angular-material.module';
 
 @NgModule({
   declarations: [ RowGridComponent,
-    LastRowGridComponent,],
+    LastRowGridComponent,PhaseDeuxAffichageComponent,ModalNoteComponent,    ModalAccessComponent,],
   imports: [
     FormsModule,
     CommonModule,
     HttpClientModule,
+    MDBBootstrapModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,
@@ -22,14 +28,18 @@ import { FormsModule } from '@angular/forms';
           deps: [HttpClient]
       }
   }),
+  AngularMaterialModule,
   ],
   exports:[
     RowGridComponent,
-    LastRowGridComponent,
+    LastRowGridComponent,PhaseDeuxAffichageComponent,ModalNoteComponent,    ModalAccessComponent,AngularMaterialModule,
   ],
   providers:[
     CookieService,
-  ]
+  ],
+  entryComponents: [
+    ModalNoteComponent,    ModalAccessComponent,
+  ],
 })
 export class SharedServiceModule { }
 

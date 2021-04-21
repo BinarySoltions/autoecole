@@ -4,7 +4,7 @@
       <th>Module</th>
       <th>
           <span>Complété le</span><br/>
-          Année  mois  Jour
+          <span class="font-size">Année  mois  Jour</span>
       </th>
     </tr>
     <ng-template ngFor let-row [ngForOf]="modules">
@@ -13,7 +13,7 @@
           {{row?.nom}}
       </td>
       <td>
-          {{row?.eleve_module?.date_complete}} {{obtenirDate(row?.eleve_module)}}
+          {{row?.eleve_module?.date_complete}} {{obtenirDate(row?.eleve_module)}} <span *ngIf="isNote(row)" (click)="showNote(row)" class="fa fa-eye"></span>
       </td>
    
     </tr>

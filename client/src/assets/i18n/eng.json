@@ -52,5 +52,11 @@
         "merci":"Thank you for your subscription and welcome!",
         "inscrire":"Subscribe again",
         "langue":"Language"
+    },
+    "erreur_sortie":{
+        "titre":"Sortie",
+        "colErreur":"Erreur",
+        "colChoix":"Choix",
+        "erreursChoisis" :"Liste d'erreurs"
     }
 }

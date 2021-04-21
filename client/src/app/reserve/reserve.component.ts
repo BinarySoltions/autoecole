@@ -9,6 +9,8 @@ import moment from 'moment';
 import { ModuleService } from '../service/module/module.service';
 import { Module } from 'src/app/entite/module.entity';
 import { EvenementEleve,Evenement } from '../entite/evenement.entity';
+import { ModalAccessComponent } from '../modal-access/modal-access.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 
@@ -33,7 +35,8 @@ export class ReserveComponent implements OnInit {
   timesUser: { value: string; label: string; places: string; date: string }[] = [];
   pos: number;
   eventsDateHeures:Evenement[]=[];
-
+  idEleve:number ;
+  numero:string;
 
  
 
@@ -42,13 +45,25 @@ export class ReserveComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
     private translate: TranslateService,
-    private cookieService: CookieService, private serviceModule: ModuleService) {
+    private cookieService: CookieService, private serviceModule: ModuleService,
+    public dialog: MatDialog) {
     this.translate.setDefaultLang('fr');
-    this.cookieTimeout = this.cookieService.get('subscribe-student');
+    this.cookieTimeout = this.cookieService.get('login-student');
+    this.openDialog();
   }
 
   ngOnInit() {
-    this.obtenirModules();
+    this.cookieTimeout = this.cookieService.get('login-student');
+    let cookEle = JSON.parse(this.cookieTimeout);
+    this.lang = cookEle.langue;
+    this.idEleve = cookEle.id;
+    this.init();
+  }
+
+  init(){
+    if(this.cookieTimeout){
+      this.obtenirModules();
+    this.obtenirEvenementsEleve();
     this.languages = [
       { value: 'fr', label: 'FR' },
       { value: 'eng', label: 'ENG' }
@@ -58,10 +73,19 @@ export class ReserveComponent implements OnInit {
     { value: '17:00', label: '17:00', places: '', date: null }, { value: '18:00', label: '18:00', places: '', date: null }, { value: '19:00', label: '19:00', places: '', date: null }, { value: '20:00', label: '20:00', places: '', date: null }]
     this.eventDriving.heure_debut = this.formatAMPM(new Date());
     this.eventDriving.heure_fin = this.eventDriving.heure_debut;
+    }
   }
   obtenirModules() {
     this.serviceModule.obtnenirSorties().subscribe(m => {
       this.listeModules = m;
+    });
+  }
+  obtenirEvenementsEleve(){
+    let req = {numero:this.numero};
+    this.serviceEleve.obtenirEvenementsEleve(req).subscribe(evt=>{
+      if(evt){
+        this.events = evt;
+      }
     });
   }
   initialiserDate() {
@@ -74,13 +98,18 @@ export class ReserveComponent implements OnInit {
     console.log(this.times);
     if (!this.cookieTimeout) {
       this.formaterDate();
-      this.eventDriving.numero = "2020-2299";
-      this.eventDriving.eleve_id = 23;
+      this.eventDriving.numero = this.numero;//"2020-2299";
+      this.eventDriving.eleve_id = this.idEleve;
       this.eventDriving.place = 1;
       this.eventDriving.nom_module = this.listeModules.find(m => m.id == this.eventDriving.module_id).nom;
       this.serviceEleve.creerEvenementEleve(this.eventDriving).subscribe((evt) => {
-
-        this.toastr.success("Merci / Thank's!", "Succes / Success", { timeOut: 5000 });
+        if(evt){
+          this.events = evt
+          this.toastr.success("Merci / Thank's!", "Succes / Success", { timeOut: 5000 });
+        }else{
+          this.toastr.error("Erreur / Error !", "Erreur / Error !", { timeOut: 5000 });
+        }
+        
         // this.cookieTimeout = 'uurureurueureuredj';
         // this.cookieService.set('event_student', this.cookieTimeout,1000);
       });
@@ -158,5 +187,30 @@ export class ReserveComponent implements OnInit {
         this.timesEnd.push({value:hf,label:hf,date:x.date,places:x.places.toString()});
       }
     });
+  }
+
+  openDialog(): void {
+    if(!this.cookieTimeout){
+    const dialogRef = this.dialog.open(ModalAccessComponent, {
+      data: {nom: null, numeroIdentification: null,langue:null}
+    });
+
+    dialogRef.beforeClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.lang = result.langue;
+      let req = { numero: result.numeroIdentification, nom: result.nom };
+      this.serviceEleve.getEleveLogin(req).subscribe(res => {
+        if (res && res.valid) {
+          this.idEleve = res.id;
+          let req = {langue:this.lang,id:res.id};
+          this.cookieService.set('login-student',JSON.stringify(req),0.02);
+          dialogRef.close();
+        } else {
+          res.isLogin = true;
+        }
+      })
+      this.init();
+    });
+  }
   }
 }

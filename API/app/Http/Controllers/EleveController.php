@@ -568,7 +568,9 @@ class EleveController extends Controller
                     'isValid' => false
                 ]);
             }
-            $events = EvenementEleve::where('numero', '=', $request->numero)->get();
+            $events = EvenementEleve::where('numero', '=', $request->numero)
+            ->orderBy('created_at', 'desc')
+            ->get();
             return EvenementEleveResource::Collection($events);
         } catch (Exception $e) {
             return $e;
@@ -628,5 +630,55 @@ class EleveController extends Controller
             ->whereDate('evenement.date', '>=', $dateStart)
             ->whereDate('evenement.date', '<', $dateEnd)->get();
         return EvenementResource::Collection($events);
+    }
+
+    function getEvenementsEleve(Request $request){
+        $events = EvenementEleve::where('numero', '=', $request->numero)
+        ->orderBy('created_at', 'desc')
+        ->get();
+        return EvenementEleveResource::Collection($events);
+    }
+
+    function ajouterNoteSortie(Request $request){
+        if(isset($request)){
+            //retrieve data
+        $module = Eleve::where('id',$request->id)
+        ->with(['modules' => function ($query) use ($request) {      
+            $query->where('module_id', '=', $request->id_module);
+        }])->get();
+        $valid = true;
+        //update
+        foreach($module as $md){
+            $res = $md->modules()->updateExistingPivot($request->id_module,
+            ['note' => $request->note]);
+            if(!$res){
+                $valid = false;
+            }
+        }
+
+       return response()->json([
+        'valid' => $valid
+        ]);
+        }
+    }
+
+    function loginEleveParNom(Request $request){
+        $valid = false;
+        $id = 0;
+        if(isset($request)){
+            $nom = strtolower($request->nom);
+            $eleve = Eleve::where('numero_contrat',$request->numero)
+            ->whereRaw('lower(nom) like (?)',["%{$nom}%"])
+            ->get();
+            if(isset($eleve)){
+                $valid = true;
+                $id = $eleve[0]->id;
+            }
+        }
+
+        return response()->json([
+            'valid' => $valid,
+            'id'=>$id
+            ]);
     }
 }

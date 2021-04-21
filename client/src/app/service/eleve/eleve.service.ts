@@ -32,7 +32,9 @@ export class EleveService {
   obtenirEleveById(id: number): Observable<Eleve> {
     return this.http.get<Eleve>(this.apiUrl + 'eleve/' + id);
   }
-
+  obtenirEleveByIdPublic(id: number): Observable<Eleve> {
+    return this.http.get<Eleve>(this.apiUrl + 'elevePublic/' + id);
+  }
   obtenirEleves(): Observable<Eleve[]> {
     return this.http.get<Eleve[]>(this.apiUrl + 'eleves');
   }
@@ -114,6 +116,20 @@ export class EleveService {
   }
   obtenirEvenementDatesHeures(req:any): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'getDatesHeures', req, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+  obtenirEvenementsEleve(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'getEvenementsEleve', req, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  ajouterNoteSortie(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'ajouterNoteSortie', req, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  getEleveLogin(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'loginEleve', req, httpOptions)
       .pipe(catchError(this.handleError));
   }
   private handleError(error: HttpErrorResponse) {

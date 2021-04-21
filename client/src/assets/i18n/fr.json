@@ -114,5 +114,11 @@
         "merci":"Merci pour votre inscription et bienvenue!",
         "inscrire":"S'inscrire à nouveau",
         "langue":"Langue"
+    },
+    "erreur_sortie":{
+        "titre":"Sortie",
+        "colErreur":"Erreur",
+        "colChoix":"Choix",
+        "erreursChoisis" :"Liste d'erreurs"
     }
 }
