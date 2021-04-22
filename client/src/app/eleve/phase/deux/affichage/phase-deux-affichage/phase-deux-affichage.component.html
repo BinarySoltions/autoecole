@@ -9,9 +9,12 @@
     </tr>
     <ng-template ngFor let-row [ngForOf]="modules">
     <tr>
-      <td>
-          {{row?.nom}}
+      <td *ngIf="!isSession(row?.nom)" >
+        <i class="fa fa-book"></i> {{row?.nom}}
       </td>
+      <td *ngIf="isSession(row?.nom)" >
+        <i class="fas fa-car"></i> {{session(row?.nom)}}
+    </td>
       <td>
           {{row?.eleve_module?.date_complete}} {{obtenirDate(row?.eleve_module)}} <span *ngIf="isNote(row)" (click)="showNote(row)" class="fa fa-eye"></span>
       </td>

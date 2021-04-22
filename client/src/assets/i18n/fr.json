@@ -120,5 +120,20 @@
         "colErreur":"Erreur",
         "colChoix":"Choix",
         "erreursChoisis" :"Liste d'erreurs"
+    },
+    "access":{
+        "titre":"Connexion",
+        "numero":"Numéro de contrat",
+        "nom":"Nom de famille",
+        "action":"Connecter"
+    },
+    "reservation":{
+        "titre":"Reservation",
+        "liste":"Reservations",
+        "sortie":"Sortie",
+        "date":"Date",
+        "debut":"Heure de début",
+        "fin":"Heure de fin",
+        "action":"Action"
     }
 }

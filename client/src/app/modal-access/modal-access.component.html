@@ -1,32 +1,35 @@
 <div *ngIf="!isStarting">
   <mdb-card>
-    <mdb-card-header><h3>{{'examen.title' | translate}}</h3><div *ngIf="isLogin" style="color: red;">Erreur / Error</div></mdb-card-header>
+    <mdb-card-header><h3>{{'access.titre' | translate}}</h3><div *ngIf="isLogin" style="color: red;">Erreur / Error</div></mdb-card-header>
     <mdb-card-body>
       <mdb-card-text>
         <form #formulaire="ngForm">
           <div class="row">
-              <div class="col col-3">
+            <div class="col col-lg-12">
+              <mat-radio-group aria-label="Langue" name="langue" [(ngModel)] = "data.langue" required>
+                <mat-radio-button name="langue" value="fr" style="margin-right: 10px;" (change)="radioChange($event)" checked><span>FR </span></mat-radio-button>
+                <mat-radio-button name="langue" value="eng" (change)="radioChange($event)"><span>ENG </span></mat-radio-button>
+              </mat-radio-group>
+              </div>
+              <div class="col  col-lg-6">
                 <mat-form-field>
-                  <input matInput type="text" maxlength="50" name="idEleve" aria-label="Numero" [(ngModel)]="data.numeroIdentification" class="col-3" placeholder="Numéro" required>
+                  <input matInput type="text" maxlength="50" name="idEleve" aria-label="Numero" [(ngModel)]="data.numeroIdentification"  placeholder="{{'access.numero' | translate}}" required>
                 </mat-form-field>
                 </div>
-                <div class="col col-3">
+                <div class="col col-lg-6">
                   <mat-form-field>
-                    <input matInput type="text" maxlength="50" name="nom" aria-label="Nom" [(ngModel)]="data.nom" class="col-3" placeholder="Nom de famille / last name" required>
+                    <input matInput type="text" maxlength="50" name="nom" aria-label="Nom" [(ngModel)]="data.nom"  placeholder="{{'access.nom' | translate}}" required>
                   </mat-form-field>
                   </div>
-                <div class="col col-3">
-                  <mat-radio-group aria-label="Langue" name="data.langue" [(ngModel)] = "langue" required>
-                    <mat-radio-button name="langue" value="fr" (change)="radioChange($event)" checked>FR</mat-radio-button>
-                    <mat-radio-button name="langue" value="eng" (change)="radioChange($event)">ENG</mat-radio-button>
-                  </mat-radio-group>
-                  </div>
-                  <div class="col col-3">
+               
+                </div>
+                <div class="row">
+                  <div class="col col-lg-12 push-right">
                     <button type="button" 
         class="btn bg-color-green"
-         (click)="commencer()"
+         (click)="commencer()" [mat-dialog-close]="data"
          style="margin-right:10px;" [disabled]="!formulaire.valid">
-            <i class="fas fa-save"></i>&nbsp;{{'examen.start' | translate}}
+            <i class="fas fa-save"></i>&nbsp;{{'access.action' | translate}}
           </button>
                   </div>
                 </div>

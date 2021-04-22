@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,6 +11,8 @@ import { Module } from 'src/app/entite/module.entity';
 import { EvenementEleve,Evenement } from '../entite/evenement.entity';
 import { ModalAccessComponent } from '../modal-access/modal-access.component';
 import { MatDialog } from '@angular/material/dialog';
+import { timer } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 
 
 
@@ -37,7 +39,8 @@ export class ReserveComponent implements OnInit {
   eventsDateHeures:Evenement[]=[];
   idEleve:number ;
   numero:string;
-
+  first: boolean;
+  isVisible:boolean;
  
 
 
@@ -46,22 +49,25 @@ export class ReserveComponent implements OnInit {
     private toastr: ToastrService,
     private translate: TranslateService,
     private cookieService: CookieService, private serviceModule: ModuleService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    @Inject(DOCUMENT) private _document: Document) {
     this.translate.setDefaultLang('fr');
-    this.cookieTimeout = this.cookieService.get('login-student');
-    this.openDialog();
+    this.checklogin();
+    this.first = true;
   }
 
   ngOnInit() {
+    
     this.cookieTimeout = this.cookieService.get('login-student');
-    let cookEle = JSON.parse(this.cookieTimeout);
-    this.lang = cookEle.langue;
-    this.idEleve = cookEle.id;
     this.init();
   }
 
   init(){
     if(this.cookieTimeout){
+      this.isVisible = true;
+      let cookEle = JSON.parse(this.cookieTimeout);
+      this.lang = cookEle.langue;
+      this.idEleve = cookEle.id;
       this.obtenirModules();
     this.obtenirEvenementsEleve();
     this.languages = [
@@ -190,27 +196,57 @@ export class ReserveComponent implements OnInit {
   }
 
   openDialog(): void {
+    console.log(!this.cookieTimeout);
     if(!this.cookieTimeout){
+      console.log('out');
+     if(this.first)this.dialog.closeAll();
     const dialogRef = this.dialog.open(ModalAccessComponent, {
       data: {nom: null, numeroIdentification: null,langue:null}
     });
 
-    dialogRef.beforeClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.lang = result.langue;
-      let req = { numero: result.numeroIdentification, nom: result.nom };
-      this.serviceEleve.getEleveLogin(req).subscribe(res => {
-        if (res && res.valid) {
-          this.idEleve = res.id;
-          let req = {langue:this.lang,id:res.id};
-          this.cookieService.set('login-student',JSON.stringify(req),0.02);
-          dialogRef.close();
-        } else {
-          res.isLogin = true;
-        }
-      })
+      console.log(result);
+      console.log('after');
+      if(!!result){
+        this.getInfoEleve(result,dialogRef);
+      }
+     
       this.init();
     });
   }
   }
+
+  getInfoEleve(result,dialogRef){
+    this.isVisible = false;
+    this.lang = result.langue;
+    let req = { numero: result.numeroIdentification, nom: result.nom };
+    this.serviceEleve.getEleveLogin(req).subscribe(res => {
+      if (res && res.valid) {
+        this.isVisible = true;
+        this.idEleve = res.id;
+        let req = {langue:this.lang,id:res.id};
+        this.cookieService.set('login-student',JSON.stringify(req),0.02);
+        dialogRef.close();
+        this._document.defaultView.location.reload();
+      } else {
+        
+      }
+    })
+  }
+   checklogin(){
+    this.cookieTimeout = this.cookieService.get('login-student');
+    this.openDialog();
+    const src = timer(0,60000);
+    src.subscribe(v=>{
+      this.cookieTimeout = this.cookieService.get('login-student');
+      this.openDialog();
+    })
+}
+session(row){
+  if(row.includes('Sortie') && this.lang === "eng"){
+    return row.replace('Sortie','Session');
+  }
+  return row;
+}
 }

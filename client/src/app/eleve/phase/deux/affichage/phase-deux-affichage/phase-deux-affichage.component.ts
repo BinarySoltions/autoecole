@@ -40,4 +40,14 @@ export class PhaseDeuxAffichageComponent implements OnInit {
     }
     return false;
   }
+  isSession(row){
+    return row.includes('Sortie');
+  }
+
+  session(row){
+    if(row.includes('Sortie')){
+      return row.replace('Sortie','').trim();
+    }
+    return row;
+  }
 }

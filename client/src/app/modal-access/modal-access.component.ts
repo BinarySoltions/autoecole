@@ -35,12 +35,15 @@ export class ModalAccessComponent implements OnInit {
   }
 
   commencer() {
-    this.data.isLogin = false;
-    this.dialogRef.afterOpened();
+    //this.data.isLogin = false;
+    //this.dialogRef.close();
   }
 
   radioChange(choice) {
-    this.langue = choice.value;
-    this.translate.setDefaultLang(choice.value);
+    if(!!this.data){
+      this.langue = choice.value;
+      this.translate.setDefaultLang(choice.value);
+    }
+   
   }
 }

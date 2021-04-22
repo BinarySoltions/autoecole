@@ -1,7 +1,8 @@
+<div *ngIf="isVisible">
 <mdb-card>
   <mdb-card-header> 
     <div class="row">
-      <div><h3>{{'reservation.titre' | translate}}</h3></div>
+      <div style="text-align: center;width: 100%;"><h3>{{'reservation.titre' | translate}}</h3></div>
     </div>
    </mdb-card-header>
   <mdb-card-body>
@@ -28,15 +29,15 @@
      placeholder="date completee" required>
         <option  value="0">{{'label.selectionner' | translate}}</option>
         <ng-template ngFor let-module [ngForOf]="listeModules" let-i="index">
-            <option [value]="module.id" [disabled]="module.numero==23 || module.numero==24">{{module.nom}}</option>
+            <option [value]="module.id" [disabled]="module.numero==23 || module.numero==24">{{session(module.nom)}}</option>
         </ng-template>
       </select>
       </mat-form-field>
 </div>
   <div class="col col-lg-3">
     <mat-form-field appearance="fill">
-      <mat-label>Choose a date</mat-label>
-      <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)" [matDatepickerFilter]="weekendsDatesFilter" name="date"
+      <mat-label>{{'reservation.date' | translate }}</mat-label>
+      <input readonly matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)" [matDatepickerFilter]="weekendsDatesFilter" name="date"
        [(ngModel)]="eventDriving.date" >
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
@@ -44,7 +45,7 @@
   </div>
   <div class="col col-lg-3">
     <mat-form-field class="w-time" appearance="fill" >
-      <mat-label>De</mat-label>
+      <mat-label>{{'reservation.debut' | translate }}</mat-label>
       <select matNativeControl [(ngModel)]="eventDriving.heure_debut" name="startTime" (change)="onTimeChange($event)" required>
         <ng-template ngFor let-time [ngForOf]="times" let-i="index">
           <option [value]="time.value">{{time.label}}</option>
@@ -52,7 +53,7 @@
       </select>
     </mat-form-field>
     <mat-form-field class="w-time" appearance="fill" >
-      <mat-label>Au</mat-label>
+      <mat-label>{{'reservation.fin' | translate }}</mat-label>
       <select matNativeControl [(ngModel)]="eventDriving.heure_fin" name="endTime" aria-readonly="true">
         <ng-template ngFor let-time [ngForOf]="timesEnd" let-i="index">
           <option [value]="time.value" disabled>{{time.label}}</option>
@@ -81,3 +82,4 @@
 </mdb-card>
 <app-list-reservation [evenementEleve]="events"></app-list-reservation>
 <app-detail-phase [idEleve]="idEleve"></app-detail-phase>
+</div>

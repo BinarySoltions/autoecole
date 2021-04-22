@@ -1,7 +1,7 @@
 <mdb-card>
   <mdb-card-header> 
     <div class="row">
-      <div><h3>{{'reservation.titre' | translate}}</h3></div>
+      <div style="text-align: center;width: 100%;"><h3>{{'reservation.liste' | translate}}</h3></div>
     </div>
    </mdb-card-header>
   <mdb-card-body>
@@ -12,28 +12,28 @@
   
       <!-- ID Column -->
       <ng-container matColumnDef="nom_module">
-        <th class="bg-color-green" mat-header-cell *matHeaderCellDef mat-sort-header> Sortie </th>
+        <th class="bg-color-green" mat-header-cell *matHeaderCellDef mat-sort-header>{{'reservation.sortie' | translate}} </th>
         <td mat-cell *matCellDef="let row"> {{row.nom_module}} </td>
       </ng-container>
   
       <!-- Progress Column -->
       <ng-container matColumnDef="date">
-        <th class="bg-color-green" mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+        <th class="bg-color-green" mat-header-cell *matHeaderCellDef mat-sort-header> {{'reservation.date' | translate}} </th>
         <td mat-cell *matCellDef="let row"> {{row.date}} </td>
       </ng-container>
       
       <!-- Progress Column -->
       <ng-container matColumnDef="heure_debut">
-        <th class="bg-color-green" mat-header-cell *matHeaderCellDef> Debut </th>
+        <th class="bg-color-green" mat-header-cell *matHeaderCellDef> {{'reservation.debut' | translate}} </th>
         <td mat-cell *matCellDef="let row" style="text-align: left;"> {{getHeure(row.heure_debut)}}</td>
       </ng-container>
       <ng-container matColumnDef="heure_fin">
-        <th class="bg-color-green" mat-header-cell *matHeaderCellDef> Debut </th>
+        <th class="bg-color-green" mat-header-cell *matHeaderCellDef> {{'reservation.fin' | translate}} </th>
         <td mat-cell *matCellDef="let row" style="text-align: left;"> {{getHeure(row.heure_fin)}}</td>
       </ng-container>
       <!-- Progress Column -->
       <ng-container matColumnDef="id">
-        <th  class="bg-color-green" width="100" mat-header-cell *matHeaderCellDef> Action </th>
+        <th  class="bg-color-green" width="100" mat-header-cell *matHeaderCellDef> {{'reservation.action' | translate}} </th>
         <td mat-cell *matCellDef="let row"> 
           <div *ngIf="isHistoric(row.date)" class="dropdown col col-4" style="text-align:right">
             <button type="button" class="btn bg-color-green dropdown-toggle" data-toggle="dropdown">

@@ -1,7 +1,59 @@
 {
     "label":{
+        "prenom":"First name",
+        "nom":"Last name",
+        "adresse":"Address",
+        "numero":"Number",
+        "rue":"Street",
+        "app":"App",
+        "numero_rue_app":"Number, street, app",
+        "municipalite":"City",
+        "province":"Province",
+        "code_postal":"Postal code",
+        "numero_contrat":"Contract number",
+        "telephone":"Phone",
+        "telephone_autre":"Other phone",
+        "raison_sociale": "Raison sociale",
+        "nom_ecole":"Name of school",
+        "email":"Email",
+        "numero_attestaton":"Numéro d'attestation",
+        "numero_ecole":"Numéro de l'école",
+        "annee":"Année",
+        "mois":"mois",
+        "Jour":"Jour",
+        "complete_le":"Complété le",
+        "reussi":"Réussi",
+        "complete":"Complet",
+        "echoue":"Échoué",
+        "date":"Date",
+        "signature":"Signature",
+        "nom_responsable":"Nom de la personne responsable",
         "enregistrer":"Save",
-        "fermer":"Close"
+        "fermer":"Close",
+        "selectionner":"Sélectionner",
+        "ajouter":"Ajouter",
+        "nom_phase":"Nom de la phase",
+        "numero_phase" : "Numéro de la phase",
+        "nombre_module":"Nombre de modules",
+        "rechercher":"Rechercher",
+        "personne_responsable":"Nom complet de la personne responsable",
+        "ajouterModule":"Ajouter module",
+        "ajouterEleve":"Ajouter élève"
+    },
+    "titre":{
+        "eleve":"Student",
+        "ecole_identification":"Student identification",
+        "attestation_personne_responsable":"Attestation de la personne responsable",
+        "phase_config":"Ajouter un module dans une phase",
+        "phase_module": "List of modules",
+        "ajout_module": "Ajouter un module à un ou plusieurs élèves",
+        "liste_personnes_responsables":"Liste des personnes responsables",
+        "personne_responsable":"Ajouter une personne responsable"
+    },
+    "module":{
+        "nom":"Module",
+        "date_complete":"Date",
+        "eleves":"Students"
     },
     "examen":{
         "title":"Class 5 Learner’s Licence Test",
@@ -58,5 +110,20 @@
         "colErreur":"Erreur",
         "colChoix":"Choix",
         "erreursChoisis" :"Liste d'erreurs"
+    },
+    "access":{
+        "titre":"Login",
+        "numero":"Contract number",
+        "nom":"Last name",
+        "action":"Login"
+    },
+    "reservation":{
+        "titre":"Reservation",
+        "liste":"Reservations",
+        "sortie":"In-Car Session",
+        "date":"Date",
+        "debut":"Start time",
+        "fin":"End time",
+        "action":"Action"
     }
 }
