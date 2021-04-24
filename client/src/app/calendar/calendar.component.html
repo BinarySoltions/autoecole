@@ -4,7 +4,8 @@
     <mdb-card-text>
       <div class="row">
         <div class="col col-lg-12">
-          <button (click)="toDay()">Aujourd'hui</button> <button (click)="addMonth(-1)">  <i class="fas fa-chevron-left"></i></button> <button (click)="addMonth(1)"> <i class="fas fa-chevron-right"></i></button>
+          <button class="btn bg-color-green mr" (click)="toDay()">Aujourd'hui</button> <button class="btn bg-color-green mr" (click)="addMonth(-1)">  <i class="fas fa-chevron-left"></i></button> 
+          <button class="btn bg-color-green" (click)="addMonth(1)"> <i class="fas fa-chevron-right"></i></button>
             {{monthSelected | date:'yyyy-MMMM'}}
           </div>
       </div>
