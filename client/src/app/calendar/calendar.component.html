@@ -1,0 +1,24 @@
+<mdb-card>
+  <mdb-card-header><app-breadcrumbs [url]="'eleves'"></app-breadcrumbs><div style="text-align: center;width: 100%;"><h3>Ajouter note</h3></div></mdb-card-header>
+  <mdb-card-body>
+    <mdb-card-text>
+      <div class="row">
+        <div class="col col-lg-12">
+          <button (click)="toDay()">Aujourd'hui</button> <button (click)="addMonth(-1)">  <i class="fas fa-chevron-left"></i></button> <button (click)="addMonth(1)"> <i class="fas fa-chevron-right"></i></button>
+            {{monthSelected | date:'yyyy-MMMM'}}
+          </div>
+      </div>
+      <div class="row">
+        <div class="col col-lg-12">
+          <div #dateDiv *ngFor="let date of dataDays; let i =index" class="wd">
+            <div *ngIf="i<8" style="width:100%;text-align: center;">{{weeks[i]}}</div>
+            <div style="width:100%;text-align: center;">{{date}}</div>
+<div *ngIf="i == 3" class="event"> Ousmane Dieng </div>
+<div *ngIf="i == 3" class="event"> Mamadou Dieng </div>
+<div *ngIf="i == 3" class="event"> Khadim Dieng </div>
+          </div>
+        </div>
+      </div>
+      </mdb-card-text>
+      </mdb-card-body>
+      </mdb-card>

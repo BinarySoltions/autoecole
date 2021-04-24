@@ -72,6 +72,7 @@ import { ReserveAdminComponent } from '../eleve/reserve-admin/reserve-admin.comp
 import { DetailPayementComponent } from '../payement/detail-payement/detail-payement.component';
 import { ErreurSortieComponent } from '../erreur-sortie/erreur-sortie.component';
 import { NoteSortieComponent } from '../eleve/note-sortie/note-sortie.component';
+import { CalendarComponent } from '../calendar/calendar.component';
 
 export const config = new AuthServiceConfig([
   {
@@ -136,7 +137,8 @@ export const config = new AuthServiceConfig([
     ReserveAdminComponent,
     DetailPayementComponent,
     ErreurSortieComponent,
-    NoteSortieComponent
+    NoteSortieComponent,
+    CalendarComponent
   ],
   imports: [
     FormsModule,
