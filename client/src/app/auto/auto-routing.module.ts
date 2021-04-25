@@ -28,6 +28,7 @@ import { AutoComponent } from './auto.component';
 import { ReserveAdminComponent } from '../eleve/reserve-admin/reserve-admin.component';
 import { ErreurSortieComponent } from '../erreur-sortie/erreur-sortie.component';
 import { NoteSortieComponent } from '../eleve/note-sortie/note-sortie.component';
+import { CalendarComponent } from '../calendar/calendar.component';
 
 const routes: Routes = [
   { path: '', component: AutoComponent, 
@@ -55,6 +56,7 @@ const routes: Routes = [
   { path: 'reservation' , component: ReserveAdminComponent, canActivate: [AuthGuardService]},
   { path: 'erreur-sortie' , component: ErreurSortieComponent, canActivate: [AuthGuardService]},
   { path: 'eleve/note/:id' , component: NoteSortieComponent, canActivate: [AuthGuardService]},
+  { path: 'calendrier' , component: CalendarComponent, canActivate: [AuthGuardService]},
   ] },
   
   // // otherwise redirect to home

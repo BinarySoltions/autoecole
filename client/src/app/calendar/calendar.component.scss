@@ -1,16 +1,49 @@
 .wd{
     position: relative;
+    padding: 4px 2px;
     width: 14%;
     min-width: 100px;
     display: inline-table;
     border: 1px solid #ccc;
+    min-height: 130px;
+}
+.wd:hover{
+    background-color: honeydew;
 }
 .event{
-    padding: 1px 2px;
+    position: relative;
+    padding: 3px 2px;
     margin: 1px;
-    background-color: aqua;
+    background-color:lightblue;
     cursor: pointer;
+    border-radius: 7px;
+    font-size: x-small;
+    width: 23%;
+    display: inline-table;
+    text-align: center;
+}
+.no_event{
+    position: relative;
+    padding: 3px 2px;
+    margin: 1px;
+    background-color: grey;
+    cursor: none;
+    border-radius: 7px;
+    font-size: x-small;
+    width: 23%;
+    display: inline-table;
+    text-align: center;
+}
+.event:hover,.no_event:hover{
+    background-color: #28a745;
 }
 .mr{
    margin-right: 10px;
+}
+
+.today{
+    background-color: #28a745;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 5px;
 }

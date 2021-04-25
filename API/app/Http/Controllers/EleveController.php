@@ -631,7 +631,34 @@ class EleveController extends Controller
             ->whereDate('evenement.date', '<', $dateEnd)->get();
         return EvenementResource::Collection($events);
     }
-
+    function getDatesHeuresEvents(Request $request)
+    {
+        $dateEnd = date('Y-m-d', strtotime($request->dateEnd));
+        $dateStart = date('Y-m-d', strtotime($request->dateStart));
+        $events = Evenement::distinct()
+            ->select(
+                'evenement.date',
+                'evenement.heure_debut',
+                'evenement.heure_fin',
+                'evenement.places',
+                'evenement_eleve.place',
+                'eleve.prenom',
+                'eleve.nom',
+                'eleve.numero_contrat',
+                'evenement_eleve.nom_module'
+            )
+            ->leftJoin('evenement_eleve', function ($join) {
+                $join->on('evenement.date', '=', 'evenement_eleve.date');
+                $join->on('evenement.heure_debut', '=', 'evenement_eleve.heure_debut');
+                $join->on('evenement.heure_fin', '=', 'evenement_eleve.heure_fin');
+            })
+            ->leftJoin('eleve', function ($join) {
+                $join->on('eleve.id', '=', 'evenement_eleve.eleve_id');
+            })
+            ->whereDate('evenement.date', '>=', $dateStart)
+            ->whereDate('evenement.date', '<', $dateEnd)->get();
+        return EvenementResource::Collection($events);
+    }
     function getEvenementsEleve(Request $request){
         $events = EvenementEleve::where('numero', '=', $request->numero)
         ->orderBy('created_at', 'desc')

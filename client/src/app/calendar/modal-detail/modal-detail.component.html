@@ -1,0 +1,15 @@
+<mdb-card>
+  <mdb-card-header><i class="fas fa-calendar"></i> {{getDate(data[0].date)}}</mdb-card-header>
+  <mdb-card-body>
+    <mdb-card-text>
+      <div class="row">
+        <div class="col col-lg-12">
+          <h5> <i class="fas fa-clock"></i> {{data[0].heure_debut.substring(0,5)}} - {{data[0].heure_fin.substring(0,5)}}</h5>
+          <div *ngFor="let n of data"><i class="fas fa-user-clock"></i> {{n.prenom}} {{n.nom}} ({{n.numero_contrat}})
+            <i class="fas fa-car"></i> {{session(n.nom_module)}}
+          </div>
+        </div>
+      </div>
+      </mdb-card-text>
+  </mdb-card-body>
+  </mdb-card>

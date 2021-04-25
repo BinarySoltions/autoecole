@@ -45,6 +45,8 @@ Route::get('sorties','ModuleController@driving');
 Route::post('evenement','EleveController@saveEvent');
 Route::post('evenements','EleveController@savePlaces')->middleware('auth:api');
 Route::post('getDatesHeures','EleveController@getDatesHeures');
+Route::post('getDatesHeuresEvents','EleveController@getDatesHeuresEvents')->middleware('auth:api');
+Route::post('getEvenementsEleve','EleveController@getEvenementsEleve');
 //create eleve module
 Route::post('module_eleves','ModuleController@store_module_eleve')->middleware('auth:api');
 //create phase
@@ -64,6 +66,7 @@ Route::get('eleves/{limit}','EleveController@partialStudents')->middleware('auth
 Route::get('eleves_seulement','EleveController@seulement')->middleware('auth:api');
 //get eleve
 Route::get('eleve/{id}','EleveController@show')->middleware('auth:api');
+Route::get('elevePublic/{id}','EleveController@show');
 //get eleve
 Route::delete('eleve/{id}','EleveController@destroy')->middleware('auth:api');
 //ger search eleves
@@ -121,7 +124,11 @@ Route::post('enregistrerExamen','EleveController@updateTest')->middleware('auth:
 Route::get('examen/{numero}','ExamenController@show');
 //post test
 Route::post('examen','ExamenController@store');
-
+//post test
+Route::get('erreursSortie','ErreurSortieController@index')->middleware('auth:api');
+Route::post('erreurSortie','ErreurSortieController@store')->middleware('auth:api');
+Route::post('ajouterNoteSortie','EleveController@ajouterNoteSortie')->middleware('auth:api');
+Route::post('loginEleve','EleveController@loginEleveParNom');
 
 
 

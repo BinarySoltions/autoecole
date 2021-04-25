@@ -122,7 +122,10 @@ export class EleveService {
     return this.http.post<any>(this.apiUrl + 'getEvenementsEleve', req, httpOptions)
       .pipe(catchError(this.handleError));
   }
-
+  obtenirEvenementsDetails(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'getDatesHeuresEvents', req, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
   ajouterNoteSortie(req:any): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'ajouterNoteSortie', req, httpOptions)
       .pipe(catchError(this.handleError));

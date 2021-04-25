@@ -1,25 +1,54 @@
 <mdb-card>
-  <mdb-card-header><app-breadcrumbs [url]="'eleves'"></app-breadcrumbs><div style="text-align: center;width: 100%;"><h3>Ajouter note</h3></div></mdb-card-header>
+  <mdb-card-header>
+    <div class="row" style="min-width:928px">
+      <div class="col col-lg-3" style="text-align: left;width: 100%;"><h3><i class="fas fa-calendar"></i>Événements</h3></div>
+      <div class="col col-lg-6">
+        <button class="btn bg-color-green mr" (click)="toDay()">Aujourd'hui</button> <button class="btn bg-color-green mr" (click)="addMonth(-1)">  <i class="fas fa-chevron-left"></i></button> 
+        <button class="btn bg-color-green" (click)="addMonth(1)"> <i class="fas fa-chevron-right"></i></button>
+          {{getMonth(monthSelected)}}
+        </div>
+        <div class="col col-lg-3 push-right">
+          <button class="btn bg-color-green" (click)="reservation()"> <i class="fas fa-plus"></i> Événements</button>
+        </div>
+    </div>
+  </mdb-card-header>
   <mdb-card-body>
     <mdb-card-text>
       <div class="row">
         <div class="col col-lg-12">
-          <button class="btn bg-color-green mr" (click)="toDay()">Aujourd'hui</button> <button class="btn bg-color-green mr" (click)="addMonth(-1)">  <i class="fas fa-chevron-left"></i></button> 
-          <button class="btn bg-color-green" (click)="addMonth(1)"> <i class="fas fa-chevron-right"></i></button>
-            {{monthSelected | date:'yyyy-MMMM'}}
-          </div>
-      </div>
-      <div class="row">
-        <div class="col col-lg-12">
           <div #dateDiv *ngFor="let date of dataDays; let i =index" class="wd">
             <div *ngIf="i<8" style="width:100%;text-align: center;">{{weeks[i]}}</div>
-            <div style="width:100%;text-align: center;">{{date}}</div>
-<div *ngIf="i == 3" class="event"> Ousmane Dieng </div>
-<div *ngIf="i == 3" class="event"> Mamadou Dieng </div>
-<div *ngIf="i == 3" class="event"> Khadim Dieng </div>
+            <div style="width:100%;text-align: center;" ><span [ngClass]="{'today':isCurrentDay(date)}" >{{date.day}}</span></div>
+         
+            <div  matTooltip="{{event.heure_debut.substring(0,5)}} - {{event.heure_fin.substring(0,5)}}" 
+            *ngFor="let event of getDateEvents(date.events); let i =index" 
+            [ngClass]="{'event':!!event.numero_contrat,'no_event':!event.numero_contrat}" 
+            (click)="openDetail(event,date.events)"> 
+              <i *ngIf="event.numero_contrat" class="fas fa-user-plus"></i> 
+              <i *ngIf="!event.numero_contrat" class="fas fa-user-slash"></i>
+              {{event.heure_debut.substring(0,5)}}</div>
+         
+
           </div>
         </div>
       </div>
       </mdb-card-text>
       </mdb-card-body>
+      <mdb-card-footer>
+        <div class="row">
+          <div class="col col-lg-3" style="text-align: left;width: 100%;"><h3><i class="fas fa-calendar"></i></h3></div>
+          <div class="col col-lg-6">
+            <button class="btn bg-color-green mr" (click)="toDay()">Aujourd'hui</button> <button class="btn bg-color-green mr" (click)="addMonth(-1)">  <i class="fas fa-chevron-left"></i></button> 
+            <button class="btn bg-color-green" (click)="addMonth(1)"> <i class="fas fa-chevron-right"></i></button>
+              {{getMonth(monthSelected)}}
+            </div>
+            <div class="col col-lg-3 push-right">
+              <button class="btn bg-color-green" (click)="reservation()"> <i class="fas fa-plus"></i> Événements</button>
+            </div>
+        </div>
+      </mdb-card-footer>
       </mdb-card>
+      <div style="margin-bottom: 100px;"></div>
+      <ngx-spinner>
+        <p class="loading">Loading Awesomeness...</p>
+      </ngx-spinner>

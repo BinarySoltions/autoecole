@@ -20,6 +20,11 @@
           [ngClass]="{'active':lienActif == lien.RECHERCHE}">Recherche
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/calendrier" (click)="lienActif = lien.CALENDAR"
+          [ngClass]="{'active':lienActif == lien.CALENDAR}">Calendrier
+          </a>
+        </li>
         <li *ngIf="currentUser" class="nav-item">
           <a class="nav-link" href="#" (click)="logout()">Déconnexion
           </a>
@@ -48,6 +53,7 @@
             <a class="dropdown-item" routerLink="/personne">Personne responsable</a>
             <a class="dropdown-item" routerLink="/ecole">École</a>
             <a class="dropdown-item" routerLink="/parametres/contrat">Contrat</a>
+            <a class="dropdown-item" routerLink="/erreur-sortie">Erreurs de sortie</a>
             <a routerLink="/register" class="dropdown-item">S'inscrire</a>
           </div>
         </div>

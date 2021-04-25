@@ -11,7 +11,8 @@ import { PartageService } from 'src/app/service/partage.service';
 enum Lien{
   HOME = 1,
   ELEVE = 2,
-  RECHERCHE = 3
+  RECHERCHE = 3,
+  CALENDAR = 4
 }
 @Component({
   selector: 'app-navbar',

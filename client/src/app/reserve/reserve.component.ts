@@ -68,6 +68,7 @@ export class ReserveComponent implements OnInit {
       let cookEle = JSON.parse(this.cookieTimeout);
       this.lang = cookEle.langue;
       this.idEleve = cookEle.id;
+      this.numero = cookEle.numero;
       this.obtenirModules();
     this.obtenirEvenementsEleve();
     this.languages = [
@@ -101,8 +102,8 @@ export class ReserveComponent implements OnInit {
     return moment(value).format();
   }
   public enregistrer() {
-    console.log(this.times);
-    if (!this.cookieTimeout) {
+    console.log(this.numero);
+    if (this.cookieTimeout) {
       this.formaterDate();
       this.eventDriving.numero = this.numero;//"2020-2299";
       this.eventDriving.eleve_id = this.idEleve;
@@ -162,9 +163,9 @@ export class ReserveComponent implements OnInit {
     const dateStart = moment().format('YYYY-MM-DD');
     var dateEnd = null;
     if(module.phase_id == 2){
-      dateEnd = moment().add('days',28).format('YYYY-MM-DD');
+      dateEnd = moment().add(28,'days').format('YYYY-MM-DD');
     }else {
-      dateEnd = moment().add('days',56).format('YYYY-MM-DD');
+      dateEnd = moment().add(56,'days').format('YYYY-MM-DD');
     }
     let req = {dateStart:dateStart,dateEnd:dateEnd};
     this.serviceEleve.obtenirEvenementDatesHeures(req).subscribe(r=>{
@@ -221,11 +222,13 @@ export class ReserveComponent implements OnInit {
     this.isVisible = false;
     this.lang = result.langue;
     let req = { numero: result.numeroIdentification, nom: result.nom };
+    this.numero = req.numero;
+    console.log(this.numero);
     this.serviceEleve.getEleveLogin(req).subscribe(res => {
       if (res && res.valid) {
         this.isVisible = true;
         this.idEleve = res.id;
-        let req = {langue:this.lang,id:res.id};
+        let req = {langue:this.lang,id:res.id,numero:this.numero};
         this.cookieService.set('login-student',JSON.stringify(req),0.02);
         dialogRef.close();
         this._document.defaultView.location.reload();

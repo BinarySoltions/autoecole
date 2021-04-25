@@ -1,12 +1,12 @@
 <mdb-card>
-  <mdb-card-header><h3>{{'examen.title' | translate}}</h3></mdb-card-header>
+  <mdb-card-header><h3>Erreurs de sortie</h3></mdb-card-header>
   <mdb-card-body>
     <mdb-card-text>
       <form #formulaire="ngForm">
         <div class="row">
               <div class="col col-3">
                 <mat-radio-group aria-label="Langue" name="langue" [(ngModel)] = "langue" required>
-                  <mat-radio-button name="langue" value="fr" (change)="radioChange($event)" checked>FR</mat-radio-button>
+                  <mat-radio-button style="margin-right: 10px;" name="langue" value="fr" (change)="radioChange($event)" checked>FR</mat-radio-button>
                   <mat-radio-button name="langue" value="eng" (change)="radioChange($event)">ENG</mat-radio-button>
                 </mat-radio-group>
                 </div>
@@ -56,7 +56,7 @@ style="margin-right:10px;" [disabled]="!formulaire.valid">
 <mdb-card>
   <mdb-card-header> 
     <div class="row">
-      <div><h3>{{'reservation.titre' | translate}}</h3></div>
+      <div><h3>Liste des erreurs de sorties</h3></div>
     </div>
    </mdb-card-header>
   <mdb-card-body>

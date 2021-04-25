@@ -73,6 +73,7 @@ import { DetailPayementComponent } from '../payement/detail-payement/detail-paye
 import { ErreurSortieComponent } from '../erreur-sortie/erreur-sortie.component';
 import { NoteSortieComponent } from '../eleve/note-sortie/note-sortie.component';
 import { CalendarComponent } from '../calendar/calendar.component';
+import { ModalDetailComponent } from '../calendar/modal-detail/modal-detail.component';
 
 export const config = new AuthServiceConfig([
   {
@@ -138,7 +139,8 @@ export const config = new AuthServiceConfig([
     DetailPayementComponent,
     ErreurSortieComponent,
     NoteSortieComponent,
-    CalendarComponent
+    CalendarComponent,
+    ModalDetailComponent
   ],
   imports: [
     FormsModule,
@@ -172,7 +174,8 @@ export const config = new AuthServiceConfig([
     provide: AuthServiceConfig,
     useFactory: provideConfig,
   }
-  ]
+  ],
+  entryComponents:[ModalDetailComponent]
 })
 export class AutoModule { }
 
