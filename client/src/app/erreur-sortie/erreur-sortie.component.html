@@ -1,5 +1,5 @@
 <mdb-card>
-  <mdb-card-header><h3>Erreurs de sortie</h3></mdb-card-header>
+  <mdb-card-header><h3>Points à améliorer</h3></mdb-card-header>
   <mdb-card-body>
     <mdb-card-text>
       <form #formulaire="ngForm">
@@ -56,7 +56,7 @@ style="margin-right:10px;" [disabled]="!formulaire.valid">
 <mdb-card>
   <mdb-card-header> 
     <div class="row">
-      <div><h3>Liste des erreurs de sorties</h3></div>
+      <div><h3>Les points à améliorer</h3></div>
     </div>
    </mdb-card-header>
   <mdb-card-body>
@@ -67,7 +67,7 @@ style="margin-right:10px;" [disabled]="!formulaire.valid">
   
       <!-- ID Column -->
       <ng-container matColumnDef="texte">
-        <th class="bg-color-green" mat-header-cell *matHeaderCellDef mat-sort-header> Sortie </th>
+        <th class="bg-color-green" mat-header-cell *matHeaderCellDef mat-sort-header> Points </th>
         <td mat-cell *matCellDef="let row"> {{row.texte}} </td>
       </ng-container>
       <!-- Progress Column -->

@@ -12,10 +12,11 @@ import { ModalNoteComponent } from 'src/app/modal-note/modal-note.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ModalAccessComponent } from 'src/app/modal-access/modal-access.component';
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material/angular-material.module';
-
+import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
+import { ListReservationComponent } from 'src/app/reserve/list-reservation/list-reservation.component';
 @NgModule({
   declarations: [ RowGridComponent,
-    LastRowGridComponent,PhaseDeuxAffichageComponent,ModalNoteComponent,    ModalAccessComponent,],
+    LastRowGridComponent,PhaseDeuxAffichageComponent,ModalNoteComponent,    ModalAccessComponent, ModalConfirmComponent,ListReservationComponent,],
   imports: [
     FormsModule,
     CommonModule,
@@ -33,12 +34,13 @@ import { AngularMaterialModule } from 'src/app/angular-material/angular-material
   exports:[
     RowGridComponent,
     LastRowGridComponent,PhaseDeuxAffichageComponent,ModalNoteComponent,    ModalAccessComponent,AngularMaterialModule,
+    ModalConfirmComponent,ListReservationComponent,
   ],
   providers:[
     CookieService,
   ],
   entryComponents: [
-    ModalNoteComponent,    ModalAccessComponent,
+    ModalNoteComponent,    ModalAccessComponent, ModalConfirmComponent,
   ],
 })
 export class SharedServiceModule { }

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { EvenementEleve } from 'src/app/entite/evenement.entity';
@@ -10,9 +10,11 @@ import moment from 'moment';
   styleUrls: ['./list-reservation.component.scss']
 })
 export class ListReservationComponent implements OnInit, OnChanges {
-
+  @Input('delete') delete = false;
   @Input('evenementEleve') elements: EvenementEleve[] = [];
+  @Output() deleteEvent = new EventEmitter<number>(null);
   @ViewChild('row') row: ElementRef;
+  @Input('lang') lang = 'fr';
 
   headElements = ['nom_module', 'date', 'heure_debut', 'heure_fin', 'id'];
   dataSource = new MatTableDataSource<EvenementEleve>(this.elements);
@@ -45,7 +47,7 @@ export class ListReservationComponent implements OnInit, OnChanges {
   }
 
   editer(id) {
-
+    this.deleteEvent.emit(id);
   }
 
   getHeure(value) {
@@ -84,9 +86,19 @@ export class ListReservationComponent implements OnInit, OnChanges {
   }
 
   isHistoric(value) {
-    var now = moment(new Date()); //todays date
-    var end = moment(value); // another date
+    var now = moment(new Date()).startOf('day'); //todays date
+    if(!this.delete){
+      now = moment(new Date()).add(2,'days').startOf('day');
+    }
+    var end = moment(value).startOf('day'); // another date
     var days = now.diff(end,'days');
     return Number(days) < 0;
+  }
+
+  session(row) {
+    if (row.includes('Sortie') && this.lang === "eng") {
+      return row.replace('Sortie', 'Session');
+    }
+    return row;
   }
 }

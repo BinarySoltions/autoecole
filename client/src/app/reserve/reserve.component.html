@@ -21,10 +21,10 @@
 <div class="row">
   <div class="col col-lg-3">
     <mat-form-field appearance="fill">
-      <mat-label>{{'module.nom' | translate }}</mat-label>
+      <mat-label>{{'module.sortie' | translate }}</mat-label>
     <select matNativeControl
     name="module"
-    aria-label="{{'module.nom' | translate }}"
+    aria-label="{{'module.sortie' | translate }}"
      [(ngModel)]="eventDriving.module_id" (change)="onModulesChange($event)"
      placeholder="date completee" required>
         <option  value="0">{{'label.selectionner' | translate}}</option>
@@ -80,6 +80,7 @@
     </div>
     </mdb-card-footer>
 </mdb-card>
-<app-list-reservation [evenementEleve]="events"></app-list-reservation>
+<app-list-reservation (deleteEvent)="confirmDeleteEvent($event)" 
+[evenementEleve]="events" [lang]="lang"></app-list-reservation>
 <app-detail-phase [idEleve]="idEleve"></app-detail-phase>
 </div>

@@ -97,6 +97,9 @@ examenEleve(row){
 noteEleve(row){
   this.router.navigate(["eleve/note/"+row.id]);
 }
+sortieEleve(row){
+  this.router.navigate(["eleve/sortie/"+row.id]);
+}
 public supprimerEleve(value){
   this.idEleveASupprimer = value;
   $("#confirmerModal").modal('show');

@@ -48,7 +48,8 @@
         "phase_module": "Liste des modules",
         "ajout_module": "Ajouter un module à un ou plusieurs élèves",
         "liste_personnes_responsables":"Liste des personnes responsables",
-        "personne_responsable":"Ajouter une personne responsable"
+        "personne_responsable":"Ajouter une personne responsable",
+        "eleve_identification":"Identification de l'éléve"
     },
     "menu":{
         "eleve":"Élève",
@@ -58,7 +59,8 @@
     "module":{
         "nom":"Module",
         "date_complete":"Date",
-        "eleves":"Élèves"
+        "eleves":"Élèves",
+        "sortie":"Sortie"
     },
     
     "url":{
@@ -135,5 +137,10 @@
         "debut":"Heure de début",
         "fin":"Heure de fin",
         "action":"Action"
+    },
+    "confirm":{
+        "ok":"Oui",
+        "no":"Non",
+        "titre":"Confirmer"
     }
 }

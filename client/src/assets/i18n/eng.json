@@ -42,18 +42,20 @@
     },
     "titre":{
         "eleve":"Student",
-        "ecole_identification":"Student identification",
+        "ecole_identification":"School identification",
         "attestation_personne_responsable":"Attestation de la personne responsable",
         "phase_config":"Ajouter un module dans une phase",
         "phase_module": "List of modules",
         "ajout_module": "Ajouter un module à un ou plusieurs élèves",
         "liste_personnes_responsables":"Liste des personnes responsables",
-        "personne_responsable":"Ajouter une personne responsable"
+        "personne_responsable":"Ajouter une personne responsable",
+        "eleve_identification":"Student identification"
     },
     "module":{
         "nom":"Module",
         "date_complete":"Date",
-        "eleves":"Students"
+        "eleves":"Students",
+        "sortie":"Session"
     },
     "examen":{
         "title":"Class 5 Learner’s Licence Test",
@@ -125,5 +127,10 @@
         "debut":"Start time",
         "fin":"End time",
         "action":"Action"
+    },
+    "confirm":{
+        "ok":"Yes",
+        "no":"No",
+        "titre":"Confirm"
     }
 }

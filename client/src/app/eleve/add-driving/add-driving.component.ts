@@ -1,28 +1,29 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { DOCUMENT } from '@angular/common';
+import moment from 'moment';
 import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
-import { EleveService } from '../service/eleve/eleve.service';
-import moment from 'moment';
-import { ModuleService } from '../service/module/module.service';
-import { Module } from 'src/app/entite/module.entity';
-import { EvenementEleve, Evenement } from '../entite/evenement.entity';
-import { ModalAccessComponent } from '../modal-access/modal-access.component';
-import { MatDialog } from '@angular/material/dialog';
 import { timer } from 'rxjs';
-import { DOCUMENT } from '@angular/common';
-import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
-
-
+import { Eleve } from 'src/app/entite/eleve.entity';
+import { Evenement, EvenementEleve } from 'src/app/entite/evenement.entity';
+import { Module } from 'src/app/entite/module.entity';
+import { ModalAccessComponent } from 'src/app/modal-access/modal-access.component';
+import { ModalConfirmComponent } from 'src/app/modal-confirm/modal-confirm.component';
+import { EleveService } from 'src/app/service/eleve/eleve.service';
+import { ModuleService } from 'src/app/service/module/module.service';
 
 @Component({
-  selector: 'app-reserve',
-  templateUrl: './reserve.component.html',
-  styleUrls: ['./reserve.component.scss']
+  selector: 'app-add-driving',
+  templateUrl: './add-driving.component.html',
+  styleUrls: ['./add-driving.component.scss']
 })
-export class ReserveComponent implements OnInit {
+export class AddDrivingComponent implements OnInit {
+  eleveModele:Eleve;
+
   @ViewChild('formulaire') formulaire: NgForm;
 
   cookieTimeout: any;
@@ -42,9 +43,7 @@ export class ReserveComponent implements OnInit {
   numero: string;
   first: boolean;
   isVisible: boolean;
-
-
-
+  
   constructor(private router: Router, private serviceEleve: EleveService,
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
@@ -58,9 +57,20 @@ export class ReserveComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.idEleve = +this.activatedRoute.snapshot.paramMap.get('id');
+    this.obtenirEleveById(this.idEleve);
+  }
 
-    this.cookieTimeout = this.cookieService.get('login-student');
-    this.init();
+  public obtenirEleveById(id:number){
+    if(id){
+      this.serviceEleve.obtenirEleveById(id).subscribe(eleve=>{
+        this.eleveModele = eleve;
+        let req = { langue: "fr", id: this.idEleve, numero: this.eleveModele.numero_contrat };
+        this.cookieService.set('login-student', JSON.stringify(req));
+        this.cookieTimeout = this.cookieService.get('login-student');
+        this.init();
+      });
+    }
   }
 
   init() {
@@ -199,7 +209,7 @@ export class ReserveComponent implements OnInit {
 
   openDialog(): void {
     console.log(!this.cookieTimeout);
-    if (!this.cookieTimeout) {
+    if (!this.cookieTimeout && false) {
       console.log('out');
       if (this.first) this.dialog.closeAll();
       const dialogRef = this.dialog.open(ModalAccessComponent, {

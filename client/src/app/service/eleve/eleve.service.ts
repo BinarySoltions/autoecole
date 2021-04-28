@@ -135,6 +135,14 @@ export class EleveService {
     return this.http.post<any>(this.apiUrl + 'loginEleve', req, httpOptions)
       .pipe(catchError(this.handleError));
   }
+  deleteEvent(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'deleteEvent', req, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+  deletePlacesEvent(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'deletePlacesEvent', req, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

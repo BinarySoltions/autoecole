@@ -13,7 +13,7 @@
       <!-- ID Column -->
       <ng-container matColumnDef="nom_module">
         <th class="bg-color-green" mat-header-cell *matHeaderCellDef mat-sort-header>{{'reservation.sortie' | translate}} </th>
-        <td mat-cell *matCellDef="let row"> {{row.nom_module}} </td>
+        <td mat-cell *matCellDef="let row"> {{session(row.nom_module)}} </td>
       </ng-container>
   
       <!-- Progress Column -->
@@ -44,9 +44,9 @@
            <div class="col col-12 size-30 form-align-h">
 
            
-          <div  title="Modifier" class="btn dropdown-item bg-color-green" (click)="editer(row.id)" style="margin-right:10px">
-              <i class="fas fa-pen"></i>
-          </div>
+          <span style="padding: 3px 5px;" title="Supprimer/Delete" class="btn dropdown-item bg-color-green" (click)="editer(row.id)" style="margin-right:10px">
+              <i class="fas fa-trash-alt"></i>
+          </span>
        
         </div>
         </div>

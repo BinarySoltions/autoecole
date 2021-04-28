@@ -54,7 +54,7 @@ export class CalendarComponent implements OnInit,AfterViewInit {
      this.completeRightDays(i,days,dow);
       
     }
-    const dateMoins = moment(this.monthSelected).add(-1, 'months').format('YYYY-MM-DD');
+    const dateMoins = moment(this.monthSelected).add(-1, 'months').set('date',1).format('YYYY-MM-DD');
     const datePlus = moment(this.monthSelected).add(1, 'months').format('YYYY-MM-DD');
     this.setEvents(dateMoins,datePlus)
   }
@@ -94,12 +94,9 @@ export class CalendarComponent implements OnInit,AfterViewInit {
   resizeEventDiv(){
     let divEle: ElementRef[] = this.datesDiv.toArray();
     this.height = divEle.map(e=>e.nativeElement.offsetHeight).reduce((a,b)=>Math.max(a,b));
-    if(this.height > 200){
-      this.height = 200;
-    }else if(this.height < 100){
+    if(this.height < 100){
       this.height = 100;
     }
-
     this.datesDiv.toArray().forEach(e=>e.nativeElement.style.height = this.height+'px');
   }
 

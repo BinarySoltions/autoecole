@@ -534,7 +534,7 @@ class EleveController extends Controller
                     'evenement_eleve.heure_debut',
                     'evenement_eleve.heure_fin',
                     'evenement.places',
-                    DB::raw('max(evenement_eleve.place) as place')
+                    DB::raw('count(*) as place')
                 )
                 ->leftJoin('evenement', function ($join) {
                     $join->on('evenement.date', '=', 'evenement_eleve.date');
@@ -552,14 +552,13 @@ class EleveController extends Controller
             $erreur = false;
             if (isset($events)) {
                 if ($events->place < $events->places) {
-                    $evtEle = $events->place;
-                    $event->place =  $evtEle + 1;
+                    $event->place =  1;
                     $event->save();
                 } else {
                     $erreur = true;
                 }
             } else {
-                $event->place =  $evtEle + 1;
+                $event->place =  1;
                 $event->save();
             }
 
@@ -708,4 +707,30 @@ class EleveController extends Controller
             'id'=>$id
             ]);
     }
+
+    function deleteEvent(Request $request){
+        if(isset($request)){
+            //retrieve data
+        $module = EvenementEleve::find($request->id)
+        ->delete();
+        $valid = true;
+
+       return response()->json([
+        'valid' => $valid
+        ]);
+        }
+    }
+
+    function deletePlacesEvent(Request $request){
+        if(isset($request)){
+            //retrieve data
+        $module = Evenement::destroy($request->all());
+        $valid = true;
+
+       return response()->json([
+        'valid' => $valid
+        ]);
+        }
+    }
+
 }
