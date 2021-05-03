@@ -636,6 +636,7 @@ class EleveController extends Controller
         $dateStart = date('Y-m-d', strtotime($request->dateStart));
         $events = Evenement::distinct()
             ->select(
+                'evenement.id',
                 'evenement.date',
                 'evenement.heure_debut',
                 'evenement.heure_fin',

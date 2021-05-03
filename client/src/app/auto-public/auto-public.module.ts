@@ -16,8 +16,9 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AngularMaterialModule } from '../angular-material/angular-material/angular-material.module';
 import { NavbarPublicComponent } from './navbar-public/navbar-public.component';
 import { ReserveComponent } from '../reserve/reserve.component';
+import { DetailPhaseComponent } from '../reserve/detail-phase/detail-phase.component';
 @NgModule({
-  declarations: [AutoPublicComponent,BeginComponent,SessionFinieComponent,InscriptionComponent,ExamenComponent, NavbarPublicComponent, ReserveComponent, ],
+  declarations: [AutoPublicComponent,BeginComponent,SessionFinieComponent,InscriptionComponent,ExamenComponent, NavbarPublicComponent, ReserveComponent,DetailPhaseComponent, ],
   imports: [
     FormsModule,
     CommonModule,

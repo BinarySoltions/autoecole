@@ -18,14 +18,18 @@
         <div class="col col-lg-12">
           <div #dateDiv *ngFor="let date of dataDays; let i =index" class="wd">
             <div *ngIf="i<8" style="width:100%;text-align: center;">{{weeks[i]}}</div>
-            <div style="width:100%;text-align: center;" ><span [ngClass]="{'today':isCurrentDay(date)}" >{{date.day}}</span></div>
+            <div class="number" style="width:100%;text-align: center;" >
+              <i *ngIf="date.events.length" class="fas fa-edit" (click)="openUpdateEvent(getDateEvents(date.events),date.events,'m')"></i>
+              <span [ngClass]="{'today':isCurrentDay(date)}" > {{date.day}} </span>
+              <i *ngIf="date.events.length" class="fas fa-trash-alt" (click)="openUpdateEvent(getDateEvents(date.events),date.events,'d')"></i>
+            </div>
          
             <div  matTooltip="{{event.heure_debut.substring(0,5)}} - {{event.heure_fin.substring(0,5)}}" 
             *ngFor="let event of getDateEvents(date.events); let i =index" 
-            [ngClass]="{'event':!!event.numero_contrat,'no_event':!event.numero_contrat}" 
+            [ngClass]="{'event':!isEventPlaceEmpty(event,date.events),'no_event':isEventPlaceEmpty(event,date.events)}" 
             (click)="openDetail(event,date.events)"> 
-              <i *ngIf="event.numero_contrat" class="fas fa-user-plus"></i> 
-              <i *ngIf="!event.numero_contrat" class="fas fa-user-slash"></i>
+              <i *ngIf="!isEventPlaceEmpty(event,date.events)" class="fas fa-user-plus"></i> 
+              <i *ngIf="isEventPlaceEmpty(event,date.events)" class="fas fa-user-slash"></i>
               {{event.heure_debut.substring(0,5)}}</div>
          
 

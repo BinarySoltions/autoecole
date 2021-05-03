@@ -151,7 +151,7 @@ validEvent(x,ele):boolean{
       var start = this.startDate;
       while (start <= dateFormat) {
         const date = start.format('YYYY-MM-DD');
-        this.times.forEach(t => { t.date = date; t.places = '2'; });
+        this.times.forEach(t => { t.date = date; t.places = '1'; });
         this.timesUser = JSON.parse(JSON.stringify(this.times));
         this.rangeDateTimes.push({date:date,times:this.timesUser});
         this.timesUser.forEach(x=>{

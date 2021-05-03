@@ -14,9 +14,10 @@ import { ModalAccessComponent } from 'src/app/modal-access/modal-access.componen
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material/angular-material.module';
 import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
 import { ListReservationComponent } from 'src/app/reserve/list-reservation/list-reservation.component';
+import { ModalDeleteEventsComponent } from '../../modal-delete-events/modal-delete-events.component';
 @NgModule({
   declarations: [ RowGridComponent,
-    LastRowGridComponent,PhaseDeuxAffichageComponent,ModalNoteComponent,    ModalAccessComponent, ModalConfirmComponent,ListReservationComponent,],
+    LastRowGridComponent,PhaseDeuxAffichageComponent,ModalNoteComponent,    ModalAccessComponent, ModalConfirmComponent,ListReservationComponent, ModalDeleteEventsComponent,],
   imports: [
     FormsModule,
     CommonModule,
@@ -34,13 +35,13 @@ import { ListReservationComponent } from 'src/app/reserve/list-reservation/list-
   exports:[
     RowGridComponent,
     LastRowGridComponent,PhaseDeuxAffichageComponent,ModalNoteComponent,    ModalAccessComponent,AngularMaterialModule,
-    ModalConfirmComponent,ListReservationComponent,
+    ModalConfirmComponent,ListReservationComponent,ModalDeleteEventsComponent,
   ],
   providers:[
     CookieService,
   ],
   entryComponents: [
-    ModalNoteComponent,    ModalAccessComponent, ModalConfirmComponent,
+    ModalNoteComponent,    ModalAccessComponent, ModalConfirmComponent,ModalDeleteEventsComponent,
   ],
 })
 export class SharedServiceModule { }

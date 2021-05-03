@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import moment from 'moment';
 import 'moment/locale/fr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { Evenement } from '../entite/evenement.entity';
+import { ModalDeleteEventsComponent } from '../modal-delete-events/modal-delete-events.component';
 import { EleveService } from '../service/eleve/eleve.service';
 import { ModalDetailComponent } from './modal-detail/modal-detail.component';
 
@@ -22,7 +24,7 @@ export class CalendarComponent implements OnInit,AfterViewInit {
   eventsDateHeures: Evenement[];
   events :  Evenement[];
   constructor(private _adapter: DateAdapter<any>,private router: Router,
-    private spinner:NgxSpinnerService,
+    private spinner:NgxSpinnerService,private toastr: ToastrService,
     private serviceEleve: EleveService, public dialog: MatDialog) {
     this._adapter.setLocale('fr');
    }
@@ -149,6 +151,10 @@ export class CalendarComponent implements OnInit,AfterViewInit {
       
     });
   }
+  isEventPlaceEmpty(data:Evenement,events:Evenement[]){
+    let evt = events.filter(e=>e.heure_debut === data.heure_debut && !!e.numero_contrat);
+    return !(!!evt && evt.length > 0);
+  }
   getDateEvents(events:Evenement[]){
     return events.filter((thing, i, arr) => {
       return arr.indexOf(arr.find(t => t.heure_debut === thing.heure_debut)) === i;
@@ -158,4 +164,28 @@ export class CalendarComponent implements OnInit,AfterViewInit {
     this.router.navigate(['reservation']);
   }
   
+  openUpdateEvent(events:Evenement[],data:Evenement[],action){
+    const dialogRef = this.dialog.open(ModalDeleteEventsComponent, {
+      data: {action:action, events:events,eventsDuplicate:data}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+     let req = result.events.filter(e=>e.selection);
+     if(req && req.length > 0){
+       let r = req.map(r=>r.id);
+       if(result.action === 'd'){
+         this.serviceEleve.deletePlacesEvent(r).subscribe(r=>{
+           if(r && r.valid){
+            this.toastr.success("Suppression avec succés!", "Supprimer", {timeOut: 5000});
+            this.dataDays = [];
+            this.prepareDays();
+            setTimeout(()=>this.resizeEventDiv(),500);
+           }else{
+            this.toastr.error("Suppression avec erreur!", "Supprimer", {timeOut: 5000});
+           }
+         })
+       }
+     }
+    });
+  }
 }
