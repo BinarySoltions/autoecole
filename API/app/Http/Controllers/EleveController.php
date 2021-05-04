@@ -517,7 +517,11 @@ class EleveController extends Controller
     {
 
         try {
-
+            if(!isset($request->date)){
+                return response()->json([
+                    'isValid' => false
+                ]);
+            }
             $event = new EvenementEleve;
             $event->numero = $request->numero;
             $event->eleve_id = $request->eleve_id;
@@ -570,14 +574,18 @@ class EleveController extends Controller
             $events = EvenementEleve::where('numero', '=', $request->numero)
             ->orderBy('created_at', 'desc')
             ->get();
-            return EvenementEleveResource::Collection($events);
+            $coll =  EvenementEleveResource::Collection($events);
+            return response()->json([
+                'isValid' => true,
+                'data'=> $coll
+            ]);
         } catch (Exception $e) {
-            return $e;
             if (strpos($e, '1062 Duplicate entry') !== false) {
                 return response()->json([
                     'isValid' => false
                 ]);
             }
+            return $e;
         }
     }
 
@@ -709,29 +717,51 @@ class EleveController extends Controller
             ]);
     }
 
-    function deleteEvent(Request $request){
+    function deleteAdminEvent(Request $request){
+        $valid = false;
         if(isset($request)){
             //retrieve data
         $module = EvenementEleve::find($request->id)
         ->delete();
         $valid = true;
-
-       return response()->json([
-        'valid' => $valid
-        ]);
         }
+
+        return response()->json([
+            'valid' => $valid
+            ]);
+    }
+
+    function deleteEvent(Request $request){
+        $result = $this->loginEleveParNom($request);
+        if(!$result->valid){
+            return response()->json([
+                'valid' => false
+                ]); 
+        }
+        $valid = false;
+        if(isset($request)){
+            //retrieve data
+        $module = EvenementEleve::find($request->id)
+        ->delete();
+        $valid = true;
+        }
+
+        return response()->json([
+            'valid' => $valid
+            ]);
     }
 
     function deletePlacesEvent(Request $request){
+        $valid = false;
         if(isset($request)){
             //retrieve data
         $module = Evenement::destroy($request->all());
         $valid = true;
-
-       return response()->json([
-        'valid' => $valid
-        ]);
         }
+
+        return response()->json([
+            'valid' => $valid
+            ]);
     }
 
 }

@@ -29,7 +29,7 @@ export class ReserveAdminComponent implements OnInit,AfterViewInit {
   events: EvenementEleve[] = [];
   listeModules: Module[] = [];
   times: { value: string; label: string; places: string; date: string }[];
-  nTimes: any= ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00'];
+  nTimes: any= ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00'];
   timesUser: { value: string; label: string; places: string; date: string }[] = [];
   pos: number;
 
@@ -56,7 +56,7 @@ export class ReserveAdminComponent implements OnInit,AfterViewInit {
       { value: 'fr', label: 'FR' },
       { value: 'eng', label: 'ENG' }
     ];
-    this.times = [{ value: '09:00', label: '09:00', places: '', date: null }, { value: '10:00', label: '10:00', places: '', date: null }, { value: '11:00', label: '11:00', places: '', date: null }, { value: '12:00', label: '12:00', places: '', date: null },
+    this.times = [{ value: '08:00', label: '08:00', places: '', date: null },{ value: '09:00', label: '09:00', places: '', date: null }, { value: '10:00', label: '10:00', places: '', date: null }, { value: '11:00', label: '11:00', places: '', date: null }, { value: '12:00', label: '12:00', places: '', date: null },
     { value: '13:00', label: '13:00', places: '', date: null }, { value: '14:00', label: '14:00', places: '', date: null }, { value: '15:00', label: '15:00', places: '', date: null }, { value: '16:00', label: '16:00', places: '', date: null },
     { value: '17:00', label: '17:00', places: '', date: null }, { value: '18:00', label: '18:00', places: '', date: null }, { value: '19:00', label: '19:00', places: '', date: null }, { value: '20:00', label: '20:00', places: '', date: null }]
     this.eventDriving.heure_debut = this.formatAMPM(new Date());

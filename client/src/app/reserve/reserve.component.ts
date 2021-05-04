@@ -34,7 +34,7 @@ export class ReserveComponent implements OnInit {
   listeModules: Module[] = [];
   times: { value: string; label: string; places: string; date: string }[];
   timesEnd: { value: string; label: string; places: string; date: string }[] = [];
-  nTimes: any = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'];
+  nTimes: any = ['08:00','09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'];
   timesUser: { value: string; label: string; places: string; date: string }[] = [];
   pos: number;
   eventsDateHeures: Evenement[] = [];
@@ -42,6 +42,7 @@ export class ReserveComponent implements OnInit {
   numero: string;
   first: boolean;
   isVisible: boolean;
+  nom: any;
 
 
 
@@ -70,22 +71,24 @@ export class ReserveComponent implements OnInit {
       this.lang = cookEle.langue;
       this.idEleve = cookEle.id;
       this.numero = cookEle.numero;
-      this.obtenirModules();
-      this.obtenirEvenementsEleve();
+      this.nom = cookEle.nom;
+      this.obtenirModules(this.idEleve);
+      //this.obtenirEvenementsEleve();
       this.languages = [
         { value: 'fr', label: 'FR' },
         { value: 'eng', label: 'ENG' }
       ];
-      this.times = [{ value: '09:00', label: '09:00', places: '', date: null }, { value: '10:00', label: '10:00', places: '', date: null }, { value: '11:00', label: '11:00', places: '', date: null }, { value: '12:00', label: '12:00', places: '', date: null },
+      this.times = [{ value: '08:00', label: '08:00', places: '', date: null },{ value: '09:00', label: '09:00', places: '', date: null }, { value: '10:00', label: '10:00', places: '', date: null }, { value: '11:00', label: '11:00', places: '', date: null }, { value: '12:00', label: '12:00', places: '', date: null },
       { value: '13:00', label: '13:00', places: '', date: null }, { value: '14:00', label: '14:00', places: '', date: null }, { value: '15:00', label: '15:00', places: '', date: null }, { value: '16:00', label: '16:00', places: '', date: null },
       { value: '17:00', label: '17:00', places: '', date: null }, { value: '18:00', label: '18:00', places: '', date: null }, { value: '19:00', label: '19:00', places: '', date: null }, { value: '20:00', label: '20:00', places: '', date: null }]
       this.eventDriving.heure_debut = this.formatAMPM(new Date());
       this.eventDriving.heure_fin = this.eventDriving.heure_debut;
     }
   }
-  obtenirModules() {
-    this.serviceModule.obtnenirSorties().subscribe(m => {
+  obtenirModules(id) {
+    this.serviceModule.obtnenirSortiesEleve(id).subscribe(m => {
       this.listeModules = m;
+      this.obtenirEvenementsEleve();
     });
   }
   obtenirEvenementsEleve() {
@@ -94,6 +97,7 @@ export class ReserveComponent implements OnInit {
       if (evt) {
         this.events = evt;
       }
+      this.validSaving();
     });
   }
   initialiserDate() {
@@ -103,16 +107,29 @@ export class ReserveComponent implements OnInit {
     return moment(value).format();
   }
   public enregistrer() {
-    console.log(this.numero);
+    this.formaterDate();
+    if(!this.eventDriving.date){
+      this.toastr.error("Erreur / Error !", "Erreur / Error !", { timeOut: 5000 });
+      return;
+    }
+    
     if (this.cookieTimeout) {
-      this.formaterDate();
+     
       this.eventDriving.numero = this.numero;//"2020-2299";
       this.eventDriving.eleve_id = this.idEleve;
       this.eventDriving.place = 1;
       this.eventDriving.nom_module = this.listeModules.find(m => m.id == this.eventDriving.module_id).nom;
+      if(this.validSessionOneTwo()){
+        this.toastr.error("La date Sortie 1 doit être différente de Sortie 2 / Date of Session 1 must not be same of Session 2 !", "Erreur / Error !", { timeOut: 5000 });
+        return;
+      }
+      if(this.validSaving()){
+        this.toastr.error("Nombre de places / Number of places !", "Erreur / Error !", { timeOut: 5000 });
+        return;
+      }
       this.serviceEleve.creerEvenementEleve(this.eventDriving).subscribe((evt) => {
-        if (evt) {
-          this.events = evt
+        if (evt && evt.isValid) {
+          this.events = evt.data;
           this.toastr.success("Merci / Thank's!", "Succes / Success", { timeOut: 5000 });
         } else {
           this.toastr.error("Erreur / Error !", "Erreur / Error !", { timeOut: 5000 });
@@ -145,7 +162,6 @@ export class ReserveComponent implements OnInit {
   }
 
   weekendsDatesFilter = (d: any | null): boolean => {
-    //console.log(d);
     const date = !!d ? d : moment();
     const dateHeures = this.eventsDateHeures
       .filter(x => x.date === date.format('YYYY-MM-DD') && x.place === null);
@@ -186,7 +202,6 @@ export class ReserveComponent implements OnInit {
     const date = event.target.value.format('YYYY-MM-DD');
     const dateHeures = this.eventsDateHeures
       .filter(x => x.date === date && x.place === null).sort((a, b) => a > b ? 1 : -1);
-    console.log(event.target.value);
     dateHeures.forEach(x => {
       if (x.place === null) {
         var h = x.heure_debut.substring(0, 5);
@@ -195,21 +210,18 @@ export class ReserveComponent implements OnInit {
         this.timesEnd.push({ value: hf, label: hf, date: x.date, places: x.places.toString() });
       }
     });
+    this.times = this.times.sort((a,b)=>Number(a.value.substring(0, 2)) > Number(b.value.substring(0, 2))?1:-1);
+    this.timesEnd = this.timesEnd.sort((a,b)=>Number(a.value.substring(0, 2)) > Number(b.value.substring(0, 2))?1:-1);
   }
 
   openDialog(): void {
-    console.log(!this.cookieTimeout);
     if (!this.cookieTimeout) {
-      console.log('out');
       if (this.first) this.dialog.closeAll();
       const dialogRef = this.dialog.open(ModalAccessComponent, {
         data: { nom: null, numeroIdentification: null, langue: null }
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        console.log(result);
-        console.log('after');
         if (!!result) {
           this.getInfoEleve(result, dialogRef);
         }
@@ -224,12 +236,12 @@ export class ReserveComponent implements OnInit {
     this.lang = result.langue;
     let req = { numero: result.numeroIdentification, nom: result.nom };
     this.numero = req.numero;
-    console.log(this.numero);
+    this.nom = req.nom;
     this.serviceEleve.getEleveLogin(req).subscribe(res => {
       if (res && res.valid) {
         this.isVisible = true;
         this.idEleve = res.id;
-        let req = { langue: this.lang, id: res.id, numero: this.numero };
+        let req = { langue: this.lang, id: res.id, numero: this.numero,nom:this.nom };
         this.cookieService.set('login-student', JSON.stringify(req), 0.02);
         dialogRef.close();
         this._document.defaultView.location.reload();
@@ -255,15 +267,11 @@ export class ReserveComponent implements OnInit {
   }
 
   confirmDeleteEvent(event) {
-    console.log('The dialog open');
     const dialogRef = this.dialog.open(ModalConfirmComponent, {
       data: { id: event, lang: this.lang }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result);
-      console.log('after');
       if (!!result) {
         this.deleteEvent(result, dialogRef);
       }
@@ -271,7 +279,16 @@ export class ReserveComponent implements OnInit {
   }
 
   deleteEvent(id, dialogRef) {
-    let req = { id: id };
+    this.cookieTimeout = this.cookieService.get('login-student');
+    if(!this.cookieTimeout){
+     return;
+    }
+    let cookEle = JSON.parse(this.cookieTimeout);
+    this.lang = cookEle.langue;
+    this.idEleve = cookEle.id;
+    this.numero = cookEle.numero;
+    this.nom = cookEle.nom;
+    let req = { id: id,nom:this.nom,numero:this.numero };
     this.serviceEleve.deleteEvent(req).subscribe(res => {
       dialogRef.close();
       if (res.valid) {
@@ -281,5 +298,46 @@ export class ReserveComponent implements OnInit {
         this.toastr.error("Erreur / Error !", "Erreur / Error !", { timeOut: 5000 });
       }
     })
+  }
+
+  validSaving(){
+    var estTrue = true;
+    let sessionsCar = this.listeModules.filter(m=>m.date_complete)
+    .sort((a,b)=>moment(b.date_complete).startOf('days').diff(moment(a.date_complete).startOf('days'),'days'));
+    if(sessionsCar && sessionsCar.length > 0){
+      let lastSession = sessionsCar[0];
+      let eventsValid = this.events.filter(e=>moment(e.date).startOf('days').diff(moment(lastSession.date_complete).startOf('days'),'days')<31);
+      estTrue = eventsValid.length > 2;
+    } 
+    else if(this.events.length>0){
+      estTrue = this.events.length == 3;
+    }
+    return estTrue;
+  }
+
+  getSortie(val){
+    var estTrue = true;
+    var nom = "";
+    var evt = {numero:0};
+    let eventSesion = this.events
+    .sort((a,b)=>moment(b.date).startOf('days').diff(moment(a.date).startOf('days'),'days'));
+    if(eventSesion && eventSesion.length > 0 ){
+       nom = eventSesion[0].nom_module;
+       evt = this.listeModules.find(m=>m.nom == nom);
+    }
+   
+    let sessionsCarNext = this.listeModules.filter(m=>m.numero > evt.numero)
+      .sort((a,b)=>a.numero > b.numero?1:-1)[0];
+      
+    estTrue = !(Number(val) == sessionsCarNext.numero)
+    return estTrue;
+  }
+
+  validSessionOneTwo(){
+    if(this.eventDriving.nom_module.includes('Sortie 2')){
+      let evt = this.events.find(e=> e.nom_module == 'Sortie 1');
+      return moment(evt.date).startOf('days').diff(moment(this.eventDriving.date).startOf('days'),'days') == 0;
+    }
+    return false;
   }
 }

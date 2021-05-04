@@ -139,6 +139,10 @@ export class EleveService {
     return this.http.post<any>(this.apiUrl + 'deleteEvent', req, httpOptions)
       .pipe(catchError(this.handleError));
   }
+  deleteAdminEvent(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'deleteAdminEvent', req, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
   deletePlacesEvent(req:any): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'deletePlacesEvent', req, httpOptions)
       .pipe(catchError(this.handleError));

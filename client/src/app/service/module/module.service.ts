@@ -43,6 +43,10 @@ export class ModuleService {
   obtnenirSorties(): Observable<Module[]> {
     return this.http.get<Module[]>(this.apiUrl + 'sorties');
   }
+
+  obtnenirSortiesEleve(id): Observable<Module[]> {
+    return this.http.get<Module[]>(this.apiUrl + 'sorties/'+id);
+  }
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

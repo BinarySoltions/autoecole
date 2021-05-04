@@ -113,7 +113,6 @@ export class AddDrivingComponent implements OnInit {
     return moment(value).format();
   }
   public enregistrer() {
-    console.log(this.numero);
     if (this.cookieTimeout) {
       this.formaterDate();
       this.eventDriving.numero = this.numero;//"2020-2299";
@@ -155,7 +154,6 @@ export class AddDrivingComponent implements OnInit {
   }
 
   weekendsDatesFilter = (d: any | null): boolean => {
-    //console.log(d);
     const date = !!d ? d : moment();
     const dateHeures = this.eventsDateHeures
       .filter(x => x.date === date.format('YYYY-MM-DD') && x.place === null);
@@ -196,7 +194,6 @@ export class AddDrivingComponent implements OnInit {
     const date = event.target.value.format('YYYY-MM-DD');
     const dateHeures = this.eventsDateHeures
       .filter(x => x.date === date && x.place === null).sort((a, b) => a > b ? 1 : -1);
-    console.log(event.target.value);
     dateHeures.forEach(x => {
       if (x.place === null) {
         var h = x.heure_debut.substring(0, 5);
@@ -208,18 +205,13 @@ export class AddDrivingComponent implements OnInit {
   }
 
   openDialog(): void {
-    console.log(!this.cookieTimeout);
     if (!this.cookieTimeout && false) {
-      console.log('out');
       if (this.first) this.dialog.closeAll();
       const dialogRef = this.dialog.open(ModalAccessComponent, {
         data: { nom: null, numeroIdentification: null, langue: null }
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        console.log(result);
-        console.log('after');
         if (!!result) {
           this.getInfoEleve(result, dialogRef);
         }
@@ -234,7 +226,6 @@ export class AddDrivingComponent implements OnInit {
     this.lang = result.langue;
     let req = { numero: result.numeroIdentification, nom: result.nom };
     this.numero = req.numero;
-    console.log(this.numero);
     this.serviceEleve.getEleveLogin(req).subscribe(res => {
       if (res && res.valid) {
         this.isVisible = true;
@@ -265,15 +256,11 @@ export class AddDrivingComponent implements OnInit {
   }
 
   confirmDeleteEvent(event) {
-    console.log('The dialog open');
     const dialogRef = this.dialog.open(ModalConfirmComponent, {
       data: { id: event, lang: this.lang }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result);
-      console.log('after');
       if (!!result) {
         this.deleteEvent(result, dialogRef);
       }
@@ -282,7 +269,7 @@ export class AddDrivingComponent implements OnInit {
 
   deleteEvent(id, dialogRef) {
     let req = { id: id };
-    this.serviceEleve.deleteEvent(req).subscribe(res => {
+    this.serviceEleve.deleteAdminEvent(req).subscribe(res => {
       dialogRef.close();
       if (res.valid) {
         this.toastr.success("Succés / Success !", "Succés / Success !", { timeOut: 5000 });

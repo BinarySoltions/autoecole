@@ -28,6 +28,26 @@ class ModuleController extends Controller
         $modules = Module::where('type','P')->orderBy('numero')->get();
         return ModuleResource::Collection($modules);
     }
+
+    public function drivingCar($id)
+    {
+        $modules = Module::distinct()
+        ->select(
+            'module.id',
+            'module.phase_id',
+            'module.nom',
+            'module.type',
+            'module.numero',
+            'eleve_module.date_complete',
+        )
+        ->leftJoin('eleve_module', function ($join) {
+            $join->on('module.id', '=', 'eleve_module.module_id');
+        })
+        ->where('type','P')
+        ->where('eleve_id',$id)
+        ->orderBy('numero')->get();
+        return ModuleResource::Collection($modules);
+    }
     /**
      * Show the form for creating a new resource.
      *

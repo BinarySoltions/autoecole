@@ -86,10 +86,11 @@ export class ListReservationComponent implements OnInit, OnChanges {
   }
 
   isHistoric(value) {
-    var now = moment(new Date()).startOf('day'); //todays date
-    if(!this.delete){
-      now = moment(new Date()).add(2,'days').startOf('day');
+   
+    if(this.delete){
+      return true;
     }
+    let now = moment(new Date()).add(2,'days').startOf('day');
     var end = moment(value).startOf('day'); // another date
     var days = now.diff(end,'days');
     return Number(days) < 0;

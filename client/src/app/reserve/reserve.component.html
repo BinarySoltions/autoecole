@@ -29,7 +29,9 @@
      placeholder="date completee" required>
         <option  value="0">{{'label.selectionner' | translate}}</option>
         <ng-template ngFor let-module [ngForOf]="listeModules" let-i="index">
-            <option [value]="module.id" [disabled]="module.numero==23 || module.numero==24">{{session(module.nom)}}</option>
+            <option [value]="module.id" 
+            [disabled]="module.numero==23 || module.numero==24 || getSortie(module.numero)"
+            >{{session(module.nom)}}</option>
         </ng-template>
       </select>
       </mat-form-field>
@@ -38,7 +40,7 @@
     <mat-form-field appearance="fill">
       <mat-label>{{'reservation.date' | translate }}</mat-label>
       <input readonly matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)" [matDatepickerFilter]="weekendsDatesFilter" name="date"
-       [(ngModel)]="eventDriving.date" >
+       [(ngModel)]="eventDriving.date" required>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
