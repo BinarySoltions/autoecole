@@ -517,7 +517,7 @@ class EleveController extends Controller
     {
 
         try {
-            if(!isset($request->date)){
+            if (!isset($request->date)) {
                 return response()->json([
                     'isValid' => false
                 ]);
@@ -545,10 +545,12 @@ class EleveController extends Controller
                     $join->on('evenement.heure_debut', '=', 'evenement_eleve.heure_debut');
                     $join->on('evenement.heure_fin', '=', 'evenement_eleve.heure_fin');
                 })
-                ->groupBy('evenement_eleve.date',
-                'evenement_eleve.heure_debut',
-                'evenement_eleve.heure_fin',
-                'evenement.places')
+                ->groupBy(
+                    'evenement_eleve.date',
+                    'evenement_eleve.heure_debut',
+                    'evenement_eleve.heure_fin',
+                    'evenement.places'
+                )
                 ->whereDate('evenement_eleve.date', '=', $event->date)
                 ->where('evenement_eleve.heure_debut', '=', $event->heure_debut)
                 ->where('evenement_eleve.heure_fin', '=', $event->heure_fin)->first();
@@ -556,7 +558,7 @@ class EleveController extends Controller
             $erreur = false;
             if (isset($events)) {
                 if ($events->place < $events->places) {
-                    $event->place =  1;
+                    $event->place =  $events->place + 1;
                     $event->save();
                 } else {
                     $erreur = true;
@@ -572,12 +574,12 @@ class EleveController extends Controller
                 ]);
             }
             $events = EvenementEleve::where('numero', '=', $request->numero)
-            ->orderBy('created_at', 'desc')
-            ->get();
+                ->orderBy('created_at', 'desc')
+                ->get();
             $coll =  EvenementEleveResource::Collection($events);
             return response()->json([
                 'isValid' => true,
-                'data'=> $coll
+                'data' => $coll
             ]);
         } catch (Exception $e) {
             if (strpos($e, '1062 Duplicate entry') !== false) {
@@ -667,45 +669,50 @@ class EleveController extends Controller
             ->whereDate('evenement.date', '<', $dateEnd)->get();
         return EvenementResource::Collection($events);
     }
-    function getEvenementsEleve(Request $request){
+    function getEvenementsEleve(Request $request)
+    {
         $events = EvenementEleve::where('numero', '=', $request->numero)
-        ->orderBy('created_at', 'desc')
-        ->get();
+            ->orderBy('created_at', 'desc')
+            ->get();
         return EvenementEleveResource::Collection($events);
     }
 
-    function ajouterNoteSortie(Request $request){
-        if(isset($request)){
+    function ajouterNoteSortie(Request $request)
+    {
+        if (isset($request)) {
             //retrieve data
-        $module = Eleve::where('id',$request->id)
-        ->with(['modules' => function ($query) use ($request) {      
-            $query->where('module_id', '=', $request->id_module);
-        }])->get();
-        $valid = true;
-        //update
-        foreach($module as $md){
-            $res = $md->modules()->updateExistingPivot($request->id_module,
-            ['note' => $request->note]);
-            if(!$res){
-                $valid = false;
+            $module = Eleve::where('id', $request->id)
+                ->with(['modules' => function ($query) use ($request) {
+                    $query->where('module_id', '=', $request->id_module);
+                }])->get();
+            $valid = true;
+            //update
+            foreach ($module as $md) {
+                $res = $md->modules()->updateExistingPivot(
+                    $request->id_module,
+                    ['note' => $request->note]
+                );
+                if (!$res) {
+                    $valid = false;
+                }
             }
-        }
 
-       return response()->json([
-        'valid' => $valid
-        ]);
+            return response()->json([
+                'valid' => $valid
+            ]);
         }
     }
 
-    function loginEleveParNom(Request $request){
+    function loginEleveParNom(Request $request)
+    {
         $valid = false;
         $id = 0;
-        if(isset($request)){
+        if (isset($request)) {
             $nom = strtolower($request->nom);
-            $eleve = Eleve::where('numero_contrat',$request->numero)
-            ->whereRaw('lower(nom) like (?)',["%{$nom}%"])
-            ->get();
-            if(isset($eleve)){
+            $eleve = Eleve::where('numero_contrat', $request->numero)
+                ->whereRaw('lower(nom) like (?)', ["%{$nom}%"])
+                ->get();
+            if (isset($eleve)) {
                 $valid = true;
                 $id = $eleve[0]->id;
             }
@@ -713,55 +720,85 @@ class EleveController extends Controller
 
         return response()->json([
             'valid' => $valid,
-            'id'=>$id
-            ]);
+            'id' => $id
+        ]);
     }
 
-    function deleteAdminEvent(Request $request){
+    function deleteAdminEvent(Request $request)
+    {
         $valid = false;
-        if(isset($request)){
+        if (isset($request)) {
+            $eventsEleves = EvenementEleve::whereDate('date', '=', date('Y-m-d', strtotime($request->date)))
+                ->whereDate('date', '=', date('H:i', strtotime($request->heure_debut)))
+                ->whereDate('date', '=', date('H:i', strtotime($request->heure_fin)))
+                ->where('id', '!=', $request->id)
+                ->get();
+            $i = 1;
+            foreach ($eventsEleves  as $evt) {
+                $evt->place = $i;
+                $evt->save();
+                $i++;
+            }
             //retrieve data
-        $module = EvenementEleve::find($request->id)
-        ->delete();
-        $valid = true;
+            $eventsEleves = EvenementEleve::find($request->id)
+                ->delete();
+            $valid = true;
         }
 
         return response()->json([
             'valid' => $valid
-            ]);
+        ]);
     }
 
-    function deleteEvent(Request $request){
+    function deleteEvent(Request $request)
+    {
         $result = $this->loginEleveParNom($request);
-        if(!$result->valid){
+        if (!$result->valid) {
             return response()->json([
                 'valid' => false
-                ]); 
+            ]);
         }
+        return $this->deleteAdminEvent($request);
+    }
+
+    function deletePlacesEvent(Request $request)
+    {
         $valid = false;
-        if(isset($request)){
+        if (isset($request)) {
             //retrieve data
-        $module = EvenementEleve::find($request->id)
-        ->delete();
-        $valid = true;
+            $module = Evenement::destroy($request->all());
+            $valid = true;
         }
 
         return response()->json([
             'valid' => $valid
-            ]);
+        ]);
     }
 
-    function deletePlacesEvent(Request $request){
-        $valid = false;
-        if(isset($request)){
-            //retrieve data
-        $module = Evenement::destroy($request->all());
-        $valid = true;
+    function updatePlacesEvent(Request $request)
+    {
+        try {
+            $valid = false;
+            if (isset($request)) {
+                $result = $request->all();
+
+                foreach ($result as $requ) {
+                    $evt = Evenement::find($requ['id']);
+                    $evt->places = $requ['places'];
+                    $evt->save();
+                }
+
+                $valid = true;
+            }
+
+            return response()->json([
+                'valid' => $valid
+            ]);
+        } catch (Exception $e) {
+            return $e;
+            // return response()->json([
+            //     'isValid' => false
+            // ]);
         }
-
-        return response()->json([
-            'valid' => $valid
-            ]);
     }
-
 }

@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { timer } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 
@@ -49,7 +50,7 @@ export class ReserveComponent implements OnInit {
   constructor(private router: Router, private serviceEleve: EleveService,
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
-    private translate: TranslateService,
+    private translate: TranslateService,private spinner:NgxSpinnerService,
     private cookieService: CookieService, private serviceModule: ModuleService,
     public dialog: MatDialog,
     @Inject(DOCUMENT) private _document: Document) {
@@ -86,18 +87,21 @@ export class ReserveComponent implements OnInit {
     }
   }
   obtenirModules(id) {
+    this.spinner.show(undefined, { fullScreen: true });
     this.serviceModule.obtnenirSortiesEleve(id).subscribe(m => {
       this.listeModules = m;
+      this.spinner.hide();
       this.obtenirEvenementsEleve();
     });
   }
   obtenirEvenementsEleve() {
     let req = { numero: this.numero };
+    this.spinner.show(undefined, { fullScreen: true });
     this.serviceEleve.obtenirEvenementsEleve(req).subscribe(evt => {
       if (evt) {
         this.events = evt;
       }
-      this.validSaving();
+     this.spinner.hide();
     });
   }
   initialiserDate() {
@@ -127,6 +131,7 @@ export class ReserveComponent implements OnInit {
         this.toastr.error("Nombre de places / Number of places !", "Erreur / Error !", { timeOut: 5000 });
         return;
       }
+      this.spinner.show(undefined, { fullScreen: true });
       this.serviceEleve.creerEvenementEleve(this.eventDriving).subscribe((evt) => {
         if (evt && evt.isValid) {
           this.events = evt.data;
@@ -134,7 +139,7 @@ export class ReserveComponent implements OnInit {
         } else {
           this.toastr.error("Erreur / Error !", "Erreur / Error !", { timeOut: 5000 });
         }
-
+        this.spinner.hide();
         // this.cookieTimeout = 'uurureurueureuredj';
         // this.cookieService.set('event_student', this.cookieTimeout,1000);
       });
@@ -180,17 +185,19 @@ export class ReserveComponent implements OnInit {
     const dateStart = moment().format('YYYY-MM-DD');
     var dateEnd = null;
     if (module.phase_id == 2) {
-      dateEnd = moment().add(28, 'days').format('YYYY-MM-DD');
-    } else {
       dateEnd = moment().add(56, 'days').format('YYYY-MM-DD');
+    } else {
+      dateEnd = moment().add(100, 'days').format('YYYY-MM-DD');
     }
     let req = { dateStart: dateStart, dateEnd: dateEnd };
+    this.spinner.show(undefined, { fullScreen: true });
     this.serviceEleve.obtenirEvenementDatesHeures(req).subscribe(r => {
       if (r) {
         this.times = [];
         this.timesEnd = [];
         this.eventsDateHeures = <Evenement[]>r;
       }
+      this.spinner.hide();
     });
   }
 
@@ -201,9 +208,10 @@ export class ReserveComponent implements OnInit {
     this.timesEnd = [];
     const date = event.target.value.format('YYYY-MM-DD');
     const dateHeures = this.eventsDateHeures
-      .filter(x => x.date === date && x.place === null).sort((a, b) => a > b ? 1 : -1);
+      .filter(x => x.date === date && (x.place === null || x.place < x.places)).sort((a, b) => a > b ? 1 : -1);
     dateHeures.forEach(x => {
-      if (x.place === null) {
+      let evt = this.events.find(e=>e.date===x.date && e.heure_debut === x.heure_debut && e.heure_fin === x.heure_fin);
+      if (!evt) {
         var h = x.heure_debut.substring(0, 5);
         var hf = x.heure_fin.substring(0, 5);
         this.times.push({ value: h, label: h, date: x.date, places: x.places.toString() });
@@ -237,6 +245,7 @@ export class ReserveComponent implements OnInit {
     let req = { numero: result.numeroIdentification, nom: result.nom };
     this.numero = req.numero;
     this.nom = req.nom;
+    this.spinner.show(undefined, { fullScreen: true });
     this.serviceEleve.getEleveLogin(req).subscribe(res => {
       if (res && res.valid) {
         this.isVisible = true;
@@ -248,6 +257,7 @@ export class ReserveComponent implements OnInit {
       } else {
 
       }
+      this.spinner.hide();
     })
   }
   checklogin() {
@@ -288,9 +298,13 @@ export class ReserveComponent implements OnInit {
     this.idEleve = cookEle.id;
     this.numero = cookEle.numero;
     this.nom = cookEle.nom;
-    let req = { id: id,nom:this.nom,numero:this.numero };
+    let evt = this.events.find(e=>e.id === id);
+    let req = { id: id,nom:this.nom,numero:this.numero,
+      date:evt.date,heure_debut:evt.heure_debut,heure_fin:evt.heure_fin};
+      this.spinner.show(undefined, { fullScreen: true });
     this.serviceEleve.deleteEvent(req).subscribe(res => {
       dialogRef.close();
+      this.spinner.hide();
       if (res.valid) {
         this.toastr.success("Succés / Success !", "Succés / Success !", { timeOut: 5000 });
         this.obtenirEvenementsEleve();
@@ -306,7 +320,7 @@ export class ReserveComponent implements OnInit {
     .sort((a,b)=>moment(b.date_complete).startOf('days').diff(moment(a.date_complete).startOf('days'),'days'));
     if(sessionsCar && sessionsCar.length > 0){
       let lastSession = sessionsCar[0];
-      let eventsValid = this.events.filter(e=>moment(e.date).startOf('days').diff(moment(lastSession.date_complete).startOf('days'),'days')<31);
+      let eventsValid = this.events.filter(e=>moment(e.date).startOf('days').diff(moment(lastSession.date_complete).startOf('days'),'days')>0);
       estTrue = eventsValid.length > 2;
     } 
     else if(this.events.length>0){
@@ -326,7 +340,7 @@ export class ReserveComponent implements OnInit {
        evt = this.listeModules.find(m=>m.nom == nom);
     }
    
-    let sessionsCarNext = this.listeModules.filter(m=>m.numero > evt.numero)
+    let sessionsCarNext = this.listeModules.filter(m=>m.numero > evt.numero && m.id !=23 && m.id !=24 )
       .sort((a,b)=>a.numero > b.numero?1:-1)[0];
       
     estTrue = !(Number(val) == sessionsCarNext.numero)

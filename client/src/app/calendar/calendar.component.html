@@ -24,10 +24,11 @@
               <i *ngIf="date.events.length" class="fas fa-trash-alt" (click)="openUpdateEvent(getDateEvents(date.events),date.events,'d')"></i>
             </div>
          
-            <div  matTooltip="{{event.heure_debut.substring(0,5)}} - {{event.heure_fin.substring(0,5)}}" 
+            <div  matTooltip="{{event.heure_debut.substring(0,5)}} - {{event.heure_fin.substring(0,5)}} ({{getPlacesEmpty(event,date.events)}}P)" 
             *ngFor="let event of getDateEvents(date.events); let i =index" 
             [ngClass]="{'event':!isEventPlaceEmpty(event,date.events),'no_event':isEventPlaceEmpty(event,date.events)}" 
             (click)="openDetail(event,date.events)"> 
+            <sup class="sp" *ngIf="getPlacesEmpty(event,date.events)">{{getPlacesEmpty(event,date.events)}}</sup>
               <i *ngIf="!isEventPlaceEmpty(event,date.events)" class="fas fa-user-plus"></i> 
               <i *ngIf="isEventPlaceEmpty(event,date.events)" class="fas fa-user-slash"></i>
               {{event.heure_debut.substring(0,5)}}</div>

@@ -155,6 +155,10 @@ export class CalendarComponent implements OnInit,AfterViewInit {
     let evt = events.filter(e=>e.heure_debut === data.heure_debut && !!e.numero_contrat);
     return !(!!evt && evt.length > 0);
   }
+  getPlacesEmpty(data:Evenement,events:Evenement[]){
+    let evt = events.filter(e=>e.heure_debut === data.heure_debut && !!e.numero_contrat);
+    return data.places - evt.length;
+  }
   getDateEvents(events:Evenement[]){
     return events.filter((thing, i, arr) => {
       return arr.indexOf(arr.find(t => t.heure_debut === thing.heure_debut)) === i;
@@ -172,20 +176,38 @@ export class CalendarComponent implements OnInit,AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
      let req = result.events.filter(e=>e.selection);
      if(req && req.length > 0){
-       let r = req.map(r=>r.id);
        if(result.action === 'd'){
-         this.serviceEleve.deletePlacesEvent(r).subscribe(r=>{
-           if(r && r.valid){
-            this.toastr.success("Suppression avec succés!", "Supprimer", {timeOut: 5000});
-            this.dataDays = [];
-            this.prepareDays();
-            setTimeout(()=>this.resizeEventDiv(),500);
-           }else{
-            this.toastr.error("Suppression avec erreur!", "Supprimer", {timeOut: 5000});
-           }
-         })
-       }
+        let r = req.map(r=>r.id);
+         this.deletePlacesEvent(r)
+       }else if(result.action === 'm'){
+        this.updatePlacesEvent(req)
+      }
      }
     });
+  }
+
+  deletePlacesEvent(r){
+    this.serviceEleve.deletePlacesEvent(r).subscribe(r=>{
+      if(r && r.valid){
+       this.toastr.success("Suppression avec succés!", "Supprimer", {timeOut: 5000});
+       this.dataDays = [];
+       this.prepareDays();
+       setTimeout(()=>this.resizeEventDiv(),500);
+      }else{
+       this.toastr.error("Suppression avec erreur!", "Supprimer", {timeOut: 5000});
+      }
+    })
+  }
+  updatePlacesEvent(r){
+    this.serviceEleve.updatePlacesEvent(r).subscribe(r=>{
+      if(r && r.valid){
+       this.toastr.success("Modification avec succés!", "Modifier", {timeOut: 5000});
+       this.dataDays = [];
+       this.prepareDays();
+       setTimeout(()=>this.resizeEventDiv(),500);
+      }else{
+       this.toastr.error("Modification avec erreur!", "Modifier", {timeOut: 5000});
+      }
+    })
   }
 }

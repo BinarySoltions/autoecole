@@ -30,7 +30,7 @@
        placeholder="date completee" required>
           <option  value="0">{{'label.selectionner' | translate}}</option>
           <ng-template ngFor let-module [ngForOf]="listeModules" let-i="index">
-              <option [value]="module.id" [disabled]="module.numero==23 || module.numero==24">{{session(module.nom)}}</option>
+              <option [value]="module.id" [disabled]="module.numero==23 || module.numero==24 || getSortie(module.numero)">{{session(module.nom)}}</option>
           </ng-template>
         </select>
         </mat-form-field>
@@ -85,3 +85,6 @@
   [evenementEleve]="events" [lang]="lang" [delete]="'true'"></app-list-reservation>
   <app-detail></app-detail>
   </div>
+  <ngx-spinner>
+    <p class="loading">Loading Awesomeness...</p>
+  </ngx-spinner>

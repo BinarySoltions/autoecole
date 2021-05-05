@@ -17,6 +17,7 @@ import { AngularMaterialModule } from '../angular-material/angular-material/angu
 import { NavbarPublicComponent } from './navbar-public/navbar-public.component';
 import { ReserveComponent } from '../reserve/reserve.component';
 import { DetailPhaseComponent } from '../reserve/detail-phase/detail-phase.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   declarations: [AutoPublicComponent,BeginComponent,SessionFinieComponent,InscriptionComponent,ExamenComponent, NavbarPublicComponent, ReserveComponent,DetailPhaseComponent, ],
   imports: [
@@ -27,6 +28,7 @@ import { DetailPhaseComponent } from '../reserve/detail-phase/detail-phase.compo
     SharedServiceModule,
     MDBBootstrapModule,
     AngularMaterialModule,
+    NgxSpinnerModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,
