@@ -522,6 +522,19 @@ class EleveController extends Controller
                     'isValid' => false
                 ]);
             }
+            $dateSup = date("Y-m-d");
+            //$dateInf = date("Y-m-d");
+            $eleves = Eleve::where('id', '=', $request->eleve_id)
+                ->where(function ($query) use ($dateSup) {
+                    $query->whereDate('date_fin_contrat', '<=', $dateSup)
+                        ->orWhereDate('date_fin_permis', '<=', $dateSup);
+                })
+                ->first();
+                if (isset($eleves)) {
+                    return response()->json([
+                        'isValid' => false
+                    ]);
+                }
             $event = new EvenementEleve;
             $event->numero = $request->numero;
             $event->eleve_id = $request->eleve_id;
@@ -729,8 +742,8 @@ class EleveController extends Controller
         $valid = false;
         if (isset($request)) {
             $eventsEleves = EvenementEleve::whereDate('date', '=', date('Y-m-d', strtotime($request->date)))
-                ->whereDate('date', '=', date('H:i', strtotime($request->heure_debut)))
-                ->whereDate('date', '=', date('H:i', strtotime($request->heure_fin)))
+                ->where('heure_debut', '=', date('H:i:s', strtotime($request->heure_debut)))
+                ->where('heure_fin', '=', date('H:i:s', strtotime($request->heure_fin)))
                 ->where('id', '!=', $request->id)
                 ->get();
             $i = 1;
@@ -753,7 +766,7 @@ class EleveController extends Controller
     function deleteEvent(Request $request)
     {
         $result = $this->loginEleveParNom($request);
-        if (!$result->valid) {
+        if (!($result->getData()->valid)) {
             return response()->json([
                 'valid' => false
             ]);

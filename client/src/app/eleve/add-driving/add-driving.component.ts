@@ -36,7 +36,7 @@ export class AddDrivingComponent implements OnInit {
   listeModules: Module[] = [];
   times: { value: string; label: string; places: string; date: string }[];
   timesEnd: { value: string; label: string; places: string; date: string }[] = [];
-  nTimes: any = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'];
+  nTimes: any = ['08:00','09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'];
   timesUser: { value: string; label: string; places: string; date: string }[] = [];
   pos: number;
   eventsDateHeures: Evenement[] = [];
@@ -44,6 +44,7 @@ export class AddDrivingComponent implements OnInit {
   numero: string;
   first: boolean;
   isVisible: boolean;
+  dateProduction:any = moment();
   
   constructor(private router: Router, private serviceEleve: EleveService,
     private activatedRoute: ActivatedRoute,
@@ -53,7 +54,7 @@ export class AddDrivingComponent implements OnInit {
     public dialog: MatDialog,
     @Inject(DOCUMENT) private _document: Document) {
     this.translate.setDefaultLang('fr');
-    this.checklogin();
+    //this.checklogin();
     this.first = true;
   }
 
@@ -68,8 +69,8 @@ export class AddDrivingComponent implements OnInit {
       this.serviceEleve.obtenirEleveById(id).subscribe(eleve=>{
         this.eleveModele = eleve;
         let req = { langue: "fr", id: this.idEleve, numero: this.eleveModele.numero_contrat };
-        this.cookieService.set('login-student', JSON.stringify(req));
-        this.cookieTimeout = this.cookieService.get('login-student');
+        this.cookieService.set('login-student-admin', JSON.stringify(req));
+        this.cookieTimeout = this.cookieService.get('login-student-admin');
         this.spinner.hide();
         this.init();
       });
@@ -83,24 +84,25 @@ export class AddDrivingComponent implements OnInit {
       this.lang = cookEle.langue;
       this.idEleve = cookEle.id;
       this.numero = cookEle.numero;
-      this.obtenirModules();
-      this.obtenirEvenementsEleve();
+      this.obtenirModules(this.idEleve);
+      //this.obtenirEvenementsEleve();
       this.languages = [
         { value: 'fr', label: 'FR' },
         { value: 'eng', label: 'ENG' }
       ];
-      this.times = [{ value: '09:00', label: '09:00', places: '', date: null }, { value: '10:00', label: '10:00', places: '', date: null }, { value: '11:00', label: '11:00', places: '', date: null }, { value: '12:00', label: '12:00', places: '', date: null },
+      this.times = [{ value: '08:00', label: '08:00', places: '', date: null }, { value: '09:00', label: '09:00', places: '', date: null }, { value: '10:00', label: '10:00', places: '', date: null }, { value: '11:00', label: '11:00', places: '', date: null }, { value: '12:00', label: '12:00', places: '', date: null },
       { value: '13:00', label: '13:00', places: '', date: null }, { value: '14:00', label: '14:00', places: '', date: null }, { value: '15:00', label: '15:00', places: '', date: null }, { value: '16:00', label: '16:00', places: '', date: null },
       { value: '17:00', label: '17:00', places: '', date: null }, { value: '18:00', label: '18:00', places: '', date: null }, { value: '19:00', label: '19:00', places: '', date: null }, { value: '20:00', label: '20:00', places: '', date: null }]
       this.eventDriving.heure_debut = this.formatAMPM(new Date());
       this.eventDriving.heure_fin = this.eventDriving.heure_debut;
     }
   }
-  obtenirModules() {
+  obtenirModules(id) {
     this.spinner.show(undefined, { fullScreen: true });
-    this.serviceModule.obtnenirSorties().subscribe(m => {
+    this.serviceModule.obtnenirSortiesEleve(id).subscribe(m => {
       this.listeModules = m;
       this.spinner.hide();
+      this.obtenirEvenementsEleve();
     });
   }
   obtenirEvenementsEleve() {
@@ -131,7 +133,11 @@ export class AddDrivingComponent implements OnInit {
         return;
       }
       if(this.validSaving()){
-        this.toastr.error("Nombre de places / Number of places !", "Erreur / Error !", { timeOut: 5000 });
+        this.toastr.error("Nombre maximum de places est limité à trois / Maximum number of places is limited to three !", "Erreur / Error !", { timeOut: 5000 });
+        return;
+      }
+      if(this.validMaxPlaceDaySaving()){
+        this.toastr.error("Nombre de places par jour est de 2 / Number of places by day is 2 !", "Erreur / Error !", { timeOut: 5000 });
         return;
       }
       this.spinner.show(undefined, { fullScreen: true });
@@ -142,7 +148,7 @@ export class AddDrivingComponent implements OnInit {
         } else {
           this.toastr.error("Erreur / Error !", "Erreur / Error !", { timeOut: 5000 });
         }
-this.spinner.hide();
+          this.spinner.hide();
         // this.cookieTimeout = 'uurureurueureuredj';
         // this.cookieService.set('event_student', this.cookieTimeout,1000);
       });
@@ -185,12 +191,12 @@ this.spinner.hide();
   onModulesChange(event) {
     this.eventDriving.date = null;
     let module = this.listeModules.find(m => m.id == event.target.value);
-    const dateStart = moment().format('YYYY-MM-DD');
+    const dateStart = moment(this.dateProduction).format('YYYY-MM-DD');
     var dateEnd = null;
     if (module.phase_id == 2) {
-      dateEnd = moment().add(28, 'days').format('YYYY-MM-DD');
+      dateEnd = moment(this.dateProduction).add(100, 'days').format('YYYY-MM-DD');
     } else {
-      dateEnd = moment().add(56, 'days').format('YYYY-MM-DD');
+      dateEnd = moment(this.dateProduction).add(100, 'days').format('YYYY-MM-DD');
     }
     let req = { dateStart: dateStart, dateEnd: dateEnd };
     this.serviceEleve.obtenirEvenementDatesHeures(req).subscribe(r => {
@@ -222,7 +228,9 @@ this.spinner.hide();
     this.times = this.times.sort((a,b)=>Number(a.value.substring(0, 2)) > Number(b.value.substring(0, 2))?1:-1);
     this.timesEnd = this.timesEnd.sort((a,b)=>Number(a.value.substring(0, 2)) > Number(b.value.substring(0, 2))?1:-1);
   }
-
+  onDateProductionChange(event){
+   this.eventDriving.module_id = 0;
+  }
   openDialog(): void {
     if (!this.cookieTimeout && false) {
       if (this.first) this.dialog.closeAll();
@@ -251,7 +259,7 @@ this.spinner.hide();
         this.isVisible = true;
         this.idEleve = res.id;
         let req = { langue: this.lang, id: res.id, numero: this.numero };
-        this.cookieService.set('login-student', JSON.stringify(req), 0.02);
+        this.cookieService.set('login-student-admin', JSON.stringify(req), 0.02);
         dialogRef.close();
         this.spinner.hide();
         this._document.defaultView.location.reload();
@@ -262,11 +270,11 @@ this.spinner.hide();
     })
   }
   checklogin() {
-    this.cookieTimeout = this.cookieService.get('login-student');
+    this.cookieTimeout = this.cookieService.get('login-student-admin');
     this.openDialog();
     const src = timer(0, 60000);
     src.subscribe(v => {
-      this.cookieTimeout = this.cookieService.get('login-student');
+      this.cookieTimeout = this.cookieService.get('login-student-admin');
       this.openDialog();
     })
   }
@@ -313,28 +321,44 @@ this.spinner.hide();
     if(sessionsCar && sessionsCar.length > 0){
       let lastSession = sessionsCar[0];
       let eventsValid = this.events.filter(e=>moment(e.date).startOf('days').diff(moment(lastSession.date_complete).startOf('days'),'days')>0);
-      estTrue = eventsValid.length > 2;
+      let eventsValidOther = this.events.filter(e=>moment(e.date).startOf('days').diff(moment(lastSession.date_complete).startOf('days'),'days')==0);
+      var numberOffset = 0;
+      if(eventsValidOther && eventsValidOther.length > 1){
+        let eventsValidOtherA = this.listeModules.filter(e=>moment(e.date_complete).startOf('days').diff(moment(lastSession.date_complete).startOf('days'),'days')==0);
+        numberOffset = eventsValidOther.length - eventsValidOtherA.length;
+      }
+      estTrue = eventsValid.length + numberOffset > 2;
     } 
     else if(this.events.length>0){
       estTrue = this.events.length == 3;
     }
     return estTrue;
   }
-
+  validMaxPlaceDaySaving(){
+    let estTrue = false;
+    let eventsValid = this.events.filter(e=>moment(e.date).startOf('days').diff(moment(this.eventDriving.date).startOf('days'),'days')==0);
+    if(eventsValid && eventsValid.length > 0){
+      estTrue = true;
+    } 
+    return estTrue;
+  }
   getSortie(val){
-    var estTrue = true;
-    var nom = "";
-    var evt = {numero:0};
-    let eventSesion = this.events
-    .sort((a,b)=>moment(b.date).startOf('days').diff(moment(a.date).startOf('days'),'days'));
-    if(eventSesion && eventSesion.length > 0 ){
-       nom = eventSesion[0].nom_module;
-       evt = this.listeModules.find(m=>m.nom == nom);
-    }
-   
-    let sessionsCarNext = this.listeModules.filter(m=>m.numero > evt.numero)
+    let estTrue = true;
+    var sessionsCarNext = null;
+    let eventsId = this.events.map(e=>e.module_id);
+    if(eventsId && eventsId.length > 0){
+      let eventSesion = this.listeModules.filter(m=> eventsId.find(e=>e == m.id) && m.date_complete == null && m.sans_objet == null).sort((a,b)=>a.numero > b.numero?-1:1)[0];
+      if(eventSesion){
+        sessionsCarNext = this.listeModules.filter(m=>m.numero > eventSesion.numero &&  m.numero !=23 && m.numero !=24 )
+        .sort((a,b)=>a.numero > b.numero?1:-1)[0];
+      }else{
+        sessionsCarNext = this.listeModules.filter(m=> m.numero !=23 && m.numero !=24 && m.date_complete == null && m.sans_objet== null)
       .sort((a,b)=>a.numero > b.numero?1:-1)[0];
-      
+      }
+    } else{
+      sessionsCarNext = this.listeModules.filter(m=> m.numero !=23 && m.numero !=24 && m.date_complete == null && m.sans_objet == null)
+      .sort((a,b)=>a.numero > b.numero?1:-1)[0];
+    }
     estTrue = !(Number(val) == sessionsCarNext.numero)
     return estTrue;
   }

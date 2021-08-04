@@ -39,6 +39,7 @@ class ModuleController extends Controller
             'module.type',
             'module.numero',
             'eleve_module.date_complete',
+            'eleve_module.sans_objet'
         )
         ->leftJoin('eleve_module', function ($join) {
             $join->on('module.id', '=', 'eleve_module.module_id');

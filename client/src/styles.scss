@@ -146,3 +146,15 @@ table{
     border-radius: 4px 4px 0 0;
     background-color: rgba(0, 0, 0, 0.04);
 }
+td.mat-calendar-body-cell:not(.mat-calendar-body-disabled)> .mat-calendar-body-cell-content{
+    background-color:  #28a745;
+    color: white !important;
+    }
+.mat-calendar-body-today{
+   border: 2px solid #821430 !important; 
+   background-color:  #28a745 !important;
+   color: black !important;
+}
+td.mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover, .mat-calendar-body-today :hover{
+        background-color:   #821430 !important;  
+    }

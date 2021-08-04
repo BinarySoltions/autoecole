@@ -65,13 +65,13 @@
         </tr>
         <tr>
             <td colspan="3" style="text-align: left;width: 100%;"><span style="float: left;"><b>{{__('examen.retaking_test')}} </b>
-                    @if(isset($examenReponses->reprise->uneFois))
+                    @if(isset($examenReponses->reprise->uneFois) && $examenReponses->reprise->uneFois === TRUE)
                     <img src="{{url('/images/checked.png')}}" width="10">
                     @else
                     <img src="{{url('/images/unchecked.png')}}" width="10">
                     @endif
                     <span>&nbsp;</span>{{__('examen.first')}}<span> - </span>
-                    @if(isset($examenReponses->reprise->deuxFois))
+                    @if(isset($examenReponses->reprise->deuxFois) && $examenReponses->reprise->deuxFois === TRUE)
                     <img src="{{url('/images/checked.png')}}" width="10">
                     @else
                     <img src="{{url('/images/unchecked.png')}}" width="10">

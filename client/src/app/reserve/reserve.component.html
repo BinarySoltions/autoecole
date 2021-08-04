@@ -37,7 +37,7 @@
       </mat-form-field>
 </div>
   <div class="col col-lg-3">
-    <mat-form-field appearance="fill">
+    <mat-form-field  appearance="fill">
       <mat-label>{{'reservation.date' | translate }}</mat-label>
       <input readonly matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)" [matDatepickerFilter]="weekendsDatesFilter" name="date"
        [(ngModel)]="eventDriving.date" required>

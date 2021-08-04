@@ -10,6 +10,7 @@ export class Module implements Deserializable{
     numero:number;
     eleve_module:EleveModule;
     date_complete:any;
+    sans_objet:number;
     
     deserialize(obj: any): this {
         Object.assign(this,obj);

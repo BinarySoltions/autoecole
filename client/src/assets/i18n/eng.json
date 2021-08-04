@@ -108,10 +108,10 @@
         "langue":"Language"
     },
     "erreur_sortie":{
-        "titre":"Sortie",
-        "colErreur":"Erreur",
-        "colChoix":"Choix",
-        "erreursChoisis" :"Liste d'erreurs"
+        "titre":"Session",
+        "colErreur":"Error",
+        "colChoix":"Choice",
+        "erreursChoisis" :"Points to improve"
     },
     "access":{
         "titre":"Login",

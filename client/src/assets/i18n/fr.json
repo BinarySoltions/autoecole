@@ -121,7 +121,7 @@
         "titre":"Sortie",
         "colErreur":"Erreur",
         "colChoix":"Choix",
-        "erreursChoisis" :"Liste d'erreurs"
+        "erreursChoisis" :"Points à améliorer"
     },
     "access":{
         "titre":"Connexion",
