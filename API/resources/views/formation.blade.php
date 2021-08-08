@@ -2,13 +2,12 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     @include('header',['title'=>$title])
 
-    <div class="container-fluid">@include('carousel')</div>
-    <div class="container"> @include('service') </div>
-
-    <div class="container" style="margin-top: 50px;"> @include('mission') </div>
-    @include('contactForm')
     <div class="container" style="background-color: white;">
-        
+    <h2>Dispositif de formation du programme d’éducation à la sécurité routière</h2>
+    <div style="margin: 20px;">
+    <img src="{{url('/images/DISPOSITIF.png')}}" alt="Dispositif" style="width: 100%;">
+    </div>
+  
         @include('servicesBottom')
         <!-- If we need navigation buttons -->
 
