@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     @include('header',['title'=>$title])
 
-    <div class="container" style="background-color: white;">
+    <div class="container content" style="background-color: white;">
     <div style="text-align: center;">
     <h2>Écolde de conduite Pconduite</h2>
     <p>Téléphone : (438) 387-6644 <br/>

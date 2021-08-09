@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     @include('header',['title'=>$title])
 
-    <div class="container" style="background-color: white;">
+    <div class="container content" style="background-color: white;">
     <h2>Dispositif de formation du programme d’éducation à la sécurité routière</h2>
     <div style="margin: 20px;">
     <img src="{{url('/images/DISPOSITIF.png')}}" alt="Dispositif" style="width: 100%;">

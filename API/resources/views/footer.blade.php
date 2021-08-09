@@ -1,4 +1,4 @@
-<div class="container">
+<div id="idFooter" class="container">
     <div class="row">
         <div class="col col-lg-4">
             <h3>Pconduite</h3>

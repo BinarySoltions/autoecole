@@ -112,7 +112,10 @@
             bottom: 70% !important;
             z-index: 4;
         }
-
+        .carousel-caption>a {
+           font-size: 2rem;
+           text-transform: uppercase;
+        }
         .card-img-top {
             background-color: #00742c;
             text-align: center;
@@ -150,17 +153,18 @@
         }
 
         .btn-primary {
-            background-color: #00742c;
-            border-color: #00742c;
+            background-color: #851231;
+            border-color: #851231;
+            font-weight: bold;
         }
 
         .btn-primary:hover {
             opacity: 0.8;
-            background-color: #00742c;
-            border-color: #00742c;
+            background-color: #851231;
+            border-color: #851231;
         }
 
-        .primary {
+        .primary,a,a:hover {
             color: #00742c;
         }
 
@@ -171,6 +175,7 @@
         .card {
             max-height: 300px;
             min-height: 300px;
+            min-width: 200px;
         }
 
         .text-limit {
@@ -248,10 +253,39 @@
         .swiper-slide{
             min-width: 200px;
         }
+        .active>span{
+            color: white !important;
+            background: #851231;
+            padding:6px 12px;
+        }
+        .top-bar{
+           background: white;
+        }
+        .top-bar>div{
+           margin-bottom: 5px; 
+        }
+        .top-bar>div>button.btn,.top-bar>div>a.btn{
+           font-size: small; 
+        }
+        .top-nav{
+            margin-top: 4px !important;
+            margin-bottom: 4px !important;
+        }
+        .swiper-button-next,  .swiper-button-prev{
+            color: #851231;
+        }
+         .swiper-pagination-bullet-active{
+             background:  #851231;
+         }
+         .content{
+             min-height: 900px;
+             text-align: unset;
+         }
     </style>
 </head>
 
 <body class="container-fluid" onscroll="myFunction()">
     <div id="idMenu" class="container-fluid" style="background-color: #00742c;">
-        <div class="container"> @include('menu') </div>
+    
+         @include('menu')
     </div>
