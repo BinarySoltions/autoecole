@@ -1,6 +1,6 @@
 <div class="row justify-content-end top-bar">
 <div class="col-auto">
-
+<a class="btn btn-primary my-2 my-sm-0" href="#">Inscription</a>
 <a class="btn btn-primary my-2 my-sm-0" href="#">Réservation</a>
 <button class="btn btn-primary my-2 my-sm-0 mr-1" type="button">(438) 387-6644</button>
 </div>
@@ -26,10 +26,10 @@
           <a class="nav-link {{Request::is('tarifs') ? 'active' : ''}}" href="tarifs"><span>Tarifs<span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><span>Liens utiles<span></a>
+          <a class="nav-link {{Request::is('liens-utiles') ? 'active' : ''}}" href="liens-utiles"><span>Liens utiles<span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><span>Perfectionnement<span></a>
+          <a class="nav-link {{Request::is('perfectionnement') ? 'active' : ''}}" href="perfectionnement"><span>Perfectionnement<span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link {{Request::is('formation') ? 'active' : ''}}" href="formation"><span>Formation<span></a>

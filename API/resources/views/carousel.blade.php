@@ -7,7 +7,7 @@
   <div class="carousel-inner" style="max-height: 530px;">
     <div class="carousel-item active image" data-bs-interval="10000">
       <img src="{{url('/images/slider1.png')}}" class="d-block w-100" style="height: 600px;" alt="Code de la route">
-      <div class="carousel-caption d-none d-md-block" style="bottom:35% !important">
+      <div class="carousel-caption  d-md-block" style="bottom:35% !important">
         <h1 class="text-carousel">Pconduite</h1>
         <h1 class="text-carousel">La passion de former des conducteurs</h1>
         <a href="#" class="btn btn-primary"  role="button" aria-disabled="true">Réservation</a>
@@ -15,14 +15,14 @@
     </div>
     <div class="carousel-item image" data-bs-interval="2000">
       <img src="{{url('/images/slider3.png')}}" class="d-block w-100" alt="Auto">
-      <div class="carousel-caption d-none d-md-block" >
+      <div class="carousel-caption  d-md-block" >
         <h1 class="text-carousel">Location de voiture</h1>
         <a href="#" class="btn btn-primary"  role="button" aria-disabled="true">Réservation</a>
       </div>
     </div>
     <div class="carousel-item image">
       <img src="{{url('/images/slider2.png')}}" class="d-block w-100" alt="Code de la route">
-      <div class="carousel-caption d-none d-md-block">
+      <div class="carousel-caption d-md-block">
         <h1 class="text-carousel">Cours théoriques & pratiques</h1>
         <a href="#" class="btn btn-primary"  role="button" aria-disabled="true">Réservation</a>
       </div>
