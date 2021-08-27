@@ -11,7 +11,7 @@
             <li><i class="bi bi-check-circle"></i> Partager la route</li>
             <li><i class="bi bi-check-circle"></i> Utiliser le réseau routier de façon autonome et responsable</li>
         </ul>
-        <div class="btn btn-primary">S'inscrire</div>
+        <div ><a class="btn btn-primary" href="https://pconduite.com/auto/public/inscription">S'inscrire</a></div>
             </div>
         </div>
         

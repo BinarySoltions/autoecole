@@ -18,7 +18,7 @@
                     <td>No certificat | <em>Certificate no</em>. </td>
                 </tr>
                 <tr>
-                    <td class="h-row"></td>
+                    <td class="h-row">A132</td>
                 </tr>
             </table>
         </td>

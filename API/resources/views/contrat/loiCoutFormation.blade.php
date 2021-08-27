@@ -60,7 +60,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">T.P.S. / <em>G.S.T.</em> : (No. T.P.S. / <em>G.S.T. no. </em> 7052 7727 RT0001 ):
+                    <td colspan="2">T.P.S. / <em>G.S.T.</em> : (No. T.P.S. / <em>G.S.T. no. </em> 70752 7727 RT0001 ):
                     </td>
                     <td>
                         <!-- <input class="input-w-80 border-bottom bg-color-transparent" type="number" [disabled]="true" [value]="obtenirTPS()" />$ -->

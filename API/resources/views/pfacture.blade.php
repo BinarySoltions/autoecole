@@ -91,7 +91,7 @@
           <table border="0" >
           <tr><td colspan="2" align="right" style="padding:10px 0px">Sous Total : </td></tr>
         <tr><td  colspan="2" align="right">TVQ (no. 1224768920 TQ0001) :</td></tr>
-        <tr><td  colspan="2" align="right" style="padding:10px 0px">TPS (no. 7052 7727 RT0001) :</td></tr>
+        <tr><td  colspan="2" align="right" style="padding:10px 0px">TPS (no. 70752 7727 RT0001) :</td></tr>
          <tr><td  colspan="2" align="right" > Total : </td></tr>
           </table>
       </td>

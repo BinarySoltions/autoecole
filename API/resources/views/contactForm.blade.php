@@ -1,4 +1,12 @@
 <div class="container" style="background-color: white;">
+<div class="toast mt-3 w100 btn-primary" style="position:absolute;z-index:6">
+    <div class="toast-header">
+      Information
+    </div>
+    <div class="toast-body">
+      Merci pour votre message!<br/> Notre service à la clientèle vous répondra le plus rapidement possible!
+    </div>
+  </div>
 <form id="formContact" data-action="{{url('/api/sendContact')}}">
 <div class="form-group">
     <label for="nom">Nom (obligatoire)</label>

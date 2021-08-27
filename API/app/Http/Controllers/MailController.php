@@ -13,13 +13,12 @@ class MailController extends Controller
 {
     //
     public function emailInfo(Request $request) {
-        $to= ['address' => 'oussou.dieng@gmail.com', 'name' => 'Information'];
         
         $data = ['email'=>$request->email,
         'nom'=>$request->nom,
         'sujet'=>$request->sujet,
         'message'=>$request->message];
-       Mail::to('oussou.dieng@gmail.com','Information')
+       Mail::to('autoecolepconduite@gmail.com','Information')
        ->send(new ContactEmail($data)); 
         echo "HTML Email Sent. Check your inbox.";
      }

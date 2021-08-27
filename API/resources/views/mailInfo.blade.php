@@ -4,7 +4,10 @@
     <meta charset="utf-8" />
   </head>
   <body>
-    <h2>Test Email</h2>
-    <p>{{  $msg }}</p>
+    <h2>Information pconduite</h2>
+    <p><span>Email :</span>{{  $msg['email'] }}</p><br/>
+    <p><span>Nom :</span>{{  $msg['nom'] }}</p><br/>
+    <p><span>Sujet :</span>{{  $msg['sujet'] }}</p><br/>
+    <p><span>Message :</span>{{  $msg['message'] }}</p>
   </body>
 </html>

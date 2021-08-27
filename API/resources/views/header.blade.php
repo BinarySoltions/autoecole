@@ -6,14 +6,17 @@
     <title>{{ $title }}</title>
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="{{url('owl/css/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{url('owl/css/owl.theme.default.min.css')}}">
+   
+  
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     <link href="{{url('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="{{url('owl/js/owl.carousel.min.js')}}"></script>
     <script src="{{url('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="https://kit.fontawesome.com/150b992499.js" crossorigin="anonymous"></script>
 
@@ -92,7 +95,6 @@
 
         .text-carousel {
             z-index: 5;
-            white-space: nowrap;
             font-weight: 800;
             color: rgb(255, 255, 255);
             letter-spacing: 0px;
@@ -104,14 +106,15 @@
             opacity: 1;
             transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
             transform-origin: 50% 50% 0px;
+            font-size: 2rem;
         }
 
         .carousel-caption {
-            bottom: 60% !important;
+            bottom: 25% !important;
             z-index: 4;
         }
         .carousel-caption>a {
-           font-size: 1.5rem;
+           font-size: 1.2rem;
            text-transform: uppercase;
         }
         .card-img-top {
@@ -246,7 +249,8 @@
         }
     }
         .center-text>.card-body:hover{
-            background-color: #ccc;
+            background-color: #851231;
+            color:white;
         }
         .swiper-slide{
             min-width: 200px;
@@ -292,28 +296,6 @@
             else if (footer.getBoundingClientRect().top > 710)
                 element.classList.remove("fixed-menu");
         }
-        $(document).ready(function() {
-        var carouselSwiper = new Swiper(".carouselSwiper", {
-            slidesPerView: 3,
-            spaceBetween: 10,
-            effect: "fade",
-            loop: true,
-            speed: 1200,
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            updateOnWindowResize: true,
-            autoplay: {
-                delay: 4500,
-                disableOnInteraction: false,
-            },
-        });
-    });
     </script>
 </head>
 

@@ -3,9 +3,9 @@
                 <h1>Services</h1>
             </div>
         </div>
-<div class="row container swiper-container">
-    <div class="swiper-wrapper">
-    <div class="col col-4 swiper-slide" style="padding-left: 0;">
+<div class="row container">
+    <div class="owl-carousel owl-theme" style="background: #ccc;padding:12px;">
+    <div class="col col-4 item" style="padding-left: 0;">
         <div class="card center-text">
            
             <div class="card-body">
@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div class="col col-4 swiper-slide">
+    <div class="col col-4 item">
         <div class="card center-text">
            
             <div class="card-body">
@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <div class="col col-4 swiper-slide">
+    <div class="col col-4 item">
         <div class="card center-text">
            
             <div class="card-body">
@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-    <div class="col col-4 swiper-slide">
+    <div class="col col-4 item">
         <div class="card center-text">
             
             <div class="card-body">
@@ -40,8 +40,4 @@
         </div>
     </div>
 </div>
-    <div class="swiper-button-prev" style="width: auto;"></div>
-  <div class="swiper-button-next" style="width: auto;"></div>
-  <div class="swiper-pagination"></div>
-  <div class="swiper-scrollbar"></div>
 </div>

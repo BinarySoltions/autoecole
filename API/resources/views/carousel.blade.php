@@ -8,23 +8,23 @@
     <div class="carousel-item active image" data-bs-interval="10000">
       <img src="{{url('/images/slider1.png')}}" class="d-block w-100" style="height: 600px;" alt="Code de la route">
       <div class="carousel-caption  d-md-block" style="bottom:35% !important">
-        <h1 class="text-carousel">Pconduite</h1>
-        <h1 class="text-carousel">La passion de former des conducteurs</h1>
-        <a href="#" class="btn btn-primary"  role="button" aria-disabled="true">Réservation</a>
+        <p class="text-carousel">Pconduite<br/>
+        La passion de former des conducteurs<br/></p>
+        <a href="https://pconduite.com/auto/public/inscription" class="btn btn-primary"  role="button" aria-disabled="true">Inscription</a>
       </div>
     </div>
     <div class="carousel-item image" data-bs-interval="2000">
-      <img src="{{url('/images/slider3.png')}}" class="d-block w-100" alt="Auto">
+      <img src="{{url('/images/slider3.png')}}" class="d-block w-100" style="height: 600px;" alt="Auto">
       <div class="carousel-caption  d-md-block" >
-        <h1 class="text-carousel">Location de voiture</h1>
-        <a href="#" class="btn btn-primary"  role="button" aria-disabled="true">Réservation</a>
+        <p class="text-carousel">Location de voiture<br/></p>
+        <a href="https://pconduite.com/auto/public/reservation" class="btn btn-primary"  role="button" aria-disabled="true">Réservation</a>
       </div>
     </div>
     <div class="carousel-item image">
-      <img src="{{url('/images/slider2.png')}}" class="d-block w-100" alt="Code de la route">
+      <img src="{{url('/images/slider2.png')}}" class="d-block w-100" style="height: 600px;" alt="Code de la route">
       <div class="carousel-caption d-md-block">
-        <h1 class="text-carousel">Cours théoriques & pratiques</h1>
-        <a href="#" class="btn btn-primary"  role="button" aria-disabled="true">Réservation</a>
+        <p class="text-carousel">Cours théoriques & pratiques<br/></p>
+        <a href="https://pconduite.com/auto/public/inscription" class="btn btn-primary"  role="button" aria-disabled="true">Inscription</a>
       </div>
     </div>
   </div>

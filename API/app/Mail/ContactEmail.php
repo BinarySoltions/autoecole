@@ -32,7 +32,7 @@ class ContactEmail extends Mailable
         $from = ['address' => $this->contact['email'], 'name' => $this->contact['nom']];
         return $this->view('mailInfo')
         ->with([
-            'msg' => $this->contact['message']
+            'msg' => $this->contact
         ])
         ->from($this->contact['email'],$this->contact['nom'])
         ->subject($this->contact['sujet']);

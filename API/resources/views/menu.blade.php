@@ -1,7 +1,7 @@
 <div class="row justify-content-end top-bar">
 <div class="col-auto">
-<a class="btn btn-primary my-2 my-sm-0" href="#">Inscription</a>
-<a class="btn btn-primary my-2 my-sm-0" href="#">Réservation</a>
+<a class="btn btn-primary my-2 my-sm-0" href="https://pconduite.com/auto/public/inscription">Inscription</a>
+<a class="btn btn-primary my-2 my-sm-0" href="https://pconduite.com/auto/public/reservation">Réservation</a>
 <button class="btn btn-primary my-2 my-sm-0 mr-1" type="button">(438) 387-6644</button>
 </div>
 </div>
@@ -10,7 +10,7 @@
   <div class="container-fluid" style="z-index: 2;">
     <div class="col col-lg-3">
       <div class="header__logo">
-        <a class="navbar-brand" href="#"><img src="{{url('/images/logo_pconduite.jpg')}}" width="200" /></a>
+        <a class="navbar-brand" href="/"><img src="{{url('/images/logo_pconduite.jpg')}}" width="200" /></a>
       </div>
     </div>
    
