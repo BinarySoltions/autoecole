@@ -15,6 +15,10 @@ import { timer } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import * as CryptoJS from 'crypto-js';
+import { environment } from 'src/environments/environment';
+import { AuthenticationService } from '../auth/services/authentication.service';
+import { User } from '../auth/user.model';
 
 
 
@@ -44,15 +48,16 @@ export class ReserveComponent implements OnInit {
   first: boolean;
   isVisible: boolean;
   nom: any;
+  sub: any;
+  cookieTimeoutAutre: string;
 
 
 
   constructor(private router: Router, private serviceEleve: EleveService,
-    private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
     private translate: TranslateService,private spinner:NgxSpinnerService,
     private cookieService: CookieService, private serviceModule: ModuleService,
-    public dialog: MatDialog,
+    public dialog: MatDialog, private route:ActivatedRoute,
     @Inject(DOCUMENT) private _document: Document) {
     this.translate.setDefaultLang('fr');
     this.checklogin();
@@ -60,19 +65,20 @@ export class ReserveComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.cookieTimeout = this.cookieService.get('login-student');
-    this.init();
+    this.sub = this.route.queryParams.subscribe(params=>{
+      this.idEleve = +params['id'];
+      this.numero = params['numero'];
+      this.nom = params['nom'];
+      this.lang = params['lang'];
+      this.init();
+    })
+   
   }
 
   init() {
-    if (this.cookieTimeout) {
+    this.eventDriving = new EvenementEleve();
+  
       this.isVisible = true;
-      let cookEle = JSON.parse(this.cookieTimeout);
-      this.lang = cookEle.langue;
-      this.idEleve = cookEle.id;
-      this.numero = cookEle.numero;
-      this.nom = cookEle.nom;
       this.obtenirModules(this.idEleve);
       //this.obtenirEvenementsEleve();
       this.languages = [
@@ -84,7 +90,7 @@ export class ReserveComponent implements OnInit {
       { value: '17:00', label: '17:00', places: '', date: null }, { value: '18:00', label: '18:00', places: '', date: null }, { value: '19:00', label: '19:00', places: '', date: null }, { value: '20:00', label: '20:00', places: '', date: null }]
       this.eventDriving.heure_debut = this.formatAMPM(new Date());
       this.eventDriving.heure_fin = this.eventDriving.heure_debut;
-    }
+    
   }
   obtenirModules(id) {
     this.spinner.show(undefined, { fullScreen: true });
@@ -100,10 +106,23 @@ export class ReserveComponent implements OnInit {
     this.serviceEleve.obtenirEvenementsEleve(req).subscribe(evt => {
       if (evt) {
         this.events = evt;
+        this.updateEventCompleted();
       }
      this.spinner.hide();
     });
   }
+
+  updateEventCompleted(){
+    if(this.events && this.events.length > 0){
+    this.events.forEach(e=>{
+      e.complete = false;
+      if(this.listeModules.find(m=>m.id == e.module_id && !!m.date_complete)){
+        e.complete = true;
+      }
+    });
+  }
+  }
+
   initialiserDate() {
     this.eventDriving.date = !this.eventDriving.date ? null : this.obtenirDate(this.eventDriving.date);
   }
@@ -116,9 +135,6 @@ export class ReserveComponent implements OnInit {
       this.toastr.error("Erreur / Error !", "Erreur / Error !", { timeOut: 5000 });
       return;
     }
-    
-    if (this.cookieTimeout) {
-     
       this.eventDriving.numero = this.numero;//"2020-2299";
       this.eventDriving.eleve_id = this.idEleve;
       this.eventDriving.place = 1;
@@ -135,10 +151,17 @@ export class ReserveComponent implements OnInit {
         this.toastr.error("Nombre de places par jour est de 2 / Number of places by day is 2 !", "Erreur / Error !", { timeOut: 5000 });
         return;
       }
+      if(this.validDateEventsInfNextEventDateSaving()){
+       // let dates = this.events.map(d => moment(d.date+' '+d.heure_debut));
+       // let maxDate = moment.max(dates) 
+        this.toastr.error("Merci de contacter Pconduite pour cette réservation  / Please contact Pconduite for this reservation !", "Erreur / Error !", { timeOut: 10000 });
+        return;
+      }
       this.spinner.show(undefined, { fullScreen: true });
       this.serviceEleve.creerEvenementEleve(this.eventDriving).subscribe((evt) => {
         if (evt && evt.isValid) {
           this.events = evt.data;
+          this.updateEventCompleted();
           this.toastr.success("Merci / Thank's!", "Succes / Success", { timeOut: 5000 });
         } else {
           this.toastr.error("Erreur / Error !", "Erreur / Error !", { timeOut: 5000 });
@@ -147,9 +170,6 @@ export class ReserveComponent implements OnInit {
         // this.cookieTimeout = 'uurureurueureuredj';
         // this.cookieService.set('event_student', this.cookieTimeout,1000);
       });
-    } else {
-      this.toastr.error("Erreur / Error !", "Erreur / Error !", { timeOut: 5000 });
-    }
   }
   formaterDate() {
     this.eventDriving.date = !this.eventDriving.date ? null : moment(this.eventDriving.date).format('YYYY-MM-DD');
@@ -158,6 +178,8 @@ export class ReserveComponent implements OnInit {
     this.router.navigate(['/']);
   }
   setLanguage() {
+    console.log('lang');
+    console.log(this.lang);
     this.translate.setDefaultLang(this.lang);
   }
 
@@ -228,34 +250,28 @@ export class ReserveComponent implements OnInit {
 
   openDialog(): void {
     if (!this.cookieTimeout) {
-      if (this.first) this.dialog.closeAll();
-      const dialogRef = this.dialog.open(ModalAccessComponent, {
-        data: { nom: null, numeroIdentification: null, langue: null }
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        if (!!result) {
-          this.getInfoEleve(result, dialogRef);
-        }
-
-        this.init();
-      });
+        this.router.navigate['/public/reservation'];
     }
   }
 
   getInfoEleve(result, dialogRef) {
     this.isVisible = false;
     this.lang = result.langue;
-    let req = { numero: result.numeroIdentification, nom: result.nom };
+    let password = result.password;
+    let req = { numero: result.numeroIdentification, nom: result.nom, password: password};
     this.numero = req.numero;
     this.nom = req.nom;
     this.spinner.show(undefined, { fullScreen: true });
     this.serviceEleve.getEleveLogin(req).subscribe(res => {
-      if (res && res.valid) {
+      if (res && res.isValid) {
         this.isVisible = true;
         this.idEleve = res.id;
         let req = { langue: this.lang, id: res.id, numero: this.numero,nom:this.nom };
         this.cookieService.set('login-student', JSON.stringify(req), 0.02);
+        let user = new User;
+        user.id = res.id;
+        user.access_token = res.token;
+       // this.authenticationService.loginPublic(user);
         dialogRef.close();
         this._document.defaultView.location.reload();
       } else {
@@ -266,11 +282,11 @@ export class ReserveComponent implements OnInit {
     setTimeout(()=> this.spinner.hide(),30000);
   }
   checklogin() {
-    this.cookieTimeout = this.cookieService.get('login-student');
+    this.cookieTimeout = this.cookieService.get('_login_public');
     this.openDialog();
     const src = timer(0, 60000);
     src.subscribe(v => {
-      this.cookieTimeout = this.cookieService.get('login-student');
+      this.cookieTimeout = this.cookieService.get('_login_public');
       this.openDialog();
     })
   }
@@ -294,15 +310,11 @@ export class ReserveComponent implements OnInit {
   }
 
   deleteEvent(id, dialogRef) {
-    this.cookieTimeout = this.cookieService.get('login-student');
-    if(!this.cookieTimeout){
+    this.cookieTimeoutAutre = this.cookieService.get('login-student');
+    if(!this.cookieTimeoutAutre){
      return;
     }
-    let cookEle = JSON.parse(this.cookieTimeout);
-    this.lang = cookEle.langue;
-    this.idEleve = cookEle.id;
-    this.numero = cookEle.numero;
-    this.nom = cookEle.nom;
+
     let evt = this.events.find(e=>e.id === id);
     let req = { id: id,nom:this.nom,numero:this.numero,
       date:evt.date,heure_debut:evt.heure_debut,heure_fin:evt.heure_fin};
@@ -312,6 +324,7 @@ export class ReserveComponent implements OnInit {
       this.spinner.hide();
       if (res.valid) {
         this.toastr.success("Succés / Success !", "Succés / Success !", { timeOut: 5000 });
+        this.init();
         this.obtenirEvenementsEleve();
       }else{
         this.toastr.error("Erreur / Error !", "Erreur / Error !", { timeOut: 5000 });
@@ -320,62 +333,126 @@ export class ReserveComponent implements OnInit {
   }
 
   validSaving(){
-    let estTrue = false;
+    var estTrue = false;
     let sessionsCar = this.listeModules.filter(m=>m.date_complete)
-    .sort((a,b)=>moment(b.date_complete).startOf('days').diff(moment(a.date_complete).startOf('days'),'days'));
+    .sort((a,b)=>moment(b.date_complete).startOf('day').diff(moment(a.date_complete).startOf('day'),'days'));
     if(sessionsCar && sessionsCar.length > 0){
       let lastSession = sessionsCar[0];
-      let eventsValid = this.events.filter(e=>moment(e.date).startOf('days').diff(moment(lastSession.date_complete).startOf('days'),'days')>0);
-      let eventsValidOther = this.events.filter(e=>moment(e.date).startOf('days').diff(moment(lastSession.date_complete).startOf('days'),'days')==0);
+      let eventsValid = this.events.filter(e=> e.status != 2 && moment(e.date).startOf('day').diff(moment(lastSession.date_complete).startOf('day'),'days')>0);
+      let eventsValidOther = this.events.filter(e=> e.status != 2 && moment(e.date).startOf('day').diff(moment(lastSession.date_complete).startOf('day'),'days')==0);
       var numberOffset = 0;
       if(eventsValidOther && eventsValidOther.length > 1){
-        let eventsValidOtherA = this.listeModules.filter(e=>moment(e.date_complete).startOf('days').diff(moment(lastSession.date_complete).startOf('days'),'days')==0);
-        numberOffset = eventsValidOther.length - eventsValidOtherA.length;
+        let eventsValidOtherA = this.listeModules.filter(e=>moment(e.date_complete).startOf('day').diff(moment(lastSession.date_complete).startOf('day'),'days')==0);
+        numberOffset = eventsValidOther.length - ( !!eventsValidOtherA ?eventsValidOtherA.length : 0);
       }
-      estTrue = eventsValid.length + numberOffset > 2;
+      estTrue = (!!eventsValid?eventsValid.length:0) + numberOffset > 2;
     } 
     else if(this.events.length>0){
-      estTrue = this.events.length == 3;
+      let evts = this.events.filter(e=>e.status != 2);
+      estTrue = !!evts && evts.length == 3;
     }
-   
     return estTrue;
   }
 
   validMaxPlaceDaySaving(){
     let estTrue = false;
-    let eventsValid = this.events.filter(e=>moment(e.date).startOf('days').diff(moment(this.eventDriving.date).startOf('days'),'days')==0);
+    let eventsValid = this.events.filter(e=>moment(e.date).startOf('day').diff(moment(this.eventDriving.date).startOf('day'),'days')==0);
     if(eventsValid && eventsValid.length > 1){
       estTrue = true;
     } 
     return estTrue;
   }
 
+  validDateEventsInfNextEventDateSaving(){
+    let estTrue = false;
+    let numeroEventModule = this.listeModules.find(m => m.id == this.eventDriving.module_id).numero; 
+    let tempEvents = this.listeModules.filter(m=> this.events.find(e=>e.module_id == m.id) != null);
+    let tempEventsSup = this.events.filter(e=> tempEvents.find(m=>m.id == e.module_id && 
+      Number(m.numero) > numeroEventModule) != null );
+   
+    if(tempEventsSup && tempEventsSup.length>0){
+      let eventsValid = tempEventsSup.filter(e=>moment(e.date+' '+e.heure_debut).startOf('hour').diff(moment(this.eventDriving.date+' '+this.eventDriving.heure_debut).startOf('hour'),'hours')<0);
+      if(eventsValid && eventsValid.length > 0){
+        estTrue = true;
+      } 
+    }
+    let tempEventsInf = this.events.filter(e=> tempEvents.find(m=>m.id == e.module_id 
+      && Number(m.numero) < numeroEventModule) != null );
+    if(tempEventsInf && tempEventsInf.length>0){
+      let eventsValidInf = tempEventsInf.filter(e=>moment(e.date+' '+e.heure_debut).startOf('hour').diff(moment(this.eventDriving.date+' '+this.eventDriving.heure_debut).startOf('hour'),'hours')>0);
+      if(eventsValidInf && eventsValidInf.length > 0){
+        estTrue = true;
+      } 
+    }
+    return estTrue;
+  }
   getSortie(val){
     let estTrue = true;
     var sessionsCarNext = null;
-    let eventsId = this.events.map(e=>e.module_id);
+    var eventsId  = [];
+    if(this.events && this.events.length > 0){
+      eventsId = this.events.filter(e=>e.status != 2).map(e=>e.module_id);
+    }
+   
     if(eventsId && eventsId.length > 0){
-      let eventSesion = this.listeModules.filter(m=> eventsId.find(e=>e == m.id) && m.date_complete == null && m.sans_objet == null).sort((a,b)=>a.numero > b.numero?-1:1)[0];
+      let eventSesion = null;
+      
+      eventSesion = this.listeModules.filter(m=> eventsId.find(e=>e == m.id) == null && m.date_complete == null && m.sans_objet == null).sort((a,b)=>Number(a.numero) > Number(b.numero)?1:-1)[0];
+     
       if(eventSesion){
-        sessionsCarNext = this.listeModules.filter(m=>m.numero > eventSesion.numero &&  m.numero !=23 && m.numero !=24 )
-        .sort((a,b)=>a.numero > b.numero?1:-1)[0];
+        sessionsCarNext = eventSesion;
       }else{
-        sessionsCarNext = this.listeModules.filter(m=> m.numero !=23 && m.numero !=24 && m.date_complete == null && m.sans_objet== null)
-      .sort((a,b)=>a.numero > b.numero?1:-1)[0];
+        sessionsCarNext = this.listeModules.filter(m=> m.date_complete == null && m.sans_objet== null)
+      .sort((a,b)=>Number(a.numero) > Number(b.numero)?1:-1)[0];
       }
     } else{
-      sessionsCarNext = this.listeModules.filter(m=> m.numero !=23 && m.numero !=24 && m.date_complete == null && m.sans_objet == null)
-      .sort((a,b)=>a.numero > b.numero?1:-1)[0];
+      sessionsCarNext = this.listeModules.filter(m=> m.date_complete == null && m.sans_objet == null)
+      .sort((a,b)=>Number(a.numero) > Number(b.numero)?1:-1)[0];
     }
-    estTrue = !(Number(val) == sessionsCarNext.numero)
+    
+    if(!!sessionsCarNext){
+      estTrue = !(Number(val) == sessionsCarNext.numero)
+     }
     return estTrue;
   }
 
   validSessionOneTwo(){
     if(this.eventDriving.nom_module.includes('Sortie 2')){
       let evt = this.events.find(e=> e.nom_module == 'Sortie 1');
-      return moment(evt.date).startOf('days').diff(moment(this.eventDriving.date).startOf('days'),'days') == 0;
+      if(!!evt){
+        return moment(evt.date).startOf('day').diff(moment(this.eventDriving.date).startOf('day'),'days') == 0;
+      } 
+    } else if(this.eventDriving.nom_module.includes('Sortie 1')){
+      let evt = this.events.find(e=> e.nom_module == 'Sortie 2');
+      if(!!evt){
+        return moment(evt.date).startOf('day').diff(moment(this.eventDriving.date).startOf('day'),'days') == 0;
+      } 
     }
     return false;
+  }
+
+  encryptData(data) {
+
+    try {
+      return CryptoJS.AES.encrypt(JSON.stringify(data), environment.keyApp).toString();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  encryptDataString(data:string) {
+
+    try {
+      return CryptoJS.AES.encrypt(data, environment.keyApp).toString();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  absenterEvent(id){
+
+  }
+
+  reoder(){
+
   }
 }

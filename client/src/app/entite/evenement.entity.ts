@@ -10,6 +10,8 @@ export class EvenementEleve implements Deserializable{
     date:any;
     heure_debut:any;
     heure_fin:any;
+    complete:boolean;
+    status:number;
     
     deserialize(obj: any): this {
         Object.assign(this,obj);

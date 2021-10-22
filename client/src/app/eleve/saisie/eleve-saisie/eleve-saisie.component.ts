@@ -57,6 +57,7 @@ export class EleveSaisieComponent implements OnInit,PeutEtreDeactivate {
       this.action = "Modifier";
       this.serviceEleve.obtenirEleveById(id).subscribe(eleve=>{
         this.eleveModele = eleve;
+        this.eleveModele.payed = this.eleveModele.date_rappel_payement != null;
         this.initialiserDate();
       });
     }else{
@@ -113,4 +114,8 @@ export class EleveSaisieComponent implements OnInit,PeutEtreDeactivate {
     this.eleveModele.coordonnee.telephone = "";
     this.eleveModele.coordonnee.telephone_autre = "";
   }
+
+  public onSelectionChanged(arg) {
+    this.eleveModele.payed = arg.checked;
+   }
 }

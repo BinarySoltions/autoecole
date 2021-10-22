@@ -45,7 +45,7 @@
       <mat-button-toggle class="mr" *ngIf="i<times.length-1" [value]="time">{{time.label}} - {{times[i+1].label}}
         <mat-form-field color='primary'  class="w-place" appearance="fill" >
           <mat-label><span style="font-size: 12px;color: white;">Places</span></mat-label>
-          <input matInput type="number" name="p{{i}}" [(ngModel)]="time.places" min="1" max="2" (click)="$event.stopPropagation()">
+          <input matInput type="number" name="p{{i}}" [(ngModel)]="time.places" min="1" max="3" (click)="$event.stopPropagation()">
         </mat-form-field>
       </mat-button-toggle>
       <mat-button-toggle class="h-1" *ngIf="i<times.length-1" disabled>

@@ -117,7 +117,14 @@
         "titre":"Login",
         "numero":"Contract number",
         "nom":"Last name",
-        "action":"Login"
+        "action":"Login",
+        "password":"Password",
+        "password_new":"New password",
+        "btnAsk":"Ask",
+        "btnChange":"Change",
+        "titre_ask":"Ask a new password",
+        "titre_change":"Change your password",
+        "titre_reservation":"Do a reservation"
     },
     "reservation":{
         "titre":"Reservation",
@@ -126,7 +133,15 @@
         "date":"Date",
         "debut":"Start time",
         "fin":"End time",
-        "action":"Action"
+        "action":"Action",
+        "warning":"Warning",
+        "warning_text":"A practical course can be canceled with 48 hours notice.Failing to respect the notice, whatever the reasons, the cost of the course will be added to your balance.See Contract",
+        "done":"Done",
+        "progress":"Coming up",
+        "confirm":"To confirm",
+        "btnReorder":"Reorder",
+        "toconfirm":"Confirmed",
+        "absent":"Absent"
     },
     "confirm":{
         "ok":"Yes",

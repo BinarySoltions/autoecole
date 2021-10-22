@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Encryption\Encrypter;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
 use Exception;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +24,7 @@ use App\Coordonnee;
 use App\Module;
 use App\Examen;
 use App\Ecole;
+use App\EleveModule;
 use App\AdresseEcole;
 use App\Payement;
 use App\ParametreContrat;
@@ -51,6 +55,14 @@ class EleveController extends Controller
         return $this->serviceEleve->obtenirListeEleves();
     }
 
+    public function notvalide()
+    {
+        return  response()->json([
+            'valid' => false,
+            'isValid' => false
+        ],401)
+        ->header('X-Header-Public', 'error');
+    }
     public function partialStudents($limit)
     {
         $dateJour = date('Y-m-d');
@@ -522,14 +534,17 @@ class EleveController extends Controller
                     'isValid' => false
                 ]);
             }
+            
             $dateSup = date("Y-m-d");
             //$dateInf = date("Y-m-d");
             $eleves = Eleve::where('id', '=', $request->eleve_id)
                 ->where(function ($query) use ($dateSup) {
                     $query->whereDate('date_fin_contrat', '<=', $dateSup)
-                        ->orWhereDate('date_fin_permis', '<=', $dateSup);
+                        ->orWhereDate('date_fin_permis', '<=', $dateSup)
+                        ->orWhere('date_rappel_payement', '!=', null);
                 })
                 ->first();
+
                 if (isset($eleves)) {
                     return response()->json([
                         'isValid' => false
@@ -569,6 +584,7 @@ class EleveController extends Controller
                 ->where('evenement_eleve.heure_fin', '=', $event->heure_fin)->first();
             $evtEle = 0;
             $erreur = false;
+           
             if (isset($events)) {
                 if ($events->place < $events->places) {
                     $event->place =  $events->place + 1;
@@ -650,7 +666,10 @@ class EleveController extends Controller
                 $join->on('evenement.places', '=', 'evenement_eleve.place');
             })
             ->whereDate('evenement.date', '>=', $dateStart)
-            ->whereDate('evenement.date', '<', $dateEnd)->get();
+            ->whereDate('evenement.date', '<', $dateEnd)
+            ->orderBy('evenement.date', 'asc')
+            ->orderBy('evenement.heure_debut', 'asc')
+            ->get();
         return EvenementResource::Collection($events);
     }
     function getDatesHeuresEvents(Request $request)
@@ -679,13 +698,17 @@ class EleveController extends Controller
                 $join->on('eleve.id', '=', 'evenement_eleve.eleve_id');
             })
             ->whereDate('evenement.date', '>=', $dateStart)
-            ->whereDate('evenement.date', '<', $dateEnd)->get();
+            ->whereDate('evenement.date', '<', $dateEnd)
+            ->orderBy('evenement.date', 'asc')
+            ->orderBy('evenement.heure_debut', 'asc')
+            ->get();
         return EvenementResource::Collection($events);
     }
     function getEvenementsEleve(Request $request)
     {
-        $events = EvenementEleve::where('numero', '=', $request->numero)
-            ->orderBy('created_at', 'desc')
+        $events = EvenementEleve::where('numero', '=', trim($request->numero))
+            ->orderBy('date', 'desc')
+            ->orderBy('heure_debut', 'desc')
             ->get();
         return EvenementEleveResource::Collection($events);
     }
@@ -720,19 +743,28 @@ class EleveController extends Controller
     {
         $valid = false;
         $id = 0;
+        $password_decrypt = null;
         if (isset($request)) {
             $nom = strtolower($request->nom);
-            $eleve = Eleve::where('numero_contrat', $request->numero)
+            //$key32 = env('APP_KEY_OTHER');
+            //$encrypter = new Encrypter($key32, 'AES-256-CBC');
+            $password  = $request->password;
+            $eleve = Eleve::where('numero_contrat', trim($request->numero))
                 ->whereRaw('lower(nom) like (?)', ["%{$nom}%"])
-                ->get();
-            if (isset($eleve)) {
+                ->first();
+            //$password_decrypt  = Crypt::decrypt($eleve->password);
+            if (isset($eleve) /*&& isset($password) && $password == $password_decrypt*/) {
+                $dateToday = date('Y-m-d H:i:s');
+                $eleve->login_time = $dateToday;
+                $eleve->expire_time = date('Y-m-d H:i:s', strtotime('+ 28 days'));
+                $eleve->save();
                 $valid = true;
-                $id = $eleve[0]->id;
+                $id = $eleve->id;
             }
         }
 
         return response()->json([
-            'valid' => $valid,
+            'isValid' => $valid,
             'id' => $id
         ]);
     }
@@ -746,15 +778,19 @@ class EleveController extends Controller
                 ->where('heure_fin', '=', date('H:i:s', strtotime($request->heure_fin)))
                 ->where('id', '!=', $request->id)
                 ->get();
+             //retrieve data
+             $eventsEleve = EvenementEleve::find($request->id)
+             ->delete();
+
             $i = 1;
+            if(isset($eventsEleves) && count($eventsEleves) > 0 ){
             foreach ($eventsEleves  as $evt) {
                 $evt->place = $i;
                 $evt->save();
                 $i++;
             }
-            //retrieve data
-            $eventsEleves = EvenementEleve::find($request->id)
-                ->delete();
+        }
+           
             $valid = true;
         }
 
@@ -766,7 +802,7 @@ class EleveController extends Controller
     function deleteEvent(Request $request)
     {
         $result = $this->loginEleveParNom($request);
-        if (!($result->getData()->valid)) {
+        if (!($result->getData()->isValid)) {
             return response()->json([
                 'valid' => false
             ]);
@@ -813,5 +849,162 @@ class EleveController extends Controller
             //     'isValid' => false
             // ]);
         }
+    }
+
+    function reorderEvents(Request $request)
+    {
+        $updateEvents = null;
+        $deleteEvents = null;
+        $events = EvenementEleve::distinct()
+        ->select(
+            'evenement_eleve.id',
+            'evenement_eleve.date',
+            'evenement_eleve.heure_debut',
+            'evenement_eleve.heure_fin',
+            'evenement_eleve.nom_module',
+            'evenement_eleve.module_id'
+        )
+        ->leftJoin('eleve_module', function ($join) {
+            $join->on('eleve_module.module_id', '=', 'evenement_eleve.module_id');
+            $join->on('eleve_module.eleve_id', '=', 'evenement_eleve.eleve_id');
+        })
+        ->leftJoin('eleve', function ($join) {
+            $join->on('eleve.id', '=', 'evenement_eleve.eleve_id');
+        })
+        ->where('evenement_eleve.numero', '=', trim($request->numero))
+        ->where('eleve_module.date_complete','=',null)
+        ->where('eleve_module.sans_objet','=',null)
+        ->where(function ($query) {
+            $query->where('evenement_eleve.status','=',null)
+            ->orWhere('evenement_eleve.status', '!=', 2);
+        })->orderBy('evenement_eleve.date', 'asc')
+        ->orderBy('evenement_eleve.heure_debut', 'asc')
+        ->get();
+
+        $eleveModule = EleveModule::distinct()
+        ->select(
+            'module.id',
+            'module.numero',
+            'module.nom'
+        ) ->join('eleve', function ($join) {
+            $join->on('eleve.id', '=', 'eleve_module.eleve_id');
+        })
+        ->join('module', function ($join) {
+            $join->on('module.id', '=', 'eleve_module.module_id');
+        })
+        ->where('eleve.numero_contrat', '=', trim($request->numero))
+        ->where('eleve_module.date_complete','=',null)
+        ->where('eleve_module.sans_objet','=',null)
+        ->where('eleve.deleted_at','=',null)
+        ->where('module.type','=','P')
+        ->orderBy('module.numero', 'asc')
+        ->get();
+
+        $modulesAll = Module::distinct()
+        ->select(
+            'module.id',
+            'module.phase_id',
+            'module.nom',
+            'module.type',
+            'module.numero'
+        )
+        ->where('type','P')
+        ->orderBy('numero', 'asc')->get();
+
+        foreach($events as $ev){
+             if(isset($eleveModule) && count($eleveModule) > 0){
+                $evtToUp = $eleveModule->first();
+                $ev->nom_module = $evtToUp->nom;
+                $ev->module_id = $evtToUp->id;
+                $eleveModule = $eleveModule->filter(function ($e) use ($evtToUp){
+                    return $e->numero > $evtToUp->numero;
+                });
+            }
+        }
+
+        $updateEvents = $events;
+  
+        $modulesOneTwo = $modulesAll->take(2);
+
+        if(isset($modulesOneTwo) && count($modulesOneTwo)>0){
+            $sessionOne = $events->filter(function ($e) use ($modulesOneTwo){
+                return $e->module_id == $modulesOneTwo->first()->id;
+            });
+            if(isset($sessionOne) && count($sessionOne)>0){
+                $sessionTwo = $events->filter(function ($e) use ($modulesOneTwo){
+                    return $e->module_id == $modulesOneTwo->last()->id;
+                });
+                if(isset($sessionTwo) && count($sessionTwo)>0 &&  $sessionTwo->date ==  $sessionOne->date){
+                    $deleteEvents = $sessionTwo;
+                    $updateEvents = $events->filter(function ($e) use ($modulesOneTwo){
+                        return $e->module_id != $modulesOneTwo->first()->id;
+                    });
+                    foreach($updateEvents as $ev){
+                        if(isset($events) && count($events) > 0){
+                            $evtToUp = $events->first();
+                            $ev->nom_module = $evtToUp->nom_module;
+                            $ev->module_id = $evtToUp->module_id;
+                            $events = $events->filter(function ($e) use ($evtToUp){
+                                return $e->numero > $evtToUp->numero;
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
+        if(isset($updateEvents) && count($updateEvents)>0){
+            foreach($updateEvents as $e){
+                $event = EvenementEleve::find($e->id);
+                $event->nom_module = $e->nom_module;
+                $event->module_id = $e->module_id;
+                $event->save();
+            }
+        }
+        
+       if(isset($deleteEvents) && count($deleteEvents) > 0){
+        foreach($deleteEvents as $de){
+            $event = EvenementEleve::find($de->id)->delete();
+        }
+       }
+        return $this->getEvenementsEleve($request);
+    }
+
+    function updateStatusReservation(Request $request){
+        if(isset($request) && isset($request->id)){
+            $event = EvenementEleve::find($request->id);
+            $event->status = 2;
+            $event->save();
+            return $this->getEvenementsEleve($request);
+        }
+    }
+
+    function changePassword(Request $request){
+        $nom = strtolower($request->nom);
+        $eleve = Eleve::where('numero_contrat','=',trim($request->numero))
+        ->whereRaw('lower(nom) like (?)', ["%{$nom}%"])
+        ->where('eleve.deleted_at','=',null)
+        ->first();
+        try{
+        if(isset($eleve)){
+        //$key32 = env('APP_KEY_OTHER');
+        //$encrypter = new Encrypter($key32, 'AES-256-CBC');
+        $password  =  Crypt::decrypt($eleve->password);
+        if( $password == $request->password){
+            $eleve->password =   Crypt::encrypt($request->password_new);
+            //$eleve->save();
+            return response()->json([
+                'isValid' => true
+            ]);
+        }
+        }
+        return response()->json([
+            'isValid' => false
+        ]);
+    }catch(DecryptException $e){
+        return response()->json([
+            'isValid' => false
+        ]);
+    }
     }
 }

@@ -96,6 +96,12 @@ class EleveService implements IEleveService
         }
         if($request->date_fin_permis)
             $eleve->date_fin_permis = date('Y-m-d', strtotime($request->date_fin_permis));
+        
+        if($request->payed == true && $eleve->date_rappel_payement == null)
+            $eleve->date_rappel_payement = date('Y-m-d', strtotime("+1 day"));
+        else if(!$request->payed)
+            $eleve->date_rappel_payement = null;
+
         $eleve->email = $request->email;
         $eleve->numero_permis = $request->numero_permis;
         $eleve->frais_inscription = $request->frais_inscription;

@@ -16,3 +16,8 @@ margin-right: 10PX;
 .h-1{
     height: 5px;
 }
+.active-s,.active-s:active{
+    background-color:  #28a745 !important;
+    color: white !important;
+    cursor: pointer;
+}

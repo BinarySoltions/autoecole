@@ -13,10 +13,12 @@ export class ListReservationComponent implements OnInit, OnChanges {
   @Input('delete') delete = false;
   @Input('evenementEleve') elements: EvenementEleve[] = [];
   @Output() deleteEvent = new EventEmitter<number>(null);
+  @Output() reorderEvts = new EventEmitter(null);
+  @Output() absenterEvent = new EventEmitter<number>(null);
   @ViewChild('row') row: ElementRef;
   @Input('lang') lang = 'fr';
 
-  headElements = ['nom_module', 'date', 'heure_debut', 'heure_fin', 'id'];
+  headElements = ['nom_module', 'id'];
   dataSource = new MatTableDataSource<EvenementEleve>(this.elements);
 
 
@@ -38,6 +40,7 @@ export class ListReservationComponent implements OnInit, OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.dataSource = new MatTableDataSource(this.elements);
+    this.translate.setDefaultLang(this.lang);
     this.setDataSourceAttributes();
   }
 
@@ -49,7 +52,12 @@ export class ListReservationComponent implements OnInit, OnChanges {
   editer(id) {
     this.deleteEvent.emit(id);
   }
-
+  reorder() {
+    this.reorderEvts.emit();
+  }
+  absenter(id) {
+    this.absenterEvent.emit(id);
+  }
   getHeure(value) {
     let hh = value.substring(0, 2);
     let mm = value.substring(2, 2);
@@ -101,5 +109,27 @@ export class ListReservationComponent implements OnInit, OnChanges {
       return row.replace('Sortie', 'Session');
     }
     return row;
+  }
+
+  compareDate(row){
+    let now = moment().startOf('hour');
+    var end = moment(row.date+' '+row.heure_debut).startOf('hour'); // another date
+    var days = now.diff(end,'hours');
+    return Number(days) > 0;
+  }
+  compareDateToday(row){
+    let now = moment().startOf('hour');
+    let tom = moment().add(1,'days').startOf('day');
+    var end = moment(row.date+' '+row.heure_debut).startOf('hour'); // another date
+    var days = now.diff(end,'hours');
+    var dayAfter = tom.diff(end,'hours');
+    return Number(days) <= 0 && Number(dayAfter) > 0;
+  }
+
+  compareDateAfterToday(row){
+    let tom = moment().add(1,'days').startOf('day');
+    var end = moment(row.date+' '+row.heure_debut).startOf('hour'); // another date
+    var dayAfter = tom.diff(end,'hours');
+    return  Number(dayAfter) <= 0;
   }
 }

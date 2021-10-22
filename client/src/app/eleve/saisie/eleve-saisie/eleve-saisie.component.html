@@ -182,6 +182,11 @@
               <mat-datepicker #pickerFinContrat></mat-datepicker>
             </mat-form-field>
 </div>
+<div class="col col-lg-4  none-border-top form-align-v">
+  <mat-checkbox [checked]="eleveModele.payed" (change)="onSelectionChanged($event)">
+          Paiements en retard 
+        </mat-checkbox>
+</div>
   </div>
 </form>
 </mdb-card-text>

@@ -10,89 +10,117 @@
  <div class="col col-12">
     <label class="">{{'eleve.nom' | translate}} et {{'eleve.prenom' | translate}}</label>
  </div>
-<div class="md-form input-group col col-12 none-border-top">
-<input readonly type="text" aria-label="Nom" [(ngModel)]="eleveModele.nom" class="form-control" >
-<input readonly type="text" aria-label="Prenom" [(ngModel)]="eleveModele.prenom" class="form-control">
+<div class="col col-12">
+  <address>
+    <span class="">{{eleveModele.nom}}</span>
+    <span> {{eleveModele.prenom}}</span>
+  </address>
 </div>
 </div>
 <div class="row">
   <div class="col col-12">
       <label class="">{{'eleve.adresse' | translate}}</label>
    </div>
-  <div class="md-form input-group col col-lg-12  none-border-top">
-      <input readonly type="text" aria-label="Numero" [(ngModel)]="eleveModele.adresse.numero" class="form-control col-lg-3">
-      <input readonly type="text" aria-label="Rue" [(ngModel)]="eleveModele.adresse.rue" class="form-control col-lg-6">
-      <input readonly type="text" aria-label="App" [(ngModel)]="eleveModele.adresse.appartement" class="form-control col-lg-3">
+  <div class="col col-lg-12">
+    <address>
+      <span>{{eleveModele.adresse.numero}}</span>
+      <span *ngIf="eleveModele.adresse.rue">, {{eleveModele.adresse.rue}}</span>
+      <span *ngIf="eleveModele.adresse.appartement">, #{{eleveModele.adresse.appartement}}</span>
+    </address>
     </div>
 </div>
 <div class="row">
-<div class="md-form col col-lg-4  none-border-top">
+<div class=" col col-lg-4  ">
     <label for="municipalite">{{'eleve.municipalite' | translate}}</label>
-    <input readonly type="text" aria-label="Municipalite" [(ngModel)]="eleveModele.adresse.municipalite" class="form-control">
+    <address>
+      <span>{{eleveModele.adresse.municipalite}}</span>
+    </address>
 </div>
-<div class="md-form col col-lg-4">
+<div class=" col col-lg-4">
     <label for="province">{{'eleve.province' |translate}}</label>
-    <input readonly class="form-control" [(ngModel)]="eleveModele.adresse.province">
+    <address>
+      <span>{{eleveModele.adresse.province}}</span>
+    </address>
 </div>
-<div class="md-form col col-lg-4  none-border-top">
+<div class=" col col-lg-4  ">
     <label for="codePostal">{{'eleve.code_postal' | translate}}</label>
-    <input readonly type="text" aria-label="Code postal" [(ngModel)]="eleveModele.adresse.code_postal" class="form-control">
+    <address>
+      <span>{{eleveModele.adresse.code_postal}}</span>
+    </address>
 </div>
 </div>
 <div class="row">
-  <div class="md-form col col-lg-4  none-border-top">
+  <div class=" col col-lg-4  ">
       <label for="numero">{{'eleve.numero_contrat' | translate}}</label>
-    <input readonly type="text" aria-label="" [(ngModel)]="eleveModele.numero_contrat" class="form-control">
+      <address>
+        <span>{{eleveModele.numero_contrat}}</span>
+      </address>
   </div>
-  <div class="md-form col col-lg-4  none-border-top">
+  <div class=" col col-lg-4  ">
       <label for="telephone">{{'eleve.telephone' | translate}}</label>
-      <input readonly type="text" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone" class="form-control">
+      <address>
+        <span>{{eleveModele.coordonnee.telephone}}</span>
+      </address>
   </div>
-  <div class="md-form col col-lg-4  none-border-top">
+  <div class=" col col-lg-4  ">
       <label for="telephoneAutre">{{'eleve.telephone_autre' | translate}}</label>
-      <input readonly type="text" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone_autre" class="form-control">
+      <address>
+        <span>{{eleveModele.coordonnee.telephone_autre}}</span>
+      </address>
   </div>
 </div>
 <div class="row">
-<div class="md-form col col-lg-4  none-border-top">
+<div class="col col-lg-4">
     <label for="permis">{{'eleve.permis' | translate}}</label>
-    <input readonly type="text" maxlength="13" name="permis" aria-label="" [(ngModel)]="eleveModele.numero_permis" class="form-control">
+    <address>
+      <span>{{eleveModele.numero_permis}}</span>
+    </address>
     </div>
-    <div class="md-form col col-lg-4  none-border-top">
+    <div class="col col-lg-4">
       <label for="email">{{'eleve.email' | translate}}</label>
-      <input type="text" readonly maxlength="50" name="email" aria-label="" [(ngModel)]="eleveModele.email" class="form-control" >
+      <address>
+        <span>{{eleveModele.email}}</span>
+      </address>
   </div>
-  <div class="md-form col col-lg-4  none-border-top">
+  <div class="col col-lg-4">
     <label for="fraisInscription">{{'eleve.cout' | translate}}</label>
-    <input type="text" readonly maxlength="50" name="email" aria-label="" [(ngModel)]="eleveModele.frais_inscription" class="form-control" >
+    <address>
+      <span>{{eleveModele.frais_inscription|currency}}</span>
+    </address>
 </div>
 </div>
 <div class="row">
-<div class="md-form col col-lg-4  none-border-top">
+<div class="col col-lg-4">
     <label for="dateNaissance">{{'eleve.DDN' | translate}}</label>
-  <input readonly type="text" aria-label="" value="{{eleveModele.date_naissance | date:'yyyy-MM-dd'}}" class="form-control">
-  
+    <address>
+      <span>{{eleveModele.date_naissance | date:'yyyy-MM-dd'}}</span>
+    </address>
 </div>
-<div class="md-form col col-lg-4  none-border-top">
+<div class=" col col-lg-4  ">
     <label for="dateInscription">{{'eleve.date_inscription' | translate}}</label>
-    <input readonly type="text" aria-label="" value="{{eleveModele.date_inscription| date:'yyyy-MM-dd'}}" class="form-control">
-    
+    <address>
+      <span>{{eleveModele.date_inscription| date:'yyyy-MM-dd'}}</span>
+    </address>
   </div>
-  <div class="md-form col col-lg-4  none-border-top">
+  <div class=" col col-lg-4  ">
     <label for="dateContrat">{{'eleve.debut_contrat' | translate}}</label>
-    <input readonly type="text" aria-label="" value="{{eleveModele.date_contrat| date:'yyyy-MM-dd'}}" class="form-control">
-    
+    <address>
+      <span>{{eleveModele.date_contrat| date:'yyyy-MM-dd'}}</span>
+    </address>
   </div>
 </div>
 <div class="row">
-<div class="md-form col col-lg-4  none-border-top">
+<div class=" col col-lg-4  ">
     <label for="dateNaissance">{{'eleve.date_expiration_permis' | translate}}</label>
-  <input readonly type="text" aria-label="" value="{{eleveModele.date_fin_permis | date:'yyyy-MM-dd'}}" class="form-control">
-  
+    <address>
+      <span>{{eleveModele.date_fin_permis | date:'yyyy-MM-dd'}}</span>
+    </address>
 </div>
-<div class="md-form col col-lg-4  none-border-top">
+<div class=" col col-lg-4  ">
   <label for="dateNaissance">{{'eleve.date_expiration_contrat' | translate}}</label>
-<input readonly type="text" aria-label="" value="{{eleveModele.date_fin_contrat | date:'yyyy-MM-dd'}}" class="form-control">
+  <address>
+    <span>{{eleveModele.date_fin_contrat | date:'yyyy-MM-dd'}}</span>
+  </address>
 
 </div>
 </div>

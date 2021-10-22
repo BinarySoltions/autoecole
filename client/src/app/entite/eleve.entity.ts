@@ -17,6 +17,7 @@ export class Eleve implements Deserializable{
     date_contrat:any;
     date_fin_permis:any;
     date_fin_contrat:any;
+    date_rappel_payement:any;
     numero_permis:string;
     frais_inscription:number;
     adresse:Adresse;
@@ -25,6 +26,7 @@ export class Eleve implements Deserializable{
     payements:Payement[];
     attestation:any;
     examens:any;
+    payed:boolean;
 
     deserialize(obj: any): this {
         Object.assign(this, obj);

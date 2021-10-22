@@ -11,17 +11,23 @@
                 <mat-radio-button name="langue" value="eng" (change)="radioChange($event)"><span>ENG </span></mat-radio-button>
               </mat-radio-group>
               </div>
-              <div class="col  col-lg-6">
+          </div>
+          <div class="row">
+              <div class="col  col-lg-4">
                 <mat-form-field>
                   <input matInput type="text" maxlength="50" name="idEleve" aria-label="Numero" [(ngModel)]="data.numeroIdentification"  placeholder="{{'access.numero' | translate}}" required>
                 </mat-form-field>
                 </div>
-                <div class="col col-lg-6">
+                <div class="col col-lg-4">
                   <mat-form-field>
                     <input matInput type="text" maxlength="50" name="nom" aria-label="Nom" [(ngModel)]="data.nom"  placeholder="{{'access.nom' | translate}}" required>
                   </mat-form-field>
                   </div>
-               
+                  <div class="col col-lg-4">
+                    <mat-form-field>
+                      <input matInput type="password" maxlength="50" name="password" aria-label="Password" [(ngModel)]="data.password"  placeholder="{{'access.password' | translate}}" required>
+                    </mat-form-field>
+                    </div>
                 </div>
                 <div class="row">
                   <div class="col col-lg-12 push-right">
@@ -35,6 +41,13 @@
                 </div>
                 
         </form>
+        <div class="row">
+          <div class="col col-12">
+            <a href="/auto/public/demander-mot-de-passe">{{'access.titre_ask' | translate}}</a><br/>
+            <a href="/auto/public/changer-mot-de-passe">{{'access.titre_change' | translate}}</a>
+          </div>
+        </div>
+       
         </mdb-card-text>
         </mdb-card-body>
         </mdb-card>

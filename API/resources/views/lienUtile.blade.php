@@ -3,25 +3,29 @@
     @include('header',['title'=>$title])
 
     <div class="container content" style="background-color: white;text-align:center">
-    <h2>Testez vos connaissance</h2>
-    <div style="margin: 20px;">
-    <a href="https://testdeconnaissances.saaq.gouv.qc.ca/fr/">
-        <img src="{{url('/images/testervoscon.png')}}" alt="Dispositif" style="width: 100%;"/>
-        </a>
-    </div>
+    <h2>Liens utiles</h2>
     <div style="margin: 20px;">
     <a href="https://saaq.gouv.qc.ca/cours-conduite">
-        <img src="{{url('/images/PESR.png')}}" alt="Dispositif" style="width: 100%;"/>
+    <h5 style="font-weight: bold;">Cours de conduite</h5>
+        </a>
+        <a href="https://saaq.gouv.qc.ca/en/driving-course">
+        <h5 style="font-weight: bold;">Driving Course</h5>
+        </a>
+        <a href="https://services.saaq.gouv.qc.ca/FonctionsWeb/RendezVous.Web/fr-CA/RendezVous/Renseignement">
+        <h5 style="font-weight: bold;">Rendez-vous saaq pour examen théorique ou pratique</h5>
+        </a>
+        <a href="https://services.saaq.gouv.qc.ca/FonctionsWeb/RendezVous.Web/en-ca/RendezVous/Renseignement">
+        <h5 style="font-weight: bold;">Make appointment for exam</h5>
+        </a>
+        <a href="https://services.saaq.gouv.qc.ca/FonctionsWeb/RendezVous.Web/fr-CA/RendezVous/Identification">
+        <h5 style="font-weight: bold;">CONSULTER, MODIFIER OU ANNULER UN RENDEZ-VOUS SAAQ</h5>
+        </a>
+        <a href="https://services.saaq.gouv.qc.ca/FonctionsWeb/RendezVous.Web/en-ca/RendezVous/Identification">
+        <h5 style="font-weight: bold;">CHECK, CHANGE OR CANCEL AN APPOINTMENT SAAQ</h5>
         </a>
     </div>
-    <h2>Autres liens</h2>
     <div style="margin: 20px;">
-    <a href="https://www.aecq.ca/">
-        <img src="{{url('/images/AECQ-Logo.png')}}" alt="Dispositif" style="width: 50%;"/>
-        </a>
-        <a href="https://aqtr.com/">
-        <img src="{{url('/images/AQTR_evenement_TM.png')}}" alt="Dispositif" style="width: 50%;"/>
-        </a>
+    
     </div>
   
         @include('servicesBottom')

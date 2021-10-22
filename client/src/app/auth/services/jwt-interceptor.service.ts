@@ -21,6 +21,15 @@ export class JwtInterceptorService implements HttpInterceptor {
             }
         });
     }
+    let currentUserPublic = this.authenticationService.currentUserPublicValue;
+    
+    if (currentUserPublic && currentUserPublic.access_token) {
+      request = request.clone({
+        setHeaders: { 
+              'X-Header-Public': `${currentUserPublic.access_token}`
+            }
+      });
+    }
 
     return next.handle(request);
 }

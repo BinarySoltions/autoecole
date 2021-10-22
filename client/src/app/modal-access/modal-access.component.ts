@@ -9,6 +9,7 @@ export interface DialogDataAccess {
   numeroIdentification: string;
   nom: string;
   isLogin:boolean;
+  password:string;
 }
 
 @Component({

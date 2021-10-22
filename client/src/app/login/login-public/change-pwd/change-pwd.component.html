@@ -1,0 +1,64 @@
+<div>
+  <mdb-card>
+    <mdb-card-header><h3>{{'access.titre_change' | translate}}</h3></mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+        <form #formulaire="ngForm">
+          <div class="row">
+            <div class="col col-lg-4">
+              <mat-radio-group aria-label="Langue" name="langue" [(ngModel)] = "data.langue" required>
+                <mat-radio-button name="langue" value="fr" style="margin-right: 10px;" (change)="radioChange($event)" checked><span>FR </span></mat-radio-button>
+                <mat-radio-button name="langue" value="eng" (change)="radioChange($event)"><span>ENG </span></mat-radio-button>
+              </mat-radio-group>
+              </div>
+              </div>
+              <div class="row">
+              <div class="col  col-lg-4">
+                <mat-form-field>
+                  <input matInput type="text" maxlength="50" name="idEleve" aria-label="Numero" [(ngModel)]="data.numero"  placeholder="{{'access.numero' | translate}}" required>
+                </mat-form-field>
+                </div>
+                <div class="col col-lg-4">
+                  <mat-form-field>
+                    <input matInput type="text" maxlength="50" name="nom" aria-label="Nom" [(ngModel)]="data.nom"  placeholder="{{'access.nom' | translate}}" required>
+                  </mat-form-field>
+                  </div>
+                  </div>
+                  <div class="row">
+                  <div class="col col-lg-4">
+                    <mat-form-field>
+                      <input matInput type="password" maxlength="50" name="password" aria-label="Password" [(ngModel)]="data.password"  placeholder="{{'access.password' | translate}}" required>
+                    </mat-form-field>
+                    </div>
+                    <div class="col col-lg-4">
+                      <mat-form-field>
+                        <input matInput type="password" maxlength="50" name="pasewordn" aria-label="PasswordN" [(ngModel)]="data.password_new"  placeholder="{{'access.password_new' | translate}}" required>
+                      </mat-form-field>
+                      </div>
+                </div>
+                <div class="row">
+                  <div class="col col-lg-12 push-right">
+                    <button type="button" 
+        class="btn bg-color-green"
+         (click)="changePwd()" 
+         style="margin-right:10px;" [disabled]="!formulaire.valid">
+            <i class="fas fa-save"></i>&nbsp;{{'access.btnChange' | translate}}
+          </button>
+                  </div>
+                </div>
+                
+        </form>
+        <div class="row">
+          <div class="col col-12">
+            <a href="/auto/public/reservation">{{'access.titre_reservation' | translate}}</a><br/>
+            <a href="/auto/public/demander-mot-de-passe">{{'access.titre_ask' | translate}}</a>
+          </div>
+        </div>
+        </mdb-card-text>
+        </mdb-card-body>
+        </mdb-card>
+        
+</div>
+<ngx-spinner>
+  <p class="loading">Loading Awesomeness...</p>
+</ngx-spinner>

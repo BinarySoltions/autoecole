@@ -7,7 +7,7 @@
     <h2>Écolde de conduite Pconduite</h2>
     <p>Téléphone : (438) 387-6644 <br/>
 
-Email : <a href="mailto:info@pconduite.com">info@pconduite.com</a><br/>
+Email : <a href="mailto:info@pconduite.com" style="font-weight: bold;">info@pconduite.com</a><br/>
 
 Adresse : 6875, avenue victoria<br/>
 

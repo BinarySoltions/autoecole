@@ -1,4 +1,4 @@
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AutoPublicRoutingModule } from './auto-public-routing.module';
@@ -9,7 +9,7 @@ import { SessionFinieComponent } from '../examen/session-finie/session-finie.com
 import { InscriptionComponent } from '../eleve/inscription/inscription.component';
 import { SharedServiceModule } from '../shared/shared/shared-service.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClientModule,HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ExamenComponent } from '../examen/examen.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -18,11 +18,17 @@ import { NavbarPublicComponent } from './navbar-public/navbar-public.component';
 import { ReserveComponent } from '../reserve/reserve.component';
 import { DetailPhaseComponent } from '../reserve/detail-phase/detail-phase.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoginPublicComponent } from '../login/login-public/login-public.component';
+import { ChangePwdComponent } from '../login/login-public/change-pwd/change-pwd.component';
+import { DemanderPwdComponent } from '../login/login-public/demander-pwd/demander-pwd.component';
+import { PublicInterceptorService } from '../auth/services/public-interceptor.service';
+import { PublicErrorInterceptorService } from '../auth/services/public-error-interceptor.service';
 @NgModule({
-  declarations: [AutoPublicComponent,BeginComponent,SessionFinieComponent,InscriptionComponent,ExamenComponent, NavbarPublicComponent, ReserveComponent,DetailPhaseComponent, ],
+  declarations: [AutoPublicComponent,BeginComponent,SessionFinieComponent,InscriptionComponent,ExamenComponent, NavbarPublicComponent, ReserveComponent,DetailPhaseComponent, LoginPublicComponent, ChangePwdComponent, DemanderPwdComponent, ],
   imports: [
     FormsModule,
     CommonModule,
+    HttpClientModule,
     ReactiveFormsModule,
     AutoPublicRoutingModule,
     SharedServiceModule,
@@ -37,7 +43,11 @@ import { NgxSpinnerModule } from 'ngx-spinner';
       }
   }),
   ],
-  schemas:[ NO_ERRORS_SCHEMA],
+  schemas:[ NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+  { provide: HTTP_INTERCEPTORS, useClass: PublicInterceptorService, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: PublicErrorInterceptorService, multi: true },
+]
 })
 export class AutoPublicModule { }
 

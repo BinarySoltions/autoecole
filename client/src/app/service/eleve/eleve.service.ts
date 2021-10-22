@@ -151,6 +151,22 @@ export class EleveService {
     return this.http.post<any>(this.apiUrl + 'updatePlacesEvent', req, httpOptions)
       .pipe(catchError(this.handleError));
   }
+  reoderEvts(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'reorderEvts', req, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+  absenterEvts(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'updateStatusReservation', req, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+  askPassword(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'askPassword', req, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+  changePassword(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'changePassword', req, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

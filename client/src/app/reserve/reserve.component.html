@@ -1,4 +1,4 @@
-<div *ngIf="isVisible">
+<div>
 <mdb-card>
   <mdb-card-header> 
     <div class="row">
@@ -9,7 +9,7 @@
     <mdb-card-text>
 <form #formulaire="ngForm">
   <div class="row">
-    <div class="col col-2">
+    <div class="col col-lg-3">
       <mat-form-field>
         <mat-label>{{'eleve.langue' | translate}}</mat-label>
         <select matNativeControl  name="langue" [(ngModel)]="lang" (change)="setLanguage()">
@@ -29,8 +29,8 @@
      placeholder="date completee" required>
         <option  value="0">{{'label.selectionner' | translate}}</option>
         <ng-template ngFor let-module [ngForOf]="listeModules" let-i="index">
-            <option [value]="module.id" 
-            [disabled]="module.numero==23 || module.numero==24 || getSortie(module.numero)"
+            <option [value]="module.id" [ngClass]="{'active-s':!(getSortie(module.numero))}"
+            [disabled]="module.numero == 23 || module.numero==24 || getSortie(module.numero)"
             >{{session(module.nom)}}</option>
         </ng-template>
       </select>
