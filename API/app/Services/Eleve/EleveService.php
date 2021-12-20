@@ -101,6 +101,10 @@ class EleveService implements IEleveService
             $eleve->date_rappel_payement = date('Y-m-d', strtotime("+1 day"));
         else if(!$request->payed)
             $eleve->date_rappel_payement = null;
+        if($request->status == true)
+            $eleve->status = 1;
+        else if(!$request->status)
+            $eleve->status = 0;
 
         $eleve->email = $request->email;
         $eleve->numero_permis = $request->numero_permis;

@@ -35,15 +35,18 @@ class EnsureTokenIsValid
             //$key32 = env('APP_KEY_OTHER');
             //$encrypter = new Encrypter($key32, 'AES-256-CBC');
             
-            //$password  = $token['password'];
+           // $password  = $token->token;
             $eleve = Eleve::find($token->id);
-           // $password_decrypt  = Crypt::decrypt($eleve->password);
-           $diff = strtotime(date('Y-m-d H:i:s')) - strtotime($eleve->expire_time);
-     
-            if (isset($eleve) &&   $diff >= 0 /*&& isset($password) && $password == $password_decrypt*/) {
-                //
-                return redirect('/api/notvalide');
+            if (isset($eleve)){
+               // $password_decrypt  = Crypt::decrypt($eleve->password);
+                $diff = strtotime(date('Y-m-d H:i:s')) - strtotime($eleve->expire_time);
+          
+                 if ($diff >= 0 /*|| isset($password) && $password != $password_decrypt*/) {
+                     //
+                     return redirect('/api/notvalide');
+                 }
             }
+          
         
         return $next($request);
     }

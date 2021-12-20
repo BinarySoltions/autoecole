@@ -31,6 +31,7 @@ Route::group([
         Route::get('user', 'AuthController@user');
     });
 });
+Route::get('notvalide','EleveController@notvalide');
  //export registre
  Route::post('exporter_registre','EleveController@export')->middleware('auth:api');
 //get users
@@ -42,11 +43,16 @@ Route::post('module','ModuleController@store')->middleware('auth:api');
 Route::get('modules','ModuleController@index')->middleware('auth:api');
 //get sortie
 Route::get('sorties','ModuleController@driving');
-Route::post('evenement','EleveController@saveEvent');
+Route::get('sorties/{id}','ModuleController@drivingCar');
+Route::post('evenement','EleveController@saveEvent')->middleware('public');
 Route::post('evenements','EleveController@savePlaces')->middleware('auth:api');
-Route::post('getDatesHeures','EleveController@getDatesHeures');
+Route::post('getDatesHeures','EleveController@getDatesHeures')->middleware('public');
 Route::post('getDatesHeuresEvents','EleveController@getDatesHeuresEvents')->middleware('auth:api');
-Route::post('getEvenementsEleve','EleveController@getEvenementsEleve');
+Route::post('getEvenementsEleve','EleveController@getEvenementsEleve')->middleware('public');
+Route::post('deleteEvent','EleveController@deleteAdminEvent')->middleware('public');
+Route::post('deleteAdminEvent','EleveController@deleteAdminEvent')->middleware('auth:api');
+Route::post('deletePlacesEvent','EleveController@deletePlacesEvent')->middleware('auth:api');
+Route::post('updatePlacesEvent','EleveController@updatePlacesEvent')->middleware('auth:api');
 //create eleve module
 Route::post('module_eleves','ModuleController@store_module_eleve')->middleware('auth:api');
 //create phase
@@ -129,6 +135,16 @@ Route::get('erreursSortie','ErreurSortieController@index')->middleware('auth:api
 Route::post('erreurSortie','ErreurSortieController@store')->middleware('auth:api');
 Route::post('ajouterNoteSortie','EleveController@ajouterNoteSortie')->middleware('auth:api');
 Route::post('loginEleve','EleveController@loginEleveParNom');
+Route::post('reorderEvts','EleveController@reorderEvents')->middleware('auth:api');
+Route::post('updateStatusReservation','EleveController@updateStatusReservation');
+Route::post('sendContact','MailController@emailInfo');
+Route::post('askPassword','MailController@emailPassword');
+Route::post('changePassword','EleveController@changePassword');
+Route::post('notifyByEmail','MailController@emailNotification');
+Route::post('/sendNotifReservation', function() {
+    Artisan::call('schedule:run');
+    // Do whatever you want either a print a message or exit
+});
 
 
 

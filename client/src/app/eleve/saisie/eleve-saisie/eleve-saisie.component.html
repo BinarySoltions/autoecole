@@ -186,6 +186,9 @@
   <mat-checkbox [checked]="eleveModele.payed" (change)="onSelectionChanged($event)">
           Paiements en retard 
         </mat-checkbox>
+        <mat-checkbox [checked]="eleveModele.status == 1" (change)="onStatusChanged($event)">
+          Désactiver l'élève
+        </mat-checkbox>
 </div>
   </div>
 </form>

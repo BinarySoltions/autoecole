@@ -11,18 +11,6 @@
         <a href="https://saaq.gouv.qc.ca/en/driving-course">
         <h5 style="font-weight: bold;">Driving Course</h5>
         </a>
-        <a href="https://services.saaq.gouv.qc.ca/FonctionsWeb/RendezVous.Web/fr-CA/RendezVous/Renseignement">
-        <h5 style="font-weight: bold;">Rendez-vous saaq pour examen théorique ou pratique</h5>
-        </a>
-        <a href="https://services.saaq.gouv.qc.ca/FonctionsWeb/RendezVous.Web/en-ca/RendezVous/Renseignement">
-        <h5 style="font-weight: bold;">Make appointment for exam</h5>
-        </a>
-        <a href="https://services.saaq.gouv.qc.ca/FonctionsWeb/RendezVous.Web/fr-CA/RendezVous/Identification">
-        <h5 style="font-weight: bold;">CONSULTER, MODIFIER OU ANNULER UN RENDEZ-VOUS SAAQ</h5>
-        </a>
-        <a href="https://services.saaq.gouv.qc.ca/FonctionsWeb/RendezVous.Web/en-ca/RendezVous/Identification">
-        <h5 style="font-weight: bold;">CHECK, CHANGE OR CANCEL AN APPOINTMENT SAAQ</h5>
-        </a>
     </div>
     <div style="margin: 20px;">
     

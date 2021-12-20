@@ -15,21 +15,21 @@
                         <img src="{{url('/images/checked.png')}}" width="7">
                         @else
                         <img src="{{url('/images/unchecked.png')}}" width="7">
-                        @endif Réussie
+                        @endif Réussi
                     </td>
                     <td class=" font-label" style="width: 14%;">
                         @if(isset($attestation->resultat_final) && $attestation->resultat_final == 2)
                         <img src="{{url('/images/checked.png')}}" width="7">
                         @else
                         <img src="{{url('/images/unchecked.png')}}" width="7">
-                        @endif Échouée
+                        @endif Échoué
                     </td>
                     <td class=" font-label" style="width: 20%;">
                         @if(isset($attestation->resultat_final) && $attestation->resultat_final == 3)
                         <img src="{{url('/images/checked.png')}}" width="7">
                         @else
                         <img src="{{url('/images/unchecked.png')}}" width="8">
-                        @endif Incomplète
+                        @endif Incomplet
                     </td>
                 </tr>
             </table>

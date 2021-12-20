@@ -57,7 +57,7 @@ export class LoginPublicComponent implements OnInit {
         this.router.navigate(['/public/reservation/ok'],
         {queryParams:{id:res.id,numero:this.data.numero,nom:this.data.nom,lang:this.data.langue}});
       } else {
-
+        this.toastr.error("Erreur de saisie. Demander mot de passe. Merci! Typing error. Ask password. Thank's!", "Erreur de connexion/ Connexion error", {timeOut: 7000});
       }
       this.spinner.hide();
     });

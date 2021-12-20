@@ -164,7 +164,7 @@ export class ReserveComponent implements OnInit {
           this.updateEventCompleted();
           this.toastr.success("Merci / Thank's!", "Succes / Success", { timeOut: 5000 });
         } else {
-          this.toastr.error("Erreur / Error !", "Erreur / Error !", { timeOut: 5000 });
+          this.toastr.error("Vous devez communiquer avec l'école de conduite / You must contact the driving school!", "Erreur / Error !", { timeOut: 5000 });
         }
         this.spinner.hide();
         // this.cookieTimeout = 'uurureurueureuredj';

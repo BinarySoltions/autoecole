@@ -118,4 +118,7 @@ export class EleveSaisieComponent implements OnInit,PeutEtreDeactivate {
   public onSelectionChanged(arg) {
     this.eleveModele.payed = arg.checked;
    }
+   public onStatusChanged(arg) {
+    this.eleveModele.status = arg.checked;
+   }
 }

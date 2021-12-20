@@ -541,10 +541,11 @@ class EleveController extends Controller
                 ->where(function ($query) use ($dateSup) {
                     $query->whereDate('date_fin_contrat', '<=', $dateSup)
                         ->orWhereDate('date_fin_permis', '<=', $dateSup)
-                        ->orWhere('date_rappel_payement', '!=', null);
+                        ->orWhere('date_rappel_payement', '!=', null)
+                        ->orWhere('status', '=', 1);
                 })
                 ->first();
-
+              
                 if (isset($eleves)) {
                     return response()->json([
                         'isValid' => false
@@ -559,7 +560,10 @@ class EleveController extends Controller
             $event->date = date('Y-m-d', strtotime($request->date));
             $event->heure_debut = date('H:i', strtotime($request->heure_debut));
             $event->heure_fin = date('H:i', strtotime($request->heure_fin));
-
+            
+            //update event places
+            $this->updateEventPlaces($request);
+            //select distinct existing events
             $events = EvenementEleve::distinct()
                 ->select(
                     'evenement_eleve.date',
@@ -586,6 +590,7 @@ class EleveController extends Controller
             $erreur = false;
            
             if (isset($events)) {
+               // return $events;
                 if ($events->place < $events->places) {
                     $event->place =  $events->place + 1;
                     $event->save();
@@ -744,15 +749,16 @@ class EleveController extends Controller
         $valid = false;
         $id = 0;
         $password_decrypt = null;
+        $token = null;
         if (isset($request)) {
             $nom = strtolower($request->nom);
             //$key32 = env('APP_KEY_OTHER');
-            //$encrypter = new Encrypter($key32, 'AES-256-CBC');
+           // $encrypter = new Encrypter($key32, 'AES-256-CBC');
             $password  = $request->password;
             $eleve = Eleve::where('numero_contrat', trim($request->numero))
                 ->whereRaw('lower(nom) like (?)', ["%{$nom}%"])
                 ->first();
-            //$password_decrypt  = Crypt::decrypt($eleve->password);
+           // $password_decrypt  = Crypt::decrypt($eleve->password);
             if (isset($eleve) /*&& isset($password) && $password == $password_decrypt*/) {
                 $dateToday = date('Y-m-d H:i:s');
                 $eleve->login_time = $dateToday;
@@ -760,12 +766,14 @@ class EleveController extends Controller
                 $eleve->save();
                 $valid = true;
                 $id = $eleve->id;
+                $token = $password;
             }
         }
 
         return response()->json([
             'isValid' => $valid,
-            'id' => $id
+            'id' => $id,
+            'token'=>$token
         ]);
     }
 
@@ -801,13 +809,16 @@ class EleveController extends Controller
 
     function deleteEvent(Request $request)
     {
-        $result = $this->loginEleveParNom($request);
+        $result = $this->deleteAdminEvent($request);
         if (!($result->getData()->isValid)) {
             return response()->json([
                 'valid' => false
             ]);
         }
-        return $this->deleteAdminEvent($request);
+
+         return response()->json([
+                'valid' => false
+            ]);
     }
 
     function deletePlacesEvent(Request $request)
@@ -987,12 +998,12 @@ class EleveController extends Controller
         ->first();
         try{
         if(isset($eleve)){
-        //$key32 = env('APP_KEY_OTHER');
+       // $key32 = env('APP_KEY_OTHER');
         //$encrypter = new Encrypter($key32, 'AES-256-CBC');
         $password  =  Crypt::decrypt($eleve->password);
         if( $password == $request->password){
             $eleve->password =   Crypt::encrypt($request->password_new);
-            //$eleve->save();
+            $eleve->save();
             return response()->json([
                 'isValid' => true
             ]);
@@ -1006,5 +1017,27 @@ class EleveController extends Controller
             'isValid' => false
         ]);
     }
+    }
+
+    
+    function updateEventPlaces(Request $request)
+    {
+        if (isset($request)) {
+            $eventsEleves = EvenementEleve::whereDate('date', '=', date('Y-m-d', strtotime($request->date)))
+                ->where('heure_debut', '=', date('H:i:s', strtotime($request->heure_debut)))
+                ->where('heure_fin', '=', date('H:i:s', strtotime($request->heure_fin)))
+                ->get();
+
+            $i = 1;
+            if(isset($eventsEleves) && count($eventsEleves) > 0 ){
+            foreach ($eventsEleves  as $evt) {
+                $evt->place = $i;
+                $evt->save();
+                $i++;
+            }
+        }
+           
+           
+        }
     }
 }

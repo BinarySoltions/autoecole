@@ -148,7 +148,7 @@ class MailController extends Controller
     }
     try{
         //$key32 = env('APP_KEY_OTHER');
-        //$encrypter = new Encrypter($key32, 'AES-256-CBC');
+       // $encrypter = new Encrypter($key32, 'AES-256-CBC');
         if(isset($eleve) && $eleve->password_default == null){
             
             $password = $this->randomPassword();
@@ -162,7 +162,7 @@ class MailController extends Controller
        
 
         $eleve->save();
-
+       
         Mail::to($eleve->email,'Information')
         ->send(new NotifLoginPWD($eleve)); 
         return response()->json([
