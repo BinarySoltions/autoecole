@@ -419,7 +419,7 @@ export class ReserveComponent implements OnInit {
   validSessionOneTwo(){
     if(this.eventDriving.nom_module.includes('Sortie 2')){
       let evt = this.events.find(e=> e.nom_module == 'Sortie 1');
-      if(!!evt){
+      if(!!evt){ 
         return moment(evt.date).startOf('day').diff(moment(this.eventDriving.date).startOf('day'),'days') == 0;
       } 
     } else if(this.eventDriving.nom_module.includes('Sortie 1')){
