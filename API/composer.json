@@ -15,10 +15,14 @@
         "dompdf/dompdf": "^0.8.3",
         "elibyy/tcpdf-laravel": "^5.8",
         "fideloper/proxy": "^4.0",
+        "google/apiclient": "^2.6",
         "laravel/framework": "5.8.*",
         "laravel/passport": "^7.3",
+        "laravel/socialite": "^4.4",
         "laravel/tinker": "^1.0",
-        "milon/barcode": "^5.3"
+        "lcobucci/jwt": "3.3.3",
+        "milon/barcode": "^5.3",
+        "plivo/plivo-php": "^4.17"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
