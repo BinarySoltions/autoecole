@@ -19,6 +19,8 @@ import * as CryptoJS from 'crypto-js';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from '../auth/services/authentication.service';
 import { User } from '../auth/user.model';
+import { PhaseService } from '../service/phase.service';
+import { Phase } from '../entite/phase.entity';
 
 
 
@@ -37,6 +39,7 @@ export class ReserveComponent implements OnInit {
   eventDriving = new EvenementEleve();
   events: EvenementEleve[] = [];
   listeModules: Module[] = [];
+  listePTModules: Module[] = [];
   times: { value: string; label: string; places: string; date: string }[];
   timesEnd: { value: string; label: string; places: string; date: string }[] = [];
   nTimes: any = ['08:00','09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'];
@@ -50,11 +53,14 @@ export class ReserveComponent implements OnInit {
   nom: any;
   sub: any;
   cookieTimeoutAutre: string;
+  phases: Phase[]=[];
+  delay: number;
+  idPhase: number;
 
 
 
   constructor(private router: Router, private serviceEleve: EleveService,
-    private toastr: ToastrService,
+    private toastr: ToastrService, private servicePhase:PhaseService,
     private translate: TranslateService,private spinner:NgxSpinnerService,
     private cookieService: CookieService, private serviceModule: ModuleService,
     public dialog: MatDialog, private route:ActivatedRoute,
@@ -90,12 +96,17 @@ export class ReserveComponent implements OnInit {
       { value: '17:00', label: '17:00', places: '', date: null }, { value: '18:00', label: '18:00', places: '', date: null }, { value: '19:00', label: '19:00', places: '', date: null }, { value: '20:00', label: '20:00', places: '', date: null }]
       this.eventDriving.heure_debut = this.formatAMPM(new Date());
       this.eventDriving.heure_fin = this.eventDriving.heure_debut;
+
+      this.servicePhase.obtenirPhases().subscribe(p=>{
+        this.phases = p;
+      })
     
   }
   obtenirModules(id) {
     this.spinner.show(undefined, { fullScreen: true });
     this.serviceModule.obtnenirSortiesEleve(id).subscribe(m => {
-      this.listeModules = m;
+      this.listePTModules = m;
+      this.listeModules = m.filter(s=>s.type === 'P');
       this.spinner.hide();
       this.obtenirEvenementsEleve();
     });
@@ -139,6 +150,16 @@ export class ReserveComponent implements OnInit {
       this.eventDriving.eleve_id = this.idEleve;
       this.eventDriving.place = 1;
       this.eventDriving.nom_module = this.listeModules.find(m => m.id == this.eventDriving.module_id).nom;
+      this.delay = 0;
+      if(!this.validPhase()){
+        if(this.delay){
+          this.toastr.error("La phase "+this.idPhase+" dure "+this.delay+" jours! Merci de revenir  / Phase "+this.idPhase+" takes "+this.delay+" days! Please come next day!", "Erreur / Error !", { timeOut: 5000 });
+        }else{
+          this.toastr.error("Merci de compléter la phase précédente / Please complete your previous phase !", "Erreur / Error !", { timeOut: 5000 });
+        }
+       
+        return;
+      }
       if(this.validSessionOneTwo()){
         this.toastr.error("La date Sortie 1 doit être différente de Sortie 2 / Date of Session 1 must not be same of Session 2 !", "Erreur / Error !", { timeOut: 5000 });
         return;
@@ -310,10 +331,6 @@ export class ReserveComponent implements OnInit {
   }
 
   deleteEvent(id, dialogRef) {
-    this.cookieTimeoutAutre = this.cookieService.get('login-student');
-    if(!this.cookieTimeoutAutre){
-     return;
-    }
 
     let evt = this.events.find(e=>e.id === id);
     let req = { id: id,nom:this.nom,numero:this.numero,
@@ -422,13 +439,42 @@ export class ReserveComponent implements OnInit {
       if(!!evt){ 
         return moment(evt.date).startOf('day').diff(moment(this.eventDriving.date).startOf('day'),'days') == 0;
       } 
+      let evt1 = this.events.find(e=> e.nom_module == 'Sortie 3');
+      if(!!evt1){ 
+        return moment(evt1.date).startOf('day').diff(moment(this.eventDriving.date).startOf('day'),'days') == 0;
+      } 
     } else if(this.eventDriving.nom_module.includes('Sortie 1')){
+      let evt = this.events.find(e=> e.nom_module == 'Sortie 2');
+      if(!!evt){
+        return moment(evt.date).startOf('day').diff(moment(this.eventDriving.date).startOf('day'),'days') == 0;
+      } 
+    }else if(this.eventDriving.nom_module.includes('Sortie 3')){
       let evt = this.events.find(e=> e.nom_module == 'Sortie 2');
       if(!!evt){
         return moment(evt.date).startOf('day').diff(moment(this.eventDriving.date).startOf('day'),'days') == 0;
       } 
     }
     return false;
+  }
+
+  validPhase(){
+    let idPhaseCurrent = this.listeModules.find(m => m.id == this.eventDriving.module_id).phase_id;
+    this.idPhase = idPhaseCurrent - 1;
+    let modules = this.listePTModules.filter(m=> m.phase_id == this.idPhase && m.date_complete == null && m.sans_objet == null);
+ 
+    if(!!modules && modules.length > 0){
+      return false;
+    }
+
+    this.delay = this.phases.find(p=>p.id==idPhaseCurrent).duree;
+    this.idPhase = idPhaseCurrent;
+    let firstModulePhase = this.listePTModules.filter(m=> m.phase_id == idPhaseCurrent && m.date_complete != null).sort((a,b)=>Number(a.numero) < Number(b.numero)?-1:1)[0];
+    let lastModulePhase = this.listePTModules.filter(m=> m.phase_id == idPhaseCurrent).sort((a,b)=>Number(a.numero) < Number(b.numero)?1:-1)[0];
+    if(lastModulePhase.id == this.eventDriving.module_id){
+     
+      return moment(this.eventDriving.date).startOf('day').diff(moment(firstModulePhase.date_complete).startOf('day'),'days') >= this.delay;
+    }
+    return true;
   }
 
   encryptData(data) {
@@ -454,5 +500,9 @@ export class ReserveComponent implements OnInit {
 
   reoder(){
 
+  }
+
+  toggleCondition(event){
+    this.eventDriving.condition = event.checked;
   }
 }

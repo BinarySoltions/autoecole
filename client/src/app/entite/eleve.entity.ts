@@ -28,6 +28,7 @@ export class Eleve implements Deserializable{
     examens:any;
     payed:boolean;
     status:number;
+    condition:boolean;
 
     deserialize(obj: any): this {
         Object.assign(this, obj);

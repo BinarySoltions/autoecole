@@ -130,7 +130,14 @@
                   </mat-form-field>
       </div>
 </div>
-
+<div class="row">
+  <div class="col col-lg-12">
+    <h6 style="background-color: black;padding: 2px 3px;color: yellow;">{{'reservation.warning' | translate}}  <i class="fas fa-exclamation-triangle"></i></h6>
+      
+    <app-condition [lang]="lang"></app-condition>
+    <mat-checkbox (change)="toggleCondition($event)" required>{{'reservation.condition' | translate}}</mat-checkbox>
+  </div>
+</div>
 </form>
 </mdb-card-text>
 </mdb-card-body>
@@ -140,8 +147,8 @@
     <button type="button" 
     class="btn bg-color-green"
      (click)="enregistrer()"
-     style="margin-right:10px;" [disabled]="!formulaire.valid">
-        <i class="fas fa-save"></i>&nbsp;{{'label.enregistrer' | translate}}
+     style="margin-right:10px;" [disabled]="!formulaire.valid || !eleveModele.condition">
+        <i class="fas fa-save"></i>&nbsp;{{'label.enregistrer' | translate}}{{condition}}
       </button>
     <button type="button" class="btn btn-secondary" (click)="fermer()">
       <i class="fas fa-ban"></i>&nbsp;{{'label.fermer' | translate}}</button>

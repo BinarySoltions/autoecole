@@ -38,7 +38,8 @@
         "rechercher":"Rechercher",
         "personne_responsable":"Nom complet de la personne responsable",
         "ajouterModule":"Ajouter module",
-        "ajouterEleve":"Ajouter élève"
+        "ajouterEleve":"Ajouter élève",
+        "modifier":"Modifier"
     },
     "titre":{
         "eleve":"Élève",
@@ -49,7 +50,8 @@
         "ajout_module": "Ajouter un module à un ou plusieurs élèves",
         "liste_personnes_responsables":"Liste des personnes responsables",
         "personne_responsable":"Ajouter une personne responsable",
-        "eleve_identification":"Identification de l'éléve"
+        "eleve_identification":"Identification de l'éléve",
+        "duree":"Modifier la durée des phases"
     },
     "menu":{
         "eleve":"Élève",
@@ -145,13 +147,14 @@
         "fin":"Heure de fin",
         "action":"Action",
         "warning":"Attention",
-        "warning_text":"Vous pouvez annuler en ligne vos réservations 48h avant la date de votre rendez-vous.Passé ce delai, vous ne pourrez plus annuler le cours et si vous ne présentez pas, quelles que soient les raisons, le coût du cours pratique sera ajouté à votre balance.Cf Contrat de cours",
+        "warning_text":"Vous pouvez annuler en ligne vos réservations 48h avant la date de votre rendez-vous. Passé ce delai, vous ne pourrez plus annuler le cours et si vous ne présentez pas, quelles que soient les raisons, le coût du cours pratique sera ajouté à votre balance.Cf Contrat de cours",
         "done":"Complétée",
         "progress":"À venir",
         "confirm":"À confirmer",
         "btnReorder":"Réordonner",
         "toconfirm":"Confirmer",
-        "absent":"Absence"
+        "absent":"Absence",
+        "condition":"J'accepte les conditions ci-dessus."
     },
     "confirm":{
         "ok":"Oui",

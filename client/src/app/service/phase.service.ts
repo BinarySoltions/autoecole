@@ -24,7 +24,14 @@ export class PhaseService {
     return this.http.get<Phase[]>(this.apiUrl+'phases')
     .pipe(catchError(this.handleError));
   }
-
+  modifierPhaseDuree(req):Observable<Phase[]>{
+    return this.http.post<Phase[]>(this.apiUrl+'updatePhase',req, httpOptions)
+    .pipe(catchError(this.handleError));
+  }
+  obtenirPhases():Observable<Phase[]>{
+    return this.http.get<Phase[]>(this.apiUrl+'getPhases')
+    .pipe(catchError(this.handleError));
+  }
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

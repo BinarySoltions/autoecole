@@ -4,27 +4,35 @@
     <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
     <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div>
-  <div class="carousel-inner" style="max-height: 530px;">
-    <div class="carousel-item active image" data-bs-interval="10000">
-      <img src="{{url('/images/slider1.png')}}" class="d-block w-100" style="height: 600px;" alt="Code de la route">
-      <div class="carousel-caption  d-md-block" style="bottom:35% !important">
-        <p class="text-carousel">Pconduite<br/>
-        La passion de former des conducteurs<br/></p>
-        <a href="https://pconduite.com/auto/public/inscription" class="btn btn-primary"  role="button" aria-disabled="true">Inscription</a>
+  <div class="carousel-inner" style="max-height: 430px;background: white;">
+    <div class="carousel-item active image" data-bs-interval="5000">
+      <img src="{{url('/images/auto-wl.png')}}" class="d-block img-phone" style="float: right;" alt="Code de la route">
+      <div class="carousel-caption  d-md-block" style="">
+        <a href="https://pconduite.com/auto/public/inscription" class="btn btn-primary top-r"  role="button" aria-disabled="true">
+        <i class="fas fa-edit icon-2x pull-left"></i>  <div class="btn-large">Inscription en ligne / <br/> Online registration</div></a>
+        <br/>
+        <a href="https://pconduite.com/auto/public/reservation" class="btn btn-primary bottom-l"  role="button" aria-disabled="true">
+        <i class="fas fa-user-lock icon-2x pull-left"></i>  <div class="btn-large"> Se connecter / <br/>Login</div></a>
       </div>
     </div>
     <div class="carousel-item image" data-bs-interval="2000">
-      <img src="{{url('/images/slider3.png')}}" class="d-block w-100" style="height: 600px;" alt="Auto">
+      <img src="{{url('/images/auto-wr.png')}}" class="d-block img-phone" style="float: right;" alt="Auto">
       <div class="carousel-caption  d-md-block" >
-        <p class="text-carousel">Location de voiture<br/></p>
-        <a href="https://pconduite.com/auto/public/reservation" class="btn btn-primary"  role="button" aria-disabled="true">Réservation</a>
+        <a href="https://pconduite.com/auto/public/inscription" class="btn btn-primary top-r"  role="button" aria-disabled="true">
+        <i class="fas fa-edit icon-2x pull-left"></i>  <div class="btn-large">Inscription en ligne / <br/> Online registration</div></a>
+        <br/>
+        <a href="https://pconduite.com/auto/public/reservation" class="btn btn-primary bottom-l"  role="button" aria-disabled="true">
+        <i class="fas fa-user-lock icon-2x pull-left"></i>  <div class="btn-large"> Se connecter / <br/>Login</div></a>
       </div>
     </div>
     <div class="carousel-item image">
-      <img src="{{url('/images/slider2.png')}}" class="d-block w-100" style="height: 600px;" alt="Code de la route">
+      <img src="{{url('/images/auto-br.png')}}" class="d-block img-phone" style="float: right;" alt="Code de la route">
       <div class="carousel-caption d-md-block">
-        <p class="text-carousel">Cours théoriques & pratiques<br/></p>
-        <a href="https://pconduite.com/auto/public/inscription" class="btn btn-primary"  role="button" aria-disabled="true">Inscription</a>
+        <a href="https://pconduite.com/auto/public/inscription" class="btn btn-primary top-r"  role="button" aria-disabled="true">
+        <i class="fas fa-edit icon-2x pull-left"></i>  <div class="btn-large">Inscription en ligne / <br/> Online registration</div></a>
+        <br/>
+        <a href="https://pconduite.com/auto/public/reservation" class="btn btn-primary bottom-l"  role="button" aria-disabled="true">
+        <i class="fas fa-user-lock icon-2x pull-left"></i>  <div class="btn-large"> Se connecter / <br/>Login</div></a>
       </div>
     </div>
   </div>

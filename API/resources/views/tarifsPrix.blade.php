@@ -18,7 +18,7 @@ Livre du programme 50 $</p>
         <div class="card">
             <div class="card-img-top">
             <h5>Perfectionnement</h5>
-               <h2>$ 35</h2>
+               <h2>$ 45</h2>
             </div>
             <div class="card-body">
                 <p class="card-text text-limit">

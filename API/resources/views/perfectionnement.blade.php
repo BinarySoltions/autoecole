@@ -16,7 +16,7 @@ a le bon plan de perfectionnement pour vous !!<br/>
 Pour plus d’informations, prenez <a href="contactez-nous"> contact</a> avec nous.<br/>
     <div style="margin: 20px;">
     
-        <img src="{{url('/images/perfectionnement.jpg')}}" alt="Dispositif" style="width: 100%;"/>
+        <img src="{{url('/images/perfectionnement22.jpg')}}" alt="Dispositif" style="width: 100%;"/>
     </div>
     
         @include('servicesBottom')

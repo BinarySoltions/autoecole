@@ -1,5 +1,5 @@
 <div class="row" style="background: white;">
-    <div class="col col-lg-6">
+    <div class="col-lg-6 col-md-12 col-xs-12">
         <div class="row">
             <div class="col">
             <h1>Mission</h1>

@@ -7,6 +7,7 @@ export class Phase implements Deserializable{
     module: string;
     date_complete: string;
     ordre: number;
+    duree:number;
    
     deserialize(obj: any): this {
         Object.assign(this, obj);

@@ -19,6 +19,7 @@
                 success: function(data) {
                     $('.toast').toast({delay: 10000});
                     $('.toast').toast('show');
+                    $('.toast').css('z-index', 3);
                 }
             });
 
@@ -47,13 +48,6 @@
                     maxlength: 50
                 },
                 messages: {
-                    nom: "Please enter your firstname",
-                    lastname: "Please enter your lastname",
-                    password: {
-                        required: "Please provide a password",
-                        minlength: "Your password must be at least 5 characters long"
-                    },
-                    email: "Please enter a valid email address"
                 }
             }
         });

@@ -29,6 +29,7 @@ export class InscriptionComponent implements OnInit {
   cookiePremiereInscription:any;
   languages: { value: string; label: string; }[];
   lang = 'fr';
+  condition :boolean;
 
   constructor(private router:Router, 
         private serviceEleve:EleveService,
@@ -132,5 +133,9 @@ export class InscriptionComponent implements OnInit {
 
   setLanguage(){
     this.translate.setDefaultLang(this.lang);
+  }
+
+  toggleCondition(event){
+    this.eleveModele.condition = event.checked;
   }
 }

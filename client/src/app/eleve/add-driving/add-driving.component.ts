@@ -69,8 +69,8 @@ export class AddDrivingComponent implements OnInit {
       this.serviceEleve.obtenirEleveById(id).subscribe(eleve=>{
         this.eleveModele = eleve;
         let req = { langue: "fr", id: this.idEleve, numero: this.eleveModele.numero_contrat };
-        this.cookieService.set('login-student-admin', JSON.stringify(req));
-        this.cookieTimeout = this.cookieService.get('login-student-admin');
+       // this.cookieService.set('login-student-admin', JSON.stringify(req));
+        this.cookieTimeout = JSON.stringify(req);//this.cookieService.get('login-student-admin');
         this.spinner.hide();
         this.init();
       });
@@ -101,7 +101,7 @@ export class AddDrivingComponent implements OnInit {
   obtenirModules(id) {
     this.spinner.show(undefined, { fullScreen: true });
     this.serviceModule.obtnenirSortiesEleve(id).subscribe(m => {
-      this.listeModules = m;
+      this.listeModules = m.filter(s=>s.type === 'P');;
       this.spinner.hide();
       this.obtenirEvenementsEleve();
     });
@@ -276,7 +276,7 @@ export class AddDrivingComponent implements OnInit {
         this.isVisible = true;
         this.idEleve = res.id;
         let req = { langue: this.lang, id: res.id, numero: this.numero };
-        this.cookieService.set('login-student-admin', JSON.stringify(req), 0.02);
+        //this.cookieService.set('login-student-admin', JSON.stringify(req), 0.02);
         dialogRef.close();
         this.spinner.hide();
         this._document.defaultView.location.reload();

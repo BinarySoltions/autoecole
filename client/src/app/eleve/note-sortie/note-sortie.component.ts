@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { EleveModule } from 'src/app/entite/eleve-module.entity';
 import { Eleve } from 'src/app/entite/eleve.entity';
 import { Module } from 'src/app/entite/module.entity';
 import { EleveService } from 'src/app/service/eleve/eleve.service';
@@ -36,7 +37,7 @@ export class NoteSortieComponent implements OnInit {
   note: string;
   sortie: number = 0;
   idEleve: number;
-  moduleEleve: import("c:/laravel/client/src/app/entite/eleve-module.entity").EleveModule[];
+  moduleEleve: EleveModule[];
 
   @ViewChild(MatSort) set matSort(ms: MatSort) {
     this.sort = ms;

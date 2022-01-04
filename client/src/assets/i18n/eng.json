@@ -135,13 +135,14 @@
         "fin":"End time",
         "action":"Action",
         "warning":"Warning",
-        "warning_text":"A practical course can be canceled with 48 hours notice.Failing to respect the notice, whatever the reasons, the cost of the course will be added to your balance.See Contract",
+        "warning_text":"A practical course can be canceled with 48 hours notice. Failing to respect the notice, whatever the reasons, the cost of the course will be added to your balance.See Contract",
         "done":"Done",
         "progress":"Coming up",
         "confirm":"To confirm",
         "btnReorder":"Reorder",
         "toconfirm":"Confirmed",
-        "absent":"Absent"
+        "absent":"Absent",
+        "condition":"I accept the above conditions."
     },
     "confirm":{
         "ok":"Yes",

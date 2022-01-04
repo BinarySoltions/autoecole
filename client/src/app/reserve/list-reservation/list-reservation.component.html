@@ -8,14 +8,14 @@
     <mdb-card-text>
      
 <div class="row">
-  <div class="col col-12">
+  <!--<div class="col col-12">
     <section style="background: #ccc;
     padding: 10px 12px;
     font-size: x-small; margin-bottom: 10px;">
       <h6 style="background-color: black;padding: 2px 3px;color: yellow;">{{'reservation.warning' | translate}}  <i class="fas fa-exclamation-triangle"></i></h6>
       <div [innerHTML]="'reservation.warning_text' | translate"></div>
     </section>
-  </div>
+  </div>-->
   <div *ngIf="delete" class="col col-12 mb-2" style="text-align: right;">
     <button type="button" class="btn btn-secondary" (click)="reorder()">
       <i class="fas fa-sort"></i>&nbsp;{{'reservation.btnReorder' | translate}}</button>
@@ -49,7 +49,7 @@
       <ng-container matColumnDef="id">
         <th  class="bg-color-green" width="100" mat-header-cell *matHeaderCellDef> {{'reservation.action' | translate}} </th>
         <td mat-cell *matCellDef="let row"> 
-          <div *ngIf="isHistoric(row.date)" class="col col-4 form-align-h" style="text-align:right">
+          <div *ngIf="isHistoric(row)" class="col col-4 form-align-h" style="text-align:right">
              <span style="padding: 3px 5px;" title="Supprimer/Delete" class="btn bg-color-green" (click)="editer(row.id)" style="margin-right:10px">
               <i class="fas fa-trash-alt"></i>
           </span>

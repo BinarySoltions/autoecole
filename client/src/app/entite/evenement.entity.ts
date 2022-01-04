@@ -12,6 +12,7 @@ export class EvenementEleve implements Deserializable{
     heure_fin:any;
     complete:boolean;
     status:number;
+    condition:boolean;
     
     deserialize(obj: any): this {
         Object.assign(this,obj);

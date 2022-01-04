@@ -98,9 +98,10 @@ export class ListReservationComponent implements OnInit, OnChanges {
     if(this.delete){
       return true;
     }
-    let now = moment(new Date()).add(2,'days').startOf('day');
-    var end = moment(value).startOf('day'); // another date
-    var days = now.diff(end,'days');
+    let now = moment().startOf('hour').add(2,'days').startOf('hour');
+    var end = moment(value.date+' '+value.heure_debut).startOf('hour'); // another date
+    var days = now.diff(end,'hours');
+    
     return Number(days) < 0;
   }
 

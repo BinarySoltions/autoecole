@@ -1,5 +1,5 @@
 <div class="container" style="background-color: white;">
-<div class="toast mt-3 w100 btn-primary" style="position:absolute;z-index:6">
+<div id="msgC" class="toast  w100 btn-primary" style="position:absolute;z-index:-1">
     <div class="toast-header">
       Information
     </div>
@@ -8,6 +8,7 @@
     </div>
   </div>
 <form id="formContact" data-action="{{url('/api/sendContact')}}">
+<h1>Contactez nous</h1>
 <div class="form-group">
     <label for="nom">Nom (obligatoire)</label>
     <input type="text" class="form-control" name="nom" id="nom"  placeholder="votre nom" required>

@@ -3,6 +3,7 @@ import { EleveService } from '../service/eleve/eleve.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PartageService } from '../service/partage.service';
 import { AuthenticationService } from '../auth/services/authentication.service';
+import { Eleve } from '../entite/eleve.entity';
 
 @Component({
   selector: 'app-notification',
@@ -11,7 +12,7 @@ import { AuthenticationService } from '../auth/services/authentication.service';
 })
 export class NotificationComponent implements OnInit {
   estNotifie = 0;
-  listeEleves: import("c:/laravel/client/src/app/entite/eleve.entity").Eleve[];
+  listeEleves: Eleve[];
   titre = "Élèves en cours d'expiration";
   constructor(private serviceEleve: EleveService,
     private spinner:NgxSpinnerService,

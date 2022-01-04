@@ -64,6 +64,18 @@
     </mat-form-field>
   </div>
 </div>
+<div class="row">
+  <div class="col col-lg-12">
+    <h6 style="background-color: black;padding: 2px 3px;color: yellow;">{{'reservation.warning' | translate}}  <i class="fas fa-exclamation-triangle"></i></h6>
+      
+    <textarea [innerHTML]="'reservation.warning_text' | translate" name="" id=""  rows="3" 
+    style="width: 100%;background: #ccc;
+    padding: 10px 12px; margin-bottom: 10px;" readonly>
+    
+    </textarea>
+    <mat-checkbox (change)="toggleCondition($event)">{{'reservation.condition' | translate}}</mat-checkbox>
+  </div>
+</div>
 </form>
     </mdb-card-text>
   </mdb-card-body>
@@ -73,7 +85,7 @@
         <button type="button" 
         class="btn bg-color-green"
          (click)="enregistrer()"
-         style="margin-right:10px;" [disabled]="!formulaire.valid">
+         style="margin-right:10px;" [disabled]="!formulaire.valid || !eventDriving.condition">
             <i class="fas fa-save"></i>&nbsp;{{'label.enregistrer' | translate}}
           </button>
         <button type="button" class="btn btn-secondary" (click)="fermer()">

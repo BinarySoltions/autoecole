@@ -1,5 +1,5 @@
 <div class="row row-cols-1 row-cols-md-4 g-4">
-    <div class="col" style="padding-left: 0;">
+    <div class="col" style="padding-left: 10px;">
         <div class="card">
             <div class="card-img-top">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check" viewBox="0 0 16 16">
@@ -46,7 +46,7 @@
             </div>
         </div>
     </div>
-    <div class="col" style="padding-right: 0;">
+    <div class="col" style="padding-right: 10px;">
         <div class="card">
             <div class="card-img-top">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-speedometer" viewBox="0 0 16 16">

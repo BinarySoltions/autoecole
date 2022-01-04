@@ -4,7 +4,7 @@
 
     <div class="container content" style="background-color: white;">
     <div style="text-align: center;">
-    <h2>Écolde de conduite Pconduite</h2>
+    <h2>École de conduite Pconduite</h2>
     <p>Téléphone : (438) 387-6644 <br/>
 
 Email : <a href="mailto:info@pconduite.com" style="font-weight: bold;">info@pconduite.com</a><br/>

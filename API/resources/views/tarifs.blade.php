@@ -5,7 +5,7 @@
     <div class="container content" style="background-color: white;">
     @include('tarifsPrix')
     <div style="margin: 20px;">
-    <img src="{{url('/images/AA_PAIEMENT.jpg')}}" alt="Paiement" style="width: 100%;">
+    <img src="{{url('/images/PESR-Pconduite-Flyer221.jpg')}}" alt="Paiement" style="width: 100%;">
     </div>
   
         @include('servicesBottom')

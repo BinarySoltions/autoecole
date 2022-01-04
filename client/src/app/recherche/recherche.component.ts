@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { EleveService } from '../service/eleve/eleve.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Eleve } from '../entite/eleve.entity';
 
 @Component({
   selector: 'app-recherche',
@@ -10,7 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class RechercheComponent implements OnInit {
   term: any;
-  listeEleves: import("c:/laravel/client/src/app/entite/eleve.entity").Eleve[];
+  listeEleves: Eleve[];
   titre="Éléve(s) trouvé(s)"
   panelOpenState = false;
   constructor(private serviceEleve: EleveService,

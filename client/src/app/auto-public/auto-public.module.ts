@@ -23,8 +23,9 @@ import { ChangePwdComponent } from '../login/login-public/change-pwd/change-pwd.
 import { DemanderPwdComponent } from '../login/login-public/demander-pwd/demander-pwd.component';
 import { PublicInterceptorService } from '../auth/services/public-interceptor.service';
 import { PublicErrorInterceptorService } from '../auth/services/public-error-interceptor.service';
+import { ConditionComponent } from '../eleve/inscription/condition/condition.component';
 @NgModule({
-  declarations: [AutoPublicComponent,BeginComponent,SessionFinieComponent,InscriptionComponent,ExamenComponent, NavbarPublicComponent, ReserveComponent,DetailPhaseComponent, LoginPublicComponent, ChangePwdComponent, DemanderPwdComponent, ],
+  declarations: [AutoPublicComponent,BeginComponent,SessionFinieComponent,InscriptionComponent,ExamenComponent, NavbarPublicComponent, ReserveComponent,DetailPhaseComponent, LoginPublicComponent, ChangePwdComponent, DemanderPwdComponent, ConditionComponent, ],
   imports: [
     FormsModule,
     CommonModule,

@@ -10,9 +10,13 @@
     <link rel="stylesheet" href="{{url('owl/css/owl.theme.default.min.css')}}">
    
   
+   <!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">-->
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     <link href="{{url('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">-->
+
+
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
@@ -26,8 +30,8 @@
     <style>
         html,
         body {
-            color: #636b6f;
-            font-family: 'Nunito', sans-serif;
+            color: black;
+            font-family: 'Arial', sans-serif;
             font-weight: 200;
             height: 100vh;
             margin: 0;
@@ -38,6 +42,10 @@
             background-color: #80808038;
         }
 
+        .btn-large{
+            width:300px;
+            text-align:justify;
+        }
         .full-height {
             height: 100vh;
         }
@@ -87,7 +95,6 @@
             height: 100%;
             top: 0;
             left: 0;
-            background: rgba(0, 0, 0, 0.6);
             opacity: 1;
             transition: all 0.5s;
             -webkit-transition: all 0.5s;
@@ -96,22 +103,17 @@
         .text-carousel {
             z-index: 5;
             font-weight: 800;
-            color: rgb(255, 255, 255);
+            color: #851231;
             letter-spacing: 0px;
             font-family: "Open Sans";
-            visibility: inherit;
-            transition: none 0s ease 0s;
-            text-align: inherit;
-            border-width: 0px;
-            opacity: 1;
-            transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-            transform-origin: 50% 50% 0px;
-            font-size: 2rem;
+            font-size: 1.2rem;
         }
 
         .carousel-caption {
             bottom: 25% !important;
             z-index: 4;
+            right:0px !important;
+            text-align:left;
         }
         .carousel-caption>a {
            font-size: 1.2rem;
@@ -154,15 +156,15 @@
         }
 
         .btn-primary {
-            background-color: #851231;
-            border-color: #851231;
+            background-color: #00742c;
+            border-color: #00742c;
             font-weight: bold;
         }
 
         .btn-primary:hover {
             opacity: 0.8;
-            background-color: #851231;
-            border-color: #851231;
+            background-color: #00742c;
+            border-color: #00742c;
         }
 
         .primary,a,a:hover {
@@ -247,7 +249,21 @@
             font-size: 1.2rem;
             font-weight: bold;
         }
+       
     }
+    @media only screen and (max-width: 600px) {
+        .top-r{
+            position: absolute;
+            top:-170px;
+        }
+        .bottom-l{
+            position: absolute;
+            bottom:-81px;
+        }
+        .img-phone{
+            max-height:300px;
+        }
+}
         .center-text>.card-body:hover{
             background-color: #851231;
             color:white;

@@ -27,6 +27,8 @@ export class PhaseModuleComponent implements OnInit {
     'emptyMessage': 'Pas de modules disponible.',
     'totalMessage': ''
   };
+  numero=1;
+  duree=0;
 
   constructor(private servicePhase:PhaseService,
     private translate:TranslateService,
@@ -52,6 +54,7 @@ export class PhaseModuleComponent implements OnInit {
   obtenirPhase(){
     this.servicePhase.obtenirPhasesModules().subscribe(res=>{
       this.listePhaseModuleModel = res;
+      this.duree = this.listePhaseModuleModel.find(p=>p.id == 1).duree;
     });
   }
   
@@ -67,5 +70,22 @@ export class PhaseModuleComponent implements OnInit {
     });
   }
   ajouterModuleDansLaListe(nombre: number) {
+  }
+
+  ajouterDelai(){
+    let req = {numero:this.numero,duree:this.duree}
+    this.servicePhase.modifierPhaseDuree(req).subscribe(res=>{
+      if(res && _.has(res[0],'id')){
+        this.listePhaseModuleModel = res;
+        this.toastr.success("La phase a été modifiée avec succés!","Informtion");
+      }else{
+        this.toastr.error("Une erreur est survenue lors de l'enregistrement!","Informtion");
+      }
+    })
+  }
+
+  onPhaseChange(event){
+    let val = event.target.value;
+    this.duree = this.listePhaseModuleModel.find(p=>p.id == val).duree;
   }
 }

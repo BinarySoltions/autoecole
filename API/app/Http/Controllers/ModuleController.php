@@ -44,7 +44,7 @@ class ModuleController extends Controller
         ->leftJoin('eleve_module', function ($join) {
             $join->on('module.id', '=', 'eleve_module.module_id');
         })
-        ->where('type','P')
+        //->where('type','P')
         ->where('eleve_id',$id)
         ->orderBy('numero')->get();
         return ModuleResource::Collection($modules);
@@ -147,11 +147,21 @@ class ModuleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updatePhase(Request $request)
     {
-        //
+        $phase = Phase::where('numero',$request->numero)->first();
+            
+                $phase->duree = $request->duree;
+                $phase->save();
+                $modules = Phase::with('modules')->get(); 
+                return PhaseResource::Collection($modules);
     }
 
+    public function getPhase()
+    {
+        $phases = Phase::get(); 
+        return PhaseResource::Collection($phases);
+    }
     /**
      * Remove the specified resource from storage.
      *
