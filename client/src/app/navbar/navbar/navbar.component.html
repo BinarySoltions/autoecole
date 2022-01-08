@@ -25,6 +25,11 @@
           [ngClass]="{'active':lienActif == lien.CALENDAR}">Calendrier
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/facture" (click)="lienActif = lien.FACTURE"
+          [ngClass]="{'active':lienActif == lien.FACTURE}">Facture
+          </a>
+        </li>
         <li *ngIf="currentUser" class="nav-item">
           <a class="nav-link" href="#" (click)="logout()">Déconnexion
           </a>

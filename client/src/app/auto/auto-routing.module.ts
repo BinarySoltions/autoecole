@@ -30,6 +30,7 @@ import { ErreurSortieComponent } from '../erreur-sortie/erreur-sortie.component'
 import { NoteSortieComponent } from '../eleve/note-sortie/note-sortie.component';
 import { CalendarComponent } from '../calendar/calendar.component';
 import { AddDrivingComponent } from '../eleve/add-driving/add-driving.component';
+import { FactureComponent } from '../facture/facture.component';
 
 const routes: Routes = [
   { path: '', component: AutoComponent, 
@@ -59,6 +60,7 @@ const routes: Routes = [
   { path: 'eleve/note/:id' , component: NoteSortieComponent, canActivate: [AuthGuardService]},
   { path: 'calendrier' , component: CalendarComponent, canActivate: [AuthGuardService]},
   { path: 'eleve/sortie/:id' , component: AddDrivingComponent, canActivate: [AuthGuardService]},
+  { path: 'facture' , component: FactureComponent, canActivate: [AuthGuardService]},
   ] },
   
   // // otherwise redirect to home

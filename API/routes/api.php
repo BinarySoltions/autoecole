@@ -38,7 +38,8 @@ Route::get('notvalide','EleveController@notvalide');
 Route::get('users','AuthController@users')->middleware('auth:api');
 //create module
 Route::post('module','ModuleController@store')->middleware('auth:api');
-
+Route::post('updatePhase','ModuleController@updatePhase')->middleware('auth:api');
+Route::get('getPhases','ModuleController@getPhase')->middleware('public');
 //get modules
 Route::get('modules','ModuleController@index')->middleware('auth:api');
 //get sortie
@@ -81,6 +82,7 @@ Route::get('recherche/{term}','EleveController@search')->middleware('auth:api');
 Route::get('expiration','EleveController@notify')->middleware('auth:api');
 //print payment
 Route::post('printPayment','EleveController@printPayment')->middleware('auth:api');
+Route::post('printFacturePerso','EleveController@printFacturePerso')->middleware('auth:api');
 //print exam
 Route::post('printExam','EleveController@printExam')->middleware('auth:api');
 //post contrat

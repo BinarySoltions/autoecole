@@ -1,0 +1,113 @@
+
+<mdb-card>
+  <mdb-card-header>
+    <div class="row">
+      <app-breadcrumbs [url]="'eleves'"></app-breadcrumbs> <div style="text-align: center;width: 100%;">
+        <h3>Facture</h3>
+      </div>
+    </div>
+  </mdb-card-header>
+  <mdb-card-body>
+    <mdb-card-text>
+
+      <app-fact-detail [eleve]="eleve" [ecole]="ecole" [description]="description" [payementsPDF]="[payement]"
+[totalPaye]="payement.montant" [eventClickGenerer]="actionGenerer"></app-fact-detail>
+      <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Ajouter un payement
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+<form #formulaire="ngForm">
+  <div class="row">
+    <div class="form-align-v col col-lg-4">
+      <label for="prenom" class="requis">Prénom</label>
+      <mat-form-field>
+          <input matInput type="text" class="example-right-align"
+           name="prenom" [(ngModel)]="eleve.prenom" placeholder="prenom" required>
+      </mat-form-field>
+    </div>
+    <div class="form-align-v col col-lg-4">
+      <label for="nom" class="requis">Nom</label>
+      <mat-form-field>
+          <input matInput type="text" class="example-right-align"
+           name="nom" [(ngModel)]="eleve.nom" placeholder="nom" required>
+      </mat-form-field>
+    </div>
+    <div class="form-align-v col col-lg-4">
+      <label for="telephone" class="requis">Téléphone</label>
+      <mat-form-field>
+          <input matInput type="text" class="example-right-align"
+           name="telephone" [(ngModel)]="telephone" (change)="telChange($event)" placeholder="telephone" required>
+      </mat-form-field>
+    </div>
+  </div>
+<div class="row">
+  <div class="form-align-v col col-lg-12">
+    <label for="description" class="requis">Description</label>
+    <mat-form-field>
+        <textarea matInput  class="example-right-align"
+         name="description" [(ngModel)]="description" placeholder="description" required>
+        </textarea>
+    </mat-form-field>
+  </div>
+</div>
+<div class="row">
+    <div class="form-align-v col col-4">
+        <label for="province" class="requis">Type de payement</label>
+        <mat-form-field>
+            <mat-label>Type de payement</mat-label>
+            <select matNativeControl  name="province" [(ngModel)]="payement.type" required>
+          <option *ngFor="let type of types" [value]="type.value">{{type.label}}</option>
+            </select>
+          </mat-form-field>
+    </div>
+  <div class="form-align-v col col-4  none-border-top">
+    <label for="montant" class="requis">Montant à payer</label>
+    <mat-form-field>
+        <input matInput type="number" class="example-right-align"
+         name="montant" [(ngModel)]="payement.montant" placeholder="montant" required>
+        <span matPrefix>$&nbsp;</span>
+        <span matSuffix>.00</span>
+    </mat-form-field>
+    </div>
+    <div class="col col-4  none-border-top form-align-v">
+        <label for="datePayement" class="requis">Date de payement</label>
+              <mat-form-field floatLabel="never">
+                  <input matInput  [matDatepicker]="picker"
+                  name="datePayement" [(ngModel)]="payement.date_payement"
+                   placeholder="yyyy-mm-dd" required>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+    </div>
+    </div>
+<div class="row">
+  <div class="col col-lg-12">
+      <button type="button" 
+      class="btn bg-color-green size-btn-m"
+       (click)="enregistrer()" 
+       style="margin-right:10px;" [disabled]="!formulaire.valid">
+          <i class="fas fa-save"></i>&nbsp;{{'label.enregistrer' | translate}}
+        </button>
+        
+          <button type="button" 
+          class="btn bg-color-green size-btn-m"
+            data-toggle="modal" data-target="#detfactureModal" (click)="detFacture()"
+           style="margin-right:10px;" [disabled]="!formulaire.valid">
+              <i class="fas fa-eye"></i>&nbsp;Visualiser
+            </button>
+
+  </div>
+</div>
+</form>
+</mat-expansion-panel>
+</mat-accordion>
+
+</mdb-card-text>
+</mdb-card-body>
+</mdb-card>
+<ngx-spinner>
+  <p class="loading">Loading Awesomeness...</p>
+</ngx-spinner>

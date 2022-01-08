@@ -12,7 +12,8 @@ enum Lien{
   HOME = 1,
   ELEVE = 2,
   RECHERCHE = 3,
-  CALENDAR = 4
+  CALENDAR = 4,
+  FACTURE = 5
 }
 @Component({
   selector: 'app-navbar',

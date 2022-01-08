@@ -12,7 +12,26 @@
 */
 
 Route::get('/', function () {
-    return view('pdf');
+    return view('welcome',['title'=>"École de conduite Pconduite -
+    La passion de former des conducteurs"]);
+});
+
+Route::get('/tarifs', function () {
+    return view('tarifs',['title'=>"Tarifs - École de conduite Pconduite"]);
+});
+
+Route::get('/formation', function () {
+    return view('formation',['title'=>"Formation - École de conduite Pconduite"]);
+});
+
+Route::get('/contactez-nous', function () {
+    return view('contactezNous',['title'=>"Contactez-nous - École de conduite Pconduite"]);
+});
+Route::get('/liens-utiles', function () {
+    return view('lienUtile',['title'=>"Liens utiles - École de conduite Pconduite"]);
+});
+Route::get('/perfectionnement', function () {
+    return view('perfectionnement',['title'=>"Perfectionnement - École de conduite Pconduite"]);
 });
 //get attestation
 Route::get('attestation','AttestationController@index');

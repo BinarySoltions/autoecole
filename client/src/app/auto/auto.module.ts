@@ -76,6 +76,8 @@ import { CalendarComponent } from '../calendar/calendar.component';
 import { ModalDetailComponent } from '../calendar/modal-detail/modal-detail.component';
 import { WeeksComponent } from '../calendar/weeks/weeks.component';
 import { AddDrivingComponent } from '../eleve/add-driving/add-driving.component';
+import { FactureComponent } from '../facture/facture.component';
+import { FactDetailComponent } from '../facture/fact-detail/fact-detail.component';
 
 export const config = new AuthServiceConfig([
   {
@@ -144,7 +146,9 @@ export const config = new AuthServiceConfig([
     CalendarComponent,
     ModalDetailComponent,
     WeeksComponent,
-    AddDrivingComponent
+    AddDrivingComponent,
+    FactureComponent,
+    FactDetailComponent
   ],
   imports: [
     FormsModule,

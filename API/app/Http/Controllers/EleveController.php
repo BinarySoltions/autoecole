@@ -1040,4 +1040,53 @@ class EleveController extends Controller
            
         }
     }
+
+    function printFacturePerso(Request $request){
+        // print_r($response->getmessageUuid(0));
+        $payement = new Payement();
+        $payement->montant = $request->montant;
+        $payement->eleve_id = 0;
+        $payement->type =  $request->type;
+        $payement->date_payement =  $request->date_payement;
+        $payement->detail = $request->detail;
+
+        $payement->save();
+
+        $payements = Payement::where('id','=',$payement->id)->get();
+
+        $eleve = new Eleve();
+        $detail = json_decode($request->detail,false);
+    
+        $eleve->prenom = $detail->prenom;
+        $eleve->nom = $detail->nom;
+        $eleve->coordonnee = new Coordonnee;
+        $eleve->coordonnee->telephone = $detail->telephone;
+        $description = $detail->description;
+
+        $ecole = Ecole::with('adresse')->first();
+        $totalPaye = 0;
+
+        foreach ($payements as $p) {
+            $totalPaye = $totalPaye + $p->montant;
+        }
+
+        $view = View::make(
+            'pfactureperso',
+            ['eleve' => $eleve, 'ecole' => $ecole, 
+            'payementsPDF' => $payements, 'totalPaye' => $totalPaye, 'dateDuJour' => date('Y-m-d'),
+            'description' => $description]
+        );
+        $html = $view->render();
+
+        $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
+        // Set font
+        $pdf::SetFont('helvetica', '', 10);
+        // Title
+        //$pdf::SetHeaderData('/images/logo_pconduite.jpg', 100, 'PDF_HEADER_TITLE', "PDF_HEADER_STRING");
+        //$pdf::SetMargins(PDF_MARGIN_LEFT, 0, PDF_MARGIN_RIGHT);
+        $pdf::AddPage();
+        $pdf::writeHTML($html, true, false, true, false, '');
+        $result =  $pdf::Output('hello_world.pdf', 'E');
+        return  $result;
+    }
 }
