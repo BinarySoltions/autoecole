@@ -7,13 +7,17 @@
     <div class="row">
       
       <div class="col col-12 push-right">
+        <button type="button" color="primary" style="margin-right:10px"
+         class=" btn bg-color-green" (click)="exporterEleves()" [disabled]="isLoading">
+          <i class="fas fa-plus"></i>	&nbsp;Exporter
+        </button>
         <button type="button" style="margin-right:10px"
-        color="primary"  class=" btn bg-color-green" 
+        color="primary"  class=" btn bg-color-green" [disabled]="isLoading"
         data-toggle="modal" data-target="#examenModal">
             <i class="fas fa-plus"></i>	&nbsp;Ajouter examen
           </button>
           <button type="button" style="margin-right:10px"
-          color="primary"  class=" btn bg-color-green" 
+          color="primary"  class=" btn bg-color-green" [disabled]="isLoading"
           data-toggle="modal" data-target="#basicExampleModal">
               <i class="fas fa-plus"></i>	&nbsp;{{'label.ajouterModule' | translate}}
             </button>

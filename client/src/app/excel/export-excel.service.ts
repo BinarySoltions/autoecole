@@ -41,4 +41,25 @@ export class ExportExcelService {
     ws["M1"].v="NUMÉRO DE CONTRAT-PRATIQUE / CONTRACT NUMBER - PRACTICE ";
     ws["N1"].v="NUMÉRO DE L'ATTESTATION / NUMBER OF ATTESTATION";
   }
+
+  public exportElevsAsExcelFile(json: any[], excelFileName: string): void {
+    if(json){
+   // var merge = XLSX.utils.decode_range("D1:G1"); // this is equivalent
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+   // if(!worksheet['!merges']) worksheet['!merges'] = [];
+    //worksheet['!merges'].push(merge);
+    this.gererColonnesEleves(worksheet);
+    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer, excelFileName);
+    }
+  }
+
+  private gererColonnesEleves(ws:XLSX.WorkSheet){
+    ws["A1"].v="NOM / LAST NAME";
+    ws["B1"].v="PRÉNOM / FIRST NAME";
+    ws["C1"].v="COURRIEL / EMAIL";
+    ws["D1"].v="NUMÉRO DE TÉLÉPHONE / PHONE NUMBER";
+    ws["E1"].v="NUMÉRO DE CONTRAT / CONTRACT NUMBER";
+  }
 }

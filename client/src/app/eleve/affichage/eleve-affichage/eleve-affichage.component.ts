@@ -11,6 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import {_} from 'underscore';
 import { PartageService } from 'src/app/service/partage.service';
+import { ExportExcelService } from 'src/app/excel/export-excel.service';
 
 
 
@@ -38,6 +39,8 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
   maxVisibleItems: number = 20;
   idEleveASupprimer : number;
   indexASupprimer :number;
+
+  isLoading = true;
   
   constructor(private serviceEleve:EleveService,
     private cdRef: ChangeDetectorRef,
@@ -45,6 +48,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
     private translate:TranslateService,
     private spinner:NgxSpinnerService,
     private toastr:ToastrService,
+    private exportExcelService:ExportExcelService,
     private partageService:PartageService) {
       this.translate.setDefaultLang('fr');
    }
@@ -54,8 +58,9 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
   }
   ngOnInit() { 
     this.spinner.show(undefined, { fullScreen: true });
+    this.isLoading = true;
     this.obtenirElevesLimites(100);
-    this.obtenirElevesExpires();
+    //this.obtenirElevesExpires();
   }
 
   ngAfterViewInit() {
@@ -68,7 +73,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
         this.listeEleves  = result.filter(eleve=>{
           return _.extend(eleve, {'nomcomplet':eleve.nom+', '+eleve.prenom+', '+eleve.numero_contrat}) ;
         });
-       
+       this.isLoading = false;
       }
     });
   }
@@ -153,4 +158,14 @@ confirmerSuppression(value){
   }
 }
 
+exporterEleves(){
+ let titre = "Listes-des-eleves-actifs";
+
+ let columns = [];
+ this.elements.forEach(e=>{
+  columns.push({nom:e.nom,prenom:e.prenom,email:e.email,telephone:e.coordonnee.telephone,numero_contrat:e.numero_contrat});
+ });
+
+ this.exportExcelService.exportElevsAsExcelFile(columns,titre);
+}
 }
