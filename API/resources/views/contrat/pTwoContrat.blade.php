@@ -233,7 +233,7 @@
       <td>
         @include('contrat.modalitePayement',['modalitePayementUn'=>$parametres->modalite_payement_un,
         'modalitePayementDeux'=>$parametres->modalite_payement_deux,'modalitePayementTrois'=>$parametres->modalite_payement_trois,
-        'eleve'=>$eleve,'versement'=>number_format($eleve->frais_inscription/3,2)])
+        'eleve'=>$eleve,'versement'=>number_format($eleve->frais_inscription/6,2)])
         <!-- <app-modalite-payement [modalitePayementUn]="parametres.modalite_payement_un"
         [modalitePayementDeux]="parametres.modalite_payement_deux"
         [modalitePayementTrois]="parametres.modalite_payement_trois"

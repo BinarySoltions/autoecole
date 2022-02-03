@@ -78,6 +78,8 @@ import { WeeksComponent } from '../calendar/weeks/weeks.component';
 import { AddDrivingComponent } from '../eleve/add-driving/add-driving.component';
 import { FactureComponent } from '../facture/facture.component';
 import { FactDetailComponent } from '../facture/fact-detail/fact-detail.component';
+import { MonitorComponent } from '../monitor/monitor.component';
+import { TableMonitorComponent } from '../monitor/table-monitor/table-monitor.component';
 
 export const config = new AuthServiceConfig([
   {
@@ -148,7 +150,9 @@ export const config = new AuthServiceConfig([
     WeeksComponent,
     AddDrivingComponent,
     FactureComponent,
-    FactDetailComponent
+    FactDetailComponent,
+    MonitorComponent,
+    TableMonitorComponent
   ],
   imports: [
     FormsModule,

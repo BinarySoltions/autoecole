@@ -15,9 +15,11 @@ import { AngularMaterialModule } from 'src/app/angular-material/angular-material
 import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
 import { ListReservationComponent } from 'src/app/reserve/list-reservation/list-reservation.component';
 import { ModalDeleteEventsComponent } from '../../modal-delete-events/modal-delete-events.component';
+import { BalancePaieComponent } from 'src/app/payement/balance-paie/balance-paie.component';
 @NgModule({
   declarations: [ RowGridComponent,
-    LastRowGridComponent,PhaseDeuxAffichageComponent,ModalNoteComponent,    ModalAccessComponent, ModalConfirmComponent,ListReservationComponent, ModalDeleteEventsComponent,],
+    LastRowGridComponent,PhaseDeuxAffichageComponent,ModalNoteComponent,    ModalAccessComponent, 
+    ModalConfirmComponent,ListReservationComponent, ModalDeleteEventsComponent,BalancePaieComponent,],
   imports: [
     FormsModule,
     CommonModule,
@@ -35,7 +37,7 @@ import { ModalDeleteEventsComponent } from '../../modal-delete-events/modal-dele
   exports:[
     RowGridComponent,
     LastRowGridComponent,PhaseDeuxAffichageComponent,ModalNoteComponent,    ModalAccessComponent,AngularMaterialModule,
-    ModalConfirmComponent,ListReservationComponent,ModalDeleteEventsComponent,
+    ModalConfirmComponent,ListReservationComponent,ModalDeleteEventsComponent,  BalancePaieComponent,
   ],
   providers:[
     CookieService,

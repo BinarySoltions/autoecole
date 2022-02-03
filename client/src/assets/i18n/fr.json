@@ -160,5 +160,11 @@
         "ok":"Oui",
         "no":"Non",
         "titre":"Confirmer"
+    },
+    "payement":{
+        "balanceTitre":"Payements",
+        "total":"Frais total",
+        "recu":"Total payé",
+        "balance":"Balance"
     }
 }

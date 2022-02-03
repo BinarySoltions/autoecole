@@ -18,11 +18,11 @@ Livre du programme 50 $</p>
         <div class="card">
             <div class="card-img-top">
             <h5>Perfectionnement</h5>
-               <h2>$ 45</h2>
+               <h2>$ 350</h2>
             </div>
             <div class="card-body">
                 <p class="card-text text-limit">
-                Plan de perfectionnement pour ceux qui ont terminé leur programme d’éducation à la sécurité routière dans une école de conduite reconnue et qui désirent améliorer leur conduite pour aller passer leur examen pratique à la SAAQ; Ou Ceux qui veulent changer leur permis étranger et obtenir le permis de conduire du Québec.
+                Plan de perfectionnement 10h à 350$ pour ceux qui ont terminé leur programme d’éducation à la sécurité routière dans une école de conduite reconnue et qui désirent améliorer leur conduite pour aller passer leur examen pratique à la SAAQ; Ou Ceux qui veulent changer leur permis étranger et obtenir le permis de conduire du Québec.
                 </p>
                 <a href="perfectionnement" class="primary">Plus de Details</a>
             </div>
@@ -33,7 +33,7 @@ Livre du programme 50 $</p>
         <div class="card">
             <div class="card-img-top">
             <h5>Location de véhicule</h5>
-               <h2>$ 60</h2>
+               <h2>$ 70</h2>
             </div>
             <div class="card-body">
                 <p class="card-text text-limit">Location de véhicule examen à la SAAQ</p>

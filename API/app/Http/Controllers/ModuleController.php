@@ -108,7 +108,7 @@ class ModuleController extends Controller
         //update
         foreach($module as $md){
             $res = $md->modules()->updateExistingPivot($request->id_module,
-            ['date_complete' => $request->date_complete,'sans_objet'=> $request->sans_objet]);
+            ['date_complete' => $request->date_complete,'sans_objet'=> $request->sans_objet,'moniteur'=>$request->moniteur]);
             if(!$res){
                 $valid = false;
             }

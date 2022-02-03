@@ -116,6 +116,12 @@ class EleveController extends Controller
         return  new EleveResource($eleves);
     }
 
+    public function obtenirEleve($id)
+    {
+        $eleve = Eleve::find($id);
+        return  new EleveResource($eleve);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -404,8 +410,8 @@ class EleveController extends Controller
 
             $pdf::SetMargins(10, 11, 10);
             $pdf::SetHeaderMargin(5);
-            $pdf::SetFooterMargin(10);
-            $pdf::SetAutoPageBreak(TRUE, 5);
+            $pdf::SetFooterMargin(4);
+            $pdf::SetAutoPageBreak(TRUE, 4);
             //$pdf::SetMargins(PDF_MARGIN_LEFT, 0, PDF_MARGIN_RIGHT);
             $pdf::AddPage();
             $pdf::writeHTML($html, true, false, true, false, '');

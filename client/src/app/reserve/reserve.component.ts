@@ -21,6 +21,7 @@ import { AuthenticationService } from '../auth/services/authentication.service';
 import { User } from '../auth/user.model';
 import { PhaseService } from '../service/phase.service';
 import { Phase } from '../entite/phase.entity';
+import { PayementService } from '../payement/payement.service';
 
 
 
@@ -56,10 +57,13 @@ export class ReserveComponent implements OnInit {
   phases: Phase[]=[];
   delay: number;
   idPhase: number;
+  total: number;
+  transaction: any;
+  totalPaye: number;
 
 
 
-  constructor(private router: Router, private serviceEleve: EleveService,
+  constructor(private router: Router, private serviceEleve: EleveService,private servicePayement:PayementService,  
     private toastr: ToastrService, private servicePhase:PhaseService,
     private translate: TranslateService,private spinner:NgxSpinnerService,
     private cookieService: CookieService, private serviceModule: ModuleService,
@@ -100,7 +104,7 @@ export class ReserveComponent implements OnInit {
       this.servicePhase.obtenirPhases().subscribe(p=>{
         this.phases = p;
       })
-    
+    this.obtenirEleve();
   }
   obtenirModules(id) {
     this.spinner.show(undefined, { fullScreen: true });
@@ -121,6 +125,30 @@ export class ReserveComponent implements OnInit {
       }
      this.spinner.hide();
     });
+  }
+
+  obtenirEleve(){
+    this.serviceEleve.obtenirEleve(this.idEleve).subscribe(res=>{
+      if(res){
+        this.total = res.frais_inscription;
+      }
+    })
+  }
+
+  obtenirPayements(): void {
+    this.servicePayement.obtnenirPayements(this.idEleve).subscribe(res=>{
+      if(res){
+        this.transaction = res;
+        this.getTotalCost();
+      }
+    });
+  }
+
+  getTotalCost(){
+    let total = 0;
+    this.transaction.forEach(p=>total = total + Number(p.montant));
+    this.totalPaye =  total;
+    
   }
 
   updateEventCompleted(){

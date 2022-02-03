@@ -16,7 +16,9 @@
         <i class="fas fa-car"></i> {{session(row?.nom)}}
     </td>
       <td>
-          {{row?.eleve_module?.date_complete}} {{obtenirDate(row?.eleve_module)}} <span *ngIf="isNote(row)" (click)="showNote(row)" class="fa fa-eye"></span>
+          {{row?.eleve_module?.date_complete}} {{obtenirDate(row?.eleve_module)}} 
+          <span *ngIf="isNote(row)" (click)="showNote(row)" class="fa fa-eye"></span><br/>
+          <label class="bg-color-green" *ngIf="isMonitor(row)">{{showMoniteur(row.eleve_module.moniteur)}}</label>
       </td>
    
     </tr>

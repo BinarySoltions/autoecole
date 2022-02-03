@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
   </head>
   <body>
-      @if($person->date_fin_contrat > $person->date_fin_permis)
+      @if(isset($person->date_fin_contrat) && $person->date_fin_contrat < $person->date_fin_permis)
     <h2>EXPIRATION DE VOTRE CONTRAT</h2>
     <p>Bonjour {{$person->nom}} {{$person->prenom}},<br/>
 Votre contrat avec l’Ecole de conduite expire le {{date('Y-m-d',strtotime($person->date_fin_contrat))}} ?<br/>

@@ -31,6 +31,7 @@ import { NoteSortieComponent } from '../eleve/note-sortie/note-sortie.component'
 import { CalendarComponent } from '../calendar/calendar.component';
 import { AddDrivingComponent } from '../eleve/add-driving/add-driving.component';
 import { FactureComponent } from '../facture/facture.component';
+import { MonitorComponent } from '../monitor/monitor.component';
 
 const routes: Routes = [
   { path: '', component: AutoComponent, 
@@ -61,6 +62,7 @@ const routes: Routes = [
   { path: 'calendrier' , component: CalendarComponent, canActivate: [AuthGuardService]},
   { path: 'eleve/sortie/:id' , component: AddDrivingComponent, canActivate: [AuthGuardService]},
   { path: 'facture' , component: FactureComponent, canActivate: [AuthGuardService]},
+  { path: 'moniteur' , component: MonitorComponent, canActivate: [AuthGuardService]},
   ] },
   
   // // otherwise redirect to home

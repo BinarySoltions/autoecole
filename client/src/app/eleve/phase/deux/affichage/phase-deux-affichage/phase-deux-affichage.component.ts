@@ -26,7 +26,7 @@ export class PhaseDeuxAffichageComponent implements OnInit {
     console.log(row);
     const dialogRef = this.dialog.open(ModalNoteComponent, {
       width: '250px',
-      data: {note: row.eleve_module.note, sortie: row.nom}
+      data: {note: row.eleve_module.note, sortie: row.nom, moniteur:row.eleve_module.moniteur}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -40,6 +40,13 @@ export class PhaseDeuxAffichageComponent implements OnInit {
     }
     return false;
   }
+
+  isMonitor(row){
+    if(row){
+      return !!row.eleve_module.moniteur;
+    }
+    return false;
+  }
   isSession(row){
     return row.includes('Sortie');
   }
@@ -49,5 +56,13 @@ export class PhaseDeuxAffichageComponent implements OnInit {
       return row.replace('Sortie','').trim();
     }
     return row;
+  }
+
+  showMoniteur(moniteur){
+    if(moniteur){
+      let moni = JSON.parse(moniteur);
+
+      return moni.prenom+" "+moni.nom + " ("+ moni.numero+")"; 
+    }
   }
 }

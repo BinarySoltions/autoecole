@@ -97,6 +97,7 @@
 <app-list-reservation (deleteEvent)="confirmDeleteEvent($event)" 
 [evenementEleve]="events" [lang]="lang"></app-list-reservation>
 <app-detail-phase [idEleve]="idEleve"></app-detail-phase>
+<app-balance-paie [totalPaye]="totalPaye" [total]="total"></app-balance-paie>
 </div>
 <ngx-spinner>
   <p class="loading">Loading Awesomeness...</p>

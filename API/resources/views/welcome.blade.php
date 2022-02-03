@@ -15,7 +15,7 @@
     </div>
     <div class="col col-lg-6" style="padding-right: 0;">
     <h1>Perfectionnement</h1>
-    <img src="{{url('/images/perfectionnement22.jpg')}}" alt="Dispositif" style="width: 100%;"/>
+    <img src="{{url('/images/perfectionnement20220124.jpg')}}" alt="Dispositif" style="width: 100%;"/>
     </div>
     </div>
 </div>

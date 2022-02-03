@@ -32,6 +32,9 @@ export class EleveService {
   obtenirEleveById(id: number): Observable<Eleve> {
     return this.http.get<Eleve>(this.apiUrl + 'eleve/' + id);
   }
+  obtenirEleve(id: number): Observable<Eleve> {
+    return this.http.get<Eleve>(this.apiUrl + 'obtenirEleve/' + id);
+  }
   obtenirEleveByIdPublic(id: number): Observable<Eleve> {
     return this.http.get<Eleve>(this.apiUrl + 'elevePublic/' + id);
   }

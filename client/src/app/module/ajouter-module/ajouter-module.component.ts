@@ -8,12 +8,16 @@ import {_} from 'underscore';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
 import moment from 'moment';
+import { MonitorService } from 'src/app/service/monitor.service';
+import { Monitor } from 'src/app/monitor/monitor.component';
 
 export class ModuleModel{
   id_module:number;
   eleves:number[];
   date_complete:any;
   sans_objet:number;
+  moniteur:any;
+  id_moniteur:number;
 }
 @Component({
   selector: 'app-ajouter-module',
@@ -27,6 +31,7 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
   dropdownSettings = {};
   moduleModel:ModuleModel = new ModuleModel();
   listeModules:Module[] = [];
+  moniteurs:Monitor[] = [];
 
   @Input() listeEleves:any;
   @Output() estAjouterModule = new EventEmitter<any>();
@@ -34,7 +39,7 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
 
   constructor(private serviceModule:ModuleService,
     private translate:TranslateService,
-    private serviceEleve:EleveService,
+    private serviceEleve:EleveService, private moniteurService : MonitorService,
     private toastr:ToastrService) { 
       translate.setDefaultLang('fr');
     }
@@ -53,6 +58,7 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
   }
   ngAfterViewInit(): void {
     this.obtenirModules();
+    this.obtenirMoniteurs();
   }
   onItemSelect(item: any) {
     console.log(item);
@@ -68,6 +74,7 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
   ajouter(){
     this.moduleModel.eleves = _.pluck(this.moduleModel.eleves,'id');
     this.moduleModel.date_complete = !this.moduleModel.date_complete?null:moment(this.moduleModel.date_complete).format('YYYY-MM-DD');
+    this.ajouterMoniteur();
     this.serviceModule.ajouterModuleEleves(this.moduleModel).subscribe(res=>{
       if(res.valid){
         this.estAjouterModule.emit(true);
@@ -79,6 +86,15 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
     });
     this.moduleModel.eleves = [];
   }
+  ajouterMoniteur() {
+    let moni = this.moniteurs.find(m => m.id == this.moduleModel.id_moniteur);
+    if(moni){
+      let moniteur = JSON.stringify(moni);
+      this.moduleModel.moniteur = moniteur;
+    }else{
+      this.moduleModel.moniteur = null;
+    }
+  }
   validerEleves(){
     let ct = this.moduleModel.eleves?this.moduleModel.eleves.length:0;
     return ct;
@@ -87,5 +103,13 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
     if(value){
       this.moduleModel.date_complete = null;
     }
+  }
+
+  obtenirMoniteurs(){
+    this.moniteurService.obtenirMoniteur().subscribe(res =>{
+      if(res){
+        this.moniteurs = res;
+      }
+    })
   }
 }

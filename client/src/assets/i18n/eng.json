@@ -148,5 +148,11 @@
         "ok":"Yes",
         "no":"No",
         "titre":"Confirm"
+    },
+    "payement":{
+        "balanceTitre":"Payments",
+        "total":"Total fees",
+        "recu":"Total paid",
+        "balance":"Balance"
     }
 }
