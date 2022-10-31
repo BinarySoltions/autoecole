@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-img-top">
                <h5>Permis de conduire classe 5</h5>
-               <h2>$ 799</h2>
+               <h2>$ 899</h2>
             </div>
             <div class="card-body">
                 <p class="card-text text-limit">24 h de cours théoriques<br/>

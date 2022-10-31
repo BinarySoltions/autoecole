@@ -53,7 +53,7 @@ export class ContratComponent implements OnInit {
     this.serviceEleve.obtenirEleveById(this.idEleve).subscribe(res=>{
       if(res){
         this.eleve = res;
-        const v = this.eleve.frais_inscription/3;
+        const v = this.eleve.frais_inscription/6;
         this.versement = Number(v.toFixed(2));
       }
     });

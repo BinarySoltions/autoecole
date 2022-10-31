@@ -105,6 +105,7 @@ export class ReserveComponent implements OnInit {
         this.phases = p;
       })
     this.obtenirEleve();
+    this.obtenirPayements();
   }
   obtenirModules(id) {
     this.spinner.show(undefined, { fullScreen: true });
@@ -138,7 +139,7 @@ export class ReserveComponent implements OnInit {
   obtenirPayements(): void {
     this.servicePayement.obtnenirPayements(this.idEleve).subscribe(res=>{
       if(res){
-        this.transaction = res;
+        this.transaction = res.payements;
         this.getTotalCost();
       }
     });
@@ -155,7 +156,7 @@ export class ReserveComponent implements OnInit {
     if(this.events && this.events.length > 0){
     this.events.forEach(e=>{
       e.complete = false;
-      if(this.listeModules.find(m=>m.id == e.module_id && !!m.date_complete)){
+      if(e.status !=2 && this.listeModules.find(m=>m.id == e.module_id && !!m.date_complete)){
         e.complete = true;
       }
     });
@@ -411,7 +412,7 @@ export class ReserveComponent implements OnInit {
   validDateEventsInfNextEventDateSaving(){
     let estTrue = false;
     let numeroEventModule = this.listeModules.find(m => m.id == this.eventDriving.module_id).numero; 
-    let tempEvents = this.listeModules.filter(m=> this.events.find(e=>e.module_id == m.id) != null);
+    let tempEvents = this.listeModules.filter(m=> this.events.find(e=>e.module_id == m.id && e.status != 2) != null);
     let tempEventsSup = this.events.filter(e=> tempEvents.find(m=>m.id == e.module_id && 
       Number(m.numero) > numeroEventModule) != null );
    

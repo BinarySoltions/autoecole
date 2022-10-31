@@ -10,7 +10,7 @@
         
             <h1>Tarifs</h1>
         
-            <img src="{{url('/images/PESR-Pconduite-Flyer221.jpg')}}" alt="Paiement" style="width: 100%;">
+            <img src="{{url('/images/PESR-Pconduite-Flyer220403.jpg')}}" alt="Paiement" style="width: 100%;">
         
     </div>
     <div class="col col-lg-6" style="padding-right: 0;">

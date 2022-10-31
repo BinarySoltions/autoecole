@@ -11,6 +11,8 @@ export class DateVersementComponent implements OnInit,OnChanges {
   @Input() noFR;
   @Input() noENG;
   @Input() versement;
+  @Input() dFR;
+  @Input() dENG;
   no:any;
   fr:any;
   eng:any;
