@@ -1,0 +1,13 @@
+
+<table class="table table-bordered">
+    <tr>
+      <th>Modules</th>
+    </tr>
+    <ng-template ngFor let-row [ngForOf]="modules">
+    <tr>
+      <td>
+         <span class="label label-info"> {{row.nom}} </span>
+      </td>
+    </tr>
+  </ng-template>
+  </table>

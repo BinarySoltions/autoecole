@@ -1,0 +1,86 @@
+<table class="w-100 margin-bottom">
+    <tr>
+        <th colspan="2" class="contrat-title-header">
+            5- ACCEPTATION DES CONDITIONS / <em>ACCEPTANCE OF TERMS AND CONDITIONS</em>
+        </th>
+      </tr>
+  <tr>
+    <td width="50%" [innerHTML]="loiConditionUne | safeHtml" class="no-bottom-space border-bottom"></td>
+    <td [innerHTML]="loiConditionENG | safeHtml" class="no-bottom-space border-bottom"></td>
+  </tr>
+  <tr>
+      <td colspan="2" class="border-bottom" style="text-align:center;height:25px">Pour plus d'infos, consulter le site http://www.opc.gouv.qc.ca. / 
+        <em>For additional information, go to http://www.opc.gouv.qc.ca.</em>
+        </td>
+    </tr>
+  <tr>
+      <td colspan="2" [innerHTML]="loiConditionDeux | safeHtml" class="no-bottom-space border-bottom"></td>
+    </tr>
+    <tr>
+      <td  colspan="2" class="no-border border-left border-right" style="padding:20px;">
+          <table class="w-100">
+            <tr>
+              <td class="no-border">Fait et signé à / <em>Completed and signed in </em>:</td>
+              <td width="20%" class="no-border border-bottom"></td>
+              <td class="no-border">,  le / <em>on</em> (JJ/MM/AAAA) /  <em>(MM/DD/ YYYY)</em>:</td>
+              <td width="20%" class="no-border border-bottom"></td>
+            </tr>
+            </table>
+      </td>
+    </tr>
+    <tr>
+        <td colspan="2" [innerHTML]="loiConditionTrois | safeHtml" class="no-bottom-space border-bottom"></td>
+      </tr>
+      <tr>
+        <td colspan="2"><strong> NB. -  L'école doit conserver le dossier de l’élève conformément aux lois applicables et ne peut le détruire avant l’expiration d’une période de 5 ans suivant la fin du contrat de service avec l’élève (cf. article 4.48 m) des Exigences détaillées, v. {{dateVersion | date:'yyyy-MM'}})). / 
+          <em>The driving school must keep the student's file according to the applicable laws and must not get rid of the student's file before the end of the 5-year-period following the expiration of the student's service contract (see article 4.48 m) of the Detailed Requirements, v. {{dateVersion | date:'yyyy-MM'}}).
+            </em>
+          </strong>
+          </td>
+      </tr>
+      <!--nom et signature-->
+      <tr>
+          <td width="40%" class="no-border border-bottom border-left" style="height:25px">
+          </td>
+          <td class="no-border border-right">
+          </td>
+        </tr>
+      <tr>
+        <td align="center" class="no-border border-left">
+            Nom et signature du représentant de l’école <br/>
+            <em>Name and signature of the school representative</em>
+        </td>
+        <td class="no-border border-right">
+        </td>
+      </tr>
+       <!--nom et signature parent-->
+      <tr>
+          <td  class="no-border border-left">
+          </td>
+          <td class="no-border border-bottom border-right" style="height:25px">
+          </td>
+        </tr>
+      <tr>
+          <td class="no-border border-left">
+            </td>
+        <td align="center" class="no-border border-right">
+            Nom et signature du parent ou du tuteur pour les moins de 18 ans.<br/>
+            <em>Name and signature of parent or guardian for those under 18 years old.</em>
+        </td>
+      </tr>
+      <!--nom et signature-->
+      <tr>
+          <td  width="40%" class="no-border border-bottom border-left" style="height:25px">
+          </td>
+          <td class="no-border border-right">
+          </td>
+        </tr>
+      <tr>
+        <td align="center" class="no-border border-bottom border-left" style="padding-bottom:25px">
+            Nom et signature de l’élève / 
+            <em>Student’s name and signature</em>
+        </td>
+        <td class="no-border border-bottom border-right" style="padding-bottom:25px">
+        </td>
+      </tr>
+</table>

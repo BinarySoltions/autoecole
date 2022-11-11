@@ -1,0 +1,196 @@
+<mdb-card>
+  <mdb-card-header>
+    <div class="row">
+      <app-breadcrumbs [url]="'eleves'"></app-breadcrumbs> <div style="text-align: center;width: 100%;"><h3>{{'titre.eleve_identification' | translate}}</h3></div>
+    </div>
+    </mdb-card-header>
+  <mdb-card-body>
+    <mdb-card-text>
+<div class="row">
+ <div class="col col-12">
+    <label class="">{{'eleve.nom' | translate}} et {{'eleve.prenom' | translate}}</label>
+ </div>
+<div class="col col-12">
+  <address>
+    <span class="">{{eleveModele.nom}}</span>
+    <span> {{eleveModele.prenom}}</span>
+  </address>
+</div>
+</div>
+<div class="row">
+  <div class="col col-12">
+      <label class="">{{'eleve.adresse' | translate}}</label>
+   </div>
+  <div class="col col-lg-12">
+    <address>
+      <span>{{eleveModele.adresse.numero}}</span>
+      <span *ngIf="eleveModele.adresse.rue">, {{eleveModele.adresse.rue}}</span>
+      <span *ngIf="eleveModele.adresse.appartement">, #{{eleveModele.adresse.appartement}}</span>
+    </address>
+    </div>
+</div>
+<div class="row">
+<div class=" col col-lg-4  ">
+    <label for="municipalite">{{'eleve.municipalite' | translate}}</label>
+    <address>
+      <span>{{eleveModele.adresse.municipalite}}</span>
+    </address>
+</div>
+<div class=" col col-lg-4">
+    <label for="province">{{'eleve.province' |translate}}</label>
+    <address>
+      <span>{{eleveModele.adresse.province}}</span>
+    </address>
+</div>
+<div class=" col col-lg-4  ">
+    <label for="codePostal">{{'eleve.code_postal' | translate}}</label>
+    <address>
+      <span>{{eleveModele.adresse.code_postal}}</span>
+    </address>
+</div>
+</div>
+<div class="row">
+  <div class=" col col-lg-4  ">
+      <label for="numero">{{'eleve.numero_contrat' | translate}}</label>
+      <address>
+        <span>{{eleveModele.numero_contrat}}</span>
+      </address>
+  </div>
+  <div class=" col col-lg-4  ">
+      <label for="telephone">{{'eleve.telephone' | translate}}</label>
+      <address>
+        <span>{{eleveModele.coordonnee.telephone}}</span>
+      </address>
+  </div>
+  <div class=" col col-lg-4  ">
+      <label for="telephoneAutre">{{'eleve.telephone_autre' | translate}}</label>
+      <address>
+        <span>{{eleveModele.coordonnee.telephone_autre}}</span>
+      </address>
+  </div>
+</div>
+<div class="row">
+<div class="col col-lg-4">
+    <label for="permis">{{'eleve.permis' | translate}}</label>
+    <address>
+      <span>{{eleveModele.numero_permis}}</span>
+    </address>
+    </div>
+    <div class="col col-lg-4">
+      <label for="email">{{'eleve.email' | translate}}</label>
+      <address>
+        <span>{{eleveModele.email}}</span>
+      </address>
+  </div>
+  <div class="col col-lg-4">
+    <label for="fraisInscription">{{'eleve.cout' | translate}}</label>
+    <address>
+      <span>{{eleveModele.frais_inscription|currency}}</span>
+    </address>
+</div>
+</div>
+<div class="row">
+<div class="col col-lg-4">
+    <label for="dateNaissance">{{'eleve.DDN' | translate}}</label>
+    <address>
+      <span>{{eleveModele.date_naissance | date:'yyyy-MM-dd'}}</span>
+    </address>
+</div>
+<div class=" col col-lg-4  ">
+    <label for="dateInscription">{{'eleve.date_inscription' | translate}}</label>
+    <address>
+      <span>{{eleveModele.date_inscription| date:'yyyy-MM-dd'}}</span>
+    </address>
+  </div>
+  <div class=" col col-lg-4  ">
+    <label for="dateContrat">{{'eleve.debut_contrat' | translate}}</label>
+    <address>
+      <span>{{eleveModele.date_contrat| date:'yyyy-MM-dd'}}</span>
+    </address>
+  </div>
+</div>
+<div class="row">
+<div class=" col col-lg-4  ">
+    <label for="dateNaissance">{{'eleve.date_expiration_permis' | translate}}</label>
+    <address>
+      <span>{{eleveModele.date_fin_permis | date:'yyyy-MM-dd'}}</span>
+    </address>
+</div>
+<div class=" col col-lg-4  ">
+  <label for="dateNaissance">{{'eleve.date_expiration_contrat' | translate}}</label>
+  <address>
+    <span>{{eleveModele.date_fin_contrat | date:'yyyy-MM-dd'}}</span>
+  </address>
+
+</div>
+</div>
+</mdb-card-text>
+</mdb-card-body>
+<mdb-card-footer class="text-muted">
+</mdb-card-footer>
+</mdb-card>
+<div style="height:40px"></div>
+
+<mdb-card>
+  <mdb-card-header><div style="text-align: center;width: 100%;"><h3>{{'titre.phase_module' | translate}}</h3></div></mdb-card-header>
+  <mdb-card-body>
+    <mdb-card-text>
+        <div class="row">
+<!-- phase1 -->
+<div class="col col-lg-3" style="text-align:center">
+  <table class="table table-bordered">
+    <tr>
+      <th class="bg-color-black">{{phaseUne.nom}}</th>
+    </tr>
+    <tr>
+      <td>
+          <app-phase-deux-affichage [modules]="phaseUne.modules"></app-phase-deux-affichage>
+      </td>
+    </tr>
+  </table>
+</div>
+<!-- phase 2 -->
+<div class="col col-lg-3" style="text-align:center">
+<table class="table table-bordered">
+  <tr>
+    <th class="bg-color-black">{{phaseDeux.nom}}</th>
+  </tr>
+  <tr>
+    <td>
+        <app-phase-deux-affichage [modules]="phaseDeux.modules"></app-phase-deux-affichage>
+    </td>
+  </tr>
+</table>
+</div>
+<!-- phase 3 -->
+<div class="col col-lg-3" style="text-align:center">
+<table class="table table-bordered">
+  <tr>
+    <th class="bg-color-black">{{phaseTrois.nom}}</th>
+  </tr>
+  <tr>
+    <td>
+        <app-phase-deux-affichage [modules]="phaseTrois.modules"></app-phase-deux-affichage>
+    </td>
+  </tr>
+</table>
+</div>
+<!-- phase 4 -->
+<div class="col col-lg-3" style="text-align:center">
+<table class="table table-bordered">
+  <tr>
+    <th class="bg-color-black">{{phaseQuatre.nom}}</th>
+  </tr>
+  <tr>
+    <td>
+        <app-phase-deux-affichage [modules]="phaseQuatre.modules"></app-phase-deux-affichage>
+    </td>
+  </tr>
+</table>
+</div>
+</div>
+</mdb-card-text>
+</mdb-card-body>
+<mdb-card-footer class="text-muted">
+</mdb-card-footer>
+</mdb-card>

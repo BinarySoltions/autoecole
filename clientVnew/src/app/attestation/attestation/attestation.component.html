@@ -1,0 +1,717 @@
+
+  <style>
+    body {
+      width: 100%;
+      font-size: 18px;
+    }
+
+    /* #pdf{
+  width:  80% !important;
+} */
+    .font-label {
+      font-size: 15px;
+    }
+
+    .row {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      margin: 10px;
+      margin-left: 10px;
+    }
+
+    .container {
+      width: auto;
+      height: auto;
+    }
+
+    .col-12 {
+      -ms-flex: 0 0 100%;
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    .col-8 {
+      -ms-flex: 0 0 66.666667%;
+      flex: 0 0 66.666667%;
+      max-width: 66.666667%;
+    }
+
+    .col-4 {
+      -ms-flex: 0 0 30.333333%;
+      flex: 0 0 30.333333%;
+      max-width: 30.333333%;
+    }
+
+    .table-bordered {
+      width: 100%;
+      color: #000;
+      border: 1px solid #000;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-bottom: 5px;
+    }
+
+    .table td,
+    .table th,
+    .table-bordered td {
+      border-top: 0px solid transparent !important;
+    }
+
+    .table-bordered td,
+    .table-bordered th {
+      border: 0px solid transparent !important;
+    }
+
+    .table-bordered-yes td, .table-bordered-yes th{
+      border: 1px solid black;
+    }
+    table.resize-70 {
+      width: 75% !important;
+    }
+
+    table.resize-30 {
+      width: 10% !important;
+    }
+
+    .centrer {
+      text-align: center !important;
+      font-size: 15px;
+    }
+
+    .bg-color-green {
+      background-color: lightgray;
+      padding: 5px 0px 5px 5px;
+      color:black !important;
+    }
+    .bg-color-green-btn {
+      background-color: #28a745;
+      padding: 5px 0px 5px 5px;
+      color:white !important;
+      font-weight: bold;
+      margin-bottom: 10px;
+      padding: 6px 12px;
+    }
+
+    .bg-color-black {
+      background-color: black;
+      color: white;
+    }
+
+    .padding-label {
+      padding: 0px 0px 0px 12px !important;
+      font-size: 10px;
+      border-bottom-color: transparent !important;
+    }
+
+    tr {
+      border-bottom: 1px solid #000;
+    }
+
+    tr>td,
+    th {
+      border-bottom: 1px solid #000;
+    }
+
+    .no-border-left {
+      border-left: 0px solid transparent !important;
+    }
+
+    .no-border-right {
+      border-right: 0px solid transparent !important;
+    }
+
+    tr>.no-border-bottom {
+      border-bottom: 0px transparent !important;
+    }
+
+    tr>.no-border-top {
+      border-top: 0px transparent !important;
+    }
+
+    tr>.border-top {
+      border-top: 1px solid #000 !important;
+    }
+
+    tr>.border-bottom {
+      border-bottom: 1px solid #000 !important;
+    }
+
+    tr>.-no-border-bottom,
+    tr {
+      border-bottom: 0px solid transparent !important;
+    }
+
+    tr>.border-right {
+      border-right: 1px solid #000 !important;
+    }
+
+    tr>.border-left {
+      border-left: 1px solid #000 !important;
+    }
+
+    .resize-h-30 {
+      height: 30px;
+    }
+
+    .resize-10 {
+      width: 40% !important;
+    }
+
+    td.trait {
+      border-right: 1px solid #000;
+      height: 1px !important;
+      width: 8px !important;
+    }
+
+    .bg-gray {
+      background-color: gray !important;
+      color: white;
+    }
+
+    .permis-w {
+      width: 17% !important;
+      height: 2% !important;
+    }
+ 
+    .numero-attestation{
+      font-size: 30px;
+      letter-spacing: 10px;
+    }
+    .numero-permis{
+      font-size: 27px;
+      letter-spacing: 10px;
+      font-weight: bold;
+    }
+    .resize-100 {
+      width: 100% !important;
+    }
+
+    .bg-color-gray {
+      background-color: lightgray;
+    }
+
+    .bg-color-white {
+      background-color: white;
+    }
+
+    .no-border {
+      border: 0px solid transparent !important;
+    }
+
+    .texte td,
+    .texte th {
+      padding-left: 10px !important;
+    }
+
+    .text-left td {
+      padding-left: 40px !important;
+    }
+
+    .font-weight-bold {
+      font-weight: bold;
+    }
+
+    .padding-0 {
+      padding: 0px;
+    }
+    .color-red{
+      color:red;
+      font-weight: bold;
+      padding: 0px;
+      text-align: center;
+    }
+    .hide-phase{
+      opacity: 0;
+    }
+    .hide-phase1{
+      display: none;
+    }
+    .hide-complet{
+      display: none;
+    }
+    .height-champ{
+      height:45px !important;
+    }
+  </style>
+<mdb-card>
+    <mdb-card-header>
+      <div class="row">
+        <app-breadcrumbs [url]="'eleves'"></app-breadcrumbs> <div style="text-align: center;width: 100%;">
+          <h3>Attestation</h3>
+        </div>
+      </div>
+    </mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+  <div class="row">
+   <table class="resize-100">
+     <tr>
+       <td><input type="checkbox" 
+        aria-label="phaseUne" 
+        [(ngModel)]="estPhaseUne" 
+        >&nbsp;Copie Phase 1
+      </td>
+      <td>
+          <label class="inline-block"><input
+            (click)="selectionnerComplet()"
+             type="checkbox" aria-label="complet"  [(ngModel)]="estCopieDelegataire" 
+      
+         >&nbsp;Copie Complète</label>
+      </td>
+      
+      <td align="right" style="width:60%">
+          <button type="button" class="btn bg-color-green-btn"
+           (click)="telecharger()"
+           [disabled]="eventClickTelecharger">
+           <i [class.spinner-border.spinner-border-sm]="eventClickTelecharger"></i>&nbsp;<i class="fas fa-save"></i>&nbsp;Télécharger </button>
+          <button type="button" class="btn btn-secondary" (click)="fermer()" style="margin:0px 10px 10px 10px"><i class="fas fa-ban"></i>&nbsp;Fermer </button>
+        </td>
+     </tr>
+   </table>
+  </div>
+  <ng-template ngFor let-typeCopie [ngForOf]="typeDeCopies" let-i="index">
+  <div id="{{i}}pdf" class="container" [class.hide-complet]="i>0 && estPhaseUne" [class.hide-phase1]="i == 0 && estCopieDelegataire">
+    <table class="resize-100 no-border-bottom">
+      <tr>
+        <td class="no-border-bottom" style="padding-bottom:0px;margin-bottom:0px">
+          <img style="" src="assets/saaq.png" alt="logo" />
+        </td>
+        <td colspan="3" class="no-border-bottom" style="padding-top: 10px;vertical-align:top;font-weight:bold;font-size:20px">
+          <div style="vertical-align:bottom;text-align: center;width: 100%;height:60px;background-color:#000;color: white;"><br/>
+            Attestation de cours de conduite - Classe 5</div></td>
+        <td  class="no-border resize-30" style="margin-bottom:0px;padding-left: 20px;">
+          <!-- code bare -->
+          <table class="table-bordered-yes" style="width:150px;border-bottom: 0px;">
+            <tr>
+              <th class="bg-color-black centrer border-bottom border-top border-left font-label ">
+                Numéro d'attestation</th>
+            </tr>
+            <tr>
+              <td  class="no-border-bottom border-left border-right2 color-red numero-attestation" style="font-size: 30px;">{{numeroAttestation}}</td>
+            </tr>
+            <tr>
+              <td class="no-border-bottom">
+                <table  class="no-border-bottom">
+                  <tr class="no-border">
+                    <td class="no-border-bottom"><svg id="barcode"></svg></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5" class="resize-100 padding-0 no-border-bottom" style="margin:0px">
+          * Prenez note que ce formulaire est exigé par la Société et doit être rempli par une école reconnue.
+        </td>
+      </tr>
+    </table>
+
+      <!-- eleve  -->
+      <table class="table-bordered-yes texte">
+        <tr>
+          <th colspan="7" class="bg-color-black border-bottom border-top border-left" align="left">
+            Renseignements sur l'élève
+          </th>
+        </tr>
+        <tr class="">
+          <td rowspan="2" colspan="2" class="no-border-bottom font-label no-border-right bg-color-green" style="width:30%">
+            
+          </td>
+          <td class="no-border-bottom font-label no-border-left bg-color-green" style="width:10%"></td>
+          <td colspan="2" class="no-border-bottom font-label" style="width:30%">
+            Nom
+          </td>
+          <td colspan="2" class="no-border-bottom font-label" style="width:30%">
+            Prénom
+          </td>
+        </tr>
+        <tr>
+         
+          <td class=" no-border-top font-label no-border-left bg-color-green" style="width:10%"></td>
+          <td colspan="2" class=" no-border-top font-label" style="width:30%">
+            <span>&nbsp;{{eleve.nom}}</span>
+          </td>
+          <td colspan="2" class=" no-border-top font-label" style="width:30%">
+            <span >&nbsp;{{eleve.prenom}}</span>
+          </td>
+        </tr>
+        <tr class="">
+          <td  rowspan="2" class=" font-label bg-color-green" style="width:10%">
+            Adresse
+          </td>
+          <td  class="no-border-bottom font-label" style="width:15%">
+           Numéro
+          </td>
+          
+          <td colspan="5"  class="no-border-bottom font-label" style="width:75%">
+            Rue
+          </td>
+        </tr>
+        <tr>
+        
+          <td  class=" font-label no-border-top" style="width:15%">
+            {{eleve.adresse.numero}} </td>
+           
+          <td colspan="5" class=" font-label no-border-top" style="width:75%">
+           {{eleve.adresse.rue}}<span *ngIf="ecole.adresse.appartement">, &nbsp;{{eleve.adresse.appartement}}</span>
+          </td>
+        </tr>
+        <tr class="">
+          <td colspan="5" class=" no-border-bottom font-label" style="width:65%">
+            Municipalité
+          </td>
+          <td class=" no-border-bottom font-label" style="width:15%">Province</td>
+          <td class="no-border-bottom font-label" style="width:20%">Code postal</td>
+        </tr>
+        <tr>
+          <td colspan="5" class="border-bottom font-label no-border-top" style="width:65%">
+            &nbsp;{{eleve.adresse.municipalite}}
+          </td>
+          <td class="border-bottom font-label no-border-top" style="width:15%">
+            &nbsp;{{eleve.adresse.province | uppercase}}
+          </td>
+          <td class="border-bottom font-label no-border-top" style="width:20%">
+            &nbsp;{{eleve.adresse.code_postal}}
+          </td>
+        </tr>
+      </table>
+    <!-- ecole  -->
+    <table class="table-bordered-yes texte">
+      <tr>
+        <th colspan="7" class="bg-color-black border-bottom border-top border-left" align="left">
+          Renseignements sur l'école
+        </th>
+      </tr>
+      <tr class="">
+        <td colspan="3" class="no-border-bottom font-label no-border-right" style="width:30%;font-weight: bold;">
+          Numéro de reconnaissance
+        </td>
+        <td class="no-border-bottom font-label no-border-left" style="width:10%"></td>
+        <td colspan="3" class="no-border-bottom font-label" style="width:60%">
+          Nom de l'école
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" class=" no-border-top font-label no-border-right" style="width:30%">
+          <span>{{ecole.numero}}</span>
+        </td>
+        <td class=" no-border-top font-label no-border-left" style="width:10%"></td>
+        <td colspan="3" class=" no-border-top font-label" style="width:60%">
+          <span *ngIf="ecole.nom">&nbsp;{{ecole.nom}}</span>
+        </td>
+      </tr>
+      <tr class="">
+        <td  rowspan="2" class=" font-label bg-color-green" style="width:10%">
+          Adresse
+        </td>
+        <td  class="no-border-bottom font-label" style="width:15%">
+         Numéro
+        </td>
+        
+        <td colspan="5"  class="no-border-bottom font-label" style="width:75%">
+          Rue
+        </td>
+      </tr>
+      <tr>
+      
+        <td  class=" font-label no-border-top" style="width:15%">
+          {{ecole.adresse.numero}} </td>
+         
+        <td colspan="5" class=" font-label no-border-top" style="width:75%">
+         {{ecole.adresse.rue}}<span *ngIf="ecole.adresse.appartement">, &nbsp;{{ecole.adresse.appartement}}</span>
+        </td>
+      </tr>
+      <tr class="">
+        <td colspan="5" class=" no-border-bottom font-label" style="width:65%">
+          Municipalité
+        </td>
+        <td class=" no-border-bottom font-label" style="width:15%">Province</td>
+        <td class="no-border-bottom font-label" style="width:20%">Code postal</td>
+      </tr>
+      <tr>
+        <td colspan="5" class="border-bottom font-label no-border-top" style="width:65%">
+          &nbsp;{{ecole.adresse.municipalite}}
+        </td>
+        <td class="border-bottom font-label no-border-top" style="width:15%">
+          &nbsp;{{ecole.adresse.province | uppercase}}
+        </td>
+        <td class="border-bottom font-label no-border-top" style="width:20%">
+          &nbsp;{{ecole.adresse.code_postal}}
+        </td>
+      </tr>
+    </table>
+    <table style="width:100%;">
+      <tr>
+        <td style="padding:10px;vertical-align: top;" class="no-border-bottom bg-color-gray">
+          <table class="table-bordered-yes" style="width:230px; padding:10px;">
+            <tr>
+              <th colspan="4" class="bg-color-black centrer">Phase 1</th>
+            </tr>
+            <tr>
+              <td rowspan="2" style="padding:0"
+                class="border-left bg-color-green border-right border-bottom centrer font-weight-bold">Modules</td>
+              <td style="padding:0" class="bg-color-green no-border-bottom centrer font-weight-bold"
+                colspan="3">Dates de réalisation</td>
+            </tr>
+            <tr>
+              <td colspan="3" style="padding:0" class="bg-color-green no-border-top centrer">(Année-Mois-Jour)</td>
+             
+            </tr>
+            <ng-template ngFor let-module [ngForOf]="phaseUne.modules">
+              <tr>
+                <td class="border-left font-label border-right bg-color-white border-bottom centrer">
+                  {{obtenirModule(module.nom)}} {{module.nom}}</td>
+                <td class="border-right font-label bg-color-white border-bottom centrer" colspan="3">
+                  {{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}{{obtenirDate(module?.eleve_module)}}</td>
+              </tr>
+            </ng-template>
+            <tr>
+              <td *ngIf="!estPhaseUne" colspan="4" rowspan="2" style="padding-top:20px;font-size:14px" class="no-border-left no-border-right no-border font-label">
+                <em>Théorie : 12 modules (24 heures)
+                  Pratique : 15 sorties (15 heures)</em>
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td class="no-border bg-color-gray " *ngIf="!estPhaseUne" style="vertical-align: top;padding: 10px 0px 10px 0px;">
+          <table class="table-bordered-yes no-border" style="width:230px; padding:10px;">
+            <tr>
+              <th colspan="4" class="border-left border-bottom border-top bg-color-black centrer border-right">
+                Phase 2</th>
+            </tr>
+            <tr>
+              <td rowspan="2" style="padding:0"
+                class="border-left bg-color-green border-right border-bottom centrer font-weight-bold">Modules<br/>
+                <span style="font-weight: normal;">et sorties</span>
+              </td>
+              <td style="padding:0" class="bg-color-green no-border-bottom centrer  font-weight-bold"
+                colspan="3">Dates de réalisation</td>
+            </tr>
+            <tr>
+              <td colspan="3" style="padding:0" class="bg-color-green no-border-top centrer">(Année-Mois-Jour)</td>
+            </tr>
+            <ng-template ngFor let-module [ngForOf]="phaseDeux.modules">
+              <tr>
+                <td class="border-left border-right font-label bg-color-white border-bottom centrer">{{obtenirModule(module.nom)}}{{module.nom}}</td>
+                <td class="border-right bg-color-white font-label border-bottom centrer" colspan="3">
+                  {{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}{{obtenirDate(module?.eleve_module)}}</td>
+              </tr>
+            </ng-template>
+            <tr>
+              <td class="no-border" colspan="4"></td>
+            </tr>
+           
+          </table>
+        </td>
+        <td class="bg-color-gray no-border-bottom" align="center"
+          style="width:500px;padding: 10px 0px 10px 10px;vertical-align: top;" *ngIf="!estPhaseUne">
+          <table class="table-bordered-yes" style="width:230px; padding:10px;">
+            <tr>
+              <th colspan="4" class="bg-color-black centrer">Phase 3</th>
+            </tr>
+            <tr>
+              <td rowspan="2" style="padding:0"
+                class="border-left bg-color-green border-right border-bottom centrer font-weight-bold">Modules
+                <br/>
+                <span style="font-weight: normal;">et sorties</span>
+              </td>
+              <td style="padding:0" class="bg-color-green no-border-bottom centrer font-weight-bold"
+                colspan="3">Dates de réalisation</td>
+            </tr>
+            <tr>
+              <td colspan="3" style="padding:0" class="bg-color-green no-border-top centrer">(Année-Mois-Jour)</td>
+            </tr>
+            <ng-template ngFor let-module [ngForOf]="phaseTrois.modules">
+              <tr>
+                <td class="border-left font-label border-right bg-color-white border-bottom centrer">{{obtenirModule(module.nom)}}{{module.nom}}</td>
+                <td class="border-right font-label bg-color-white border-bottom centrer" colspan="3">
+                  {{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}{{obtenirDate(module?.eleve_module)}}</td>
+              </tr>
+            </ng-template>
+            </table>
+        </td>
+        <td align="top" class="bg-color-gray no-border-bottom" 
+        style="width:200px;padding: 10px 0px 10px 10px;vertical-align: top;"
+        *ngIf="!estPhaseUne">
+          <table class="table-bordered-yes" style="width:230px; padding:10px;">
+            <tr>
+              <th colspan="4" class="bg-color-black centrer">Phase 4</th>
+            </tr>
+            <tr>
+              <td rowspan="2" style="padding:0"
+                class="border-left bg-color-green border-right border-bottom centrer font-weight-bold">Modules
+                <br/>
+                <span style="font-weight: normal;">et sorties</span>
+              </td>
+              <td style="padding:0" class="bg-color-green no-border-bottom centrer font-weight-bold"
+                colspan="3">Dates de réalisation</td>
+            </tr>
+            <tr>
+              <td colspan="3" style="padding:0" class="bg-color-green no-border-top centrer">(Année-Mois-Jour)</td>
+            </tr>
+            <ng-template ngFor let-module [ngForOf]="phaseQuatre.modules">
+              <tr>
+                <td class="border-left font-label border-right bg-color-white border-bottom centrer">{{obtenirModule(module.nom)}}{{module.nom}}</td>
+                <td class="border-right font-label bg-color-white border-bottom centrer" colspan="3">
+                  {{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}{{obtenirDate(module?.eleve_module)}}</td>
+              </tr>
+            </ng-template>
+            
+          </table>
+        </td>
+        <td colspan="3" class="no-border-bottom" *ngIf="estPhaseUne" style="width:75%;  padding:0px 0px 0px 10px;" colspan="1">
+          <table style="float:right;width:100%">
+            <tr>
+              <td class="no-border-bottom">
+
+                <!-- atteste -->
+                <table class="table-bordered texte">
+                  <tr>
+                    <th colspan="4" class="bg-color-black border-bottom font-label border-top border-left" align="left">
+                      Attestation de la personne responsable autorisée
+                    </th>
+                  </tr>
+                  <tr class="">
+                    <td class="border-bottom font-label height-champ" >
+                      J'atteste que la phase 1 du cours de conduite est :
+                    </td>
+                    <td class="border-bottom font-label" > <input type="checkbox" [(ngModel)]="resultat_phaseUne[0]" /> Réussie</td>
+                    <td class="border-bottom font-label" > <input type="checkbox" [(ngModel)]="resultat_phaseUne[1]" /> Non Réussie</td>
+                    <td class="border-bottom font-label" > <input type="checkbox" [(ngModel)]="resultat_phaseUne[2]" /> Non terminée</td>
+                  </tr>
+                  <tr>
+                    <td colspan="4" class=" font-label height-champ">
+                      Nom de la personne responsable :
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="4" class="border-bottom font-label height-champ" (dblclick)="personnePhase1.id=null">
+                      <span *ngIf="personnePhase1.id">{{obtenirPersonne(personnePhase1.id)}}</span>&nbsp;&nbsp;
+                      <span *ngIf="!personnePhase1.id"><select [(ngModel)]="personnePhase1.id">
+                          <option [value]="null">Selectionner</option>
+                        <option *ngFor="let personne of personnes" [value]="personne.id">{{personne.nom}}</option>
+                      </select>
+                    </span>
+                    </td>
+                  </tr>
+                  <tr class="font-label">
+                    <td rowspan="3" colspan="3" class="font-label" style="height:80px;padding:12px 0px 12px;vertical-align: bottom;">
+                      Signature :
+                    </td>
+                    <td rowspan="3" class="font-label" style="vertical-align: top;">Date (Année-Mois-Jour</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class=" no-border-bottom" colspan="3" style="width:100%; height: 200px;padding: 10px 10px 0px 10px;">
+         
+        </td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td colspan="1" class="no-border-bottom"></td>
+        <td class="no-border-bottom font-label" align="center" style="font-weight:bolder"> Sceau de l'école </td>
+      </tr>
+      <tr>
+        <td style="width:80%;vertical-align: bottom;" class="no-border-bottom" >
+          <!-- atteste -->
+          <table class="table-bordered texte" style="width:100%" *ngIf="!estPhaseUne">
+            <tr>
+              <th colspan="4" class="bg-color-black border-bottom border-top border-left font-label" align="left">
+                Attestation de la personne responsable autorisée
+              </th>
+            </tr>
+            <tr class="">
+              <td class="border-bottom font-label height-champ">
+                J'atteste que le cours de conduite est :
+              </td>
+              <td class="border-bottom font-label"> <input type="checkbox" [(ngModel)]="resultat_final[0]" /> Réussi</td>
+              <td class="border-bottom font-label"> <input type="checkbox" [(ngModel)]="resultat_final[1]" /> Non réussi</td>
+              <td class="border-bottom font-label"> <input type="checkbox" [(ngModel)]="resultat_final[2]" /> Non terminé</td>
+            </tr>
+            <tr>
+              <td colspan="4" class=" font-label height-champ">
+                Nom de la personne responsable :
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4" class="border-bottom font-label height-champ" (dblclick)="personneAutre.id=null">
+                <span *ngIf="personneAutre.id">{{obtenirPersonne(personneAutre.id)}}</span>&nbsp;&nbsp;
+                <span *ngIf="!personneAutre.id"><select [(ngModel)]="personneAutre.id">
+                  <option [value]="null">Sélectionner</option>
+                  <option *ngFor="let personne of personnes" [value]="personne.id">{{personne.nom}}</option>
+                </select>
+              </span>
+              </td>
+            </tr>
+            <tr class="font-label">
+              <td rowspan="3" colspan="3" class="font-label" style="height:80px;padding:12px 0px 12px;vertical-align: bottom;">
+                Signature :
+              </td>
+              <td rowspan="3" class="font-label" style="vertical-align: top;">Date (Année-Mois-Jour</td>
+            </tr>
+          </table>
+          <table class="table-bordered-yes texte" *ngIf="estPhaseUne">
+            <tr>
+              
+              <td class="font-label" style="padding: 10px; text-align:justify"><span style="font-weight:bolder;">La communication de renseignements personnels</span><br/>
+                <span>Le personnel autorisé de la Société de l’assurance automobile du Québec traite de façon confidentielle les renseignements personnels qui 
+                  lui sont confiés. Ils sont indispensables pour appliquer les lois que la Société est chargée d’appliquer, notamment le Code de la sécurité 
+                  routière, la Loi sur l’assurance automobile et la Loi concernant le transport rémunéré de personnes par automobile. La Société communique 
+                  ces renseignements à ses mandataires et à certains ministères et organismes, selon la Loi sur l’accès aux documents des organismes publics 
+                  et sur la protection des renseignements personnels. Ces renseignements peuvent aussi servir aux fins de production de statistiques, d’étude, 
+                  de sondage, d’enquête ou de vérification. Omettre de les fournir peut entraîner un refus du service demandé. Vous pouvez consulter les 
+                  renseignements personnels vous concernant, en obtenir une copie ou les faire corriger.</span><br/>
+                  <span>Pour plus d’information, consultez la Politique de confidentialité de la Société à <a href="https://saaq.gouv.qc.ca/" >saaq.gouv.qc.ca</a> ou téléphonez au Centre de relations avec 
+                    la clientèle de la Société.</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td align="top" class="no-border-bottom" style="padding-left:20px;">
+          <div style="width: 250px;height: 300px;border: 2px solid black;"></div>
+        </td>
+      </tr>
+    </table>
+    <table class="resize-100 no-border">
+      <tr>
+        <td colspan="2" align="left" class="no-border font-weight-bold font-label" >Société de l’assurance automobile du Québec</td>
+      </tr>
+      <tr><td colspan="2" style="height: 5px;background-color:#000"></td></tr>
+      <tr>
+        <td align="left" class="no-border font-weight-bold font-label">4241 35 <span style="font-weight: normal;">(2022)</span></td>
+        <td *ngIf="estPhaseUne" class="no-border-bottom" align="right">Page 1 de 2</td>
+        <td *ngIf="!estPhaseUne" class="no-border-bottom" align="right"> Page 2 de 2</td>
+      </tr>
+    </table>
+  </div>
+</ng-template>
+</mdb-card-text>
+</mdb-card-body>
+<mdb-card-footer class="text-muted">
+    <div class="row">
+      <div class="col col-12 push-right">
+          <button type="button" class="btn bg-color-green-btn"  style="margin-right:10px"
+          (click)="telecharger()"
+          [disabled]="eventClickTelecharger">
+              <i [class.spinner-border.spinner-border-sm]="eventClickTelecharger"></i>&nbsp;<i class="fas fa-save"></i>&nbsp; Télécharger
+            </button>
+          <button type="button" class="btn btn-secondary" (click)="fermer()"><i  class="fas fa-ban"></i>&nbsp;{{'label.fermer' | translate}}</button>
+      </div>
+    </div>
+    </mdb-card-footer>
+</mdb-card>
+<!-- <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+    <span class="sr-only">Loading...</span>
+  </div> -->

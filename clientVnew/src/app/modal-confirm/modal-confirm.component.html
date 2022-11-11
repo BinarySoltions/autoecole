@@ -1,0 +1,16 @@
+<div> 
+  <mdb-card>
+    <mdb-card-header><h3>{{'confirm.titre' | translate}}</h3></mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+        <div class="row">
+          <div class="col col-lg-12 puh-right">
+            <button class="btn bg-color-green" style="margin-right: 10px;"
+         [mat-dialog-close]="data.id">{{'confirm.ok' | translate}}</button>
+        <button class="btn bg-color-green" (click)="annuler()">{{'confirm.no' | translate}}</button>
+          </div>
+        </div>
+        </mdb-card-text> 
+        </mdb-card-body>
+  </mdb-card>
+</div>

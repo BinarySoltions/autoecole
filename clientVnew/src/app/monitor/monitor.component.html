@@ -1,0 +1,51 @@
+<div>
+  <mdb-card>
+    <mdb-card-header><h3>{{'access.titre' | translate}}</h3></mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+        <form #formulaire="ngForm">
+          <div class="row">
+              <div class="col  col-lg-4">
+                <mat-form-field>
+                  <input matInput type="text" maxlength="50" name="prenom" aria-label="Prenom" [(ngModel)]="data.prenom"  placeholder="Prénom" required>
+                </mat-form-field>
+                </div>
+                <div class="col col-lg-4">
+                  <mat-form-field>
+                    <input matInput type="text" maxlength="50" name="nom" aria-label="Nom" [(ngModel)]="data.nom"  placeholder="Nom" required>
+                  </mat-form-field>
+                  </div>
+                  <div class="col col-lg-4">
+                    <mat-form-field>
+                      <input matInput type="text" maxlength="50" name="numero" aria-label="Numero" [(ngModel)]="data.numero"  placeholder="Numéro">
+                    </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col col-lg-12 push-right">
+                    <button type="button" 
+        class="btn bg-color-green"
+         (click)="ajouter()"
+         style="margin-right:10px;" [disabled]="!formulaire.valid">
+            <i class="fas fa-save"></i>&nbsp;Ajouter
+          </button>
+                  </div>
+                </div>
+                
+        </form>
+        <div class="row">
+          <div class="col col-12">
+           <!-- <a href="/auto/public/demander-mot-de-passe">{{'access.titre_ask' | translate}}</a><br/>
+            <a href="/auto/public/changer-mot-de-passe">{{'access.titre_change' | translate}}</a>-->
+          </div>
+        </div>
+       
+        </mdb-card-text>
+        </mdb-card-body>
+        </mdb-card>
+  
+</div>
+<app-table-monitor [moniteurs]="monitors"></app-table-monitor>
+<ngx-spinner>
+  <p class="loading">Loading Awesomeness...</p>
+</ngx-spinner>

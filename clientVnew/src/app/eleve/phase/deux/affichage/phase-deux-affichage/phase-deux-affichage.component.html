@@ -1,0 +1,26 @@
+
+<table class="table table-bordered bg-color-white">
+    <tr>
+      <th>Module</th>
+      <th>
+          <span>Complété le</span><br/>
+          <span class="font-size">Année  mois  Jour</span>
+      </th>
+    </tr>
+    <ng-template ngFor let-row [ngForOf]="modules">
+    <tr>
+      <td *ngIf="!isSession(row?.nom)" >
+        <i class="fa fa-book"></i> {{row?.nom}}
+      </td>
+      <td *ngIf="isSession(row?.nom)" >
+        <i class="fas fa-car"></i> {{session(row?.nom)}}
+    </td>
+      <td>
+          {{row?.eleve_module?.date_complete}} {{obtenirDate(row?.eleve_module)}} 
+          <span *ngIf="isNote(row)" (click)="showNote(row)" class="fa fa-eye"></span><br/>
+          <label style="font-size: x-small;" class="bg-color-green" *ngIf="isMonitor(row)">{{showMoniteur(row.eleve_module.moniteur)}}</label>
+      </td>
+   
+    </tr>
+  </ng-template>
+  </table>

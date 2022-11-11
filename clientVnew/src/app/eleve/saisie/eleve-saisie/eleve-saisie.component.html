@@ -1,0 +1,212 @@
+ 
+<mdb-card>
+    <mdb-card-header>
+      <div class="row">
+        <app-breadcrumbs [url]="'eleves'"></app-breadcrumbs> <div style="text-align: center;width: 100%;">
+          <h3>{{action}} - {{'titre.eleve' | translate}}</h3>
+        </div>
+      </div>
+      </mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+        <form #formulaire="ngForm">
+ <div class="row">
+   <!-- <div class="col col-12">
+      <label class="requis">{{'label.nom' | translate}} et {{'label.prenom' | translate}}</label>
+   </div> -->
+ <div class="form-align-v col col-lg-6 none-border-top">
+    <mat-form-field>
+  <input matInput type="text" maxlength="50" #nom="ngModel" name="nom" aria-label="Nom" [(ngModel)]="eleveModele.nom" placeholder="nom" required>
+  </mat-form-field>
+ </div>
+ <div class="form-align-v col col-lg-6 none-border-top">
+  <mat-form-field>
+  <input matInput type="text" maxlength="50" #prenom="ngModel" name="prenom" aria-label="Prenom" [(ngModel)]="eleveModele.prenom" placeholder="prénom" required>
+</mat-form-field>
+</div>
+<!-- <div class="col col-6 none-border-top">
+    <app-champ-obligatoire [modele]="nom"></app-champ-obligatoire>
+  </div>
+  <div class="col col-6 none-border-top">
+      <app-champ-obligatoire [modele]="prenom"></app-champ-obligatoire>
+    </div> -->
+</div>
+<div class="row">
+    <!-- <div class="col col-12">
+        <label class="requis">{{'label.adresse' | translate}} ({{'label.numero_rue_app' | translate}})</label>
+     </div> -->
+     <div class="form-align-v col col-lg-4 none-border-top">
+      <mat-form-field>
+        <input matInput type="number" maxlength="50" #adresseNumero="ngModel" name="adresseNumero" aria-label="Numero" [(ngModel)]="eleveModele.adresse.numero" class="col-3" placeholder="Numéro" required>
+      </mat-form-field>
+     </div>
+     <div class="form-align-v col col-lg-4 none-border-top">
+      <mat-form-field>
+        <input matInput type="text" maxlength="50" #rue="ngModel" name="rue" aria-label="Rue" [(ngModel)]="eleveModele.adresse.rue" class="col-6" placeholder="rue" required>
+      </mat-form-field>
+     </div>
+     <div class="form-align-v col col-lg-4 none-border-top">
+      <mat-form-field>
+          <input matInput type="text" maxlength="10" name="app" aria-label="App" [(ngModel)]="eleveModele.adresse.appartement" class="col-3" placeholder="app">
+      </mat-form-field>
+        
+      </div>
+      <!-- <div class="md-form input-group col col-4 none-border-top">
+          <app-champ-obligatoire [modele]="adresseNumero"></app-champ-obligatoire>
+        </div>
+        <div class="md-form input-group col col-4 none-border-top">
+            <app-champ-obligatoire [modele]="rue"></app-champ-obligatoire>
+          </div> -->
+</div>
+<div class="row">
+  <div class="form-align-v col col-lg-4  none-border-top">
+      <label for="municipalite" class="requis">{{'label.municipalite' | translate}}</label>
+      <mat-form-field>
+          <input matInput type="text" maxlength="50" #municipalite="ngModel" name="municipalite" aria-label="Municipalite" [(ngModel)]="eleveModele.adresse.municipalite" class="requis" placeholder="Municipalité" required>
+      </mat-form-field>
+      
+      <!-- <app-champ-obligatoire [modele]="municipalite"></app-champ-obligatoire> -->
+    </div>
+  <div class="form-align-v col col-lg-4 none-border-top">
+      <label for="province">{{'label.province' | translate}}</label>
+      <mat-form-field>
+          <mat-label>province</mat-label>
+          <select matNativeControl  name="province" [(ngModel)]="eleveModele.adresse.province">
+        <option *ngFor="let province of listeProvinces" [value]="province.value">{{province.label}}</option>
+          </select>
+        </mat-form-field>
+  </div>
+  <div class="form-align-v col col-lg-4  none-border-top">
+      <label for="codePostal" class="requis">{{'label.code_postal' | translate}}</label>
+      <mat-form-field>
+          <input matInput type="text" maxlength="10" #codePostal="ngModel" name="codePostal" aria-label="Code postal" [(ngModel)]="eleveModele.adresse.code_postal"  placeholder="code postal" required>
+      </mat-form-field>
+      
+      <app-champ-obligatoire [modele]="codePostal"></app-champ-obligatoire>
+    </div>
+</div>
+<div class="row">
+    <div class="form-align-v col col-lg-4  none-border-top">
+        <label for="numero" class="requis">{{'label.numero_contrat' | translate}}</label>
+        <mat-form-field>
+            <input matInput type="text" #numero="ngModel" name="numero" aria-label="" [(ngModel)]="eleveModele.numero_contrat" placeholder="champ numero contrat" required>
+        </mat-form-field>
+      <app-champ-obligatoire [modele]="numero"></app-champ-obligatoire>
+    </div>
+    <div class="form-align-v col col-lg-4  none-border-top">
+        <label for="telephone">{{'label.telephone' | translate}}</label>
+        <mat-form-field>
+            <input matInput type="text" maxlength="13" name="telephone" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone"  placeholder="champ telephone">
+   </mat-form-field>
+          </div>
+    <div class="form-align-v col col-lg-4  none-border-top">
+        <label for="telephoneAutre">{{'label.telephone_autre' | translate}}</label>
+        <mat-form-field>
+            <input matInput type="text" maxlength="13" name="telephoneAutre" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone_autre" placeholder="champ telephone autre">
+    </mat-form-field>
+          </div>
+</div>
+<div class="row">
+  <div class="form-align-v col col-lg-4  none-border-top">
+      <label for="permis">Permis de conduire</label>
+      <mat-form-field>
+          <input matInput type="text" maxlength="13" name="permis" aria-label="" [(ngModel)]="eleveModele.numero_permis" placeholder="numéro de permis">
+      </mat-form-field>
+        </div>
+      <div class="form-align-v col col-lg-4  none-border-top">
+        <label for="email">Email</label>
+        <mat-form-field>
+            <input matInput type="email" maxlength="50" name="email" aria-label="" [(ngModel)]="eleveModele.email" placeholder="email">
+    </mat-form-field>
+          </div>
+    <div class="form-align-v col col-lg-4  none-border-top">
+      <label for="fraisInscription">Coût de la formation  </label>
+      <mat-form-field>
+          <input matInput type="number" class="example-right-align"
+           name="fraisInscription" [(ngModel)]="eleveModele.frais_inscription" placeholder="coût formation">
+          <span matPrefix>$&nbsp;</span>
+          <span matSuffix>.00</span>
+      </mat-form-field>
+      </div>
+</div>
+<div class="row">
+    <div class="col col-lg-4  none-border-top form-align-v">
+        <label for="dateNaissance">Date de naissance</label>
+              <mat-form-field floatLabel="never">
+                  <input matInput  [matDatepicker]="picker"
+                  name="dateNaissance" [(ngModel)]="eleveModele.date_naissance"
+                   placeholder="yyyy-mm-dd">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+    </div>
+    <div class="col col-lg-4  none-border-top form-align-v">
+      <label for="dateInscription">Date d'inscription</label>
+            <mat-form-field floatLabel="never">
+                <input matInput  [matDatepicker]="pickerInscription"
+                name="dateInscription" [(ngModel)]="eleveModele.date_inscription"
+                 placeholder="yyyy-mm-dd">
+                <mat-datepicker-toggle matSuffix [for]="pickerInscription"></mat-datepicker-toggle>
+                <mat-datepicker #pickerInscription></mat-datepicker>
+              </mat-form-field>
+  </div>
+  <div class="col col-lg-4  none-border-top form-align-v">
+    <label for="dateContrat">Début du contrat</label>
+          <mat-form-field floatLabel="never">
+              <input matInput  [matDatepicker]="pickerContrat"
+              name="dateContrat" [(ngModel)]="eleveModele.date_contrat" (dateChange)="obtenirFinContrat($event)"
+               placeholder="yyyy-mm-dd">
+              <mat-datepicker-toggle matSuffix [for]="pickerContrat"></mat-datepicker-toggle>
+              <mat-datepicker #pickerContrat></mat-datepicker>
+            </mat-form-field>
+</div>
+</div>
+<div class="row">
+  <div class="col col-lg-4  none-border-top form-align-v">
+      <label for="dateNaissance">Date d'expiration permis</label>
+            <mat-form-field floatLabel="never">
+                <input matInput  [matDatepicker]="pickerFinPermis"
+                name="dateFinPermis" [(ngModel)]="eleveModele.date_fin_permis" 
+                 placeholder="yyyy-mm-dd">
+                <mat-datepicker-toggle matSuffix [for]="pickerFinPermis"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFinPermis></mat-datepicker>
+              </mat-form-field>
+  </div>
+  <div class="col col-lg-4  none-border-top form-align-v">
+    <label for="dateFinContrat">Date d'expiration contrat</label>
+          <mat-form-field floatLabel="never">
+              <input matInput  [matDatepicker]="pickerFinContrat" 
+              name="dateFinContrat" [(ngModel)]="eleveModele.date_fin_contrat"
+               placeholder="yyyy-mm-dd" disabled>
+              <mat-datepicker-toggle matSuffix [for]="pickerFinContrat"></mat-datepicker-toggle>
+              <mat-datepicker #pickerFinContrat></mat-datepicker>
+            </mat-form-field>
+</div>
+<div class="col col-lg-4  none-border-top form-align-v">
+  <mat-checkbox [checked]="eleveModele.payed" (change)="onSelectionChanged($event)">
+          Paiements en retard 
+        </mat-checkbox>
+        <mat-checkbox [checked]="eleveModele.status == 1" (change)="onStatusChanged($event)">
+          Désactiver l'élève
+        </mat-checkbox>
+</div>
+  </div>
+</form>
+</mdb-card-text>
+</mdb-card-body>
+<mdb-card-footer class="text-muted">
+<div class="row">
+  <div class="col col-12" style="text-align:right">
+      <button type="button" 
+      class="btn bg-color-green"
+       (click)="enregistrer()"
+       style="margin-right:10px;" [disabled]="!formulaire.valid">
+          <i class="fas fa-save"></i>&nbsp;{{'label.enregistrer' | translate}}
+        </button>
+      <button type="button" class="btn btn-secondary" (click)="fermer()">
+        <i class="fas fa-ban"></i>&nbsp;{{'label.fermer' | translate}}</button>
+  </div>
+</div>
+</mdb-card-footer>
+</mdb-card>
+  

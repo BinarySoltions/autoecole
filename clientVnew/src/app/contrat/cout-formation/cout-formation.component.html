@@ -1,0 +1,85 @@
+<table class="w-100 margin-bottom">
+    <tr>
+      <th colspan="3" class="contrat-title-header">
+        3 -  COÛT DE LA FORMATION (sur la base d’un taux horaire unique pour la formation théorique et pratique) / <em>TRAINING FEES (based on a fixed hourly rate for both theoretical and practical instruction)</em>  
+      </th>
+    </tr>
+  <tr class="no-border-top"><td colspan="3" class="no-border-bottom" style="padding-top:5px;">Type de formation / <em>Type of training</em> (Sélectionnez un cours / <em>Select a course</em>) </td></tr>
+  <tr class="no-border-top">
+    <td class="no-border-right no-border-bottom"><strong><input class="chk-size-8" type="checkbox" checked> Automobile / <em>Automobile</em> </strong></td>
+    <td class="no-border-right no-border-bottom no-border-left"><strong><input class="chk-size-8" type="checkbox" /> Cyclomoteur / <em>Moped and Motorized Scooter</em> </strong></td>
+    <td class="no-border-bottom no-border-left"></td>
+  </tr>
+  <tr class="no-border-top padding-bottom">
+      <td class="no-border-right no-border-bottom"><strong><input class="chk-size-8" type="checkbox" /> Motocyclette / <em>Motorcycle</em> </strong></td>
+      <td class="no-border-right no-border-bottom no-border-left"><strong><input class="chk-size-8" type="checkbox" /> Motocyclette à trois roues /  <em>Three-Wheeled Motorcycle</em></strong></td>
+    <td class="no-border-bottom no-border-left"></td>
+    </tr>
+    <tr class="no-border-top">
+      <td colspan="2" class="no-border-right no-border-bottom">
+        Total d’heures de cours théoriques / <em>Total number of hours of theoretical modules</em> : 
+    </td>
+    <td class="no-border-bottom no-border-left">
+      <input class="input-w-80 border-normal" type="number" [(ngModel)]="heureTheorique"/> heures / <em>hours</em>
+    </td>
+  </tr>
+  <tr class="no-border-top">
+      <td colspan="2" class="no-border-right no-border-bottom">
+          Total d’heures de sorties sur la route ou cours pratiques / <em>Total number of hours of on-the-road sessions or practical courses</em> : 
+    </td>
+    <td class="no-border-bottom no-border-left">
+      <input class="input-w-80 border-normal" type="number" [(ngModel)]="heurePratique"/> heures / <em>hours</em>
+    </td>
+  </tr>
+  <tr class="no-border-top">
+      <td colspan="2" class="no-border-right no-border-bottom">
+          Total d’heures / <em>Total numbers of hours</em> : 
+    </td>
+    <td class="no-border-bottom no-border-left">
+      <input  class="input-w-80 border-bottom bg-color-transparent" type="number" [disabled]="true" [value]="obtenirHeuresTotales()"/>
+    </td>
+  </tr>
+  <tr class="no-border-top padding-bottom">
+      <td colspan="2" class="no-border-right no-border-bottom">
+          Taux horaire / <em>Hourly rate</em> : 
+    </td>
+    <td class="no-border-bottom no-border-left">
+      <input class="input-w-80 border-bottom bg-color-transparent" type="number" [disabled]="true" [value]="obtenirTauxHoraire()"/>$
+    </td>
+  </tr>
+  <tr class="no-border-top">
+      <td colspan="2" class="contrat-title-cell no-border-right">
+          Prix total avant taxes / <em>Total training cost before taxes</em> : 
+    </td>
+    <td class="no-border-bottom no-border-left">
+      <input class="input-w-80 border-bold bg-color-transparent" type="number" [disabled]="true" [value]="obtenirMontantHorsTaxes()"/>$
+    </td>
+  </tr>
+  <tr class="no-border-top padding-top">
+      <td colspan="2" class="no-border-right no-border-bottom">
+          T.P.S. / <em>G.S.T.</em> : (No. T.P.S. / <em>G.S.T. no. </em> 7052 7727 RT0001 ):
+    </td>
+    <td class="no-border-bottom no-border-left padding-top">
+      <input class="input-w-80 border-bottom bg-color-transparent" type="number" [disabled]="true" [value]="obtenirTPS()"/>$
+    </td>
+  </tr>
+  <tr class="no-border-top padding-bottom">
+      <td colspan="2" class="no-border-right no-border-bottom">
+          T.V.Q. / <em>Q.S.T.</em> : (No. T.V.Q. / <em>Q.S.T. no. </em> 1224768920 TQ0001 ):
+    </td>
+    <td class="no-border-bottom no-border-left">
+      <input class="input-w-80 border-bottom bg-color-transparent" type="number" [disabled]="true" [value]="obtenirTVQ()"/>$
+    </td>
+  </tr>
+  <tr class="no-border-top">
+      <td colspan="2" class="contrat-title-cell no-border-right">
+          Prix total après taxes / <em>Total training cost after taxes</em> : 
+    </td>
+    <td class="no-border-bottom no-border-left">
+      <input class="input-w-80 border-bold bg-color-transparent" type="number" [disabled]="true" [value]="coutFormation"/>$
+    </td>
+  </tr>
+  <tr class="no-border-top padding-top">
+      <td colspan="3" [innerHTML]="loiCoutFormation | safeHtml" class="no-bottom-space border-bottom"></td>
+    </tr>
+</table>

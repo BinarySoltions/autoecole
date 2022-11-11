@@ -1,0 +1,43 @@
+<!-- <style>
+  td{
+    font-size: 12px !important;
+  }
+  .w-100{
+    width: 100% !important;
+  }
+    .h-row{
+      height: 15px !important;
+    }
+    .no-bottom{
+      border-bottom-color: transparent !important;
+    }
+  </style> -->
+<table class="w-100">
+  <tr>
+    <td class="no-bottom border-top"><strong>Nom de l’école de conduite / <em>Name of the driving school</em> : </strong></td>
+  </tr>
+  <tr>
+    <td class="h-row border-bottom">{{ecole.raison_social}}</td>
+  </tr>
+  <tr>
+    <td  class="no-bottom">No certificat | <em>Certificate no</em>. </td>
+  </tr>
+  <tr>
+    <td class="h-row border-bottom"></td>
+  </tr>
+  <tr>
+    <td  class="no-bottom">Adresse / <em>Address</em> </td>
+  </tr>
+  <tr>
+    <td class="h-row border-bottom">{{ecole.adresse.numero}}, &nbsp;{{ecole.adresse.rue}}<span *ngIf="ecole.adresse.appartement">, &nbsp;{{ecole.adresse.appartement}}</span></td>
+  </tr>
+  <tr>
+    <td  class="no-bottom">Ville / <em>City</em> </td>
+  </tr>
+  <tr>
+    <td class="border-bottom">&nbsp;{{ecole.adresse.municipalite}}</td>
+  </tr>
+  <tr>
+    <td class="border-bottom">Code postal /<em> Postal code</em>  &nbsp;{{ecole.adresse.code_postal}} </td>
+  </tr>
+</table>

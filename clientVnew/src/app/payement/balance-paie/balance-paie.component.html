@@ -1,0 +1,14 @@
+
+<mdb-card>
+  <mdb-card-header>
+    <div style="text-align: center;width: 100%;"> <h3>{{'payement.balanceTitre' | translate}}</h3></div>
+  </mdb-card-header>
+  <table class="table">
+    <tr><th>{{'payement.total' | translate}}</th><th>{{'payement.recu' | translate}}</th><th>{{'payement.balance' | translate}}</th></tr>
+      <tr><td>{{total | currency}}</td><td>{{totalPaye | currency}}</td><td>{{balance | currency}}</td></tr>
+  </table>
+  <mdb-card-body>
+    <mdb-card-text>
+    </mdb-card-text>
+  </mdb-card-body>
+</mdb-card>

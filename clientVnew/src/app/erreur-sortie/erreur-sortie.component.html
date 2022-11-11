@@ -1,0 +1,105 @@
+<mdb-card>
+  <mdb-card-header><h3>Points à améliorer</h3></mdb-card-header>
+  <mdb-card-body>
+    <mdb-card-text>
+      <form #formulaire="ngForm">
+        <div class="row">
+              <div class="col col-3">
+                <mat-radio-group aria-label="Langue" name="langue" [(ngModel)] = "langue" required>
+                  <mat-radio-button style="margin-right: 10px;" name="langue" value="fr" (change)="radioChange($event)" checked>FR</mat-radio-button>
+                  <mat-radio-button name="langue" value="eng" (change)="radioChange($event)">ENG</mat-radio-button>
+                </mat-radio-group>
+                </div>
+        </div>
+        <div class="row" *ngFor="let chp of champs">
+          <div class="col col-lg-12" *ngIf="chp <= indexShow">
+            <mat-form-field >
+              <textarea matInput  maxlength="500" [(ngModel)]="champsText[chp-1]" name="textarea_{{chp}}" class="col col-lg-12" placeholder="erreur sortie" required>
+
+              </textarea>
+            </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col col-lg-12">
+            <button type="button" 
+            class="btn bg-color-green"
+             (click)="ajouter()"
+             style="margin-right:10px;">
+                <i class="fas fa-plus"></i>&nbsp;
+              </button>
+              <button type="button" 
+            class="btn bg-color-green"
+             (click)="diminuer()"
+             style="margin-right:10px;">
+                <i class="fas fa-ban"></i>&nbsp;
+              </button>
+          </div>
+        </div>
+              
+      </form>
+      </mdb-card-text>
+      </mdb-card-body>
+<mdb-card-footer>
+  <div class="row">
+    <div class="col col-lg-12 push-right">
+      <button type="button" 
+class="btn bg-color-green"
+(click)="soumettre()"
+style="margin-right:10px;" [disabled]="!formulaire.valid">
+<i class="fas fa-save"></i>&nbsp;
+</button>
+    </div>
+  </div>
+</mdb-card-footer>
+      </mdb-card>
+<mdb-card>
+  <mdb-card-header> 
+    <div class="row">
+      <div><h3>Les points à améliorer</h3></div>
+    </div>
+   </mdb-card-header>
+  <mdb-card-body>
+    <mdb-card-text>
+<div class="row">
+  <div class="col col-lg">
+    <table mat-table [dataSource]="dataSource" matSort>
+  
+      <!-- ID Column -->
+      <ng-container matColumnDef="texte">
+        <th class="bg-color-green" mat-header-cell *matHeaderCellDef mat-sort-header> Points </th>
+        <td mat-cell *matCellDef="let row"> {{row.texte}} </td>
+      </ng-container>
+      <!-- Progress Column -->
+      <ng-container matColumnDef="id">
+        <th  class="bg-color-green" width="100" mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let row"> 
+          <div  class="dropdown col col-4" style="text-align:right">
+            <button type="button" class="btn bg-color-green dropdown-toggle" data-toggle="dropdown">
+              <i class="fas fa-list"></i>
+            </button>
+            <div class="dropdown-menu row">
+              
+           <div class="col col-12 size-30 form-align-h">
+
+           
+          <div  title="Modifier" class="btn dropdown-item bg-color-green" (click)="editer(row.id)" style="margin-right:10px">
+              <i class="fas fa-pen"></i>
+          </div>
+       
+        </div>
+        </div>
+      </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="headElements"></tr>
+      <tr mat-row *matRowDef="let row; columns: headElements;">
+      </tr>
+    </table>
+  
+    <mat-paginator #paginator  [pageSize]="pageSize" [pageSizeOptions]="[5,10,20]"></mat-paginator>
+  </div>
+</div>
+    </mdb-card-text>
+  </mdb-card-body>
+</mdb-card>

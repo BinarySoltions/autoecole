@@ -1,0 +1,116 @@
+
+  <mdb-card>
+    <mdb-card-header><h3>{{'titre.duree' | translate}}</h3></mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+        <div class="row">
+    
+    <div class="md-form col-lg-4  none-border-top">
+        <label for="telephone">{{'label.numero_phase' | translate}}</label>
+        <select aria-label="{{'label.numero_phase' | translate}}" [(ngModel)]="numero" 
+        class="form-control"  (change)="onPhaseChange($event)"
+        placeholder="nombre de modules">
+            <option  value="0">{{'label.selectionner' | translate}}</option>
+            <ng-template ngFor let-number [ngForOf]="listeNombres" let-i="index">
+                <option [value]="number" *ngIf="i<4">{{number}}</option>
+            </ng-template>
+          </select>
+    </div>
+    <div class="md-form col-lg-4  none-border-top">
+        <label for="numero">Durée</label>
+      <input type="number" aria-label="" [(ngModel)]="duree" class="form-control" placeholder="Durée">
+    </div>
+   
+  </div>
+</mdb-card-text>
+</mdb-card-body>
+<mdb-card-footer class="text-muted">
+<div class="row">
+  <div class="col offset-10 col-2" style="text-align:right">
+      <button mdbBtn type="button" color="primary" class="bg-color-green" (click)="ajouterDelai()" mdbWavesEffect>
+          <mdb-icon fas icon="plus" class="mr-1"></mdb-icon>{{'label.modifier' | translate}}
+        </button>
+  </div>
+</div>
+</mdb-card-footer>
+</mdb-card>
+  <mdb-card>
+    <mdb-card-header><h3>{{'titre.phase_config' | translate}}</h3></mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+        <div class="row">
+    <div class="md-form col-lg-4  none-border-top">
+        <label for="numero">{{'label.nom_phase' | translate}}</label>
+      <input type="text" aria-label="{{'label.nom_phase' | translate}}" [(ngModel)]="phase.nom" class="form-control" placeholder="nom de la phase">
+    </div>
+    <div class="md-form col-lg-4  none-border-top">
+        <label for="telephone">{{'label.numero_phase' | translate}}</label>
+        <select aria-label="{{'label.numero_phase' | translate}}" [(ngModel)]="phase.numero" class="form-control" placeholder="nombre de modules">
+            <option  value="0">{{'label.selectionner' | translate}}</option>
+            <ng-template ngFor let-number [ngForOf]="listeNombres" let-i="index">
+                <option [value]="number" *ngIf="i<4">{{number}}</option>
+            </ng-template>
+          </select>
+    </div>
+    </div>
+    <div class="row">
+    <div class="md-form col-lg-4  none-border-top">
+        <label for="numero">Nom du module</label>
+      <input type="text" aria-label="" [(ngModel)]="phase.nom_module" class="form-control" placeholder="module">
+    </div>
+    <div class="md-form col-lg-4  none-border-top">
+        <label for="numero">Type du module</label>
+        <select [(ngModel)]="phase.type" class="form-control">
+            <option value="T">Théorie</option>
+            <option value="P">Pratique</option>
+        </select>
+    </div>
+    <div class="md-form col-lg-4  none-border-top">
+        <label for="telephoneAutre">Numéro du module</label>
+        <select aria-label="{{'label.nombre_module' | translate}}" [(ngModel)]="phase.numero_module" class="form-control" placeholder="nombre de modules">
+            <option value="0">{{'label.selectionner' | translate}}</option>
+            <ng-template ngFor let-number [ngForOf]="listeNombres" let-i="index">
+                <option [value]="number">{{number}}</option>
+            </ng-template>
+          </select>
+    </div>
+  </div>
+</mdb-card-text>
+</mdb-card-body>
+<mdb-card-footer class="text-muted">
+<div class="row">
+  <div class="col offset-10 col-2" style="text-align:right">
+      <button mdbBtn type="button" color="primary" class="bg-color-green" (click)="ajouter()" mdbWavesEffect>
+          <mdb-icon fas icon="plus" class="mr-1"></mdb-icon>{{'label.ajouter' | translate}}
+        </button>
+  </div>
+</div>
+</mdb-card-footer>
+</mdb-card>
+<div style="height:40px"></div>
+
+    <mdb-card>
+        <mdb-card-header><h3>{{'titre.phase_module' | translate}}</h3></mdb-card-header>
+        <mdb-card-body>
+          <mdb-card-text>
+              <div class="row">
+  <ng-template ngFor let-phase [ngForOf]="listePhaseModuleModel">
+      <div class="col col-3" style="text-align:center">
+        <table class="table table-bordered">
+          <tr>
+            <th class="bg-color-black">{{phase.nom}} <span title="Durée">({{phase.duree}})</span> </th>
+          </tr>
+          <tr>
+            <td>
+                <app-phase-une-affichage [modules]="phase.modules"></app-phase-une-affichage>
+            </td>
+          </tr>
+        </table>
+  </div>
+  </ng-template>
+</div>
+</mdb-card-text>
+</mdb-card-body>
+<mdb-card-footer class="text-muted">
+</mdb-card-footer>
+</mdb-card>

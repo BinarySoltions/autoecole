@@ -1,0 +1,85 @@
+ 
+ <mdb-card>
+    <mdb-card-header><h3>{{'titre.ecole_identification' | translate}}</h3></mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+ <div class="row">
+   <div class="col col-8">
+      <label class="">{{'label.raison_sociale' | translate}} et {{'label.nom_ecole' | translate}}</label>
+   </div>
+   <div class="col col-4">
+    <label class="">Numéro de l'école</label>
+ </div>
+ <div class="md-form input-group col col-12  none-border-top">
+  <input type="text" aria-label="raison" [(ngModel)]="ecole.raison_social" class="form-control" placeholder="raison sociale">
+  <input type="text" aria-label="Nom" [(ngModel)]="ecole.nom" class="form-control" placeholder="nom">
+  <input type="text" aria-label="Nom" [(ngModel)]="ecole.numero" class="form-control" placeholder="numéro">
+</div>
+</div>
+<div class="row">
+    <div class="col col-12">
+        <label class="">{{'label.adresse' | translate}} ({{'label.numero_rue_app' | translate}})</label>
+     </div>
+    <div class="md-form input-group col col-12  none-border-top">
+        <input type="text" 
+        aria-label="Numero" 
+        class="form-control col-3" 
+        placeholder="numero"
+        [(ngModel)]="ecole.adresse.numero">
+        <input type="text" aria-label="Rue" 
+        class="form-control col-6" placeholder="rue"
+        [(ngModel)]="ecole.adresse.rue">
+        <input type="text" 
+        aria-label="App" 
+        class="form-control col-3" 
+        placeholder="app"
+        [(ngModel)]="ecole.adresse.appartement">
+      </div>
+</div>
+<div class="row">
+  <div class="md-form col col-4  none-border-top">
+      <label for="municipalite">{{'label.municipalite' | translate}}</label>
+      <input type="text" 
+      aria-label="" class="form-control" 
+      placeholder="{{'label.municipalite' | translate}}"
+      [(ngModel)]="ecole.adresse.municipalite">
+  </div>
+  <div class="md-form col col-4">
+      <label for="province">{{'label.province'| translate}}</label>
+      <select class="browser-default custom-select" [(ngModel)]="ecole.adresse.province">
+        <option selected>{{'label.selectionner' | translate}}</option>
+        <option *ngFor="let province of listeProvinces" [value]="province.value">{{province.label}}</option>
+    </select>
+  </div>
+  <div class="md-form col col-4  none-border-top">
+      <label for="codePostal">{{'label.code_postal' | translate}}</label>
+      <input type="text" aria-label="" 
+      class="form-control" 
+      placeholder="H12 2K3"
+      [(ngModel)]="ecole.adresse.code_postal">
+  </div>
+</div>
+<div class="row">
+    <div class="md-form col col-12  none-border-top">
+        <label for="numero">{{'label.email' | translate}}</label>
+      <input type="text" aria-label="" class="form-control" 
+      placeholder="courriel"
+      [(ngModel)]="ecole.email">
+    </div>
+</div>
+</mdb-card-text>
+</mdb-card-body>
+<mdb-card-footer class="text-muted">
+<div class="row">
+  <div class="col offset-8 col-2">
+      <button mdbBtn type="button" color="primary" class="bg-color-green"  (click)="enregistrer()" mdbWavesEffect>
+          <mdb-icon fas icon="save" class="mr-1"></mdb-icon>{{'label.enregistrer' | translate}}
+        </button>
+  </div>
+  <div class="col col-2">
+      <button type="button" class="btn btn-secondary" (click)="fermer()"><i class="fas fa-ban"></i>&nbsp;{{'label.fermer' | translate}}</button>
+  </div>
+</div>
+</mdb-card-footer>
+</mdb-card>
+  

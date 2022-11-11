@@ -1,0 +1,41 @@
+<div *ngIf="!isStarting">
+  <mdb-card>
+    <mdb-card-header><h3>{{'examen.title' | translate}}</h3></mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+        <form #formulaire="ngForm">
+          <div class="row">
+              <div class="col col-3">
+                <mat-form-field>
+                  <input matInput type="text" maxlength="50" name="idEleve" aria-label="Numero" [(ngModel)]="numeroIdentification" class="col-3" placeholder="Numéro" required>
+                </mat-form-field>
+                </div>
+                <div class="col col-3">
+                  <mat-radio-group aria-label="Langue" name="langue" [(ngModel)] = "langue" required>
+                    <mat-radio-button name="langue" value="fr" (change)="radioChange($event)" checked>FR</mat-radio-button>
+                    <mat-radio-button name="langue" value="eng" (change)="radioChange($event)">ENG</mat-radio-button>
+                  </mat-radio-group>
+                  </div>
+                  <div class="col col-3">
+                    <button type="button" 
+        class="btn bg-color-green"
+         (click)="commencer()"
+         style="margin-right:10px;" [disabled]="!formulaire.valid">
+            <i class="fas fa-save"></i>&nbsp;{{'examen.start' | translate}}
+          </button>
+                  </div>
+                </div>
+                
+        </form>
+        </mdb-card-text>
+        </mdb-card-body>
+        </mdb-card>
+  
+</div>
+<div *ngIf="isStarting">
+  <app-examen [numeroIdentification]="numeroIdentification" [langue]="langue"></app-examen>
+</div>
+
+<ngx-spinner>
+  <p class="loading">Loading Awesomeness...</p>
+</ngx-spinner>

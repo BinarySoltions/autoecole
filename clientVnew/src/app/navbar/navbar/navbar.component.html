@@ -1,0 +1,73 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#"><img width="200" src="assets/logo_pconduite.jpg"/></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav" *ngIf="checkLogin()">
+      <div class="col col-7">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="lienActif = lien.HOME" 
+          [ngClass]="{'active':lienActif == lien.HOME}">Home </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  (click)="lienActif = lien.ELEVE" 
+          routerLink="/eleves" [ngClass]="{'active':lienActif == lien.ELEVE}">{{'menu.eleve' | translate}}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/recherche" (click)="lienActif = lien.RECHERCHE"
+          [ngClass]="{'active':lienActif == lien.RECHERCHE}">Recherche
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/calendrier" (click)="lienActif = lien.CALENDAR"
+          [ngClass]="{'active':lienActif == lien.CALENDAR}">Calendrier
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/facture" (click)="lienActif = lien.FACTURE"
+          [ngClass]="{'active':lienActif == lien.FACTURE}">Facture
+          </a>
+        </li>
+        <li *ngIf="currentUser" class="nav-item">
+          <a class="nav-link" href="#" (click)="logout()">Déconnexion
+          </a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/module">Module</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">{{'menu.autre' | translate}}</a>
+        </li> -->
+      </ul>
+    </div>
+    <div class="col col-2" *ngIf="estNotifie">
+        <a class="nav-link" routerLink="/notification" (click)="lienActif = lien.ELEVE"><i class="fas fa-bell color-text"></i>
+          <sup><span style="font-weight: bold;color: black;">{{estNotifie}}</span></sup></a>
+    </div>
+    <div class="col col-2" *ngIf="!estNotifie">
+      <i class="far fa-bell"></i>
+  </div>
+      <div class="dropdown col col-3" style="text-align:right">
+          <button type="button" class="btn bg-color-green dropdown-toggle" data-toggle="dropdown">
+              {{'menu.parametre' | translate}}
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" routerLink="/phase">Phase et module</a>
+            <a class="dropdown-item" routerLink="/personne">Personne responsable</a>
+            <a class="dropdown-item" routerLink="/ecole">École</a>
+            <a class="dropdown-item" routerLink="/parametres/contrat">Contrat</a>
+            <a class="dropdown-item" routerLink="/erreur-sortie">Points à améliorer</a>
+            <a class="dropdown-item" routerLink="/moniteur">Moniteur</a>
+            <a routerLink="/register" class="dropdown-item">S'inscrire</a>
+          </div>
+        </div>
+    </div>
+  </nav>
+  <!-- notification-->
+
+      <div style="display: none;">
+        <app-notification #notification></app-notification>
+      </div>
+   

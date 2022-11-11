@@ -1,0 +1,87 @@
+<mdb-card>
+  <mdb-card-header> 
+    <div class="row">
+      <div style="text-align: center;width: 100%;"><h3>{{'reservation.liste' | translate}}</h3></div>
+    </div>
+   </mdb-card-header>
+  <mdb-card-body>
+    <mdb-card-text>
+     
+<div class="row">
+  <!--<div class="col col-12">
+    <section style="background: #ccc;
+    padding: 10px 12px;
+    font-size: x-small; margin-bottom: 10px;">
+      <h6 style="background-color: black;padding: 2px 3px;color: yellow;">{{'reservation.warning' | translate}}  <i class="fas fa-exclamation-triangle"></i></h6>
+      <div [innerHTML]="'reservation.warning_text' | translate"></div>
+    </section>
+  </div>-->
+  <div *ngIf="delete" class="col col-12 mb-2" style="text-align: right;">
+    <button type="button" class="btn btn-secondary" (click)="reorder()">
+      <i class="fas fa-sort"></i>&nbsp;{{'reservation.btnReorder' | translate}}</button>
+  </div>
+  <div class="col col-12">
+    <table mat-table [dataSource]="dataSource" matSort>
+  
+      <!-- ID Column -->
+      <ng-container matColumnDef="nom_module">
+        <th class="bg-color-green" mat-header-cell *matHeaderCellDef mat-sort-header>{{'reservation.sortie' | translate}} </th>
+        <td mat-cell *matCellDef="let row"> 
+          <div class="row">
+          <div class="col col-lg-12">
+            <i class="fas fa-car"></i> {{session(row.nom_module)}} 
+            <span *ngIf="row.complete"> <i class="fas fa-check-circle" style="color: #28a745;"> {{'reservation.done' | translate}}</i></span>
+            <span *ngIf="!row.complete && compareDateAfterToday(row)"> <i class="fas fa-bell" style="color: #851231;"> {{'reservation.progress' | translate}}</i></span>
+            <span *ngIf="!row.complete && compareDateToday(row)"> <i class="fas fa-bell-slash" style="color: rgb(111, 0, 255);"> {{'reservation.toconfirm' | translate}}</i></span>
+            <span *ngIf="!row.complete && row.status != 2 && compareDate(row)"> <i class="fas fa-bell-slash" style="color:rgb(233, 157, 15)"> {{'reservation.confirm' | translate}}</i></span>
+            <span *ngIf="row.status==2 && compareDate(row)"> <i class="fas fa-bell-slash" style="color: red;"> {{'reservation.absent' | translate}}</i></span><br/>
+            <i class="fas fa-calendar-day"></i> <span style="font-weight: bolder;"> {{row.date}} </span> <br/>
+         
+            <i class="fas fa-clock"></i><span style="font-weight: bolder;font-style: italic;"> {{getHeure(row.heure_debut)}} - {{getHeure(row.heure_fin)}}</span>
+          </div>
+        </div>
+    </td>
+      </ng-container>
+  
+      <!-- Progress Column -->
+     
+      <!-- Progress Column -->
+      <ng-container matColumnDef="id">
+        <th  class="bg-color-green" width="100" mat-header-cell *matHeaderCellDef> {{'reservation.action' | translate}} </th>
+        <td mat-cell *matCellDef="let row"> 
+          <div *ngIf="isHistoric(row)" class="col col-4 form-align-h" style="text-align:right">
+             <span style="padding: 3px 5px;" title="Supprimer/Delete" class="btn bg-color-green" (click)="editer(row.id)" style="margin-right:10px">
+              <i class="fas fa-trash-alt"></i>
+          </span>
+          <span *ngIf="!row.complete && row.status!=2 && compareDate(row)" style="padding: 3px 5px;" title="S'Absenter/Absent" class="btn bg-color-green" (click)="absenter(row.id)" style="margin-right:10px">
+            <i class="fas fa-user-edit"></i>
+        </span>
+            
+           <!--  <button type="button" class="btn bg-color-green dropdown-toggle" data-toggle="dropdown">
+              <i class="fas fa-list"></i>
+            </button>
+            <div class="dropdown-menu row">
+              
+           <div class="col col-12 size-30 form-align-h">
+
+           
+          <span style="padding: 3px 5px;" title="Supprimer/Delete" class="btn dropdown-item bg-color-green" (click)="editer(row.id)" style="margin-right:10px">
+              <i class="fas fa-trash-alt"></i>
+          </span>
+       
+        </div>
+        </div> -->
+      </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="headElements"></tr>
+      <tr mat-row *matRowDef="let row; columns: headElements;">
+      </tr>
+    </table>
+  
+    <mat-paginator #paginator  [pageSize]="pageSize" [pageSizeOptions]="[5,10,20]"></mat-paginator>
+  </div>
+</div>
+    </mdb-card-text>
+  </mdb-card-body>
+</mdb-card>

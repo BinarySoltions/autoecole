@@ -1,0 +1,79 @@
+<mdb-card>
+  <mdb-card-header> 
+    <div class="row">
+      <div><h3>{{'reservation.titre' | translate}}</h3></div>
+    </div>
+   </mdb-card-header>
+  <mdb-card-body>
+    <mdb-card-text>
+<form #formulaire="ngForm">
+<div class="row">
+  <div class="col col-lg-3">
+    <mat-form-field appearance="fill">
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker1" [min]="dateNow" (dateChange)="addEvent($event,1)" [matDatepickerFilter]="weekendsDatesFilter" name="date1"
+        >
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="col col-lg-3">
+    <mat-form-field appearance="fill">
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker2" (dateChange)="addEvent($event,2)" [min]="startDate" [matDatepickerFilter]="weekendsDatesFilter" name="date2"
+        >
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+  </div>
+</div>
+<mat-accordion [multi]="true">
+  <mat-expansion-panel *ngFor="let tu of rangeDateTimes; let i = index">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{tu.date}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Choisir les heures et disponibilités
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+<div class="row" > 
+  <div class="col col-lg-12">
+    <ng-template ngFor let-time [ngForOf]="tu.times" let-i="index">
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" multiple vertical [value]="time" (change)="changeGroup($event,time)">
+     
+      <mat-button-toggle class="mr" *ngIf="i<times.length-1" [value]="time">{{time.label}} - {{times[i+1].label}}
+        <mat-form-field color='primary'  class="w-place" appearance="fill" >
+          <mat-label><span style="font-size: 12px;color: white;">Places</span></mat-label>
+          <input matInput type="number" name="p{{i}}" [(ngModel)]="time.places" min="1" max="3" (click)="$event.stopPropagation()">
+        </mat-form-field>
+      </mat-button-toggle>
+      <mat-button-toggle class="h-1" *ngIf="i<times.length-1" disabled>
+    </mat-button-toggle>
+     
+    </mat-button-toggle-group>
+  </ng-template>
+  </div>
+</div>
+</mat-expansion-panel>
+</mat-accordion>
+
+</form>
+<div id="schedule"></div>
+    </mdb-card-text>
+  </mdb-card-body>
+  <mdb-card-footer class="text-muted">
+    <div class="row">
+    <div class="col col-lg-12" style="text-align:right">
+        <button type="button" 
+        class="btn bg-color-green"
+         (click)="enregistrer()"
+         style="margin-right:10px;" [disabled]="!formulaire.valid">
+            <i class="fas fa-save"></i>&nbsp;{{'label.enregistrer' | translate}}
+          </button>
+        <button type="button" class="btn btn-secondary" (click)="fermer()">
+          <i class="fas fa-ban"></i>&nbsp;{{'label.fermer' | translate}}</button>
+    </div>
+    </div>
+    </mdb-card-footer>
+</mdb-card>

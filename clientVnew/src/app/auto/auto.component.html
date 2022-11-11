@@ -1,0 +1,11 @@
+<div class="container">
+  <app-navbar [isExamen]="isExamen"></app-navbar>
+</div>
+
+<div class="btn bg-color-green bande"></div>
+<div class="container">
+  <main>
+      <router-outlet (activate)='onActivate($event)'></router-outlet>
+  </main>
+</div>
+<app-confirmer-changement></app-confirmer-changement>

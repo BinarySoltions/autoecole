@@ -1,0 +1,171 @@
+<mdb-card>
+    <mdb-card-header>
+      <div class="row">
+        <app-breadcrumbs [url]="'eleves'"></app-breadcrumbs> <div style="text-align: center;width: 100%;"><h3>Identification de l'élève</h3></div>
+      </div>
+      </mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+ <div class="row">
+   <div class="col col-12">
+      <label class="">{{'label.nom' | translate}} et {{'label.prenom' | translate}}</label>
+   </div>
+ <div class="md-form input-group col col-12 none-border-top">
+  <input readonly type="text" aria-label="Nom" [(ngModel)]="eleveModele.nom" class="form-control" >
+  <input readonly type="text" aria-label="Prenom" [(ngModel)]="eleveModele.prenom" class="form-control">
+</div>
+</div>
+<div class="row">
+    <div class="col col-12">
+        <label class="">{{'label.adresse' | translate}} ({{'label.numero_rue_app' | translate}})</label>
+     </div>
+    <div class="md-form input-group col col-lg-12  none-border-top">
+        <input readonly type="text" aria-label="Numero" [(ngModel)]="eleveModele.adresse.numero" class="form-control col-lg-3">
+        <input readonly type="text" aria-label="Rue" [(ngModel)]="eleveModele.adresse.rue" class="form-control col-lg-6">
+        <input readonly type="text" aria-label="App" [(ngModel)]="eleveModele.adresse.appartement" class="form-control col-lg-3">
+      </div>
+</div>
+<div class="row">
+  <div class="md-form col col-lg-4  none-border-top">
+      <label for="municipalite">{{'label.municipalite' | translate}}</label>
+      <input readonly type="text" aria-label="Municipalite" [(ngModel)]="eleveModele.adresse.municipalite" class="form-control">
+  </div>
+  <div class="md-form col col-lg-4">
+      <label for="province">{{'label.province' |translate}}</label>
+      <input readonly class="form-control" [(ngModel)]="eleveModele.adresse.province">
+  </div>
+  <div class="md-form col col-lg-4  none-border-top">
+      <label for="codePostal">{{'label.code_postal' | translate}}</label>
+      <input readonly type="text" aria-label="Code postal" [(ngModel)]="eleveModele.adresse.code_postal" class="form-control">
+  </div>
+</div>
+<div class="row">
+    <div class="md-form col col-lg-4  none-border-top">
+        <label for="numero">{{'label.numero_contrat' | translate}}</label>
+      <input readonly type="text" aria-label="" [(ngModel)]="eleveModele.numero_contrat" class="form-control">
+    </div>
+    <div class="md-form col col-lg-4  none-border-top">
+        <label for="telephone">{{'label.telephone' | translate}}</label>
+        <input readonly type="text" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone" class="form-control">
+    </div>
+    <div class="md-form col col-lg-4  none-border-top">
+        <label for="telephoneAutre">{{'label.telephone_autre' | translate}}</label>
+        <input readonly type="text" aria-label="" [(ngModel)]="eleveModele.coordonnee.telephone_autre" class="form-control">
+    </div>
+</div>
+<div class="row">
+  <div class="md-form col col-lg-4  none-border-top">
+      <label for="permis">Permis de conduire</label>
+      <input readonly type="text" maxlength="13" name="permis" aria-label="" [(ngModel)]="eleveModele.numero_permis" class="form-control">
+      </div>
+      <div class="md-form col col-lg-4  none-border-top">
+        <label for="email">Email</label>
+        <input type="text" readonly maxlength="50" name="email" aria-label="" [(ngModel)]="eleveModele.email" class="form-control" >
+    </div>
+    <div class="md-form col col-lg-4  none-border-top">
+      <label for="fraisInscription">Coût de la formation ($ CAD)</label>
+      <input type="text" readonly maxlength="50" name="email" aria-label="" [(ngModel)]="eleveModele.frais_inscription" class="form-control" >
+  </div>
+</div>
+<div class="row">
+  <div class="md-form col col-lg-4  none-border-top">
+      <label for="dateNaissance">Date de naissance</label>
+    <input readonly type="text" aria-label="" value="{{eleveModele.date_naissance | date:'yyyy-MM-dd'}}" class="form-control">
+    
+  </div>
+  <div class="md-form col col-lg-4  none-border-top">
+      <label for="dateInscription">Date d'inscription</label>
+      <input readonly type="text" aria-label="" value="{{eleveModele.date_inscription| date:'yyyy-MM-dd'}}" class="form-control">
+      
+    </div>
+    <div class="md-form col col-lg-4  none-border-top">
+      <label for="dateContrat">Début du contrat</label>
+      <input readonly type="text" aria-label="" value="{{eleveModele.date_contrat| date:'yyyy-MM-dd'}}" class="form-control">
+      
+    </div>
+</div>
+<div class="row">
+  <div class="md-form col col-lg-4  none-border-top">
+      <label for="dateNaissance">Date d'expiration permis</label>
+    <input readonly type="text" aria-label="" value="{{eleveModele.date_fin_permis | date:'yyyy-MM-dd'}}" class="form-control">
+    
+  </div>
+  <div class="md-form col col-lg-4  none-border-top">
+    <label for="dateNaissance">Date d'expiration contrat</label>
+  <input readonly type="text" aria-label="" value="{{eleveModele.date_fin_contrat | date:'yyyy-MM-dd'}}" class="form-control">
+  
+</div>
+  </div>
+</mdb-card-text>
+</mdb-card-body>
+<mdb-card-footer class="text-muted">
+</mdb-card-footer>
+</mdb-card>
+<div style="height:40px"></div>
+
+<mdb-card>
+    <mdb-card-header><h3>{{'titre.phase_module' | translate}}</h3></mdb-card-header>
+    <mdb-card-body>
+      <mdb-card-text>
+          <div class="row">
+<!-- phase1 -->
+  <div class="col col-lg-3" style="text-align:center">
+    <table class="table table-bordered">
+      <tr>
+        <th class="bg-color-black">{{phaseUne.nom}}</th>
+      </tr>
+      <tr>
+        <td>
+            <app-phase-deux-affichage [modules]="phaseUne.modules"></app-phase-deux-affichage>
+        </td>
+      </tr>
+    </table>
+</div>
+<!-- phase 2 -->
+<div class="col col-lg-3" style="text-align:center">
+  <table class="table table-bordered">
+    <tr>
+      <th class="bg-color-black">{{phaseDeux.nom}}</th>
+    </tr>
+    <tr>
+      <td>
+          <app-phase-deux-affichage [modules]="phaseDeux.modules"></app-phase-deux-affichage>
+      </td>
+    </tr>
+  </table>
+</div>
+<!-- phase 3 -->
+<div class="col col-lg-3" style="text-align:center">
+  <table class="table table-bordered">
+    <tr>
+      <th class="bg-color-black">{{phaseTrois.nom}}</th>
+    </tr>
+    <tr>
+      <td>
+          <app-phase-deux-affichage [modules]="phaseTrois.modules"></app-phase-deux-affichage>
+      </td>
+    </tr>
+  </table>
+</div>
+<!-- phase 4 -->
+<div class="col col-lg-3" style="text-align:center">
+  <table class="table table-bordered">
+    <tr>
+      <th class="bg-color-black">{{phaseQuatre.nom}}</th>
+    </tr>
+    <tr>
+      <td>
+          <app-phase-deux-affichage [modules]="phaseQuatre.modules"></app-phase-deux-affichage>
+      </td>
+    </tr>
+  </table>
+</div>
+</div>
+</mdb-card-text>
+</mdb-card-body>
+<mdb-card-footer class="text-muted">
+    <div class="col offset-lg-8 col-lg-4">
+        <button type="button" class="btn btn-secondary" (click)="fermer()"><i class="fas fa-ban"></i>&nbsp;{{'label.fermer' | translate}}</button>
+      </div>
+</mdb-card-footer>
+</mdb-card>
