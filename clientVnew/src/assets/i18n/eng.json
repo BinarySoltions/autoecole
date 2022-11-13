@@ -78,7 +78,17 @@
         "answer_grid":"Answer Grid",
         "start":"Start",
         "submit":"Submit",
-        "next":"Next"
+        "next":"Next",
+        "msg_confirm":"Would you like to submit?",
+        "confirm_text":"Confirm your choice",
+        "decTitre":"Regarding the online knowledge test, I commit to :",
+        "decOne":"Carry out the examination alone, without anyone's help.",
+        "decTwo":"Take the test at the agreed time and respect the granted time.",
+        "decThree":"Not consult material that is not permitted for use during the test.",
+        "decFour":"Not disclose any information or pass on exam questions to anyone.",
+        "decFive":"Not cheat or plagiarize in any way.",
+        "decIntergrity":"Integrity Declaration Regarding Online Examination",
+        "agree_dec":"I fully understand that failure to comply with these remote examination instructions or any involvement in situations of plagiarism or cheating will automatically result in failure and may result in further sanctions."
     },
     "eleve":{
         "titre":"Subscribe",
@@ -135,7 +145,7 @@
         "fin":"End time",
         "action":"Action",
         "warning":"Warning",
-        "warning_text":"A practical course can be canceled with 48 hours notice. Failing to respect the notice, whatever the reasons, the cost of the course will be added to your balance.See Contract",
+        "warning_text":"Cancellation or report of a driving lesson by a student requires a 48-hour advance notice via online or by contacting the Driving School. Failure to do so will result in the student being charged the full amount for the course and penalities as if he/she had taken it.",
         "done":"Done",
         "progress":"Coming up",
         "confirm":"To confirm",

@@ -90,7 +90,17 @@
         "answer_grid":"Choix de réponses",
         "start":"Commencer",
         "submit":"Soumettre",
-        "next":"Suivant"
+        "next":"Suivant",
+        "msg_confirm":"Voulez vous soummettre?",
+        "confirm_text":"Confirmer votre choix",
+        "decTitre":"Concernant l’examen en ligne, je m’engage à :",
+        "decOne":"Réaliser l’examen seul, sans l’aide de personne.",
+        "decTwo":"Faire l’examen au moment convenu et respecter le temps alloué.",
+        "decThree":"Ne pas consulter du matériel non permis pour la réalisation de l’examen.",
+        "decFour":"Ne divulguer aucune information ni transmettre les questions de l’examen à qui que ce soit.",
+        "decFive":"Ne pas tricher ou plagier, quel que soit le moyen.",
+        "decIntergrity":"Déclaration d’intégrité relative à l’examen en ligne",
+        "agree_dec":"Je comprends parfaitement que le non-respect de ces consignes liées à la passation de l’examen à distance ou toute implication dans des situations de plagiat ou de tricherie entraînera automatiquement un échec et pourra donner lieu à d’autres sanctions."
     },
     "eleve":{
         "titre":"S'inscrire",
@@ -147,7 +157,7 @@
         "fin":"Heure de fin",
         "action":"Action",
         "warning":"Attention",
-        "warning_text":"Vous pouvez annuler en ligne vos réservations 48h avant la date de votre rendez-vous. Passé ce delai, vous ne pourrez plus annuler le cours et si vous ne présentez pas, quelles que soient les raisons, le coût du cours pratique sera ajouté à votre balance.Cf Contrat de cours",
+        "warning_text":"Pour annuler ou reporter un cours pratique, l’élève peut le faire en ligne ou communiquer avec nous, au moins dans un délai de 48 heures à l’avance. Au-delà de ce délai, le coût du cours et les pénalités seront débités du compte de l’élève comme si le cours avait été suivi ",
         "done":"Complétée",
         "progress":"À venir",
         "confirm":"À confirmer",

@@ -52,7 +52,8 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
       selectAllText: 'Cocher tout',
       unSelectAllText: 'Décocher tout',
       searchPlaceholderText:'Rechercher',
-      allowSearchFilter: true
+      allowSearchFilter: true,
+      enableCheckAll:false
     };
     this.moduleModel.id_module = 0;
   }
