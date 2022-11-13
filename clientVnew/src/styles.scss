@@ -158,3 +158,6 @@ td.mat-calendar-body-cell:not(.mat-calendar-body-disabled)> .mat-calendar-body-c
 td.mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover, .mat-calendar-body-today :hover{
         background-color:   #821430 !important;  
     }
+    .mat-checkbox .mat-checkbox-layout{
+        white-space: normal !important;
+      }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormControl, NgForm, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EleveService } from 'src/app/service/eleve/eleve.service';
@@ -16,9 +16,18 @@ export class BeginComponent implements OnInit,OnDestroy {
   isStarting = false;
   @ViewChild('formulaire') formulaire:NgForm;
   sub: any;
+  declarations = this._formBuilder.group({
+    decOne: new FormControl(false, Validators.required),
+    decTwo: new FormControl(false, Validators.required),
+    decThree: new FormControl(false, Validators.required),
+    decFour: new FormControl(false, Validators.required),
+    decFive: new FormControl(false, Validators.required),
+    decAgree: new FormControl(false, Validators.required),
+  });
 
   constructor(private translate: TranslateService, private route:Router,private router:ActivatedRoute,
-    private serviceEleve:EleveService,private spinner:NgxSpinnerService,) {
+    private serviceEleve:EleveService,private spinner:NgxSpinnerService,
+    private _formBuilder: FormBuilder,) {
     this.translate.setDefaultLang('fr');
    }
 
@@ -51,4 +60,12 @@ export class BeginComponent implements OnInit,OnDestroy {
     this.route.navigate(['public/examen',this.numeroIdentification,this.langue]);
   }
 
+  validateForm(){
+    return  this.declarations.get('decOne').value &&
+            this.declarations.get('decTwo').value &&
+            this.declarations.get('decThree').value &&
+            this.declarations.get('decFour').value &&
+            this.declarations.get('decFive').value &&
+            this.declarations.get('decAgree').value;
+  }
 }

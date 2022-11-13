@@ -22,6 +22,7 @@ import { getDutchPaginatorIntl } from 'src/app/french-paginator-intl';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { LayoutModule } from '@angular/cdk/layout';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatDividerModule} from '@angular/material/divider';
 
 export const MY_FORMATS = {
   parse: {
@@ -60,7 +61,8 @@ export const MY_FORMATS = {
     MatIconModule,
     LayoutModule,
     MatButtonToggleModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDividerModule,
   ],
   providers:[
     { provide: MAT_DATE_LOCALE, useValue: 'fr' },

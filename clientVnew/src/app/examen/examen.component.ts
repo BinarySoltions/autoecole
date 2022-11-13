@@ -8,6 +8,7 @@ import { ExamenModel } from '../modele/examen-model';
 import {environment} from 'src/environments/environment';
 import { getDocument, PDFDocumentProxy, ViewportParameters,PDFRenderParams,version} from 'pdfjs-dist';
 import * as pdfjsLib from 'pdfjs-dist';
+declare var $: any;
 @Component({
   selector: 'app-examen',
   templateUrl: './examen.component.html',
@@ -78,7 +79,13 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
   }
 
   soumettre(){
-   // const content = this.pdf.nativeElement.innerHTML;
+    $("#confirmerModal").modal('show');
+   
+  }
+
+  confirmerSoummission(value){
+    if(value){
+      // const content = this.pdf.nativeElement.innerHTML;
     const dateNow = moment().format('YYYY-MM-DD');
     const content = JSON.stringify(this.examenReponses);
     let request = {numero:this.numeroIdentification,resultat:content,date_examen:dateNow,langue:this.langue};
@@ -87,8 +94,8 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
         this.route.navigate(['public/session-terminer']);
       }
     })
+    }
   }
-
 
   next(){
     this.index = this.index+1;

@@ -1,4 +1,5 @@
-import { Component, OnInit, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Output,EventEmitter,Input } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -8,10 +9,17 @@ import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 })
 export class DialogConfirmerComponent implements OnInit {
   @Output() estConfirmer = new EventEmitter<any>();
-  constructor() { }
+  @Input('description') description = "Voulez vous vraiment supprimer cet élève?";
+  @Input('confirmText') confirmText ="Confirmer votre choix";
+  constructor(private translate: TranslateService,) {
+    this.translate.setDefaultLang('fr');
+  
+   }
 
   ngOnInit() {
   }
+
+  
   confirmer(){
     this.estConfirmer.emit(true)
   }

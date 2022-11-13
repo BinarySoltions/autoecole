@@ -3,6 +3,8 @@
     <mdb-card-header><h3>{{'examen.title' | translate}}</h3></mdb-card-header>
     <mdb-card-body>
       <mdb-card-text>
+        <div style="margin-bottom: 20px;border-bottom: 1px solid black; padding:5px;text-align: center;"><h4><i class='fas fa-file-signature'></i> {{'examen.decIntergrity' | translate}}</h4></div>
+     
         <form #formulaire="ngForm">
           <div class="row">
               <div class="col col-3">
@@ -17,18 +19,34 @@
                   </mat-radio-group>
                   </div>
                   <div class="col col-3">
-                    <button type="button" 
-        class="btn bg-color-green"
-         (click)="commencer()"
-         style="margin-right:10px;" [disabled]="!formulaire.valid">
-            <i class="fas fa-save"></i>&nbsp;{{'examen.start' | translate}}
-          </button>
+                   
                   </div>
                 </div>
                 
         </form>
+           <section class="example-section" [formGroup]="declarations">
+          <h6>{{'examen.decTitre' | translate}}</h6>
+          <mat-divider></mat-divider>
+          <p><mat-checkbox formControlName="decOne">{{'examen.decOne' | translate}}</mat-checkbox></p>
+          <p><mat-checkbox formControlName="decTwo">{{'examen.decTwo' | translate}}</mat-checkbox></p>
+          <p><mat-checkbox formControlName="decThree">{{'examen.decThree' | translate}}</mat-checkbox></p>
+          <p><mat-checkbox formControlName="decFour">{{'examen.decFour' | translate}}</mat-checkbox></p>
+          <p><mat-checkbox formControlName="decFive">{{'examen.decFive' | translate}}</mat-checkbox></p>
+          <mat-divider></mat-divider>
+          <mat-checkbox formControlName="decAgree">{{'examen.agree_dec' | translate}}</mat-checkbox>
+          <mat-divider></mat-divider>
+        </section>
+        <div class="row"><div class="col col-12">
+          <button type="button" 
+      class="btn bg-color-green float-right"
+      (click)="commencer()"
+      style="margin-right:10px;" [disabled]="!formulaire.valid || !validateForm()">
+      <i class="fas fa-save"></i>&nbsp;{{'examen.start' | translate}}
+      </button>
+        </div></div>
         </mdb-card-text>
         </mdb-card-body>
+        <mdb-card-footer></mdb-card-footer>
         </mdb-card>
   
 </div>

@@ -120,3 +120,6 @@ style="margin-right:10px;" [disabled]="!formulaire.valid">
   </div>
 </div>
 <div style="height: 200px;"></div>
+<app-dialog-confirmer (estConfirmer)="confirmerSoummission($event)" 
+[description]="'examen.msg_confirm' | translate"
+[confirmText]="'examen.confirm_text' | translate"></app-dialog-confirmer>

@@ -448,6 +448,7 @@ class EleveController extends Controller
 
     public function printAttestation(Request $request)
     {
+        set_time_limit(0);
         $eleve = Eleve::with('adresse', 'coordonnee', 'modules')
             ->find($request->id);
         $isAll = $request->copie;
@@ -458,9 +459,13 @@ class EleveController extends Controller
         $numero = $attestation->numero;
         define('K_TCPDF_CALLS_IN_HTML', true);
         $params = $pdf::serializeTCPDFtagParameters(array($numero, 'C128C', '', '', '', 8, 0.50, array('position' => 'C', 'border' => false, 'padding' => 1, 'fgcolor' => array(0, 0, 0), 'bgcolor' => array(255, 255, 255), 'text' => false, 'font' => 'helvetica', 'fontsize' => 7), 'N'));
+        $paramsText = $pdf::serializeTCPDFtagParameters(array(45, 9, 'Adresse', 1, 'J', 1, 0, '', '', true, 0, false, true, 9, 'M'));
+        $paramsTextModules = $pdf::serializeTCPDFtagParameters(array(15, 7, 'Modules', 0, $ln=0, 'C', 0, '', 0, false, 'T', 'C'));
+       
         $view = View::make(
-            'attestation.pattestation',
-            ['eleve' =>  $eleve, 'ecole' => $ecole, 'params' => $params, 'attestation' => $attestation, 'personnes' => $personnes, 'isAll' => !$isAll]
+            'attestationV2.pattestation',
+            ['eleve' =>  $eleve, 'ecole' => $ecole, 'params' => $params,'paramsM' => $paramsTextModules,
+            'paramsT' => $paramsText, 'attestation' => $attestation, 'personnes' => $personnes, 'isAll' => !$isAll]
         );
         $html = $view->render();
         if (isset($html)) {

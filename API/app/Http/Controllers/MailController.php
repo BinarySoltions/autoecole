@@ -52,8 +52,8 @@ class MailController extends Controller
     public function emailReservation()
     {
 
-        $dateStart = date('Y-m-d', strtotime(' + 1 days'));
-        $dateEnd = date('Y-m-d', strtotime(' + 2 days'));
+        $dateStart = date('Y-m-d', strtotime(' + 3 days'));
+        $dateEnd = date('Y-m-d', strtotime(' + 4 days'));
 
         $eleves = EvenementEleve::distinct()
             ->select(
