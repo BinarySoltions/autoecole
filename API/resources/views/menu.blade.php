@@ -1,6 +1,6 @@
 <div class="row justify-content-end top-bar">
 <div class="col-auto">
-<button id="test" class="btn btn-primary my-2 my-sm-0 mr-1" type="button"><i class="fas fa-phone-square-alt"></i> (438) 387-6644</button>
+<button id="test" class="btn btn-primary my-2 my-sm-0 mr-1" type="button"><i class="fas fa-phone-square-alt"></i> (438) 387-6644 / (514) 632-9644</button>
 </div>
 </div>
 <div class="container top-nav">

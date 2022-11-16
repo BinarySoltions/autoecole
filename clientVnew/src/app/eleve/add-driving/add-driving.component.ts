@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -16,11 +16,13 @@ import { ModalConfirmComponent } from 'src/app/modal-confirm/modal-confirm.compo
 import { EleveService } from 'src/app/service/eleve/eleve.service';
 import { ModuleService } from 'src/app/service/module/module.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-add-driving',
   templateUrl: './add-driving.component.html',
-  styleUrls: ['./add-driving.component.scss']
+  styleUrls: ['./add-driving.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AddDrivingComponent implements OnInit {
   eleveModele:Eleve;
@@ -201,6 +203,21 @@ export class AddDrivingComponent implements OnInit {
     const dates = dateHeures.map(e => e.date);
     return dates.indexOf(date.format('YYYY-MM-DD')) != -1;
   }
+  dateClass: MatCalendarCellClassFunction<any> = (cellDate, view) => {
+    // Only highligh dates inside the month view.
+    if (view === 'month') {
+      
+      const date = !!cellDate ? cellDate : moment();
+      const dateHeures = this.eventsDateHeures
+      .filter(x => x.date === date.format('YYYY-MM-DD') && x.place === null);
+    // Prevent Saturday and Sunday from being selected.
+    //return day !== 0 && day !== 6;
+    const dates = dateHeures.map(e => e.date);
+    return dates.length > 0 ? 'example-custom-date-class' : '';
+    }
+
+    return '';
+  };
   onTimeChange(time) {
     this.pos = this.times.map(e => e.value).indexOf(time.target.value);
     this.eventDriving.heure_fin = this.timesEnd[this.pos].value;

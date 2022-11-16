@@ -16,12 +16,14 @@ margin-right: 10PX;
 .h-1{
     height: 5px;
 }
-.mat-calendar-body-cell> .mat-calendar-body-cell-content{
-background-color:  #28a745 !important;
-color: white !important;
-}
+
 .active-s,.active-s:active{
     background-color:  #28a745 !important;
     color: white !important;
     cursor: pointer;
 }
+
+button.example-custom-date-class {
+    background: #28a745;
+    border-radius: 100%;
+  }

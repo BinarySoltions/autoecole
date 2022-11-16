@@ -177,18 +177,25 @@
           <mat-form-field floatLabel="never">
               <input matInput  [matDatepicker]="pickerFinContrat" 
               name="dateFinContrat" [(ngModel)]="eleveModele.date_fin_contrat"
-               placeholder="yyyy-mm-dd" disabled>
+               placeholder="yyyy-mm-dd" >
               <mat-datepicker-toggle matSuffix [for]="pickerFinContrat"></mat-datepicker-toggle>
               <mat-datepicker #pickerFinContrat></mat-datepicker>
             </mat-form-field>
 </div>
-<div class="col col-lg-4  none-border-top form-align-v">
+<div class="col col-lg-4  none-border-top form-align-v" style="border: 1px solid gray;padding-top:10px">
   <mat-checkbox [checked]="eleveModele.payed" (change)="onSelectionChanged($event)">
           Paiements en retard 
         </mat-checkbox>
         <mat-checkbox [checked]="eleveModele.status == 1" (change)="onStatusChanged($event)">
           Désactiver l'élève
         </mat-checkbox>
+        <!-- <div class="form-align-v col col-lg-12  none-border-top">
+          <label for="fraisInscription">Nombre de versements </label>
+          <mat-form-field>
+              <input matInput type="number" class="example-right-align" min="0" max="6"
+               name="versement" [(ngModel)]="eleveModele.versement" placeholder="Nombre de versements">
+          </mat-form-field>
+          </div> -->
 </div>
   </div>
 </form>

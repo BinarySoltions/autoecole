@@ -5,10 +5,10 @@
     <div class="container content" style="background-color: white;text-align:center">
     <h2>Liens utiles</h2>
     <div style="margin: 20px;">
-    <a href="https://saaq.gouv.qc.ca/cours-conduite">
+    <a target="_blank" href="https://saaq.gouv.qc.ca/cours-conduite/automobile">
     <h5 style="font-weight: bold;">Cours de conduite</h5>
         </a>
-        <a href="https://saaq.gouv.qc.ca/en/driving-course">
+        <a target="_blank" href="https://saaq.gouv.qc.ca/en/driving-course/automobile">
         <h5 style="font-weight: bold;">Driving Course</h5>
         </a>
     </div>

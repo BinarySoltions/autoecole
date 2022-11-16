@@ -9,15 +9,17 @@ Pconduite est une école de conduite reconnue.</p>
         <div class="col col-lg-4">
             <h3>Nos Horaires</h3>
             <hr>
-            <p>Tous les jours<br/>De 11h00 à 19h00</p>
+            <p>Tous les jours<br/>De 12h00 à 19h00</p>
         </div>
         <div class="col col-lg-4">
             <h3>Nous Joindre</h3>
             <hr>
-            <p>Téléphone : (438) 387-6644<br/>
-Email : <a href="mailto:info@pconduite.com">info@pconduite.com</a><br/>
+            <p>Téléphones : (438) 387-6644  <br/>
+            <span style="visibility: hidden;">Téléphones : </span>(514) 632-9644<br/>
+Emails : <a href="mailto:info@pconduite.com">info@pconduite.com</a> <br/>
+<span style="visibility: hidden;">Emails : </span><a href="mailto:autoecolepconduite@gmail.com">autoecolepconduite@gmail.com</a><br/>
 Adresse : 6875, avenue victoria<br/>
-Montréal (QC) H3W 2T3</p>
+<span style="visibility: hidden;">Adresse : </span>Montréal (QC) H3W 2T3</p>
         </div>
     </div>
 </div>

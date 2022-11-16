@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -22,13 +22,15 @@ import { User } from '../auth/user.model';
 import { PhaseService } from '../service/phase.service';
 import { Phase } from '../entite/phase.entity';
 import { PayementService } from '../payement/payement.service';
+import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 
 
 
 @Component({
   selector: 'app-reserve',
   templateUrl: './reserve.component.html',
-  styleUrls: ['./reserve.component.scss']
+  styleUrls: ['./reserve.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ReserveComponent implements OnInit {
   @ViewChild('formulaire', { static: true }) formulaire: NgForm;
@@ -251,6 +253,21 @@ export class ReserveComponent implements OnInit {
     const dates = dateHeures.map(e => e.date);
     return dates.indexOf(date.format('YYYY-MM-DD')) != -1;
   }
+  dateClass: MatCalendarCellClassFunction<any> = (cellDate, view) => {
+    // Only highligh dates inside the month view.
+    if (view === 'month') {
+      
+      const date = !!cellDate ? cellDate : moment();
+      const dateHeures = this.eventsDateHeures
+      .filter(x => x.date === date.format('YYYY-MM-DD') && x.place === null);
+    // Prevent Saturday and Sunday from being selected.
+    //return day !== 0 && day !== 6;
+    const dates = dateHeures.map(e => e.date);
+    return dates.length > 0 ? 'example-custom-date-class' : '';
+    }
+
+    return '';
+  };
   onTimeChange(time) {
     this.pos = this.times.map(e => e.value).indexOf(time.target.value);
     this.eventDriving.heure_fin = this.timesEnd[this.pos].value;
