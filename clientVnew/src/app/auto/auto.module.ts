@@ -20,7 +20,6 @@ import { PhaseModuleComponent } from 'src/app/phase/module/phase-module/phase-mo
 import { AjouterModuleComponent } from 'src/app/module/ajouter-module/ajouter-module.component';
 import { DetailComponent } from 'src/app/eleve/detail/detail.component';
 import { GenererComponent } from 'src/app/attestation/generer/generer.component';
-import { DialogConfirmerComponent } from 'src/app/partage/dialog-confirmer/dialog-confirmer.component';
 import { HomeComponent } from 'src/app/home/home.component';
 import { LoginComponent } from 'src/app/login/login.component';
 import { RegisterComponent } from 'src/app/register/register.component';
@@ -80,6 +79,7 @@ import { FactureComponent } from '../facture/facture.component';
 import { FactDetailComponent } from '../facture/fact-detail/fact-detail.component';
 import { MonitorComponent } from '../monitor/monitor.component';
 import { TableMonitorComponent } from '../monitor/table-monitor/table-monitor.component';
+import { UploadFileComponent } from '../upload-file/upload-file.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +103,6 @@ import { TableMonitorComponent } from '../monitor/table-monitor/table-monitor.co
     DetailComponent,
     GenererComponent,
     NavbarComponent,
-    DialogConfirmerComponent,
     HomeComponent,
     LoginComponent,
     RegisterComponent,
@@ -144,7 +143,8 @@ import { TableMonitorComponent } from '../monitor/table-monitor/table-monitor.co
     FactureComponent,
     FactDetailComponent,
     MonitorComponent,
-    TableMonitorComponent
+    TableMonitorComponent,
+    UploadFileComponent
   ],
   imports: [
     FormsModule,

@@ -42,9 +42,12 @@ class EleveService implements IEleveService
             $eleve->date_inscription = date('Y-m-d', strtotime($request->date_inscription));
         if($request->date_naissance)
             $eleve->date_naissance = date('Y-m-d', strtotime($request->date_naissance));
-        if($request->date_contrat){
+        if(isset($request->date_contrat) && !isset($request->date_fin_contrat)){
             $eleve->date_contrat = date('Y-m-d', strtotime($request->date_contrat));
             $eleve->date_fin_contrat = date('Y-m-d', strtotime("+18 months",strtotime($eleve->date_contrat)));
+        }else if(isset($request->date_contrat) && isset($request->date_fin_contrat)){
+            $eleve->date_contrat = date('Y-m-d', strtotime($request->date_contrat));
+            $eleve->date_fin_contrat = date('Y-m-d', strtotime($request->date_fin_contrat));
         }
         if($request->date_fin_permis)
             $eleve->date_fin_permis = date('Y-m-d', strtotime($request->date_fin_permis));
@@ -90,9 +93,12 @@ class EleveService implements IEleveService
             $eleve->date_inscription = date('Y-m-d', strtotime($request->date_inscription));
         if($request->date_naissance)
             $eleve->date_naissance = date('Y-m-d', strtotime($request->date_naissance));
-        if($request->date_contrat){
+        if(isset($request->date_contrat) && !isset($request->date_fin_contrat)){
+                $eleve->date_contrat = date('Y-m-d', strtotime($request->date_contrat));
+                $eleve->date_fin_contrat = date('Y-m-d', strtotime("+18 months",strtotime($eleve->date_contrat)));
+        }else if(isset($request->date_contrat) && isset($request->date_fin_contrat)){
             $eleve->date_contrat = date('Y-m-d', strtotime($request->date_contrat));
-            $eleve->date_fin_contrat = date('Y-m-d', strtotime("+18 months",strtotime($eleve->date_contrat)));
+            $eleve->date_fin_contrat = date('Y-m-d', strtotime($request->date_fin_contrat));
         }
         if($request->date_fin_permis)
             $eleve->date_fin_permis = date('Y-m-d', strtotime($request->date_fin_permis));
@@ -105,6 +111,10 @@ class EleveService implements IEleveService
             $eleve->status = 1;
         else if(!$request->status)
             $eleve->status = 0;
+
+        if($request->versement > 0) {
+           // $eleve->versement = $request->versement ; en attente de saaq
+        }  
 
         $eleve->email = $request->email;
         $eleve->numero_permis = $request->numero_permis;

@@ -82,15 +82,17 @@ class MailController extends Controller
             });
 
             $allId = array_unique($allId->all(), SORT_REGULAR);
+            echo "Send email reservation start\r\n";
             foreach ($allId as $id) {
 
                 $data = $eleves->filter(function ($e) use ($id) {
                     return $e->id == $id;
                 });
-                Mail::to($data->first->email, 'Information')
+                Mail::to($data->first()->email, 'Information')
                     ->send(new NotifReservation($data));
-                echo "HTML Email Sent. Check your inbox.";
+                echo "Email to: ".$data->first()->nom." ".$data->first()->prenom."\r\n";
             }
+            echo "Send email reservation end\r\n";
         }
     }
 
@@ -108,11 +110,13 @@ class MailController extends Controller
             })
             ->orderBy('created_at', 'desc')->get();
         if (isset($eleves)) {
+            echo "Send email contract start\r\n";
             foreach ($eleves as $data) {
                 Mail::to($data->email, 'Information')
                     ->send(new NotifFinDossier($data));
-                echo "HTML Email Sent. Check your inbox.";
+                echo "Email to: ".$data->nom." ".$data->prenom."\r\n";
             }
+            echo "Send email contract end\r\n";
         }
     }
 
@@ -126,11 +130,13 @@ class MailController extends Controller
         })
             ->orderBy('created_at', 'desc')->get();
         if (isset($eleves)) {
+            echo "Send email payment start\r\n";
             foreach ($eleves as $data) {
                 Mail::to($data->email, 'Information')
                     ->send(new NotifPayement($data));
-                echo "HTML Email Sent. Check your inbox.";
+                echo "Email to: ".$data->nom." ".$data->prenom."\r\n";
             }
+            echo "Send email payment end\r\n";
         }
     }
 

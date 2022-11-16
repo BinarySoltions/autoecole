@@ -23,6 +23,7 @@ import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/mat
 import { LayoutModule } from '@angular/cdk/layout';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDividerModule} from '@angular/material/divider';
+import {PortalModule} from '@angular/cdk/portal';
 
 export const MY_FORMATS = {
   parse: {
@@ -63,6 +64,7 @@ export const MY_FORMATS = {
     MatButtonToggleModule,
     MatTooltipModule,
     MatDividerModule,
+    PortalModule,
   ],
   providers:[
     { provide: MAT_DATE_LOCALE, useValue: 'fr' },
