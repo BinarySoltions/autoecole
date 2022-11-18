@@ -21,16 +21,33 @@ export class UploadFileService {
   constructor(private http:HttpClient) { }
   
   // Returns an observable
-  upload(file):Observable<any> {
+  upload(file,group):Observable<any> {
   
       // Create form data
       const formData = new FormData(); 
         
       // Store form name as "file" with file data
       formData.append("file", file, file.name);
+      formData.append("group", group.group);
+      formData.append("lang", group.lang);
         
       // Make http post request over api
       // with formData as req
       return this.http.post(this.apiUrl+'upload', formData,httpOptions)
   }
+
+   // Returns an observable
+   getFiles():Observable<any> {
+  
+    return this.http.post<any>(this.apiUrl+'getFiles', "",httpOptions)
+}
+
+deleteFiles(req):Observable<any> {
+  
+  return this.http.post<any>(this.apiUrl+'deleteFiles', req,httpOptions)
+}
+getFilesByGroup(req):Observable<any> {
+  
+  return this.http.post<any>(this.apiUrl+'getFilesByGroup', req,httpOptions)
+}
 }

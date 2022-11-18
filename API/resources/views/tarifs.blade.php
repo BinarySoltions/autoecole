@@ -4,8 +4,8 @@
 
     <div class="container content" style="background-color: white;">
     @include('tarifsPrix')
-    <div style="margin: 20px;">
-    <img src="{{url('/images/PESR-Pconduite-Flyer220403.jpg')}}" alt="Paiement" style="width: 100%;">
+    <div id="grpFlyersTarif" style="margin: 20px;">
+   
     </div>
   
         @include('servicesBottom')

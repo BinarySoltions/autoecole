@@ -14,9 +14,8 @@ Vous désirez changer votre permis étranger et obtenir le permis de conduire du
 a le bon plan de perfectionnement pour vous !!<br/>
 
 Pour plus d’informations, prenez <a href="contactez-nous"> contact</a> avec nous.<br/>
-    <div style="margin: 20px;">
+    <div id="grpFlyersPerfectionnement" style="margin: 20px;">
     
-        <img src="{{url('/images/perfectionnement20220124.jpg')}}" alt="Dispositif" style="width: 100%;"/>
     </div>
     
         @include('servicesBottom')

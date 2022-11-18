@@ -1,7 +1,23 @@
 
 <script>
+     function getMessage(group,div,nbr) {
+            $.ajax({
+               type:'POST',
+               url:'/api/getFilesWebGroup',
+               data: JSON.stringify({'group':group,'nbr':nbr}),
+               dataType: 'text',
+               contentType: 'application/json',
+               success:function(data) {
+                console.log(data);
+                  div.html(data);
+               }
+            });
+         }
     $(document).ready(function() {
-       
+        getMessage("Groupe",$("#grpImage"),2);
+        getMessage("Flyers",$("#grpFlyers"),2);
+        getMessage("FlyersTarif",$("#grpFlyersTarif"),1);
+        getMessage("FlyersPerfectionnement",$("#grpFlyersPerfectionnement"),1);
         // this is the id of the form
         $("#formContact").submit(function(e) {
 

@@ -1,0 +1,31 @@
+<div class="">
+    <mdb-card>
+        <mdb-card-header>
+            <div class="row">
+                <div style="text-align: center;width: 100%;">
+                    <h3>{{'fichier.titreStationnement' | translate}}</h3>
+                </div>
+            </div>
+        </mdb-card-header>
+        <mdb-card-body>
+            <mdb-card-text>
+<div class="row">
+    <div class="col col-lg-2" *ngFor="let file of dragables">
+
+        <!-- <img src="{{file.src}}" class="cover" title="{{file.name}}" /> -->
+        <mat-card class="example-card cover">
+
+            <img mat-card-image src="{{getSource(file)}}" title="{{file?.name}}">
+            <mat-card-content>
+                <p class="cut-text">
+                    <a href="{{file?.src}}" target="_blank">{{getImageName(file?.name)}}</a>
+                </p>
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+</div>
+            </mdb-card-text>
+        </mdb-card-body>
+    </mdb-card>
+</div>

@@ -1,21 +1,123 @@
-<div class="text-center">
-    <input class="form-control" type="file" 
-            (change)="onChange($event)">
-  
-    <button (click)="onUpload()" 
-        class="btn btn-success">
-        Upload
-    </button>
+<div class="">
+    <mdb-card>
+        <mdb-card-header>
+            <div class="row">
+                <div style="text-align: center;width: 100%;">
+                    <h3>{{'fichier.titre' | translate}}</h3>
+                </div>
+            </div>
+        </mdb-card-header>
+        <mdb-card-body>
+            <mdb-card-text>
+                <form [formGroup]="form">
+                    <div class="row">
+                        <div class="col col-lg-4">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Catégorie de fichiers</mat-label>
+                                <select matNativeControl [formControl]="groupControl" name="group">
+                                    <ng-template ngFor let-group [ngForOf]="groups" let-i="index">
+                                        <option [value]="group">{{group}}</option>
+                                    </ng-template>
+                                </select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col col-lg-3">
+                            <mat-form-field appearance="fill">
+                              <mat-label>{{'eleve.langue' | translate}}</mat-label>
+                              <select matNativeControl  name="lang" [formControl]="langControl">
+                                <ng-template ngFor let-language [ngForOf]="languages">
+                            <option [value]="language.value">{{language.label}}</option>
+                        </ng-template>
+                              </select>
+                            </mat-form-field>
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-12" style="text-align:left">
+                            <div style="background: whitesmoke;width: 100%;">
+                                <button type="button" class="btn bg-color-green" (click)="fakeUpload()" 
+                                    style="margin-right:10px;">
+                                    <i class="fas fa-upload"></i>&nbsp;{{'fichier.televerser' | translate}}
+                                </button>
+                                <span> {{nameFile}} </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <input class="form-control" type="file" #fileInput (change)="onChange($event)" style="display: none;">
+                <div class="row">
+                    <div class="col col-lg-12" style="text-align:right;margin: 20px 0px;">
+                        <button (click)="onUpload()" class="btn bg-color-green">
+                            <i class="fas fa-save"></i>&nbsp; {{'fichier.enregistrer' | translate}}
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-lg-12" style="text-align:center;color: white;margin: 20px 0px;background: grey;">
+                       <h4> Fichiers</h4>
+                    </div>
+                </div>
+                <div class="row"  cdkDropListGroup>
+                    <div class="col col-lg-12">
+                        <div class="row">
+                    <div class="col col-lg-12" cdkDropList cdkDropListOrientation="horizontal" class="example-list" style="background: gray; overflow:scroll;max-height:500px"
+                    [cdkDropListData]="filesDroped" (cdkDropListDropped)="dropFile($event)">
+                       
+                        <div  class="example-box" *ngFor="let file of filesDroped" cdkDrag>
+                            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+
+                            <!-- <img src="{{movie.src}}" class="cover" title="{{movie.name}}" /> -->
+                            <mat-card class="example-card cover">
+                                    
+                                <img mat-card-image src="{{getSource(file)}}"  title="{{file.name}}" >
+                                <mat-card-content>
+                                  <p class="cut-text">
+                                    <a href="{{file.src}}" target="_blank">{{getImageName(file.name)}}</a>
+                                  </p>
+                                </mat-card-content>
+                              </mat-card>
+
+                        </div>
+                    </div>
+                    <div class="col col-lg-12" style="text-align:right;margin: 20px 0px;">
+                        <button (click)="supprimer()" class="btn bg-color-green">
+                            <i class="fas fa-trash"></i>&nbsp; {{'fichier.supprimer' | translate}}
+                        </button>
+
+                    </div>
+                    </div>
+                    </div>
+                    <div class="col col-lg-12" style="background: gray; overflow:scroll;max-height:500px">
+                        <div class="row">
+                        <div class="col col-lg-4" *ngFor="let files of dragables" cdkDropList class="example-list"
+                            [cdkDropListData]="files" (cdkDropListDropped)="drop($event)">
+                            <div (click)="clickBox(file.id)" class="example-box" *ngFor="let file of files" cdkDrag>
+                                <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+
+                                <!-- <img src="{{file.src}}" class="cover" title="{{file.name}}" /> -->
+                                <mat-card class="example-card cover">
+                                    <mat-card-header>
+                                       
+                                        <mat-card-title>{{file.group}}</mat-card-title>
+                                        
+                                      </mat-card-header>
+                                    <img mat-card-image src="{{getSource(file)}}"  title="{{file.name}}" >
+                                    <mat-card-content>
+                                      <p class="cut-text">
+                                        <a href="{{file.src}}" target="_blank">{{getImageName(file.name)}}</a>
+                                      </p>
+                                    </mat-card-content>
+                                  </mat-card>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                   
+                </div>
+            </mdb-card-text>
+        </mdb-card-body>
+    </mdb-card>
 </div>
-  
-<!-- Shareable short link of  uploaded file -->
-<div class="container text-center jumbotron"
-    *ngIf="shortLink">
-    <h2> Visit Here</h2>
-    <a href="{{shortLink}}">{{shortLink}}</a>
-</div>
-  
-<!--Flag variable is used here-->
-<div class="container" *ngIf="loading">
-    <h3>Loading ...</h3>
-</div>
+<ngx-spinner>
+    <p class="loading">Loading Awesomeness...</p>
+  </ngx-spinner>

@@ -73,6 +73,7 @@ Route::get('eleves/{limit}','EleveController@partialStudents')->middleware('auth
 Route::get('eleves_seulement','EleveController@seulement')->middleware('auth:api');
 //get eleve
 Route::get('eleve/{id}','EleveController@show')->middleware('auth:api');
+Route::get('obtenirEleve/{id}','EleveController@obtenirEleve');
 Route::get('elevePublic/{id}','EleveController@show');
 //get eleve
 Route::delete('eleve/{id}','EleveController@destroy')->middleware('auth:api');
@@ -88,7 +89,7 @@ Route::post('printExam','EleveController@printExam')->middleware('auth:api');
 //post contrat
 Route::post('printContrat','EleveController@printContrat')->middleware('auth:api');
 //post attestation
-Route::post('printAttestation','EleveController@printAttestation')->middleware('auth:api');
+Route::post('printAttestation','PrinterController@printAttestation')->middleware('auth:api');
  
 //create ecole
 Route::post('ecole','EcoleController@store')->middleware('auth:api');
@@ -114,7 +115,7 @@ Route::get('attestations','AttestationController@index')->middleware('auth:api')
 //store payement
 Route::post('payer','PayementController@store')->middleware('auth:api');
 //get payement
-Route::get('payements/{id}','PayementController@index')->middleware('auth:api');
+Route::get('payements/{id}','PayementController@index');
 //get payement
 Route::post('payements','PayementController@totalPayement')->middleware('auth:api');
 
@@ -148,5 +149,13 @@ Route::post('/sendNotifReservation', function() {
     // Do whatever you want either a print a message or exit
 });
 
-
+Route::get('moniteurs','MoniteurController@index')->middleware('auth:api');
+Route::post('add','MoniteurController@ajouter')->middleware('auth:api');
+Route::post('supprimermoniteur','MoniteurController@supprimer')->middleware('auth:api');
+//upload file
+Route::post('upload','UploadFileController@upload')->middleware('auth:api');
+Route::post('getFiles','UploadFileController@getFiles')->middleware('auth:api');
+Route::post('deleteFiles','UploadFileController@deleteFiles')->middleware('auth:api');
+Route::post('getFilesByGroup','UploadFileController@getFilesByGroup')->middleware('public');
+Route::post('getFilesWebGroup','UploadFileController@getFilesByGroupWeb');
 

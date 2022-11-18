@@ -164,5 +164,12 @@
         "total":"Total fees",
         "recu":"Total paid",
         "balance":"Balance"
+    },
+    "fichier":{
+        "titreStationnement":"Parking files",
+        "titre":"File management",
+        "enregistrer":"Save",
+        "supprimer":"Delete",
+        "televerser":"Upload"
     }
 }

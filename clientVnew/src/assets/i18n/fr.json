@@ -176,5 +176,13 @@
         "total":"Frais total",
         "recu":"Total payé",
         "balance":"Balance"
+    },
+    "fichier":{
+        "titreStationnement":"Fichiers stationnement",
+        "titre":"Gérer les fichiers",
+        "enregistrer":"Enregistrer",
+        "supprimer":"Supprimer",
+        "televerser":"Téléverser"
     }
+
 }

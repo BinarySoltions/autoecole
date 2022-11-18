@@ -17,10 +17,12 @@ import { ListReservationComponent } from 'src/app/reserve/list-reservation/list-
 import { ModalDeleteEventsComponent } from '../../modal-delete-events/modal-delete-events.component';
 import { BalancePaieComponent } from 'src/app/payement/balance-paie/balance-paie.component';
 import { DialogConfirmerComponent } from 'src/app/partage/dialog-confirmer/dialog-confirmer.component';
+import { DisplayFileComponent } from '../display-file/display-file.component';
 @NgModule({
   declarations: [ RowGridComponent,
     LastRowGridComponent,PhaseDeuxAffichageComponent,ModalNoteComponent,    ModalAccessComponent, 
-    ModalConfirmComponent,ListReservationComponent, ModalDeleteEventsComponent,BalancePaieComponent,DialogConfirmerComponent,],
+    ModalConfirmComponent,ListReservationComponent, ModalDeleteEventsComponent,BalancePaieComponent,DialogConfirmerComponent,
+    DisplayFileComponent,],
   imports: [
     FormsModule,
     CommonModule,
@@ -39,6 +41,7 @@ import { DialogConfirmerComponent } from 'src/app/partage/dialog-confirmer/dialo
     RowGridComponent,
     LastRowGridComponent,PhaseDeuxAffichageComponent,ModalNoteComponent,    ModalAccessComponent,AngularMaterialModule,
     ModalConfirmComponent,ListReservationComponent,ModalDeleteEventsComponent,  BalancePaieComponent,DialogConfirmerComponent,
+    DisplayFileComponent,
   ],
   providers:[
     CookieService,

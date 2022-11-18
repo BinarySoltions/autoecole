@@ -24,6 +24,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDividerModule} from '@angular/material/divider';
 import {PortalModule} from '@angular/cdk/portal';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 export const MY_FORMATS = {
   parse: {
@@ -65,6 +66,7 @@ export const MY_FORMATS = {
     MatTooltipModule,
     MatDividerModule,
     PortalModule,
+    DragDropModule,
   ],
   providers:[
     { provide: MAT_DATE_LOCALE, useValue: 'fr' },
