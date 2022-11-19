@@ -80,6 +80,7 @@ import { FactDetailComponent } from '../facture/fact-detail/fact-detail.componen
 import { MonitorComponent } from '../monitor/monitor.component';
 import { TableMonitorComponent } from '../monitor/table-monitor/table-monitor.component';
 import { UploadFileComponent } from '../upload-file/upload-file.component';
+import { NavbarSideComponent } from '../navbar/navbar-side/navbar-side.component';
 
 @NgModule({
   declarations: [
@@ -144,7 +145,8 @@ import { UploadFileComponent } from '../upload-file/upload-file.component';
     FactDetailComponent,
     MonitorComponent,
     TableMonitorComponent,
-    UploadFileComponent
+    UploadFileComponent,
+    NavbarSideComponent
   ],
   imports: [
     FormsModule,

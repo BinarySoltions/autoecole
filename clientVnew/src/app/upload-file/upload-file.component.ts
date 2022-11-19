@@ -1,11 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UploadFileService } from '../service/upload-file.service';
-import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { object } from 'underscore';
+import { MatSelectionList } from '@angular/material/list';
 
 export class FileModel {
   id: number;
@@ -33,6 +32,7 @@ export class ValueLabel{
 export class UploadFileComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: ElementRef;
+  @ViewChild('filesSelected') filesSelected: MatSelectionList;
   // Variable to store shortLink from api response
   shortLink: string = "";
   loading: boolean = false; // Flag variable
@@ -43,17 +43,17 @@ export class UploadFileComponent implements OnInit {
   languages: ValueLabel[];
   groupControl = new FormControl(this.groups[0]);
   langControl = new FormControl("fr");
+  descControl= new FormControl("");
   form = new FormGroup({
     group: this.groupControl,
-    lang: this.langControl
+    lang: this.langControl,
+    description:this.descControl
   });
 
   nameFile: string = "Choisir un fichier";
  
   dragables = new Array(50);
   fileSelected : FileModel = new FileModel();
-  filesDroped:any[] = [];
-
   // Inject service 
   constructor(private uploadFileService: UploadFileService,private translate: TranslateService,
     private spinner:NgxSpinnerService,) 
@@ -78,11 +78,11 @@ export class UploadFileComponent implements OnInit {
   // OnClick of button Upload
   onUpload() {
     this.spinner.show(undefined, { fullScreen: true });
-    this.loading = !this.loading;
-    console.log(this.file);
     const group = this.form.get('group').value;
     const lang = this.form.get('lang').value;
-    this.uploadFileService.upload(this.file, {group:group,lang:lang}).subscribe(
+    const desc = this.form.get('description').value;
+
+    this.uploadFileService.upload(this.file, {group:group,lang:lang,description:desc}).subscribe(
       (event: any) => {
         if (typeof (event) === 'object') {
           this.nameFile = "Choisir un fichier";
@@ -101,51 +101,14 @@ export class UploadFileComponent implements OnInit {
     this.fileInput.nativeElement.click();
   }
 
-  drop(event: CdkDragDrop<any[]>) {
-    // moveItemInArray(this.movies, event.previousIndex, event.currentIndex);
-    this.fileSelected = <FileModel>event.previousContainer.data[event.previousIndex];
-    if(event.container.data.length<1){
-     
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-    }
-
-  }
-  }
-
-  dropFile(event: CdkDragDrop<any[]>) {
-    // moveItemInArray(this.movies, event.previousIndex, event.currentIndex);
-   
-    
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-    }
-
-  }
   getFiles() {
     this.spinner.show(undefined, { fullScreen: true });
-    for (var i = 0; i < this.dragables.length; i++) {
-      this.dragables[i] = new Array();
-    }
+    this.dragables=[];
     this.uploadFileService.getFiles().subscribe(res => {
       if (res) {
         for (var i = 0; i < res.length; i++) {
           let path = environment.pathPublic + environment.pathVariableStorage +res[i].path;
-          this.dragables[i] = new Array({src:path, id:res[i].id,name:res[i].name,mime:res[i].mime,group:res[i].group_file});
+          this.dragables.push({src:path, id:res[i].id,name:res[i].name,mime:res[i].mime,group:res[i].group_file});
         }
         this.spinner.hide();
       }
@@ -157,12 +120,14 @@ export class UploadFileComponent implements OnInit {
   }
 
   supprimer(){
-    console.log(this.filesDroped);
+    const filesSelected = this.filesSelected.selectedOptions.selected
+    console.log(filesSelected);
     let req = [];
-    this.filesDroped.forEach(f => {req.push({id:f.id});});
+    filesSelected.forEach(f =>{
+    req.push({id:f.value.id});});
    this.uploadFileService.deleteFiles(req).subscribe(res=>{
     if(res?.success){
-      this.filesDroped = [];
+     this.getFiles();
     }
    })
   }
@@ -179,4 +144,7 @@ export class UploadFileComponent implements OnInit {
     file.src;
   }
 
+  isDeleted(){
+    return !this.filesSelected?.selectedOptions.selected.length;
+  }
 }

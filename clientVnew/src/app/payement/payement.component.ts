@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit ,ViewEncapsulation} from '@angular/core';
 import { PayementService } from './payement.service';
 import { Payement } from './payement.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,7 +18,8 @@ import { Coordonnee } from '../entite/coordonnee.entity';
   selector: 'app-payement',
   templateUrl: './payement.component.html',
   styleUrls: ['./payement.component.scss'],
-  providers:[PayementService]
+  providers:[PayementService],
+  encapsulation:ViewEncapsulation.None
 })
 export class PayementComponent implements OnInit,AfterViewInit {
   eleve:Eleve = new Eleve();

@@ -25,6 +25,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDividerModule} from '@angular/material/divider';
 import {PortalModule} from '@angular/cdk/portal';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+
 
 export const MY_FORMATS = {
   parse: {
@@ -67,6 +71,9 @@ export const MY_FORMATS = {
     MatDividerModule,
     PortalModule,
     DragDropModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
   ],
   providers:[
     { provide: MAT_DATE_LOCALE, useValue: 'fr' },

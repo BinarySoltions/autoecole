@@ -1,11 +1,47 @@
-<div class="container">
-  <app-navbar [isExamen]="isExamen"></app-navbar>
-</div>
+<mat-toolbar class="white-toolbar">
+  <button class="bg-color-green" mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+    <mat-icon *ngIf="!sidenav.opened">
+        menu
+    </mat-icon>
+    <mat-icon *ngIf="sidenav.opened">
+        close
+    </mat-icon>
+</button>
+  <a class="navbar-brand" href="#"><img width="200" src="assets/logo_pconduite.jpg"/></a>
+  <div *ngIf="checkLogin()" class="dropdown" style="text-align:right;float: right;width: 100%;">
+    <button type="button" class="btn bg-color-green dropdown-toggle" title="{{'menu.parametre' | translate}}" data-toggle="dropdown">
+      <i class="fas fa-cog"></i>
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" routerLink="/phase">Phase et module</a>
+      <a class="dropdown-item" routerLink="/personne">Personne responsable</a>
+      <a class="dropdown-item" routerLink="/ecole">École</a>
+      <a class="dropdown-item" routerLink="/parametres/contrat">Contrat</a>
+      <a class="dropdown-item" routerLink="/erreur-sortie">Points à améliorer</a>
+      <a class="dropdown-item" routerLink="/moniteur">Moniteur</a>
+      <a routerLink="/register" class="dropdown-item">S'inscrire</a>
+    </div>
+  </div>
+</mat-toolbar>
+ <div class="btn bg-color-green bande"></div>
+<mat-sidenav-container>
+  <mat-sidenav  class=" mat-elevation-z8" #sidenav="matSidenav"  mode="side" opened> 
+   
+      <app-navbar-side [isExamen]="isExamen"></app-navbar-side>
 
-<div class="btn bg-color-green bande"></div>
-<div class="container">
-  <main>
-      <router-outlet (activate)='onActivate($event)'></router-outlet>
-  </main>
-</div>
+  </mat-sidenav>
+  <mat-sidenav-content class="content mat-elevation-z8">
+    <div >
+      <!-- <div class="btn bg-color-green bande"></div> -->
+
+        <main>
+          <router-outlet (activate)='onActivate($event)'></router-outlet>
+        </main>
+
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
 <app-confirmer-changement></app-confirmer-changement>

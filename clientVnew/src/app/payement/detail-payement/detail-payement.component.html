@@ -18,24 +18,24 @@
   <table width="100%" mat-table matSort [dataSource]="dataSource1" class="mat-elevation-z8">
   <ng-container matColumnDef="date_payement">
     <th mat-header-cell *matHeaderCellDef  mat-sort-header> Date </th>
-    <td mat-cell *matCellDef="let transaction"> {{transaction.date_payement | date:'yyyy-MM-dd'}} </td>
+    <td mat-cell *matCellDef="let transaction" data-label="date"> {{transaction.date_payement | date:'yyyy-MM-dd'}} </td>
     <!-- <td mat-footer-cell *matFooterCellDef> </td> -->
   </ng-container>
   <!-- Cost Column -->
   <ng-container matColumnDef="nom">
   <th mat-header-cell *matHeaderCellDef  mat-sort-header> Nom </th>
-  <td mat-cell *matCellDef="let transaction"> {{transaction.nom}} </td>
+  <td mat-cell *matCellDef="let transaction" data-label="nom"> {{transaction.nom}} </td>
   <!-- <td mat-footer-cell *matFooterCellDef> </td> -->
   </ng-container>
   <ng-container matColumnDef="type">
     <th mat-header-cell *matHeaderCellDef  mat-sort-header> Type </th>
-    <td mat-cell *matCellDef="let transaction"> {{transaction.type}} </td>
+    <td mat-cell *matCellDef="let transaction" data-label="type"> {{transaction.type}} </td>
     <!-- <td mat-footer-cell *matFooterCellDef> </td> -->
   </ng-container>
   <!-- Cost Column -->
   <ng-container matColumnDef="montant">
   <th mat-header-cell *matHeaderCellDef  mat-sort-header> Montant </th>
-  <td mat-cell *matCellDef="let transaction" align="center"> 
+  <td mat-cell *matCellDef="let transaction" align="center" data-label="Montant"> 
     {{transaction.montant | currency}}
   </td>
   <!-- <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td> -->

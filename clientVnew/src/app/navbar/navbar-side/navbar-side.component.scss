@@ -1,0 +1,15 @@
+.nav-item{
+    display: block !important;
+}
+.menu-ul{
+    padding-inline-start: 9px;
+    > li{
+    text-align: left;
+    margin-top: 25px;
+    color: green;
+    font-size: large;
+}
+}
+a{
+    color:black;
+}

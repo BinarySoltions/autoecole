@@ -1,23 +1,47 @@
-
 <script>
-     function getMessage(group,div,nbr) {
-            $.ajax({
-               type:'POST',
-               url:'/api/getFilesWebGroup',
-               data: JSON.stringify({'group':group,'nbr':nbr}),
-               dataType: 'text',
-               contentType: 'application/json',
-               success:function(data) {
+     var called = false;  
+    
+    function toggleDesc() {
+        if(!called){
+        $(".complete").toggle();
+        $(".more").click(function() {
+           
+            if ($(this).text().localeCompare("Voir moins..") == 0) {
+                $(this).text("Voir plus..").siblings(".complete").toggle();
+                $(this).siblings(".notAll").toggle();
+
+            } else {
+                $(this).text("Voir moins..").siblings(".complete").toggle();
+                $(this).siblings(".notAll").toggle();
+                
+        }
+        });
+        called = true;
+    }
+    }
+    function getMessage(group, div, nbr) {
+        $.ajax({
+            type: 'POST',
+            url: '/api/getFilesWebGroup',
+            data: JSON.stringify({
+                'group': group,
+                'nbr': nbr
+            }),
+            dataType: 'html',
+            contentType: 'application/json',
+            success: function(data) {
                 console.log(data);
-                  div.html(data);
-               }
-            });
-         }
+                div.html(data);
+                toggleDesc();
+            }
+        });
+    }
     $(document).ready(function() {
-        getMessage("Groupe",$("#grpImage"),2);
-        getMessage("Flyers",$("#grpFlyers"),2);
-        getMessage("FlyersTarif",$("#grpFlyersTarif"),1);
-        getMessage("FlyersPerfectionnement",$("#grpFlyersPerfectionnement"),1);
+
+        getMessage("Groupe", $("#grpImage"), 2);
+        getMessage("Flyers", $("#grpFlyers"), 2);
+        getMessage("FlyersTarif", $("#grpFlyersTarif"), 1);
+        getMessage("FlyersPerfectionnement", $("#grpFlyersPerfectionnement"), 1);
         // this is the id of the form
         $("#formContact").submit(function(e) {
 
@@ -33,7 +57,9 @@
                 url: url,
                 data: form.serialize(), // serializes the form's elements.
                 success: function(data) {
-                    $('.toast').toast({delay: 10000});
+                    $('.toast').toast({
+                        delay: 10000
+                    });
                     $('.toast').toast('show');
                     $('.toast').css('z-index', 3);
                 }
@@ -63,8 +89,7 @@
                     required: true,
                     maxlength: 50
                 },
-                messages: {
-                }
+                messages: {}
             }
         });
 
@@ -90,24 +115,24 @@
 
 
         $('.owl-carousel').owlCarousel({
-    loop:true,
-    margin:10,
-    nav:true,
-    autoplay:true,
-    autoplayTimeout:3000,
-    autoplayHoverPause:true,
-    responsive:{
-        0:{
-            items:1
-        },
-        600:{
-            items:2
-        },
-        1000:{
-            items:4
-        }
-    }
-});
+            loop: true,
+            margin: 10,
+            nav: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        });
 
     });
 </script>

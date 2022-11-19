@@ -5,7 +5,7 @@
        
 <form #formulaire="ngForm">
   <div class="row">
-      <div class="col col-3  none-border-top form-align-v">
+      <div class="col col-lg-3  none-border-top form-align-v">
           <label for="datePayement" class="requis">Date de début</label>
                 <mat-form-field floatLabel="never">
                     <input matInput  [matDatepicker]="pickerDD"
@@ -15,7 +15,7 @@
                     <mat-datepicker #pickerDD></mat-datepicker>
                   </mat-form-field>
       </div>
-      <div class="col col-3  none-border-top form-align-v">
+      <div class="col col-lg-3   none-border-top form-align-v">
           <label for="datePayement" class="requis">Date de Fin</label>
                 <mat-form-field floatLabel="never">
                     <input matInput  [matDatepicker]="picker" [min]="dateDebut" [disabled]="!dateDebut"
@@ -25,11 +25,11 @@
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
       </div>
-      <div class="col col-3 el-align-centre">
+      <div class="col col-lg-3  flex-container-btn">
           <button type="button" 
           class="btn bg-color-green size-btn-m"
            (click)="enregistrer()"
-           style="margin-right:10px;" [disabled]="!formulaire.valid">
+           style="margin-bottom:10px;" [disabled]="!formulaire.valid">
               <i class="fas fa-save"></i>&nbsp;Rechercher
             </button>
       </div>
@@ -39,18 +39,18 @@
 <!-- Cost Column -->
 <ng-container matColumnDef="dateDebut">
     <th mat-header-cell *matHeaderCellDef> Date de début </th>
-    <td mat-cell *matCellDef="let transaction"> {{dateDebut | date:'yyyy-MM-dd'}} </td>
+    <td mat-cell *matCellDef="let transaction" data-label="Date de début"> {{dateDebut | date:'yyyy-MM-dd'}} </td>
     <!-- <td mat-footer-cell *matFooterCellDef> </td> -->
   </ng-container>
   <ng-container matColumnDef="dateFin">
       <th mat-header-cell *matHeaderCellDef> Date de fin </th>
-      <td mat-cell *matCellDef="let transaction"> {{dateFin | date:'yyyy-MM-dd'}} </td>
+      <td mat-cell *matCellDef="let transaction" data-label="Date de fin"> {{dateFin | date:'yyyy-MM-dd'}} </td>
       <!-- <td mat-footer-cell *matFooterCellDef> </td> -->
     </ng-container>
   <!-- Cost Column -->
   <ng-container matColumnDef="montant">
     <th mat-header-cell *matHeaderCellDef align="center"> Montant total par type de payement </th>
-    <td mat-cell *matCellDef="let transaction" align="center"> 
+    <td mat-cell *matCellDef="let transaction" align="center" data-label="Total"> 
       <table width="50%">
         <tr *ngFor="let m of transaction?.montant">
           <td align="right">{{m.type}} :</td>

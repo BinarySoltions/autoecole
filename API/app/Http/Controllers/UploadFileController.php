@@ -42,6 +42,7 @@ class UploadFileController extends Controller
                 $fileModel->group_file = Request::createFromGlobals()->get('group');
                 $fileModel->lang = Request::createFromGlobals()->get('lang');
                 $fileModel->mime = $mime;
+                $fileModel->description = Request::createFromGlobals()->get('description');
                 $fileModel->save();
                 return response()->json([
                     'link' => $filePath

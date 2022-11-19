@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild ,ViewEncapsulation} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -10,7 +10,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-detail-payement',
   templateUrl: './detail-payement.component.html',
-  styleUrls: ['./detail-payement.component.scss']
+  styleUrls: ['./detail-payement.component.scss'],
+  encapsulation:ViewEncapsulation.None
 })
 export class DetailPayementComponent implements OnInit, OnChanges {
 

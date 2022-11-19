@@ -28,12 +28,22 @@ export class UploadFileService {
         
       // Store form name as "file" with file data
       formData.append("file", file, file.name);
-      formData.append("group", group.group);
-      formData.append("lang", group.lang);
+      for(var j in group){
+        var sub_key = j;
+        var sub_val = group[j];
+        console.log('sub_key');
+        console.log(sub_key);
+        console.log('sub_val');
+        console.log(sub_val);
+        formData.set(sub_key, sub_val);
+        
+      }
+      console.log('formData');
+      console.log(formData);
         
       // Make http post request over api
       // with formData as req
-      return this.http.post(this.apiUrl+'upload', formData,httpOptions)
+      return this.http.post(this.apiUrl+'upload', formData,httpOptions);
   }
 
    // Returns an observable

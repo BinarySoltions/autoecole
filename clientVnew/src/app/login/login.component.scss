@@ -1,0 +1,9 @@
+.padding-login{
+    padding: 20px 30vw;
+}
+
+@media screen and (max-width: 960px) {
+    .padding-login{
+        padding: 20px 10vw;
+    }
+}

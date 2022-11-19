@@ -33,6 +33,36 @@
                           </div>
                     </div>
                     <div class="row">
+                        <div class="col col-lg-12" style="margin-bottom: 20px;">
+                        <h5 class="no-margin-top pc-header">Description</h5>
+ <editor
+   initialValue=""
+   [init]="{
+        height: 300,
+        menubar: false,
+        content_style: '.tox-toolbar { background-color: #f1f1f1 !important; }',
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar:
+          'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent|styleselect |table tabledelete | \
+          tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol | removeformat | help',
+        entity_encoding:'numeric',
+        style_formats: [
+                {title:'Indent', selector:'p', styles:{'padding-left':'5px'}},
+                {title:'MarginB', selector:'p', styles:{'margin-bottom':'2px'}}
+                ],
+        style_formats_merge: true
+      }"
+      [formControl]="descControl"
+   >
+ </editor></div>
+                    </div>
+                    <div class="row">
                         <div class="col col-lg-12" style="text-align:left">
                             <div style="background: whitesmoke;width: 100%;">
                                 <button type="button" class="btn bg-color-green" (click)="fakeUpload()" 
@@ -57,30 +87,11 @@
                        <h4> Fichiers</h4>
                     </div>
                 </div>
-                <div class="row"  cdkDropListGroup>
-                    <div class="col col-lg-12">
+                <div class="row" >
+                    <div class="col col-12">
                         <div class="row">
-                    <div class="col col-lg-12" cdkDropList cdkDropListOrientation="horizontal" class="example-list" style="background: gray; overflow:scroll;max-height:500px"
-                    [cdkDropListData]="filesDroped" (cdkDropListDropped)="dropFile($event)">
-                       
-                        <div  class="example-box" *ngFor="let file of filesDroped" cdkDrag>
-                            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-
-                            <!-- <img src="{{movie.src}}" class="cover" title="{{movie.name}}" /> -->
-                            <mat-card class="example-card cover">
-                                    
-                                <img mat-card-image src="{{getSource(file)}}"  title="{{file.name}}" >
-                                <mat-card-content>
-                                  <p class="cut-text">
-                                    <a href="{{file.src}}" target="_blank">{{getImageName(file.name)}}</a>
-                                  </p>
-                                </mat-card-content>
-                              </mat-card>
-
-                        </div>
-                    </div>
                     <div class="col col-lg-12" style="text-align:right;margin: 20px 0px;">
-                        <button (click)="supprimer()" class="btn bg-color-green">
+                        <button (click)="supprimer()" class="btn bg-color-green" [disabled]="isDeleted()">
                             <i class="fas fa-trash"></i>&nbsp; {{'fichier.supprimer' | translate}}
                         </button>
 
@@ -88,17 +99,19 @@
                     </div>
                     </div>
                     <div class="col col-lg-12" style="background: gray; overflow:scroll;max-height:500px">
+                        <form>
                         <div class="row">
-                        <div class="col col-lg-4" *ngFor="let files of dragables" cdkDropList class="example-list"
-                            [cdkDropListData]="files" (cdkDropListDropped)="drop($event)">
-                            <div (click)="clickBox(file.id)" class="example-box" *ngFor="let file of files" cdkDrag>
-                                <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-
+                            <mat-selection-list #filesSelected>
+                                <mat-list-option class="col col-lg-4" *ngFor="let file of dragables" [value]="file">
+                                
+                        <!-- <div class="col col-lg-4" *ngFor="let files of dragables"  class="example-list" > -->
+                            <div (click)="clickBox(file.id)" class="example-box" >
+                               
                                 <!-- <img src="{{file.src}}" class="cover" title="{{file.name}}" /> -->
                                 <mat-card class="example-card cover">
                                     <mat-card-header>
                                        
-                                        <mat-card-title>{{file.group}}</mat-card-title>
+                                        <mat-card-title><p class="cut-text">{{file.group}}</p></mat-card-title>
                                         
                                       </mat-card-header>
                                     <img mat-card-image src="{{getSource(file)}}"  title="{{file.name}}" >
@@ -109,8 +122,12 @@
                                     </mat-card-content>
                                   </mat-card>
                             </div>
-                        </div>
+                        <!-- </div> -->
+
+                    </mat-list-option>
+                  </mat-selection-list>
                     </div>
+                </form>
                     </div>
                    
                 </div>

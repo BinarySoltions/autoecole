@@ -1,8 +1,9 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { MatTableDataSource} from '@angular/material/table';
 import { PayementService } from '../payement.service';
 import moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
+
 
 export class TotalPayement{
   dateDebut:any;
@@ -17,7 +18,8 @@ export class TotalTypePayement{
 @Component({
   selector: 'app-total',
   templateUrl: './total.component.html',
-  styleUrls: ['./total.component.scss']
+  styleUrls: ['./total.component.scss'],
+  encapsulation:ViewEncapsulation.None
 })
 export class TotalComponent implements OnInit {
   @Output('datesEvent') datesEvent = new EventEmitter<any>(null);
