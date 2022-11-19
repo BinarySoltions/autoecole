@@ -29,7 +29,7 @@ class NotifLoginPWD extends Mailable
      */
     public function build()
     {
-        return $this->view('mailLoginPWD')
+        return $this->view('mail.mailLoginPWD')
         ->from("notify@pconduite.com","Pconduite")
         ->subject("Se connecter / Login");
     }

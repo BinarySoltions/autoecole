@@ -28,7 +28,7 @@ class NotifFinDossier extends Mailable
      */
     public function build()
     {
-        return $this->view('mailFinDossier')
+        return $this->view('mail.mailFinDossier')
         ->from("notify@pconduite.com","Pconduite")
         ->subject("Dossier");
     }

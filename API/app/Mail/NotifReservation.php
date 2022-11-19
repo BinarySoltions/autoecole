@@ -29,7 +29,7 @@ class NotifReservation extends Mailable
      */
     public function build()
     {
-        return $this->view('mailReservation')
+        return $this->view('mail.mailReservation')
         ->from("notify@pconduite.com","Pconduite")
         ->subject("Réservation / Reservation");
     }

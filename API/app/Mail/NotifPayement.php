@@ -29,7 +29,7 @@ class NotifPayement extends Mailable
      */
     public function build()
     {
-        return $this->view('mailArretPayment')
+        return $this->view('mail.mailArretPayment')
         ->from("notify@pconduite.com","Pconduite")
         ->subject("Paiement / Payment");
     }
