@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-img-top">
                <h5>Permis de conduire classe 5</h5>
-               <h2>$ 899</h2>
+               <h2>$ 979</h2>
             </div>
             <div class="card-body">
                 <p class="card-text text-limit">24 h de cours théoriques<br/>
@@ -18,7 +18,7 @@ Livre du programme 50 $</p>
         <div class="card">
             <div class="card-img-top">
             <h5>Perfectionnement</h5>
-               <h2>$ 350</h2>
+               <h2>$ 400</h2>
             </div>
             <div class="card-body">
                 <p class="card-text text-limit">
@@ -33,7 +33,7 @@ Livre du programme 50 $</p>
         <div class="card">
             <div class="card-img-top">
             <h5>Location de véhicule</h5>
-               <h2>$ 70</h2>
+               <h2>$ 80</h2>
             </div>
             <div class="card-body">
                 <p class="card-text text-limit">Location de véhicule examen à la SAAQ</p>
