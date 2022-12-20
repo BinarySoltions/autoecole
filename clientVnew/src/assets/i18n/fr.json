@@ -182,7 +182,8 @@
         "titre":"Gérer les fichiers",
         "enregistrer":"Enregistrer",
         "supprimer":"Supprimer",
-        "televerser":"Téléverser"
+        "televerser":"Téléverser",
+        "msg_confirm":"Voulez vous supprimer?"
     }
 
 }

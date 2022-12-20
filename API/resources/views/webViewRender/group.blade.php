@@ -6,10 +6,9 @@
     <div class="col-lg-6 col-md-12 col-xs-12">
 @endif
 @if(isset($groupe->description))
-<section>
-    <span class="complete">{!! $groupe->description !!}</span>
-    <span class="notAll">{!! substr($groupe->description,0,400)!!}</p></span>
-    <span class="more" style="color:green;font-weight:bold;cursor:pointer;font-size:large">Voir plus..</span>
+<section style="overflow: overlay; height: 200px;">
+@if(isset($groupe->lang) && $groupe->lang=="fr")<h3>Nouveau Groupe</h3>@else <h3>New Group</h3> @endif
+    <span style="text-align: justify;">{!! $groupe->description !!}</span>
 </section>
 @endif
 

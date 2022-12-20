@@ -2,7 +2,7 @@
 <ul class="menu-ul" *ngIf="checkLogin()">
 <li class="nav-item">
 <i class="fas fa-home"></i> &nbsp; <a class="" href="#" (click)="lienActif = lien.HOME" 
-        [ngClass]="{'active':lienActif == lien.HOME}">Home </a>
+        [ngClass]="{'active':lienActif == lien.HOME}">Accueil </a>
   </li>
 <li  class="nav-item">
     <i class="fas fa-users"></i> &nbsp; <a class=""  (click)="lienActif = lien.ELEVE" 
@@ -25,7 +25,8 @@
         </a>
       </li>
       <li  class="nav-item">
-        <i class="fas fa-folder"></i>&nbsp; <a class=""  routerLink="/televerser" (click)="lienActif = lien.FICHIER">Fichiers
+        <i class="fas fa-folder"></i>&nbsp; <a class=""  routerLink="/televerser" (click)="lienActif = lien.FICHIER"
+        [ngClass]="{'active':lienActif == lien.FICHIER}">Fichier
         </a>
       </li>
       <li *ngIf="currentUser" class="nav-item">

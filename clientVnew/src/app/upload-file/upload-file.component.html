@@ -135,6 +135,9 @@
         </mdb-card-body>
     </mdb-card>
 </div>
+<app-dialog-confirmer (estConfirmer)="confirmerSoummission($event)" 
+[description]="'fichier.msg_confirm' | translate"
+[confirmText]="'examen.confirm_text' | translate"></app-dialog-confirmer>
 <ngx-spinner>
     <p class="loading">Loading Awesomeness...</p>
   </ngx-spinner>

@@ -170,6 +170,7 @@
         "titre":"File management",
         "enregistrer":"Save",
         "supprimer":"Delete",
-        "televerser":"Upload"
+        "televerser":"Upload",
+        "msg_confirm":"Voulez vous supprimer?"
     }
 }

@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatSelectionList } from '@angular/material/list';
+declare var $: any;
 
 export class FileModel {
   id: number;
@@ -120,16 +121,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   supprimer(){
-    const filesSelected = this.filesSelected.selectedOptions.selected
-    console.log(filesSelected);
-    let req = [];
-    filesSelected.forEach(f =>{
-    req.push({id:f.value.id});});
-   this.uploadFileService.deleteFiles(req).subscribe(res=>{
-    if(res?.success){
-     this.getFiles();
-    }
-   })
+    $("#confirmerModal").modal('show');
   }
 
   getImageName(value){
@@ -146,5 +138,25 @@ export class UploadFileComponent implements OnInit {
 
   isDeleted(){
     return !this.filesSelected?.selectedOptions.selected.length;
+  }
+
+  soumettre(){
+  
+   
+  }
+
+  confirmerSoummission(value){
+    if(value){
+      const filesSelected = this.filesSelected.selectedOptions.selected
+      console.log(filesSelected);
+      let req = [];
+      filesSelected.forEach(f =>{
+      req.push({id:f.value.id});});
+     this.uploadFileService.deleteFiles(req).subscribe(res=>{
+      if(res?.success){
+       this.getFiles();
+      }
+     })
+    }
   }
 }
