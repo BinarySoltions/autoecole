@@ -39,7 +39,7 @@ export class UploadFileComponent implements OnInit {
   loading: boolean = false; // Flag variable
   file: File = null; // Variable to store file
   groups: any[] = [
-    "Groupe", "Examen", "Flyers","Stationnement","FlyersTarif","FlyersPerfectionnement"
+    "Groupe", "Examen","ExamenRepriseUne" ,"Flyers","Stationnement","FlyersTarif","FlyersPerfectionnement"
   ];
   languages: ValueLabel[];
   groupControl = new FormControl(this.groups[0]);

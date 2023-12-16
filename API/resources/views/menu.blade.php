@@ -8,10 +8,10 @@
   <div class="container-fluid" style="z-index: 2;">
     <div class="col col-lg-3">
       <div class="header__logo">
-        <a class="navbar-brand" href="/"><img src="{{url('/images/logo_pconduite.jpg')}}" width="200" /></a>
+        <a class="navbar-brand" href="/"><img src="{{url('/images/logo_pconduite.svg')}}"/></a>
       </div>
     </div>
-   
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

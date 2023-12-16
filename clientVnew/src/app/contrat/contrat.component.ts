@@ -30,7 +30,7 @@ export class ContratComponent implements OnInit {
   ecole = new Ecole();
   actionGenerer: boolean;
   totalPaye = 0;
-  versement = 0;
+  versement = [0.00,0.00,0.00,0.00,0.00,0.00];
   dateVersion: any;
   heurePratique: any;
   heureTheorique: any;
@@ -54,7 +54,8 @@ export class ContratComponent implements OnInit {
       if(res){
         this.eleve = res;
         const v = this.eleve.frais_inscription/6;
-        this.versement = Number(v.toFixed(2));
+       // this.versement[0] = Number(v.toFixed(2));
+       this.calculerVersement(this.eleve.frais_inscription,this.eleve.versement)
       }
     });
     this.serviceEcole.obtenirEcole().subscribe(res=>{
@@ -62,6 +63,26 @@ export class ContratComponent implements OnInit {
         this.ecole = res;
       }
     })
+  }
+
+  calculerVersement(montant:any,nbrVersement:any){
+    if(!nbrVersement){
+      let v = montant*0.20;
+      this.versement[0] =Number(v.toFixed(2));
+      let vautre = montant*0.80/5;
+      this.versement.fill(Number(vautre.toFixed(2)),1);
+    }
+    if(nbrVersement && nbrVersement>0){
+      if(nbrVersement == 6){
+        let v = montant*0.20;
+        this.versement[0] =Number(v.toFixed(2));
+        let vautre = montant*0.80/5;
+        this.versement.fill(Number(vautre.toFixed(2)),1);
+      } else {
+        let vautre = montant/nbrVersement;
+        this.versement.fill(Number(vautre.toFixed(2)),6-nbrVersement);
+      }
+    }
   }
   obtenirParametresContrat(){
     this.serviceContrat.obtenirParametresContrat().subscribe(res=>{

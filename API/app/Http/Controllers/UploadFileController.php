@@ -88,7 +88,11 @@ class UploadFileController extends Controller
             $file = File::where('group_file','=',$req->group)
             ->orderBy('created_at','desc')->take($req->nbr)->get();
         }
-        return View::make("webViewRender.group",['groupes'=>$file,'nbr'=>$req->nbr])
+        $visible = false;
+        if(strcmp($req->group,"Groupe")==0){
+            $visible = true;
+        }
+        return View::make("webViewRender.group",['groupes'=>$file,'nbr'=>$req->nbr,'visibleDesc'=>$visible])
         ->render();
     }
 }

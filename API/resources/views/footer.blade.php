@@ -9,7 +9,8 @@ Pconduite est une école de conduite reconnue.</p>
         <div class="col col-lg-4">
             <h3>Nos Horaires</h3>
             <hr>
-            <p>Tous les jours<br/>De 12h00 à 19h00</p>
+            <p>SERVICE À LA CLIENTÈLE ET ACCUEIL tous les jours<br/>de 12h00 à 19h00</p>
+            <p>Cours de conduite tous les jours <br/>de 8h00 a 20h00</p>
         </div>
         <div class="col col-lg-4">
             <h3>Nous Joindre</h3>

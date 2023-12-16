@@ -113,7 +113,7 @@ class EleveService implements IEleveService
             $eleve->status = 0;
 
         if($request->versement > 0) {
-           // $eleve->versement = $request->versement ; en attente de saaq
+           $eleve->versement = $request->versement ; 
         }  
 
         $eleve->email = $request->email;

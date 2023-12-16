@@ -13,7 +13,7 @@ class Module extends Model
     ];
 
     public function eleves(){
-        return $this->belongsToMany('App\Eleve','eleve_module','eleve_id','module_id')
+        return $this->belongsToMany('App\Eleve','eleve_module','module_id','eleve_id')
             ->as('eleve_module')
             ->withPivot('date_complete','sans_objet','note','moniteur')
             ->withTimestamps();

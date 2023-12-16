@@ -231,9 +231,35 @@
     </tr>
     <tr>
       <td>
+      <?php 
+      $versement = array(0.00,0.00,0.00,0.00,0.00,0.00);
+      if(!isset($eleve->versement)){
+        $vOne = $eleve->frais_inscription*0.20;
+        $versement[0] = number_format($vOne,2);
+        $vAutre = $eleve->frais_inscription*0.80/5;
+        $versementAutre = array_fill(1,5,number_format($vAutre,2));
+        $versement = array_replace($versement,$versementAutre);
+      }
+
+      if(isset($eleve->versement) && $eleve->versement>0){
+        if($eleve->versement == 6){
+          $vOne = $eleve->frais_inscription*0.20;
+          $versement[0] = number_format($vOne,2);
+          $vAutre = $eleve->frais_inscription*0.80/5;
+          $versementAutre = array_fill(1,5,number_format($vAutre,2));
+          $versement = array_replace($versement,$versementAutre);
+        }else{
+          $vAutre = $eleve->frais_inscription/$eleve->versement;
+          $index= 6 - $eleve->versement;
+          $versementAutre = array_fill($index,$eleve->versement,number_format($vAutre,2));
+          $versement = array_replace($versement,$versementAutre);
+        }
+       
+      }
+      ?>
         @include('contrat.modalitePayement',['modalitePayementUn'=>$parametres->modalite_payement_un,
         'modalitePayementDeux'=>$parametres->modalite_payement_deux,'modalitePayementTrois'=>$parametres->modalite_payement_trois,
-        'eleve'=>$eleve,'versement'=>number_format($eleve->frais_inscription/6,2)])
+        'eleve'=>$eleve,'versement'=>$versement])
         <!-- <app-modalite-payement [modalitePayementUn]="parametres.modalite_payement_un"
         [modalitePayementDeux]="parametres.modalite_payement_deux"
         [modalitePayementTrois]="parametres.modalite_payement_trois"

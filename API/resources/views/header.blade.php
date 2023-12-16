@@ -2,14 +2,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta property="og:image" content="{{url('/images/logo_pconduite881.png')}}">
+    <meta property="og:image:width" content="200">
+<meta property="og:image:height" content="200">
     <title>{{ $title }}</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="{{url('owl/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{url('owl/css/owl.theme.default.min.css')}}">
-   
-  
+
+
    <!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">-->
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -17,7 +19,7 @@
     <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">-->
 
 
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
     <script src="{{url('owl/js/owl.carousel.min.js')}}"></script>
@@ -249,7 +251,7 @@
             font-size: 1.2rem;
             font-weight: bold;
         }
-       
+
     }
     @media only screen and (max-width: 600px) {
         .top-r{
@@ -280,10 +282,10 @@
            background: white;
         }
         .top-bar>div{
-           margin-bottom: 5px; 
+           margin-bottom: 5px;
         }
         .top-bar>div>button.btn,.top-bar>div>a.btn{
-           font-size: small; 
+           font-size: small;
         }
         .top-nav{
             margin-top: 4px !important;
@@ -317,6 +319,6 @@
 
 <body class="container-fluid" onscroll="myFunction()">
     <div id="idMenu" class="container-fluid" style="background-color: #00742c;">
-    
+
          @include('menu')
     </div>

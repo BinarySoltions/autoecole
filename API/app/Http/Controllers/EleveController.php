@@ -365,6 +365,7 @@ class EleveController extends Controller
 
     public function printContrat(Request $request)
     {
+       // set_time_limit(0);
         $eleve = Eleve::with('adresse', 'coordonnee')
             ->find($request->id);
         $ecole = Ecole::with('adresse')->first();
@@ -408,10 +409,10 @@ class EleveController extends Controller
             //$pdf::setPrintHeader(true);
             //$pdf::setPrintFooter(true);
 
-            $pdf::SetMargins(10, 11, 10);
-            $pdf::SetHeaderMargin(5);
-            $pdf::SetFooterMargin(4);
-            $pdf::SetAutoPageBreak(TRUE, 4);
+            $pdf::SetMargins(10, 10, 10);
+            $pdf::SetHeaderMargin(4);
+            $pdf::SetFooterMargin(6);
+            $pdf::SetAutoPageBreak(TRUE, 2);
             //$pdf::SetMargins(PDF_MARGIN_LEFT, 0, PDF_MARGIN_RIGHT);
             $pdf::AddPage();
             $pdf::writeHTML($html, true, false, true, false, '');
