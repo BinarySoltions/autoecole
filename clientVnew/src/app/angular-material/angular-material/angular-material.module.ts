@@ -28,6 +28,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
 
 
 export const MY_FORMATS = {
@@ -61,7 +62,7 @@ export const MY_FORMATS = {
     MatPaginatorModule,
     MatTableModule,
     MatSortModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
@@ -74,6 +75,7 @@ export const MY_FORMATS = {
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
+    MatSelectModule,
   ],
   providers:[
     { provide: MAT_DATE_LOCALE, useValue: 'fr' },

@@ -24,12 +24,14 @@ declare var $: any;
 })
 export class GabaritEleveComponent implements OnInit, AfterViewInit,OnChanges {
 
+  numero=0;
   champ:any=core;
   lien:any=lien;
   @Input() listeEleves:Eleve[];
   @Input() titre:string;
+  @Input() modulesConfig:any=[];
   @Output() estSupprimeEleve = new EventEmitter<number>();
-  
+
   @ViewChild('row') row: ElementRef;
   elements: Eleve[]=[];
   headElements1 = ['nom', 'prenom','coordonnee.telephone','attestation.resultat_phase_une','modules','id'];
@@ -43,6 +45,8 @@ export class GabaritEleveComponent implements OnInit, AfterViewInit,OnChanges {
   indexASupprimer :number;
   private paginator: MatPaginator;
   private sort: MatSort;
+  phaseGroup :any;
+
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -61,12 +65,13 @@ export class GabaritEleveComponent implements OnInit, AfterViewInit,OnChanges {
    }
 
 
-  ngOnInit() { 
+  ngOnInit() {
     //this.dataSource.paginator = this.paginator;
     //this.dataSource.sort = this.sort;
   }
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     this.obtenirEleves(this.listeEleves);
+    this.phaseGroup = this.modulesConfig.map(m=> m.phase_id).filter((value, index, self) => self.indexOf(value) === index);
   }
   ngAfterViewInit() {
   }
@@ -75,9 +80,9 @@ export class GabaritEleveComponent implements OnInit, AfterViewInit,OnChanges {
       this.elements = result;
       this.dataSource = new MatTableDataSource(this.elements);
       this.setDataSourceAttributes();
-    } 
+    }
   }
- 
+
  public editerEleve(value){
    this.router.navigate([lien.url.ajout_eleve+"/"+value]);
  }
@@ -109,31 +114,49 @@ public supprimerEleve(value){
 }
 
  determinerPhase(modules:Module[]):string{
-   let mapModule = new Map;
-   modules.forEach(m=>{
-      if(m.eleve_module.date_complete != null){
-        mapModule.set(m.numero,m.nom);
-      }
-   });
-   let resultatArray = Array.from(mapModule.keys()).sort(this.compare);
-   let resultat = mapModule.get(resultatArray[0]);
-   if(resultat && Number(resultat)){
-     resultat = "Théorie "+resultat;
+   let modulesCompleted = [];
+   modulesCompleted = modules.filter(m=>m.eleve_module.date_complete != null);
+   let resultatArray = modulesCompleted.sort(this.compare);
+   let resultat = resultatArray[0];
+   if(resultat && Number(resultat.numero)){
+     resultat = (resultat.type==="T" ? "Théorie "+resultat.nom : resultat.nom);
    }
   return resultat;
  }
+
+ determinerModulesAfaire(modules:Module[]):string{
+  let modulesCompleted = [];
+  modulesCompleted = modules.filter(m=>m.eleve_module.date_complete != null);
+  let resultatCompleted = modulesCompleted.sort(this.compare);
+  let lastModuleCompleted = resultatCompleted[0];
+  let modulesAbsent = [];
+  modulesAbsent = modules.filter(m=>m.eleve_module.date_complete == null);
+
+  let resultat = "";
+  modulesAbsent.forEach((r:any)=>{
+    if(r && Number(r.numero) && lastModuleCompleted && Number(r.numero) < Number(lastModuleCompleted.numero)){
+      resultat+= (r.type==="T" ? "Théorie "+r.nom : r.nom) +", ";
+    }
+  });
+  if(resultat && lastModuleCompleted && Number(lastModuleCompleted.numero)){
+    resultat = resultat.substring(0,resultat.length-2);
+  } else if(!lastModuleCompleted){
+    resultat = "Théorie "+ modulesAbsent[0].nom;
+  }
+ return resultat;
+}
   compare(a, b){
-  if (a < b) return 1;
-  if (b < a) return -1;
+  if (a.numero < b.numero) return 1;
+  if (b.numero < a.numero) return -1;
 
   return 0;
 }
 applyFilter(event: Event) {
   if(event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();  
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  
+
   if (this.dataSource.paginator) {
     this.dataSource.paginator.firstPage();
   }
@@ -167,5 +190,54 @@ validerExamen(row):any{
   } else {
     return false;
   }
+}
+
+onModulesChange(event){
+  this.numero = Number(event.value);
+  if(this.numero) {
+  let firstModule = this.modulesConfig[0];
+  let module = this.modulesConfig.filter(m=>Number(m.numero)=== Number(this.numero))[0];
+  let previousElements = this.modulesConfig.filter(m=>Number(m.numero)< Number(this.numero) && Number(m.phase_id)===Number(module.phase_id));
+  console.log(" numero haut :", previousElements)
+  if(previousElements && previousElements.length===0 && Number(firstModule.numero) === Number(this.numero)){
+    previousElements = this.modulesConfig.filter(m=>Number(m.phase_id) === Number(module.phase_id));
+  } else if(previousElements && previousElements.length===0){
+    previousElements = this.modulesConfig.filter(m=>Number(m.phase_id) === Number(module.phase_id)-1);
+    console.log(" numero prev :", previousElements)
+  }
+  let previousNumbers = [];
+  if(previousElements && previousElements.length>0){
+    previousNumbers = previousElements.map(n=>n.numero);
+  }
+  let listPreviousModules =  this.elements.filter((e:Eleve)=>{
+    let index = Number(firstModule.numero) === Number(this.numero) ?1:e.modules.findIndex((m:Module)=>this.compareModuleDone(m,previousNumbers));
+    if(index != -1){
+     return e;
+    }
+   });
+  let testlisteEleves =  listPreviousModules.filter((e:Eleve)=>{
+   let index = e.modules.findIndex((m:Module)=>this.compareModuleAbsent(m));
+   if(index != -1){
+    return e;
+   }
+  });
+  this.dataSource = new MatTableDataSource(testlisteEleves);
+  this.setDataSourceAttributes();
+} else{
+  this.dataSource = new MatTableDataSource(this.elements);
+  this.setDataSourceAttributes();
+}
+}
+
+compareModuleAbsent(m):boolean{
+  return Number(m.numero) === Number(this.numero) && m.eleve_module.date_complete==null;
+}
+
+compareModuleDone(m,previousNumbers):boolean{
+  return previousNumbers.includes(m.numero) && m.eleve_module.date_complete!=null;
+}
+
+getModules(phase){
+  return this.modulesConfig.filter(m=>m.phase_id === phase);
 }
 }

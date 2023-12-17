@@ -35,12 +35,13 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
 
   @Input() listeEleves:any;
   @Output() estAjouterModule = new EventEmitter<any>();
+  @Output() modulesChange = new EventEmitter<any>();
   @ViewChild('formulaire', { static: true }) formulaire:NgForm;
 
   constructor(private serviceModule:ModuleService,
     private translate:TranslateService,
     private serviceEleve:EleveService, private moniteurService : MonitorService,
-    private toastr:ToastrService) { 
+    private toastr:ToastrService) {
       translate.setDefaultLang('fr');
     }
 
@@ -70,6 +71,7 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
   obtenirModules(){
     this.serviceModule.obtnenirModules().subscribe(m=>{
       this.listeModules = m;
+      this.modulesChange.emit(this.listeModules);
     });
   }
   ajouter(){

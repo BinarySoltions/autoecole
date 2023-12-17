@@ -26,7 +26,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
   champ:any=core;
   lien:any=lien;
   listeEleves:Eleve[]=[];
-  
+
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('row') row: ElementRef;
@@ -41,7 +41,8 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
   indexASupprimer :number;
 
   isLoading = true;
-  
+  modules: any = [];
+
   constructor(private serviceEleve:EleveService,
     private cdRef: ChangeDetectorRef,
     private router: Router,
@@ -56,7 +57,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
   @HostListener('input') oninput() {
     //this.mdbTablePagination.searchText = this.searchText;
   }
-  ngOnInit() { 
+  ngOnInit() {
     this.spinner.show(undefined, { fullScreen: true });
     this.isLoading = true;
     this.obtenirElevesLimites(100);
@@ -64,7 +65,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
   }
 
   ngAfterViewInit() {
-   
+
   }
   obtenirEleves(){
     this.serviceEleve.obtenirEleves().subscribe((result)=>{
@@ -84,13 +85,13 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
         this.listeEleves  = result.filter(eleve=>{
           return _.extend(eleve, {'nomcomplet':eleve.nom+', '+eleve.prenom+', '+eleve.numero_contrat}) ;
         });
-       
+
       }
       this.spinner.hide();
     });
     this.obtenirEleves();
   }
- 
+
  public editerEleve(value){
    this.router.navigate([lien.url.ajout_eleve+"/"+value]);
  }
@@ -137,7 +138,7 @@ evenementAjouterModule(value){
     this.obtenirEleves();
   }
 }
-obtenirElevesExpires() {    
+obtenirElevesExpires() {
   this.serviceEleve.obtenirElevesExpires().subscribe(res=>{
     const n  = !res? 0 : res.length;
     this.partageService.nouveauNombre(n);
@@ -167,5 +168,9 @@ exporterEleves(){
  });
 
  this.exportExcelService.exportElevsAsExcelFile(columns,titre);
+}
+
+modulesChange(event){
+  this.modules = event;
 }
 }

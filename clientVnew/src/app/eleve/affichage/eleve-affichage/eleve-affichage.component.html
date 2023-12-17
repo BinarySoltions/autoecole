@@ -5,13 +5,13 @@
         <mdb-card-body>
           <mdb-card-text>
     <div class="row">
-      
+
       <div class="col col-12 flex-container-btn">
-        <button type="button" color="primary" 
+        <button type="button" color="primary"
          class=" btn bg-color-green" (click)="exporterEleves()" [disabled]="isLoading">
           <i class="fas fa-file-export"></i>	&nbsp;Exporter
         </button>
-        <button type="button" 
+        <button type="button"
         color="primary"  class=" btn bg-color-green" [disabled]="isLoading"
         data-toggle="modal" data-target="#examenModal">
             <i class="fas fa-plus"></i>	&nbsp;Ajouter examen
@@ -26,12 +26,12 @@
           </button>
       </div>
     </div>
- 
+
     </mdb-card-text>
     </mdb-card-body>
     </mdb-card>
-    <app-gabarit-eleve  [listeEleves]="listeEleves"  (estSupprimeEleve)="estSupprimeEleve($event)"></app-gabarit-eleve>
-  <app-ajouter-module [listeEleves]="listeEleves" (estAjouterModule)="evenementAjouterModule($event)"></app-ajouter-module>
+    <app-gabarit-eleve  [listeEleves]="listeEleves"  (estSupprimeEleve)="estSupprimeEleve($event)" [modulesConfig]="modules"></app-gabarit-eleve>
+  <app-ajouter-module [listeEleves]="listeEleves" (estAjouterModule)="evenementAjouterModule($event)" (modulesChange)="modulesChange($event)"></app-ajouter-module>
   <app-ajouter-examen [listeEleves]="listeEleves" (estAjouterModule)="evenementAjouterModule($event)"></app-ajouter-examen>
   <app-dialog-confirmer (estConfirmer)="confirmerSuppression($event)" ></app-dialog-confirmer>
   <ngx-spinner>
