@@ -17,9 +17,9 @@
         <div class="col col-4 mx-auto">
           <mat-form-field>
           <mat-label>Modules</mat-label>
-          <mat-select aria-label="Modules" [(ngModel)]="numero"
+          <mat-select aria-label="Modules"
           class="form-control"  (selectionChange)="onModulesChange($event)"
-          placeholder="nombre de modules">
+          >
               <mat-option  [value]="0">Initialiser</mat-option>
               <mat-optgroup *ngFor="let group of phaseGroup" [label]="'Phase'+group">
                   <mat-option *ngFor="let module of getModules(group)"  [value]="module.numero">{{module.type==="T"?"Théorie "+module.nom : module.nom}}</mat-option>

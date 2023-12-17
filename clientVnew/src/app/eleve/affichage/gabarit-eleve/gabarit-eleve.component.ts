@@ -194,33 +194,37 @@ validerExamen(row):any{
 
 onModulesChange(event){
   this.numero = Number(event.value);
+  let isPrevPhase = false;
   if(this.numero) {
   let firstModule = this.modulesConfig[0];
   let module = this.modulesConfig.filter(m=>Number(m.numero)=== Number(this.numero))[0];
   let previousElements = this.modulesConfig.filter(m=>Number(m.numero)< Number(this.numero) && Number(m.phase_id)===Number(module.phase_id));
-  console.log(" numero haut :", previousElements)
   if(previousElements && previousElements.length===0 && Number(firstModule.numero) === Number(this.numero)){
     previousElements = this.modulesConfig.filter(m=>Number(m.phase_id) === Number(module.phase_id));
   } else if(previousElements && previousElements.length===0){
     previousElements = this.modulesConfig.filter(m=>Number(m.phase_id) === Number(module.phase_id)-1);
-    console.log(" numero prev :", previousElements)
+    isPrevPhase = true;
   }
   let previousNumbers = [];
   if(previousElements && previousElements.length>0){
     previousNumbers = previousElements.map(n=>n.numero);
   }
   let listPreviousModules =  this.elements.filter((e:Eleve)=>{
-    let index = Number(firstModule.numero) === Number(this.numero) ?1:e.modules.findIndex((m:Module)=>this.compareModuleDone(m,previousNumbers));
-    if(index != -1){
+    let index = isPrevPhase?(e.modules.filter(m=>Number(m.phase_id) === Number(module.phase_id)-1).every(m=> m.eleve_module.date_complete!=null || m.eleve_module.sans_objet!=null)?1:-1) : e.modules.findIndex((m:Module)=>this.compareModuleDone(m,previousNumbers));
+    if(index != -1 && Number(firstModule.numero) != Number(this.numero)){
      return e;
-    }
+    }else if(Number(firstModule.numero) === Number(this.numero)){
+      return e;
+     }
    });
+
   let testlisteEleves =  listPreviousModules.filter((e:Eleve)=>{
    let index = e.modules.findIndex((m:Module)=>this.compareModuleAbsent(m));
    if(index != -1){
     return e;
    }
   });
+
   this.dataSource = new MatTableDataSource(testlisteEleves);
   this.setDataSourceAttributes();
 } else{
@@ -230,11 +234,11 @@ onModulesChange(event){
 }
 
 compareModuleAbsent(m):boolean{
-  return Number(m.numero) === Number(this.numero) && m.eleve_module.date_complete==null;
+  return Number(m.numero) === Number(this.numero) && m.eleve_module.date_complete===null && m.eleve_module.sans_objet ===null;
 }
 
 compareModuleDone(m,previousNumbers):boolean{
-  return previousNumbers.includes(m.numero) && m.eleve_module.date_complete!=null;
+  return previousNumbers.includes(m.numero) && (m.eleve_module.date_complete!=null || m.eleve_module.sans_objet!=null);
 }
 
 getModules(phase){
