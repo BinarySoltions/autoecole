@@ -8,6 +8,10 @@
 
       <div class="col col-12 flex-container-btn">
         <button type="button" color="primary"
+        class=" btn bg-color-green"  (click)="AjouterNoteEleves()" [disabled]="isLoading">
+         <i class="fas fa-file-export"></i>	&nbsp;Ajouter note
+       </button>
+        <button type="button" color="primary"
          class=" btn bg-color-green" (click)="exporterEleves()" [disabled]="isLoading">
           <i class="fas fa-file-export"></i>	&nbsp;Exporter
         </button>
@@ -34,6 +38,7 @@
   <app-ajouter-module [listeEleves]="listeEleves" (estAjouterModule)="evenementAjouterModule($event)" (modulesChange)="modulesChange($event)"></app-ajouter-module>
   <app-ajouter-examen [listeEleves]="listeEleves" (estAjouterModule)="evenementAjouterModule($event)"></app-ajouter-examen>
   <app-dialog-confirmer (estConfirmer)="confirmerSuppression($event)" ></app-dialog-confirmer>
+
   <ngx-spinner>
       <p class="loading">Loading Awesomeness...</p>
     </ngx-spinner>

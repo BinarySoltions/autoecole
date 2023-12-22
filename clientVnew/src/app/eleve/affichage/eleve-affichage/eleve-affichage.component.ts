@@ -12,6 +12,9 @@ import { ToastrService } from 'ngx-toastr';
 import * as _ from 'underscore';
 import { PartageService } from 'src/app/service/partage.service';
 import { ExportExcelService } from 'src/app/excel/export-excel.service';
+import { AjouterModuleComponent } from 'src/app/module/ajouter-module/ajouter-module.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { NoteModuleComponent } from '../../note-module/note-module.component';
 
 
 
@@ -42,6 +45,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
 
   isLoading = true;
   modules: any = [];
+  dialogRef: MatDialogRef<NoteModuleComponent>;
 
   constructor(private serviceEleve:EleveService,
     private cdRef: ChangeDetectorRef,
@@ -50,7 +54,8 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
     private spinner:NgxSpinnerService,
     private toastr:ToastrService,
     private exportExcelService:ExportExcelService,
-    private partageService:PartageService) {
+    private partageService:PartageService,
+    private dialog:MatDialog) {
       this.translate.setDefaultLang('fr');
    }
 
@@ -75,6 +80,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
           return _.extend(eleve, {'nomcomplet':eleve.nom+', '+eleve.prenom+', '+eleve.numero_contrat}) ;
         });
        this.isLoading = false;
+       this.dialogRef?.componentInstance.elevesChangeSubscribe.next(this.listeEleves)
       }
     });
   }
@@ -85,7 +91,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
         this.listeEleves  = result.filter(eleve=>{
           return _.extend(eleve, {'nomcomplet':eleve.nom+', '+eleve.prenom+', '+eleve.numero_contrat}) ;
         });
-
+        this.dialogRef?.componentInstance.elevesChangeSubscribe.next(this.listeEleves)
       }
       this.spinner.hide();
     });
@@ -172,5 +178,15 @@ exporterEleves(){
 
 modulesChange(event){
   this.modules = event;
+}
+
+AjouterNoteEleves(){
+   this.dialogRef = this.dialog.open(NoteModuleComponent, {
+    data: {listeEleves:this.listeEleves}
+  });
+
+  this.dialogRef.afterClosed().subscribe(result => {
+
+  });
 }
 }

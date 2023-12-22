@@ -26,14 +26,14 @@ export class PhaseDeuxAffichageComponent implements OnInit {
     console.log(row);
     const dialogRef = this.dialog.open(ModalNoteComponent, {
       width: '250px',
-      data: {note: row.eleve_module.note, sortie: row.nom, moniteur:row.eleve_module.moniteur}
+      data: {note: row.eleve_module.note, sortie: row.type==="T"?"Théorie "+row.nom:row.nom, moniteur:row.eleve_module.moniteur}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
   }
-  
+
   isNote(row){
     if(row){
       return !!row.eleve_module.note;
@@ -62,7 +62,7 @@ export class PhaseDeuxAffichageComponent implements OnInit {
     if(moniteur){
       let moni = JSON.parse(moniteur);
 
-      return moni.prenom+" "+moni.nom + " ("+ moni.numero+")"; 
+      return moni.prenom+" "+moni.nom + " ("+ moni.numero+")";
     }
   }
 }

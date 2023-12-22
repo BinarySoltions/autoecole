@@ -81,10 +81,11 @@ import { MonitorComponent } from '../monitor/monitor.component';
 import { TableMonitorComponent } from '../monitor/table-monitor/table-monitor.component';
 import { UploadFileComponent } from '../upload-file/upload-file.component';
 import { NavbarSideComponent } from '../navbar/navbar-side/navbar-side.component';
+import { NoteModuleComponent } from '../eleve/note-module/note-module.component';
 
 @NgModule({
   declarations: [
-    AutoComponent,  
+    AutoComponent,
     EleveAffichageComponent,
     EleveSaisieComponent,
     PhaseUneAffichageComponent,
@@ -146,7 +147,8 @@ import { NavbarSideComponent } from '../navbar/navbar-side/navbar-side.component
     MonitorComponent,
     TableMonitorComponent,
     UploadFileComponent,
-    NavbarSideComponent
+    NavbarSideComponent,
+    NoteModuleComponent,
   ],
   imports: [
     FormsModule,
@@ -195,7 +197,7 @@ import { NavbarSideComponent } from '../navbar/navbar-side/navbar-side.component
 
   }
   ],
-  entryComponents:[ModalDetailComponent]
+  entryComponents:[ModalDetailComponent,NoteModuleComponent]
 })
 export class AutoModule { }
 

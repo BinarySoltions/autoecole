@@ -10,15 +10,9 @@ import { NgForm } from '@angular/forms';
 import moment from 'moment';
 import { MonitorService } from 'src/app/service/monitor.service';
 import { Monitor } from 'src/app/monitor/monitor.component';
+import { ModuleModel } from 'src/app/modele/module.model';
 
-export class ModuleModel{
-  id_module:number;
-  eleves:number[];
-  date_complete:any;
-  sans_objet:number;
-  moniteur:any;
-  id_moniteur:number;
-}
+
 @Component({
   selector: 'app-ajouter-module',
   templateUrl: './ajouter-module.component.html',

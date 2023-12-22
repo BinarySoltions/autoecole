@@ -1,0 +1,62 @@
+<mat-dialog-content>
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col col-4 mx-auto">
+          <mat-form-field>
+            <mat-label>{{'module.nom' | translate }}</mat-label>
+            <mat-select aria-label="{{'module.nom' | translate }}" [(value)]="selected" formControlName="id_module"
+              class="form-control" (selectionChange)="onModulesChange($event)" style="border: 0px solid #ced4da;">
+              <mat-option [value]="0">{{'label.selectionner' | translate}}</mat-option>
+              <mat-optgroup *ngFor="let group of phaseGroup" [label]="'Phase '+group">
+                <mat-option *ngFor="let module of getModules(group)" [value]="module.id">{{module.type==="T"?"Théorie "+module.nom : module.nom}}</mat-option>
+              </mat-optgroup>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="md-form col col-12  none-border-top">
+          <label for="module">{{'module.eleves' | translate}}</label>
+          <ng-multiselect-dropdown name="eleves" #listEleve placeholder="{{'label.selectionner' | translate}}" [settings]="dropdownSettings"
+            [data]="data.listeEleves" formControlName="eleves"
+            (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="col col-lg-12" style="margin-bottom: 20px;">
+          <h5 class="no-margin-top pc-header">{{'erreur_sortie.erreursChoisis' | translate}}</h5>
+          <editor initialValue="" [init]="{
+height: 300,
+menubar: false,
+content_style: '.tox-toolbar { background-color: #f1f1f1 !important; }',
+plugins: [
+'advlist autolink lists link image charmap print preview anchor',
+'searchreplace visualblocks code fullscreen',
+'insertdatetime media table paste code help wordcount'
+],
+toolbar:
+'undo redo | formatselect | bold italic backcolor | \
+alignleft aligncenter alignright alignjustify | \
+bullist numlist outdent indent|styleselect | link',
+entity_encoding:'numeric',
+style_formats: [
+{title:'Indent', selector:'p', styles:{'padding-left':'5px'}},
+{title:'MarginB', selector:'p', styles:{'margin-bottom':'2px'}}
+],
+style_formats_merge: true
+}" [formControl]="descControl">
+          </editor>
+        </div>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <div class="row">
+      <div class="col col-lg-12 push-right">
+        <button type="button"(click)="supprimer()" class="btn bg-color-green" style="margin-right:10px;">
+          <i class="fas fa-ban"></i>&nbsp;Fermer
+        </button>
+        <button type="button" class="btn bg-color-green" (click)="soumettre()" style="margin-right:10px;"
+          [disabled]="!form.valid">
+          <i class="fas fa-save"></i>&nbsp;Enregistrer
+        </button>
+      </div>
+    </div>
+  </mat-dialog-actions>

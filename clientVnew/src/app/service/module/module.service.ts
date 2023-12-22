@@ -4,11 +4,11 @@ import { Module } from 'src/app/entite/module.entity';
 import { environment } from 'src/environments/environment';
 import { HttpHeaders,HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { ModuleModel } from 'src/app/module/ajouter-module/ajouter-module.component';
 import { Eleve } from 'src/app/entite/eleve.entity';
 import { Phase } from 'src/app/entite/phase.entity';
 import { PhaseModel } from 'src/app/phase/module/phase-module/phase-module.component';
 import { SharedServiceModule } from 'src/app/shared/shared/shared-service.module';
+import { ModuleModel } from 'src/app/modele/module.model';
 
 const httpOptions = {
   headers: new HttpHeaders({

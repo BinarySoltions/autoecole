@@ -33,9 +33,10 @@ import { AddDrivingComponent } from '../eleve/add-driving/add-driving.component'
 import { FactureComponent } from '../facture/facture.component';
 import { MonitorComponent } from '../monitor/monitor.component';
 import { UploadFileComponent } from '../upload-file/upload-file.component';
+import { NoteModuleComponent } from '../eleve/note-module/note-module.component';
 
 const routes: Routes = [
-  { path: '', component: AutoComponent, 
+  { path: '', component: AutoComponent,
   children:[
     { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
   { path: 'eleves', component: EleveAffichageComponent, canActivate: [AuthGuardService]},
@@ -59,14 +60,14 @@ const routes: Routes = [
   { path: 'liste-examen/:id' , component: ListExamenComponent, canActivate: [AuthGuardService]},
   { path: 'reservation' , component: ReserveAdminComponent, canActivate: [AuthGuardService]},
   { path: 'erreur-sortie' , component: ErreurSortieComponent, canActivate: [AuthGuardService]},
-  { path: 'eleve/note/:id' , component: NoteSortieComponent, canActivate: [AuthGuardService]},
+  { path: 'eleve/note/:id' , component: NoteModuleComponent, canActivate: [AuthGuardService]},
   { path: 'calendrier' , component: CalendarComponent, canActivate: [AuthGuardService]},
   { path: 'eleve/sortie/:id' , component: AddDrivingComponent, canActivate: [AuthGuardService]},
   { path: 'facture' , component: FactureComponent, canActivate: [AuthGuardService]},
   { path: 'moniteur' , component: MonitorComponent, canActivate: [AuthGuardService]},
   { path: 'televerser' , component: UploadFileComponent, canActivate: [AuthGuardService]},
   ] },
-  
+
   // // otherwise redirect to home
   // { path: '**', redirectTo: '' }
 ];

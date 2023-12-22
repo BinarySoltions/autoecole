@@ -294,7 +294,7 @@ class EleveController extends Controller
         // $client = new RestClient("MAYJHMOTDIOGMYMZLKZM", "OWNiZTIxNWZmZmFkYjQ5ODE1NGJhNWM3MTQ0MjI2");
         // //$client->setHttpClient($http);
         // $response = $client->messages->create(
-        //     '5147084568', 
+        //     '5147084568',
         //     ['4388282886'],
         //     'Hello, this is a sample text'
         // );
@@ -462,7 +462,7 @@ class EleveController extends Controller
         $params = $pdf::serializeTCPDFtagParameters(array($numero, 'C128C', '', '', '', 8, 0.50, array('position' => 'C', 'border' => false, 'padding' => 1, 'fgcolor' => array(0, 0, 0), 'bgcolor' => array(255, 255, 255), 'text' => false, 'font' => 'helvetica', 'fontsize' => 7), 'N'));
         $paramsText = $pdf::serializeTCPDFtagParameters(array(45, 9, 'Adresse', 1, 'J', 1, 0, '', '', true, 0, false, true, 9, 'M'));
         $paramsTextModules = $pdf::serializeTCPDFtagParameters(array(15, 7, 'Modules', 0, $ln=0, 'C', 0, '', 0, false, 'T', 'C'));
-       
+
         $view = View::make(
             'attestationV2.pattestation',
             ['eleve' =>  $eleve, 'ecole' => $ecole, 'params' => $params,'paramsM' => $paramsTextModules,
@@ -546,7 +546,7 @@ class EleveController extends Controller
                     'isValid' => false
                 ]);
             }
-            
+
             $dateSup = date("Y-m-d");
             //$dateInf = date("Y-m-d");
             $eleves = Eleve::where('id', '=', $request->eleve_id)
@@ -557,7 +557,7 @@ class EleveController extends Controller
                         ->orWhere('status', '=', 1);
                 })
                 ->first();
-              
+
                 if (isset($eleves)) {
                     return response()->json([
                         'isValid' => false
@@ -572,7 +572,7 @@ class EleveController extends Controller
             $event->date = date('Y-m-d', strtotime($request->date));
             $event->heure_debut = date('H:i', strtotime($request->heure_debut));
             $event->heure_fin = date('H:i', strtotime($request->heure_fin));
-            
+
             //update event places
             $this->updateEventPlaces($request);
             //select distinct existing events
@@ -600,7 +600,7 @@ class EleveController extends Controller
                 ->where('evenement_eleve.heure_fin', '=', $event->heure_fin)->first();
             $evtEle = 0;
             $erreur = false;
-           
+
             if (isset($events)) {
                // return $events;
                 if ($events->place < $events->places) {
@@ -734,7 +734,7 @@ class EleveController extends Controller
     {
         if (isset($request)) {
             //retrieve data
-            $module = Eleve::where('id', $request->id)
+            $module = Eleve::whereIn('id',$request->eleves)
                 ->with(['modules' => function ($query) use ($request) {
                     $query->where('module_id', '=', $request->id_module);
                 }])->get();
@@ -743,7 +743,7 @@ class EleveController extends Controller
             foreach ($module as $md) {
                 $res = $md->modules()->updateExistingPivot(
                     $request->id_module,
-                    ['note' => $request->note]
+                    ['note' => $request->text]
                 );
                 if (!$res) {
                     $valid = false;
@@ -810,7 +810,7 @@ class EleveController extends Controller
                 $i++;
             }
         }
-           
+
             $valid = true;
         }
 
@@ -946,7 +946,7 @@ class EleveController extends Controller
         }
 
         $updateEvents = $events;
-  
+
         $modulesOneTwo = $modulesAll->take(2);
 
         if(isset($modulesOneTwo) && count($modulesOneTwo)>0){
@@ -984,7 +984,7 @@ class EleveController extends Controller
                 $event->save();
             }
         }
-        
+
        if(isset($deleteEvents) && count($deleteEvents) > 0){
         foreach($deleteEvents as $de){
             $event = EvenementEleve::find($de->id)->delete();
@@ -1031,7 +1031,7 @@ class EleveController extends Controller
     }
     }
 
-    
+
     function updateEventPlaces(Request $request)
     {
         if (isset($request)) {
@@ -1048,8 +1048,8 @@ class EleveController extends Controller
                 $i++;
             }
         }
-           
-           
+
+
         }
     }
 
@@ -1068,7 +1068,7 @@ class EleveController extends Controller
 
         $eleve = new Eleve();
         $detail = json_decode($request->detail,false);
-    
+
         $eleve->prenom = $detail->prenom;
         $eleve->nom = $detail->nom;
         $eleve->coordonnee = new Coordonnee;
@@ -1084,7 +1084,7 @@ class EleveController extends Controller
 
         $view = View::make(
             'pfactureperso',
-            ['eleve' => $eleve, 'ecole' => $ecole, 
+            ['eleve' => $eleve, 'ecole' => $ecole,
             'payementsPDF' => $payements, 'totalPaye' => $totalPaye, 'dateDuJour' => date('Y-m-d'),
             'description' => $description]
         );
