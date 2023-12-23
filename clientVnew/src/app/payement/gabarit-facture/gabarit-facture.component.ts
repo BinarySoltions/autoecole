@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Inject } from '@angular/core';
 import { Eleve } from 'src/app/entite/eleve.entity';
 import { Ecole } from 'src/app/entite/ecole.entity';
 import { Payement } from '../payement.model';
@@ -7,23 +7,37 @@ import { Coordonnee } from 'src/app/entite/coordonnee.entity';
 import { AdresseEcole, Adresse } from 'src/app/entite/adresse.entity';
 import { PayementService } from '../payement.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ModalSendEmailComponent } from 'src/app/shared/modal-send-email/modal-send-email.component';
 
+export interface DialogData {
+  eleve: Eleve;
+  ecole:Ecole;
+  payementsPDF:Payement[];
+  totalPaye:any;
+  eventClickGenerer:any;
+}
 @Component({
   selector: 'app-gabarit-facture',
   templateUrl: './gabarit-facture.component.html',
   styleUrls: ['./gabarit-facture.component.scss']
 })
 export class GabaritFactureComponent implements OnInit,OnChanges {
-  @Input('eleve') eleve = new Eleve();
-  @Input('ecole') ecole = new Ecole();
-  @Input('payementsPDF') payementsPDF : Payement[];
-  @Input('totalPaye') totalPaye:any;
-  @Input('eventClickGenerer') eventClickGenerer:any;
+ eleve = new Eleve();
+ecole = new Ecole();
+payementsPDF : Payement[];
+totalPaye:any;
+eventClickGenerer:any;
   TPS = 5;
   TVQ = 9.975;
   numeroFacture = "";
   dateDuJour = new Date();
-  constructor(private servicePayement:PayementService,private spinner:NgxSpinnerService) { }
+  constructor(private servicePayement:PayementService,
+    private spinner:NgxSpinnerService, private dialog:MatDialog,
+    public dialogRef: MatDialogRef<GabaritFactureComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,) {
+      this.dialogRef.disableClose = true;
+    }
 
   ngOnInit() {
     this.initialiserEcole();
@@ -70,6 +84,22 @@ export class GabaritFactureComponent implements OnInit,OnChanges {
     var a = window.open();
     a.document.write(html);
 }
+annuler(){
+  this.dialogRef.close();
+}
+imprimerOuEnvoyer(){
+   const  dialogRef = this.dialog.open(ModalSendEmailComponent,{data:this.data.eleve.email});
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result && result.isSending){
+        console.log(result)
+        this.dialogRef.close();
+      }else{
+        console.log('result :',result)
+      }
+
+    });
+  }
   imprimer(){
    //this.print(1,"facture",1);
    this.spinner.show(undefined, { fullScreen: true });
@@ -82,7 +112,7 @@ export class GabaritFactureComponent implements OnInit,OnChanges {
         byteNumbers[i] = byteCharacters.charCodeAt(i);
       }
       const byteArray = new Uint8Array(byteNumbers);
-      let file = new Blob([byteArray], { type: 'application/pdf' });   
+      let file = new Blob([byteArray], { type: 'application/pdf' });
       var fileURL = URL.createObjectURL(file);
       var tempLink = document.createElement('a');
       tempLink.style.display = 'none';
@@ -94,6 +124,7 @@ export class GabaritFactureComponent implements OnInit,OnChanges {
       //window.URL.revokeObjectURL(fileURL);
       var tab = window.open(fileURL,'fichier.pdf');
       this.spinner.hide();
+      this.dialogRef.close();
     });
   }
   printTest(){
@@ -102,7 +133,7 @@ export class GabaritFactureComponent implements OnInit,OnChanges {
      let html = res.replace(/<!--[a-zA-Z"-\]\[}={ \n]+>/g,"");
     this.servicePayement.genererPDF({Html:html}).subscribe((response)=>{
 
-      let file = new Blob([response], { type: 'application/pdf' });            
+      let file = new Blob([response], { type: 'application/pdf' });
       //var fileURL = URL.createObjectURL(file);
      })
   }

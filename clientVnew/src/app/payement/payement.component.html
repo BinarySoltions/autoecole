@@ -18,7 +18,7 @@
                 <span *ngIf="eleve.adresse">, {{eleve.adresse.code_postal}}</span>
                 <span *ngIf="eleve.adresse">, {{eleve.adresse.municipalite}}, {{eleve.adresse.province}}</span>
             </span>
-            
+
             <span *ngIf="eleve.coordonnee" ><i class="fas fa-phone"></i> : {{eleve.coordonnee.telephone}}</span>
           </div>
           <div class="offset-3 col-3 form-align-v flex-end">
@@ -68,7 +68,7 @@
                   </mat-form-field>
       </div>
       <div class="col col-lg-3 el-align-centre flex-container-btn">
-          <button type="button" 
+          <button type="button"
           class="btn bg-color-green size-btn-m"
            (click)="enregistrer()"
            style="margin-right:10px;" [disabled]="!formulaire.valid">
@@ -81,7 +81,7 @@
 </mat-accordion>
 <div class="row">
     <div class="col col-12 flex-container-btn">
-        <button type="button" 
+        <button type="button"
         class="btn bg-color-green size-btn-m"  data-toggle="modal" data-target="#factureModal" (click)="genererFacture()"
          style="margin:20px 0px;" [disabled]="!selection.selected.length">
             <i class="fas fa-save"></i>&nbsp;Génèrer
@@ -132,5 +132,5 @@
 </mdb-card-body>
 </mdb-card>
 
-<app-gabarit-facture [eleve]="eleve" [ecole]="ecole" [payementsPDF]="selection.selected"
- [totalPaye]="totalPaye" [eventClickGenerer]="actionGenerer"></app-gabarit-facture>
+<!-- <app-gabarit-facture [eleve]="eleve" [ecole]="ecole" [payementsPDF]="selection.selected" [totalPaye]="totalPaye"
+  [eventClickGenerer]="actionGenerer"></app-gabarit-facture> -->

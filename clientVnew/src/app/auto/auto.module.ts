@@ -197,7 +197,7 @@ import { NoteModuleComponent } from '../eleve/note-module/note-module.component'
 
   }
   ],
-  entryComponents:[ModalDetailComponent,NoteModuleComponent]
+  entryComponents:[ModalDetailComponent,NoteModuleComponent,GabaritFactureComponent]
 })
 export class AutoModule { }
 

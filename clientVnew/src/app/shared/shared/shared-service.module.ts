@@ -6,7 +6,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RowGridComponent } from 'src/app/examen/row-grid/row-grid.component';
 import { LastRowGridComponent } from 'src/app/examen/last-row-grid/last-row-grid.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PhaseDeuxAffichageComponent } from 'src/app/eleve/phase/deux/affichage/phase-deux-affichage/phase-deux-affichage.component';
 import { ModalNoteComponent } from 'src/app/modal-note/modal-note.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -18,11 +18,12 @@ import { ModalDeleteEventsComponent } from '../../modal-delete-events/modal-dele
 import { BalancePaieComponent } from 'src/app/payement/balance-paie/balance-paie.component';
 import { DialogConfirmerComponent } from 'src/app/partage/dialog-confirmer/dialog-confirmer.component';
 import { DisplayFileComponent } from '../display-file/display-file.component';
+import { ModalSendEmailComponent } from '../modal-send-email/modal-send-email.component';
 @NgModule({
   declarations: [ RowGridComponent,
-    LastRowGridComponent,PhaseDeuxAffichageComponent,ModalNoteComponent,    ModalAccessComponent, 
+    LastRowGridComponent,PhaseDeuxAffichageComponent,ModalNoteComponent,    ModalAccessComponent,
     ModalConfirmComponent,ListReservationComponent, ModalDeleteEventsComponent,BalancePaieComponent,DialogConfirmerComponent,
-    DisplayFileComponent,],
+    DisplayFileComponent, ModalSendEmailComponent,],
   imports: [
     FormsModule,
     CommonModule,
@@ -36,18 +37,19 @@ import { DisplayFileComponent } from '../display-file/display-file.component';
       }
   }),
   AngularMaterialModule,
+  ReactiveFormsModule
   ],
   exports:[
     RowGridComponent,
     LastRowGridComponent,PhaseDeuxAffichageComponent,ModalNoteComponent,    ModalAccessComponent,AngularMaterialModule,
     ModalConfirmComponent,ListReservationComponent,ModalDeleteEventsComponent,  BalancePaieComponent,DialogConfirmerComponent,
-    DisplayFileComponent,
+    DisplayFileComponent, ModalSendEmailComponent,
   ],
   providers:[
     CookieService,
   ],
   entryComponents: [
-    ModalNoteComponent,    ModalAccessComponent, ModalConfirmComponent,ModalDeleteEventsComponent,
+    ModalNoteComponent,    ModalAccessComponent, ModalConfirmComponent,ModalDeleteEventsComponent, ModalSendEmailComponent,
   ],
 })
 export class SharedServiceModule { }

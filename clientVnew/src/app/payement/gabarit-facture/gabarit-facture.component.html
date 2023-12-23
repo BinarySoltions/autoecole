@@ -1,16 +1,8 @@
-<div class="modal fade" id="factureModal" tabindex="-1" role="dialog" aria-labelledby="factureModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="factureModalLabel">Facture</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
+
+        <mat-dialog-content>
+          <h5>Facture</h5>
 <!-- pdf facture -->
-<div id="1pdf" style="width:auto;height: 792px;padding: 30px 20px;font-weight: 500;">
+<div id="1pdf" style="min-width: 500px;width:auto;height: 792px;padding: 30px 20px;font-weight: 500;">
   <table class="" style="margin-bottom:50px">
     <tr>
       <td width="20%">
@@ -20,12 +12,12 @@
       </td>
       <td width="50%" align="center">
         <div class="" style="padding-top:20px;font-size: 12px !important">
-          <h6>{{ecole.raison_social}} {{ecole.nom}}</h6>
-          <span *ngIf="ecole.adresse">{{ecole.adresse.numero}}
-              <span *ngIf="ecole.adresse">, {{ecole.adresse.rue}}</span>
-              <span *ngIf="ecole.adresse">, #{{ecole.adresse.appartement}}</span>
-              <span *ngIf="ecole.adresse">, {{ecole.adresse.code_postal}}</span>
-              <span *ngIf="ecole.adresse">, {{ecole.adresse.municipalite}}, {{ecole.adresse.province}}</span>
+          <h6>{{data.ecole.raison_social}} {{data.ecole.nom}}</h6>
+          <span *ngIf="ecole.adresse">{{data.ecole.adresse.numero}}
+              <span *ngIf="data.ecole.adresse">, {{data.ecole.adresse.rue}}</span>
+              <span *ngIf="data.ecole.adresse">, #{{data.ecole.adresse.appartement}}</span>
+              <span *ngIf="data.ecole.adresse">, {{data.ecole.adresse.code_postal}}</span>
+              <span *ngIf="data.ecole.adresse">, {{data.ecole.adresse.municipalite}}, {{data.ecole.adresse.province}}</span>
           </span>
           <br/>
           <span><i class="fas fa-phone"></i> : 438-387-6644 </span>
@@ -34,7 +26,7 @@
       <td align="center">
         <div style="padding-top:20px">
           <h4>Facture</h4>
-       
+
       </div>
       </td>
     </tr>
@@ -43,27 +35,27 @@
   <tr>
     <td width="30%" align="left">
         <h6>Facturé à</h6>
-      <span>{{eleve.nom}} {{eleve.prenom}}</span><br/>
-      <span *ngIf="eleve.adresse">{{eleve.adresse.numero}}
-          <span *ngIf="eleve.adresse">, {{eleve.adresse.rue}}</span>
-          <span *ngIf="eleve.adresse">, #{{eleve.adresse.appartement}}</span>
-          <span *ngIf="eleve.adresse">, {{eleve.adresse.code_postal}}</span>
-          <span *ngIf="eleve.adresse">, {{eleve.adresse.municipalite}}, {{eleve.adresse.province}}</span>
+      <span>{{data.eleve.nom}} {{data.eleve.prenom}}</span><br/>
+      <span *ngIf="data.eleve.adresse">{{data.eleve.adresse.numero}}
+          <span *ngIf="data.eleve.adresse">, {{data.eleve.adresse.rue}}</span>
+          <span *ngIf="data.eleve.adresse">, #{{data.eleve.adresse.appartement}}</span>
+          <span *ngIf="data.eleve.adresse">, {{data.eleve.adresse.code_postal}}</span>
+          <span *ngIf="data.eleve.adresse">, {{data.eleve.adresse.municipalite}}, {{data.eleve.adresse.province}}</span>
       </span>
       <br/>
-      <span *ngIf="eleve.coordonnee" ><i class="fas fa-phone"></i> : {{eleve.coordonnee.telephone}}</span>
+      <span *ngIf="data.eleve.coordonnee" ><i class="fas fa-phone"></i> : {{data.eleve.coordonnee.telephone}}</span>
     </td>
     <td align="right">
         <span>No de facture : </span><br/>
         <span>Date :</span> <br/>
         <span>Coût de la formation :</span><br/>
-        <span *ngIf="totalPaye">Total payé :</span><br/>
+        <span *ngIf="data.totalPaye">Total payé :</span><br/>
     </td>
     <td align="left">
         <span>{{dateDuJour|date:'hhmmss'}}</span><br/>
         <span>{{dateDuJour|date:'yyyy-MM-dd'}}</span><br/>
-      <span>{{eleve.frais_inscription | currency}}</span><br/>
-      <span *ngIf="totalPaye">{{totalPaye | currency}}</span><br/>
+      <span>{{data.eleve.frais_inscription | currency}}</span><br/>
+      <span *ngIf="data.totalPaye">{{data.totalPaye | currency}}</span><br/>
     </td>
   </tr>
 </table><!--end-->
@@ -73,7 +65,7 @@
     <tr>
     <th style="text-align:center">Type de payement</th><th style="text-align:center">Date payement</th><th width="100px" style="text-align:right;padding-right: 10px">Montant</th>
   </tr>
-  <tr  *ngFor="let payementPDF of payementsPDF"><td align="center">{{payementPDF.type}}</td><td align="center">{{payementPDF.date_payement}}</td><td style="text-align:right;padding-right: 10px">{{obtenirMontantHorsTaxes(payementPDF)|currency}}</td></tr>
+  <tr  *ngFor="let payementPDF of data.payementsPDF"><td align="center">{{payementPDF.type}}</td><td align="center">{{payementPDF.date_payement}}</td><td style="text-align:right;padding-right: 10px">{{obtenirMontantHorsTaxes(payementPDF)|currency}}</td></tr>
   <tr><td colspan="2" align="right" style="border-color:transparent">Sous Total : </td><td style="border-color:transparent;text-align:right;padding-right: 10px">{{obtenirTotalHorsTaxes()|currency}}</td></tr>
   <tr><td  colspan="2" align="right" style="border-color:transparent">TVQ (no. 1224768920 TQ0001) :</td><td style="border-color:transparent;text-align:right;padding-right: 10px">{{obtenirTVQ()|currency}}</td></tr>
   <tr><td  colspan="2" align="right" style="border-color:transparent">TPS (no. 7052 7727 RT0001) :</td><td style="border-color:transparent;text-align:right;padding-right: 10px" >{{obtenirTPS()|currency}}</td></tr>
@@ -81,12 +73,17 @@
   </table>
 </div>
 </div>
+        </mat-dialog-content>
 <!-- fin pdf -->
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn bg-color-green" (click)="imprimer()" >Imprimer</button>
-  <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-</div>
-</div>
-</div>
-</div>
+
+<mat-dialog-actions >
+  <div class="row">
+    <div class="col col-lg-12 push-right">
+  <button type="button" class="btn bg-color-green" (click)="imprimerOuEnvoyer()" style="margin-right:10px;">
+       Envoyer par courriel
+      </button>
+  <button type="button" class="btn bg-color-green" (click)="imprimer()" style="margin-right:10px;">Imprimer</button>
+  <button type="button" class="btn btn-secondary" (click)="annuler()">Annuler</button>
+    </div>
+  </div>
+</mat-dialog-actions>

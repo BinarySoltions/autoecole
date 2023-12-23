@@ -13,6 +13,9 @@ import { EcoleService } from '../service/ecole/ecole.service';
 import { Ecole } from '../entite/ecole.entity';
 import { AdresseEcole, Adresse } from '../entite/adresse.entity';
 import { Coordonnee } from '../entite/coordonnee.entity';
+import { MatDialog } from '@angular/material/dialog';
+import { GabaritFactureComponent } from './gabarit-facture/gabarit-facture.component';
+import { result } from 'underscore';
 
 @Component({
   selector: 'app-payement',
@@ -39,12 +42,13 @@ export class PayementComponent implements OnInit,AfterViewInit {
   ecole = new Ecole();
   actionGenerer: boolean;
   totalPaye = 0;
-  constructor(private servicePayement:PayementService, 
+  constructor(private servicePayement:PayementService,
       private activatedRoute:ActivatedRoute,
-      private router:Router, 
+      private router:Router,
       private toastr: ToastrService,
       private translate:TranslateService,
-      private serviceEcole:EcoleService) {
+      private serviceEcole:EcoleService,
+      private dialog:MatDialog) {
        this.translate.setDefaultLang('fr');
       }
 
@@ -52,7 +56,7 @@ export class PayementComponent implements OnInit,AfterViewInit {
     this.idEleve = +this.activatedRoute.snapshot.paramMap.get('id');
    // this.initialiserEcole();
    // this.initialiserEleve();
-   
+
     this.types = [
       { value: 'Liquide', label: 'Liquide' },
       { value: 'Interac', label: 'Interac' },
@@ -158,5 +162,13 @@ export class PayementComponent implements OnInit,AfterViewInit {
 
   genererFacture(){
     this.actionGenerer = !this.actionGenerer;
+    const dialogRef = this.dialog.open(GabaritFactureComponent,{
+      data:{eleve:this.eleve,ecole:this.ecole,payementsPDF:this.payementsPDF,
+        totalPaye:this.totalPaye, eventClickGenerer:this.actionGenerer}
+    });
+
+    dialogRef.afterClosed().subscribe(result=>{
+
+    })
   }
 }
