@@ -25,7 +25,6 @@ export class PhaseDeuxAffichageComponent implements OnInit {
   showNote(row){
     console.log(row);
     const dialogRef = this.dialog.open(ModalNoteComponent, {
-      width: '250px',
       data: {note: row.eleve_module.note, sortie: row.type==="T"?"Théorie "+row.nom:row.nom, moniteur:row.eleve_module.moniteur}
     });
 

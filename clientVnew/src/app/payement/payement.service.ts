@@ -21,6 +21,13 @@ const httpOptions2 = {
   responseType: 'text' as 'json'
 };
 
+const httpOptions3 = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  }),
+  responseType: 'text'
+};
 @Injectable({
   providedIn: SharedServiceModule
 })
@@ -48,7 +55,7 @@ export class PayementService {
   }
 
   envoyerFacture(req:any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'notifyBill', req, httpOptions)
+    return this.http.post<any>(this.apiUrl + 'notifyBill', req, httpOptions2)
       .pipe(catchError(this.handleError));
   }
 

@@ -30,11 +30,11 @@ class NotifFacturePerso extends Mailable
      */
     public function build()
     {
-        return $this->view('pfactureperso')
+        return $this->view('mail.factureperso')
         ->with([
 
             'eleve' => $this->data['eleve'], 'ecole' => $this->data['ecole'],
-                    'payementsPDF' => $this->data['payements'], 'totalPaye' => $this->data['totalPaye'], 'dateDuJour' => date('Y-m-d'),
+                    'payementsPDF' => $this->data['payementsPDF'], 'totalPaye' => $this->data['totalPaye'], 'dateDuJour' => date('Y-m-d'),
                     'description' => $this->data['description']
                     ]
         )

@@ -53,17 +53,17 @@ eventClickGenerer:any;
   }
 
   obtenirTotalHorsTaxes(){
-    if (this.payementsPDF){
+    if (this.data.payementsPDF){
       let montantHorsTaxe = 0;
-      this.payementsPDF.forEach(p=>montantHorsTaxe = montantHorsTaxe + Number(p.montant));
+      this.data.payementsPDF.forEach(p=>montantHorsTaxe = montantHorsTaxe + Number(p.montant));
       return montantHorsTaxe/(1+0.05+0.09975);
     }
     return 0;
   }
   obtenirTotalAvecTaxes(){
-    if (this.payementsPDF){
+    if (this.data.payementsPDF){
       let montantHorsTaxe = 0;
-      this.payementsPDF.forEach(p=>montantHorsTaxe = montantHorsTaxe + Number(p.montant));
+      this.data.payementsPDF.forEach(p=>montantHorsTaxe = montantHorsTaxe + Number(p.montant));
       return montantHorsTaxe;
     }
     return 0;
@@ -92,15 +92,16 @@ annuler(){
 imprimerOuEnvoyer(){
    const  dialogRef = this.dialog.open(ModalSendEmailComponent,
     {data:{email:this.data.eleve.email,required:false}});
-
     dialogRef.afterClosed().subscribe(result => {
       if(result && result.isSending){
         console.log(result)
-        let req = {id:this.eleve.id,payments:this.payementsPDF.map(x=>x.id),email:result.email,facturePerso:false}
+        let req = {id:this.data.eleve.id,payments:this.data.payementsPDF.map(x=>x.id),email:result.email,facturePerso:false}
+        this.spinner.show(undefined, { fullScreen: true });
         this.servicePayement.envoyerFacture(req).subscribe(response=>{
           this.toastr.success(response,"Facture");
+          this.spinner.hide();
+          this.dialogRef.close();
         });
-        this.dialogRef.close();
       }else{
         console.log('result :',result)
       }

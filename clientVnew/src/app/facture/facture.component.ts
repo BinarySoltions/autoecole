@@ -131,8 +131,10 @@ export class FactureComponent implements OnInit ,AfterViewInit {
          this.prepareDetailPayment();
          this.payement.facturePerso = true;
          this.payement.email = result.email;
+         this.spinner.show(undefined, { fullScreen: true });
          this.servicePayement.envoyerFacture(this.payement).subscribe(response=>{
            this.toastr.success(response,"Facture");
+           this.spinner.hide();
          });
        }else{
          console.log('result :',result)

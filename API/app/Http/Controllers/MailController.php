@@ -273,6 +273,7 @@ class MailController extends Controller
                 $email = $eleves->email;
             }
             $data = ['eleve' => $eleves, 'ecole' => $ecole, 'payementsPDF' => $payements, 'totalPaye' => $totalPaye, 'dateDuJour' => date('Y-m-d')];
+
             Mail::to($email, 'Facture / Bill')
                 ->send(new NotifFacture($data));
             echo "Veuillez vérifier votre courriel, la facture a été envoyée / Please check your email, the invoice has been sent";
