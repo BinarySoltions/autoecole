@@ -46,6 +46,12 @@ export class PayementService {
     return this.http.post<any>(this.apiUrl + 'printPayment', req, httpOptions2)
       .pipe(catchError(this.handleError));
   }
+
+  envoyerFacture(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'notifyBill', req, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   obtnenirDetailsPayements(totalPayement:TotalPayement): Observable<TotalPayement> {
     return this.http.post<TotalPayement>(this.apiUrl + 'detailsPayements',totalPayement,httpOptions);
   }

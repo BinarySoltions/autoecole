@@ -14,9 +14,13 @@ use App\Mail\ContactEmail;
 use App\Mail\NotifReservation;
 use App\EvenementEleve;
 use App\Eleve;
+use App\Ecole;
+use App\Payement;
+use App\Coordonnee;
 use App\Mail\NotifFinDossier;
 use App\Mail\NotifLoginPWD;
 use App\Mail\NotifPayement;
+use App\Mail\NotifFacture;
 use Illuminate\Encryption\Encrypter;
 
 class MailController extends Controller
@@ -156,7 +160,7 @@ class MailController extends Controller
         //$key32 = env('APP_KEY_OTHER');
        // $encrypter = new Encrypter($key32, 'AES-256-CBC');
         if(isset($eleve) && $eleve->password_default == null){
-            
+
             $password = $this->randomPassword();
             $encrypt_password  = Crypt::encrypt($password);
             $eleve->password = $encrypt_password;
@@ -165,12 +169,12 @@ class MailController extends Controller
             $encrypt_password  =  Crypt::encrypt($eleve->password_default);
             $eleve->password =  $encrypt_password;
         }
-       
+
 
         $eleve->save();
-       
+
         Mail::to($eleve->email,'Information')
-        ->send(new NotifLoginPWD($eleve)); 
+        ->send(new NotifLoginPWD($eleve));
         return response()->json([
             'isValid' => true
         ]);
@@ -204,5 +208,74 @@ class MailController extends Controller
             $pass[] = $alphabet[$n];
         }
         return implode($pass); //turn the array into a string
+    }
+
+
+    public function sendBillPayment(Request $request)
+    {
+
+        if ($request->facturePerso) {
+            $payement = new Payement();
+            $payement->montant = $request->montant;
+            $payement->eleve_id = 0;
+            $payement->type =  $request->type;
+            $payement->date_payement =  $request->date_payement;
+            $payement->detail = $request->detail;
+
+            $payement->save();
+
+            $payements = Payement::where('id', '=', $payement->id)->get();
+
+            $eleve = new Eleve();
+            $detail = json_decode($request->detail, false);
+
+            $eleve->prenom = $detail->prenom;
+            $eleve->nom = $detail->nom;
+            $eleve->coordonnee = new Coordonnee;
+            $eleve->coordonnee->telephone = $detail->telephone;
+            $description = $detail->description;
+
+            $ecole = Ecole::with('adresse')->first();
+            $totalPaye = 0;
+
+            foreach ($payements as $p) {
+                $totalPaye = $totalPaye + $p->montant;
+            }
+
+            $data = [
+                    'eleve' => $eleve, 'ecole' => $ecole,
+                    'payementsPDF' => $payements, 'totalPaye' => $totalPaye, 'dateDuJour' => date('Y-m-d'),
+                    'description' => $description
+                ];
+                if(isset($request->email)){
+                    $email = $request->email;
+                }
+                Mail::to($email, 'Facture / Bill')
+                ->send(new NotifFacture($data));
+            echo "Veuillez vérifier votre courriel, la facture a été envoyée / Please check your email, the invoice has been sent";
+        } else {
+            $eleves = Eleve::with('adresse', 'coordonnee', 'payements')
+                ->find($request->id);
+            $ecole = Ecole::with('adresse')->first();
+            $totalPaye = 0;
+            $ids = $request->payments;
+
+            $payements = $eleves->payements->filter(function ($value, $key) use ($ids) {
+                return  in_array($value['id'], $ids);
+            });
+
+            foreach ($payements as $p) {
+                $totalPaye = $totalPaye + $p->montant;
+            }
+            if(isset($request->email)){
+                $email = $request->email;
+            }else{
+                $email = $eleves->email;
+            }
+            $data = ['eleve' => $eleves, 'ecole' => $ecole, 'payementsPDF' => $payements, 'totalPaye' => $totalPaye, 'dateDuJour' => date('Y-m-d')];
+            Mail::to($email, 'Facture / Bill')
+                ->send(new NotifFacture($data));
+            echo "Veuillez vérifier votre courriel, la facture a été envoyée / Please check your email, the invoice has been sent";
+        }
     }
 }

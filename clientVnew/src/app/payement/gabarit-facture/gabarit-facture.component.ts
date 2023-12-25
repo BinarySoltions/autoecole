@@ -9,6 +9,7 @@ import { PayementService } from '../payement.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ModalSendEmailComponent } from 'src/app/shared/modal-send-email/modal-send-email.component';
+import { ToastrService } from 'ngx-toastr';
 
 export interface DialogData {
   eleve: Eleve;
@@ -35,7 +36,8 @@ eventClickGenerer:any;
   constructor(private servicePayement:PayementService,
     private spinner:NgxSpinnerService, private dialog:MatDialog,
     public dialogRef: MatDialogRef<GabaritFactureComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,) {
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private toastr:ToastrService) {
       this.dialogRef.disableClose = true;
     }
 
@@ -88,11 +90,16 @@ annuler(){
   this.dialogRef.close();
 }
 imprimerOuEnvoyer(){
-   const  dialogRef = this.dialog.open(ModalSendEmailComponent,{data:this.data.eleve.email});
+   const  dialogRef = this.dialog.open(ModalSendEmailComponent,
+    {data:{email:this.data.eleve.email,required:false}});
 
     dialogRef.afterClosed().subscribe(result => {
       if(result && result.isSending){
         console.log(result)
+        let req = {id:this.eleve.id,payments:this.payementsPDF.map(x=>x.id),email:result.email,facturePerso:false}
+        this.servicePayement.envoyerFacture(req).subscribe(response=>{
+          this.toastr.success(response,"Facture");
+        });
         this.dialogRef.close();
       }else{
         console.log('result :',result)

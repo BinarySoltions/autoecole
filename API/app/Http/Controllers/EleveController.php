@@ -60,8 +60,8 @@ class EleveController extends Controller
         return  response()->json([
             'valid' => false,
             'isValid' => false
-        ],401)
-        ->header('X-Header-Public', 'error');
+        ], 401)
+            ->header('X-Header-Public', 'error');
     }
     public function partialStudents($limit)
     {
@@ -365,7 +365,7 @@ class EleveController extends Controller
 
     public function printContrat(Request $request)
     {
-       // set_time_limit(0);
+        // set_time_limit(0);
         $eleve = Eleve::with('adresse', 'coordonnee')
             ->find($request->id);
         $ecole = Ecole::with('adresse')->first();
@@ -461,12 +461,14 @@ class EleveController extends Controller
         define('K_TCPDF_CALLS_IN_HTML', true);
         $params = $pdf::serializeTCPDFtagParameters(array($numero, 'C128C', '', '', '', 8, 0.50, array('position' => 'C', 'border' => false, 'padding' => 1, 'fgcolor' => array(0, 0, 0), 'bgcolor' => array(255, 255, 255), 'text' => false, 'font' => 'helvetica', 'fontsize' => 7), 'N'));
         $paramsText = $pdf::serializeTCPDFtagParameters(array(45, 9, 'Adresse', 1, 'J', 1, 0, '', '', true, 0, false, true, 9, 'M'));
-        $paramsTextModules = $pdf::serializeTCPDFtagParameters(array(15, 7, 'Modules', 0, $ln=0, 'C', 0, '', 0, false, 'T', 'C'));
+        $paramsTextModules = $pdf::serializeTCPDFtagParameters(array(15, 7, 'Modules', 0, $ln = 0, 'C', 0, '', 0, false, 'T', 'C'));
 
         $view = View::make(
             'attestationV2.pattestation',
-            ['eleve' =>  $eleve, 'ecole' => $ecole, 'params' => $params,'paramsM' => $paramsTextModules,
-            'paramsT' => $paramsText, 'attestation' => $attestation, 'personnes' => $personnes, 'isAll' => !$isAll]
+            [
+                'eleve' =>  $eleve, 'ecole' => $ecole, 'params' => $params, 'paramsM' => $paramsTextModules,
+                'paramsT' => $paramsText, 'attestation' => $attestation, 'personnes' => $personnes, 'isAll' => !$isAll
+            ]
         );
         $html = $view->render();
         if (isset($html)) {
@@ -558,11 +560,11 @@ class EleveController extends Controller
                 })
                 ->first();
 
-                if (isset($eleves)) {
-                    return response()->json([
-                        'isValid' => false
-                    ]);
-                }
+            if (isset($eleves)) {
+                return response()->json([
+                    'isValid' => false
+                ]);
+            }
             $event = new EvenementEleve;
             $event->numero = $request->numero;
             $event->eleve_id = $request->eleve_id;
@@ -602,7 +604,7 @@ class EleveController extends Controller
             $erreur = false;
 
             if (isset($events)) {
-               // return $events;
+                // return $events;
                 if ($events->place < $events->places) {
                     $event->place =  $events->place + 1;
                     $event->save();
@@ -734,7 +736,7 @@ class EleveController extends Controller
     {
         if (isset($request)) {
             //retrieve data
-            $module = Eleve::whereIn('id',$request->eleves)
+            $module = Eleve::whereIn('id', $request->eleves)
                 ->with(['modules' => function ($query) use ($request) {
                     $query->where('module_id', '=', $request->id_module);
                 }])->get();
@@ -765,12 +767,12 @@ class EleveController extends Controller
         if (isset($request)) {
             $nom = strtolower($request->nom);
             //$key32 = env('APP_KEY_OTHER');
-           // $encrypter = new Encrypter($key32, 'AES-256-CBC');
+            // $encrypter = new Encrypter($key32, 'AES-256-CBC');
             $password  = $request->password;
             $eleve = Eleve::where('numero_contrat', trim($request->numero))
                 ->whereRaw('lower(nom) like (?)', ["%{$nom}%"])
                 ->first();
-           // $password_decrypt  = Crypt::decrypt($eleve->password);
+            // $password_decrypt  = Crypt::decrypt($eleve->password);
             if (isset($eleve) /*&& isset($password) && $password == $password_decrypt*/) {
                 $dateToday = date('Y-m-d H:i:s');
                 $eleve->login_time = $dateToday;
@@ -785,7 +787,7 @@ class EleveController extends Controller
         return response()->json([
             'isValid' => $valid,
             'id' => $id,
-            'token'=>$token
+            'token' => $token
         ]);
     }
 
@@ -798,18 +800,18 @@ class EleveController extends Controller
                 ->where('heure_fin', '=', date('H:i:s', strtotime($request->heure_fin)))
                 ->where('id', '!=', $request->id)
                 ->get();
-             //retrieve data
-             $eventsEleve = EvenementEleve::find($request->id)
-             ->delete();
+            //retrieve data
+            $eventsEleve = EvenementEleve::find($request->id)
+                ->delete();
 
             $i = 1;
-            if(isset($eventsEleves) && count($eventsEleves) > 0 ){
-            foreach ($eventsEleves  as $evt) {
-                $evt->place = $i;
-                $evt->save();
-                $i++;
+            if (isset($eventsEleves) && count($eventsEleves) > 0) {
+                foreach ($eventsEleves  as $evt) {
+                    $evt->place = $i;
+                    $evt->save();
+                    $i++;
+                }
             }
-        }
 
             $valid = true;
         }
@@ -828,9 +830,9 @@ class EleveController extends Controller
             ]);
         }
 
-         return response()->json([
-                'valid' => false
-            ]);
+        return response()->json([
+            'valid' => false
+        ]);
     }
 
     function deletePlacesEvent(Request $request)
@@ -879,67 +881,67 @@ class EleveController extends Controller
         $updateEvents = null;
         $deleteEvents = null;
         $events = EvenementEleve::distinct()
-        ->select(
-            'evenement_eleve.id',
-            'evenement_eleve.date',
-            'evenement_eleve.heure_debut',
-            'evenement_eleve.heure_fin',
-            'evenement_eleve.nom_module',
-            'evenement_eleve.module_id'
-        )
-        ->leftJoin('eleve_module', function ($join) {
-            $join->on('eleve_module.module_id', '=', 'evenement_eleve.module_id');
-            $join->on('eleve_module.eleve_id', '=', 'evenement_eleve.eleve_id');
-        })
-        ->leftJoin('eleve', function ($join) {
-            $join->on('eleve.id', '=', 'evenement_eleve.eleve_id');
-        })
-        ->where('evenement_eleve.numero', '=', trim($request->numero))
-        ->where('eleve_module.date_complete','=',null)
-        ->where('eleve_module.sans_objet','=',null)
-        ->where(function ($query) {
-            $query->where('evenement_eleve.status','=',null)
-            ->orWhere('evenement_eleve.status', '!=', 2);
-        })->orderBy('evenement_eleve.date', 'asc')
-        ->orderBy('evenement_eleve.heure_debut', 'asc')
-        ->get();
+            ->select(
+                'evenement_eleve.id',
+                'evenement_eleve.date',
+                'evenement_eleve.heure_debut',
+                'evenement_eleve.heure_fin',
+                'evenement_eleve.nom_module',
+                'evenement_eleve.module_id'
+            )
+            ->leftJoin('eleve_module', function ($join) {
+                $join->on('eleve_module.module_id', '=', 'evenement_eleve.module_id');
+                $join->on('eleve_module.eleve_id', '=', 'evenement_eleve.eleve_id');
+            })
+            ->leftJoin('eleve', function ($join) {
+                $join->on('eleve.id', '=', 'evenement_eleve.eleve_id');
+            })
+            ->where('evenement_eleve.numero', '=', trim($request->numero))
+            ->where('eleve_module.date_complete', '=', null)
+            ->where('eleve_module.sans_objet', '=', null)
+            ->where(function ($query) {
+                $query->where('evenement_eleve.status', '=', null)
+                    ->orWhere('evenement_eleve.status', '!=', 2);
+            })->orderBy('evenement_eleve.date', 'asc')
+            ->orderBy('evenement_eleve.heure_debut', 'asc')
+            ->get();
 
         $eleveModule = EleveModule::distinct()
-        ->select(
-            'module.id',
-            'module.numero',
-            'module.nom'
-        ) ->join('eleve', function ($join) {
-            $join->on('eleve.id', '=', 'eleve_module.eleve_id');
-        })
-        ->join('module', function ($join) {
-            $join->on('module.id', '=', 'eleve_module.module_id');
-        })
-        ->where('eleve.numero_contrat', '=', trim($request->numero))
-        ->where('eleve_module.date_complete','=',null)
-        ->where('eleve_module.sans_objet','=',null)
-        ->where('eleve.deleted_at','=',null)
-        ->where('module.type','=','P')
-        ->orderBy('module.numero', 'asc')
-        ->get();
+            ->select(
+                'module.id',
+                'module.numero',
+                'module.nom'
+            )->join('eleve', function ($join) {
+                $join->on('eleve.id', '=', 'eleve_module.eleve_id');
+            })
+            ->join('module', function ($join) {
+                $join->on('module.id', '=', 'eleve_module.module_id');
+            })
+            ->where('eleve.numero_contrat', '=', trim($request->numero))
+            ->where('eleve_module.date_complete', '=', null)
+            ->where('eleve_module.sans_objet', '=', null)
+            ->where('eleve.deleted_at', '=', null)
+            ->where('module.type', '=', 'P')
+            ->orderBy('module.numero', 'asc')
+            ->get();
 
         $modulesAll = Module::distinct()
-        ->select(
-            'module.id',
-            'module.phase_id',
-            'module.nom',
-            'module.type',
-            'module.numero'
-        )
-        ->where('type','P')
-        ->orderBy('numero', 'asc')->get();
+            ->select(
+                'module.id',
+                'module.phase_id',
+                'module.nom',
+                'module.type',
+                'module.numero'
+            )
+            ->where('type', 'P')
+            ->orderBy('numero', 'asc')->get();
 
-        foreach($events as $ev){
-             if(isset($eleveModule) && count($eleveModule) > 0){
+        foreach ($events as $ev) {
+            if (isset($eleveModule) && count($eleveModule) > 0) {
                 $evtToUp = $eleveModule->first();
                 $ev->nom_module = $evtToUp->nom;
                 $ev->module_id = $evtToUp->id;
-                $eleveModule = $eleveModule->filter(function ($e) use ($evtToUp){
+                $eleveModule = $eleveModule->filter(function ($e) use ($evtToUp) {
                     return $e->numero > $evtToUp->numero;
                 });
             }
@@ -949,25 +951,25 @@ class EleveController extends Controller
 
         $modulesOneTwo = $modulesAll->take(2);
 
-        if(isset($modulesOneTwo) && count($modulesOneTwo)>0){
-            $sessionOne = $events->filter(function ($e) use ($modulesOneTwo){
+        if (isset($modulesOneTwo) && count($modulesOneTwo) > 0) {
+            $sessionOne = $events->filter(function ($e) use ($modulesOneTwo) {
                 return $e->module_id == $modulesOneTwo->first()->id;
             });
-            if(isset($sessionOne) && count($sessionOne)>0){
-                $sessionTwo = $events->filter(function ($e) use ($modulesOneTwo){
+            if (isset($sessionOne) && count($sessionOne) > 0) {
+                $sessionTwo = $events->filter(function ($e) use ($modulesOneTwo) {
                     return $e->module_id == $modulesOneTwo->last()->id;
                 });
-                if(isset($sessionTwo) && count($sessionTwo)>0 &&  $sessionTwo->date ==  $sessionOne->date){
+                if (isset($sessionTwo) && count($sessionTwo) > 0 &&  $sessionTwo->date ==  $sessionOne->date) {
                     $deleteEvents = $sessionTwo;
-                    $updateEvents = $events->filter(function ($e) use ($modulesOneTwo){
+                    $updateEvents = $events->filter(function ($e) use ($modulesOneTwo) {
                         return $e->module_id != $modulesOneTwo->first()->id;
                     });
-                    foreach($updateEvents as $ev){
-                        if(isset($events) && count($events) > 0){
+                    foreach ($updateEvents as $ev) {
+                        if (isset($events) && count($events) > 0) {
                             $evtToUp = $events->first();
                             $ev->nom_module = $evtToUp->nom_module;
                             $ev->module_id = $evtToUp->module_id;
-                            $events = $events->filter(function ($e) use ($evtToUp){
+                            $events = $events->filter(function ($e) use ($evtToUp) {
                                 return $e->numero > $evtToUp->numero;
                             });
                         }
@@ -976,8 +978,8 @@ class EleveController extends Controller
             }
         }
 
-        if(isset($updateEvents) && count($updateEvents)>0){
-            foreach($updateEvents as $e){
+        if (isset($updateEvents) && count($updateEvents) > 0) {
+            foreach ($updateEvents as $e) {
                 $event = EvenementEleve::find($e->id);
                 $event->nom_module = $e->nom_module;
                 $event->module_id = $e->module_id;
@@ -985,16 +987,17 @@ class EleveController extends Controller
             }
         }
 
-       if(isset($deleteEvents) && count($deleteEvents) > 0){
-        foreach($deleteEvents as $de){
-            $event = EvenementEleve::find($de->id)->delete();
+        if (isset($deleteEvents) && count($deleteEvents) > 0) {
+            foreach ($deleteEvents as $de) {
+                $event = EvenementEleve::find($de->id)->delete();
+            }
         }
-       }
         return $this->getEvenementsEleve($request);
     }
 
-    function updateStatusReservation(Request $request){
-        if(isset($request) && isset($request->id)){
+    function updateStatusReservation(Request $request)
+    {
+        if (isset($request) && isset($request->id)) {
             $event = EvenementEleve::find($request->id);
             $event->status = 2;
             $event->save();
@@ -1002,33 +1005,34 @@ class EleveController extends Controller
         }
     }
 
-    function changePassword(Request $request){
+    function changePassword(Request $request)
+    {
         $nom = strtolower($request->nom);
-        $eleve = Eleve::where('numero_contrat','=',trim($request->numero))
-        ->whereRaw('lower(nom) like (?)', ["%{$nom}%"])
-        ->where('eleve.deleted_at','=',null)
-        ->first();
-        try{
-        if(isset($eleve)){
-       // $key32 = env('APP_KEY_OTHER');
-        //$encrypter = new Encrypter($key32, 'AES-256-CBC');
-        $password  =  Crypt::decrypt($eleve->password);
-        if( $password == $request->password){
-            $eleve->password =   Crypt::encrypt($request->password_new);
-            $eleve->save();
+        $eleve = Eleve::where('numero_contrat', '=', trim($request->numero))
+            ->whereRaw('lower(nom) like (?)', ["%{$nom}%"])
+            ->where('eleve.deleted_at', '=', null)
+            ->first();
+        try {
+            if (isset($eleve)) {
+                // $key32 = env('APP_KEY_OTHER');
+                //$encrypter = new Encrypter($key32, 'AES-256-CBC');
+                $password  =  Crypt::decrypt($eleve->password);
+                if ($password == $request->password) {
+                    $eleve->password =   Crypt::encrypt($request->password_new);
+                    $eleve->save();
+                    return response()->json([
+                        'isValid' => true
+                    ]);
+                }
+            }
             return response()->json([
-                'isValid' => true
+                'isValid' => false
+            ]);
+        } catch (DecryptException $e) {
+            return response()->json([
+                'isValid' => false
             ]);
         }
-        }
-        return response()->json([
-            'isValid' => false
-        ]);
-    }catch(DecryptException $e){
-        return response()->json([
-            'isValid' => false
-        ]);
-    }
     }
 
 
@@ -1041,19 +1045,18 @@ class EleveController extends Controller
                 ->get();
 
             $i = 1;
-            if(isset($eventsEleves) && count($eventsEleves) > 0 ){
-            foreach ($eventsEleves  as $evt) {
-                $evt->place = $i;
-                $evt->save();
-                $i++;
+            if (isset($eventsEleves) && count($eventsEleves) > 0) {
+                foreach ($eventsEleves  as $evt) {
+                    $evt->place = $i;
+                    $evt->save();
+                    $i++;
+                }
             }
-        }
-
-
         }
     }
 
-    function printFacturePerso(Request $request){
+    function printFacturePerso(Request $request)
+    {
         // print_r($response->getmessageUuid(0));
         $payement = new Payement();
         $payement->montant = $request->montant;
@@ -1064,10 +1067,10 @@ class EleveController extends Controller
 
         $payement->save();
 
-        $payements = Payement::where('id','=',$payement->id)->get();
+        $payements = Payement::where('id', '=', $payement->id)->get();
 
         $eleve = new Eleve();
-        $detail = json_decode($request->detail,false);
+        $detail = json_decode($request->detail, false);
 
         $eleve->prenom = $detail->prenom;
         $eleve->nom = $detail->nom;
@@ -1084,9 +1087,11 @@ class EleveController extends Controller
 
         $view = View::make(
             'pfactureperso',
-            ['eleve' => $eleve, 'ecole' => $ecole,
-            'payementsPDF' => $payements, 'totalPaye' => $totalPaye, 'dateDuJour' => date('Y-m-d'),
-            'description' => $description]
+            [
+                'eleve' => $eleve, 'ecole' => $ecole,
+                'payementsPDF' => $payements, 'totalPaye' => $totalPaye, 'dateDuJour' => date('Y-m-d'),
+                'description' => $description
+            ]
         );
         $html = $view->render();
 
@@ -1101,4 +1106,5 @@ class EleveController extends Controller
         $result =  $pdf::Output('hello_world.pdf', 'E');
         return  $result;
     }
+
 }

@@ -12,6 +12,8 @@ import { Eleve } from '../entite/eleve.entity';
 import { Payement } from '../payement/payement.model';
 import { PayementService } from '../payement/payement.service';
 import { EcoleService } from '../service/ecole/ecole.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalSendEmailComponent } from '../shared/modal-send-email/modal-send-email.component';
 
 @Component({
   selector: 'app-facture',
@@ -26,7 +28,7 @@ export class FactureComponent implements OnInit ,AfterViewInit {
   @ViewChild('formulaire', { static: true }) formulaire:NgForm;
   types: { value: string; label: string; }[];
 
-  
+
   TPS = 5;
   TVQ = 9.975;
   payementsPDF : Payement[];
@@ -37,11 +39,12 @@ export class FactureComponent implements OnInit ,AfterViewInit {
   totalPaye = 0;
   description:string;
   telephone:string;
-  constructor(private servicePayement:PayementService, 
+  constructor(private servicePayement:PayementService,
       private activatedRoute:ActivatedRoute,
-      private router:Router, 
+      private router:Router,
       private toastr: ToastrService,
       private translate:TranslateService,private spinner:NgxSpinnerService,
+      private dialog:MatDialog,
       private serviceEcole:EcoleService) {
        this.translate.setDefaultLang('fr');
       }
@@ -50,7 +53,7 @@ export class FactureComponent implements OnInit ,AfterViewInit {
     this.idEleve = +this.activatedRoute.snapshot.paramMap.get('id');
    // this.initialiserEcole();
    // this.initialiserEleve();
-   
+
     this.types = [
       { value: 'Liquide', label: 'Liquide' },
       { value: 'Interac', label: 'Interac' },
@@ -105,7 +108,7 @@ export class FactureComponent implements OnInit ,AfterViewInit {
     let detailJson = {nom:this.eleve.nom,prenom:this.eleve.prenom,telephone:this.telephone,description:this.description};
     this.payement.detail = JSON.stringify(detailJson);
   }
-   
+
   genererFacture(){
     this.actionGenerer = !this.actionGenerer;
   }
@@ -118,7 +121,25 @@ export class FactureComponent implements OnInit ,AfterViewInit {
   detFacture(){
     this.eleve = JSON.parse(JSON.stringify(this.eleve))
   }
+  imprimerOuEnvoyer(){
+    const  dialogRef = this.dialog.open(ModalSendEmailComponent,{data:{email:"",required:true}});
 
+     dialogRef.afterClosed().subscribe(result => {
+       if(result && result.isSending){
+         console.log(result)
+         this.formaterDate();
+         this.prepareDetailPayment();
+         this.payement.facturePerso = true;
+         this.payement.email = result.email;
+         this.servicePayement.envoyerFacture(this.payement).subscribe(response=>{
+           this.toastr.success(response,"Facture");
+         });
+       }else{
+         console.log('result :',result)
+       }
+
+     });
+   }
   imprimer(){
     //this.print(1,"facture",1);
     this.spinner.show(undefined, { fullScreen: true });
@@ -130,7 +151,7 @@ export class FactureComponent implements OnInit ,AfterViewInit {
          byteNumbers[i] = byteCharacters.charCodeAt(i);
        }
        const byteArray = new Uint8Array(byteNumbers);
-       let file = new Blob([byteArray], { type: 'application/pdf' });   
+       let file = new Blob([byteArray], { type: 'application/pdf' });
        var fileURL = URL.createObjectURL(file);
        var tempLink = document.createElement('a');
        tempLink.style.display = 'none';

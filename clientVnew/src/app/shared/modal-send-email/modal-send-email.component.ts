@@ -2,6 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
+export interface DataDialog{
+  email:string;
+  required:boolean;
+}
 @Component({
   selector: 'app-modal-send-email',
   templateUrl: './modal-send-email.component.html',
@@ -14,9 +18,9 @@ export class ModalSendEmailComponent implements OnInit {
     isSending:new FormControl(false),
   });
   constructor( public dialogRef: MatDialogRef<ModalSendEmailComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: string,
+    @Inject(MAT_DIALOG_DATA) public data: DataDialog,
    ) {
-    this.form.get('email').setValue(data);
+    this.form.get('email').setValue(data.email);
     this.dialogRef.disableClose = true;
     }
 

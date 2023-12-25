@@ -8,6 +8,8 @@ export class Payement implements Deserializable {
     type: string;
     date_payement:any;
     detail:any;
+    email:any;
+    facturePerso:boolean;
     deserialize(obj: any): this {
         Object.assign(this, obj);
         return this;

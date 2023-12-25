@@ -85,14 +85,21 @@
     </div>
 <div class="row">
   <div class="col col-lg-12">
-      <button type="button" 
-      class="btn bg-color-green size-btn-m"
-       (click)="enregistrer()" 
+    <button type="button"
+    class="btn bg-color-green"
+     (click)="imprimerOuEnvoyer()"
+     style="margin-right:10px;" [disabled]="!formulaire.valid">
+        <i class="fas fa-envelope"></i>&nbsp;Envoyer par courriel
+      </button>
+
+      <button type="button"
+      class="btn bg-color-green"
+       (click)="enregistrer()"
        style="margin-right:10px;" [disabled]="!formulaire.valid">
-          <i class="fas fa-save"></i>&nbsp;{{'label.enregistrer' | translate}}
+          <i class="fas fa-file"></i>&nbsp;Génèrer pdf
         </button>
-        
-          <button type="button" 
+
+          <button type="button"
           class="btn bg-color-green size-btn-m"
             data-toggle="modal" data-target="#detfactureModal" (click)="detFacture()"
            style="margin-right:10px;" [disabled]="!formulaire.valid">
