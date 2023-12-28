@@ -93,6 +93,8 @@ export class NoteModuleComponent implements  OnInit {
 
   soumettre() {
     console.log(this.form.value)
+    const elevesId = this.form.get('eleves').value.map(e=>e.id);
+    this.form.get('eleves').setValue(elevesId);
     this.serviceEleve.ajouterNoteSortie(this.form.value).subscribe(r=>{
       if(r && r.valid){
         this.toastr.success("Le module a été ajouté avec succés!","Information");
