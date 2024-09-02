@@ -68,8 +68,7 @@ export class NoteModuleComponent implements  OnInit {
       selectAllText: 'Cocher tout',
       unSelectAllText: 'Décocher tout',
       searchPlaceholderText:'Rechercher',
-      allowSearchFilter: true,
-      enableCheckAll:false
+      allowSearchFilter: true
     };
     this.obtenirModules();
   }

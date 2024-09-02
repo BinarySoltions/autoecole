@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="col col-lg-12" style="margin-bottom: 20px;">
                         <h5 class="no-margin-top pc-header">Description</h5>
- <editor
+ <editor apiKey="gb80z5kh18ab0ulq8cgnmvglohc0nfytkggbcde0phpy147a"
    initialValue=""
    [init]="{
         height: 300,
@@ -65,7 +65,7 @@
                     <div class="row">
                         <div class="col col-lg-12" style="text-align:left">
                             <div style="background: whitesmoke;width: 100%;">
-                                <button type="button" class="btn bg-color-green" (click)="fakeUpload()" 
+                                <button type="button" class="btn bg-color-green" (click)="fakeUpload()"
                                     style="margin-right:10px;">
                                     <i class="fas fa-upload"></i>&nbsp;{{'fichier.televerser' | translate}}
                                 </button>
@@ -103,16 +103,16 @@
                         <div class="row">
                             <mat-selection-list #filesSelected>
                                 <mat-list-option class="col col-lg-4" *ngFor="let file of dragables" [value]="file">
-                                
+
                         <!-- <div class="col col-lg-4" *ngFor="let files of dragables"  class="example-list" > -->
                             <div (click)="clickBox(file.id)" class="example-box" >
-                               
+
                                 <!-- <img src="{{file.src}}" class="cover" title="{{file.name}}" /> -->
                                 <mat-card class="example-card cover">
                                     <mat-card-header>
-                                       
+
                                         <mat-card-title><p class="cut-text">{{file.group}}</p></mat-card-title>
-                                        
+
                                       </mat-card-header>
                                     <img mat-card-image src="{{getSource(file)}}"  title="{{file.name}}" >
                                     <mat-card-content>
@@ -129,13 +129,13 @@
                     </div>
                 </form>
                     </div>
-                   
+
                 </div>
             </mdb-card-text>
         </mdb-card-body>
     </mdb-card>
 </div>
-<app-dialog-confirmer (estConfirmer)="confirmerSoummission($event)" 
+<app-dialog-confirmer (estConfirmer)="confirmerSoummission($event)"
 [description]="'fichier.msg_confirm' | translate"
 [confirmText]="'examen.confirm_text' | translate"></app-dialog-confirmer>
 <ngx-spinner>

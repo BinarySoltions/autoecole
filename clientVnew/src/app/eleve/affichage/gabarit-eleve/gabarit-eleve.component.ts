@@ -46,6 +46,7 @@ export class GabaritEleveComponent implements OnInit, AfterViewInit,OnChanges {
   private paginator: MatPaginator;
   private sort: MatSort;
   phaseGroup :any;
+  module: any;
 
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -197,20 +198,20 @@ onModulesChange(event){
   let isPrevPhase = false;
   if(this.numero) {
   let firstModule = this.modulesConfig[0];
-  let module = this.modulesConfig.filter(m=>Number(m.numero)=== Number(this.numero))[0];
-  let previousElements = this.modulesConfig.filter(m=>Number(m.numero)< Number(this.numero) && Number(m.phase_id)===Number(module.phase_id));
+  this.module = this.modulesConfig.filter(m=>Number(m.numero)=== Number(this.numero))[0];
+  let previousElements = this.modulesConfig.filter(m=>Number(m.numero)< Number(this.numero) && Number(m.phase_id)===Number(this.module.phase_id));
   if(previousElements && previousElements.length===0 && Number(firstModule.numero) === Number(this.numero)){
-    previousElements = this.modulesConfig.filter(m=>Number(m.phase_id) === Number(module.phase_id));
+    previousElements = this.modulesConfig.filter(m=>Number(m.phase_id) === Number(this.module.phase_id));
   } else if(previousElements && previousElements.length===0){
-    previousElements = this.modulesConfig.filter(m=>Number(m.phase_id) === Number(module.phase_id)-1);
+    previousElements = this.modulesConfig.filter(m=>Number(m.phase_id) === Number(this.module.phase_id)-1);
     isPrevPhase = true;
   }
   let previousNumbers = [];
   if(previousElements && previousElements.length>0){
-    previousNumbers = previousElements.map(n=>n.numero);
+   previousNumbers = previousElements.map(n=>n.numero);
   }
   let listPreviousModules =  this.elements.filter((e:Eleve)=>{
-    let index = isPrevPhase?(e.modules.filter(m=>Number(m.phase_id) === Number(module.phase_id)-1).every(m=> m.eleve_module.date_complete!=null || m.eleve_module.sans_objet!=null)?1:-1) : e.modules.findIndex((m:Module)=>this.compareModuleDone(m,previousNumbers));
+    let index = isPrevPhase?(e.modules.filter(m=>Number(m.phase_id) === Number(this.module.phase_id)-1).every(m=> m.eleve_module.date_complete!=null || m.eleve_module.sans_objet!=null)?1:-1) : e.modules.findIndex((m:Module)=>this.compareModuleDone(m,previousNumbers));
     if(index != -1 && Number(firstModule.numero) != Number(this.numero)){
      return e;
     }else if(Number(firstModule.numero) === Number(this.numero)){
@@ -219,7 +220,9 @@ onModulesChange(event){
    });
 
   let testlisteEleves =  listPreviousModules.filter((e:Eleve)=>{
-   let index = e.modules.findIndex((m:Module)=>this.compareModuleAbsent(m));
+
+   let index = Number(this.module.phase_id)>1?(e.modules.filter(m=>Number(m.phase_id) === Number(this.module.phase_id)-1).every(m=> m.eleve_module.date_complete!=null || m.eleve_module.sans_objet!=null)?
+   e.modules.findIndex((m:Module)=>this.compareModuleAbsent(m)):-1):e.modules.findIndex((m:Module)=>this.compareModuleAbsent(m));
    if(index != -1){
     return e;
    }
@@ -238,7 +241,9 @@ compareModuleAbsent(m):boolean{
 }
 
 compareModuleDone(m,previousNumbers):boolean{
-  return previousNumbers.includes(m.numero) && (m.eleve_module.date_complete!=null || m.eleve_module.sans_objet!=null);
+  //return previousNumbers.includes(m.numero) && m.eleve_module.type !="T" && (m.eleve_module.date_complete!=null || m.eleve_module.sans_objet!=null) ||
+  //previousNumbers.includes(m.numero) && m.eleve_module.type==="T";
+  return previousNumbers.includes(m.numero);
 }
 
 getModules(phase){

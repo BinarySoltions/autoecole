@@ -111,7 +111,7 @@ imprimerOuEnvoyer(){
   imprimer(){
    //this.print(1,"facture",1);
    this.spinner.show(undefined, { fullScreen: true });
-   let req = {id:this.eleve.id,payments:this.payementsPDF.map(x=>x.id)}
+   let req = {id:this.data.eleve.id,payments:this.data.payementsPDF.map(x=>x.id)}
     this.servicePayement.genererPDF(req).subscribe(response=>{
       let a = response.split("\r\n\r\n")
       const byteCharacters = atob(a[1]);
@@ -125,7 +125,7 @@ imprimerOuEnvoyer(){
       var tempLink = document.createElement('a');
       tempLink.style.display = 'none';
       tempLink.href = fileURL;
-      tempLink.setAttribute('download', "facture_"+this.eleve.prenom+this.eleve.nom+"_"+this.eleve.numero_contrat+'.pdf');
+      tempLink.setAttribute('download', "facture_"+this.data.eleve.prenom+this.data.eleve.nom+"_"+this.data.eleve.numero_contrat+'.pdf');
       document.body.appendChild(tempLink);
       tempLink.click();
       document.body.removeChild(tempLink);
