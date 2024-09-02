@@ -52,6 +52,7 @@ class EleveController extends Controller
      */
     public function index()
     {
+        //ini_set('memory_limit', '44M');
         return $this->serviceEleve->obtenirListeEleves();
     }
 
