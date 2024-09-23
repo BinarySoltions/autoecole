@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { Eleve } from 'src/app/entite/eleve.entity';
 import { environment } from 'src/environments/environment';
 import { SharedServiceModule } from 'src/app/shared/shared/shared-service.module';
+import { Module } from 'src/app/entite/module.entity';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -47,6 +48,10 @@ export class EleveService {
 
   obtenirElevesUniquement(): Observable<Eleve[]> {
     return this.http.get<Eleve[]>(this.apiUrl + 'eleves_seulement');
+  }
+
+  obtenirElevesModuleAfaire(module:Module): Observable<Eleve[]> {
+    return this.http.post<Eleve[]>(this.apiUrl + 'eleves_module_faire',module, httpOptions);
   }
 
   ajouterEleve(eleve: Eleve): Observable<Eleve> {

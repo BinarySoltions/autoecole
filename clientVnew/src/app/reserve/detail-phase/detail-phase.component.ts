@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
@@ -14,22 +14,27 @@ import * as _ from 'underscore';
   templateUrl: './detail-phase.component.html',
   styleUrls: ['./detail-phase.component.scss']
 })
-export class DetailPhaseComponent implements  OnInit {
+export class DetailPhaseComponent implements  OnInit,OnChanges {
   @Input() idEleve:number = 0;
   eleveModele:Eleve;
-  
+
   phaseUne:phaseDetailModel;
   phaseDeux:phaseDetailModel;
   phaseTrois:phaseDetailModel;
   phaseQuatre:phaseDetailModel;
 
-  constructor(private router:Router, 
+  constructor(private router:Router,
         private serviceEleve:EleveService,
         private activatedRoute: ActivatedRoute,
         private toastr: ToastrService,
-        private translate: TranslateService) { 
+        private translate: TranslateService) {
           this.translate.setDefaultLang('fr');
         }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.obtenirEleveById(this.idEleve);
+    this.initialiserEleveModele();
+    this.initialiserPhaseDetailModel();
+  }
   ngOnInit() {
     this.obtenirEleveById(this.idEleve);
     this.initialiserEleveModele();

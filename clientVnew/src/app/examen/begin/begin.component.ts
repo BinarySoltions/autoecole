@@ -28,13 +28,14 @@ export class BeginComponent implements OnInit,OnDestroy {
   constructor(private translate: TranslateService, private route:Router,private router:ActivatedRoute,
     private serviceEleve:EleveService,private spinner:NgxSpinnerService,
     private _formBuilder: FormBuilder,) {
-    this.translate.setDefaultLang('fr');
+    //this.translate.setDefaultLang('fr');
    }
 
   ngOnInit() {
     this.sub = this.router.params.subscribe(params =>{
       this.numeroIdentification = params['numero'];
       this.langue = params['langue'];
+      this.translate.setDefaultLang(this.langue);
       if(!!this.numeroIdentification && !!this.langue){
         this.commencer();
       }
@@ -57,6 +58,7 @@ export class BeginComponent implements OnInit,OnDestroy {
       }
       this.spinner.hide();
     })
+    //this.translate.use(this.langue)
     this.route.navigate(['public/examen',this.numeroIdentification,this.langue]);
   }
 

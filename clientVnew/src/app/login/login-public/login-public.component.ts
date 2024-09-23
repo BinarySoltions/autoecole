@@ -31,11 +31,14 @@ export class LoginPublicComponent implements OnInit {
     private toastr: ToastrService,private authenticationService: AuthenticationService,
     private translate: TranslateService,private spinner:NgxSpinnerService,) {
     this.translate.setDefaultLang('fr');
+    if(this.authenticationService.currentUserPublicValue){
+      this.router.navigate(['/public/reservation/ok'])
+    }
    }
 
   ngOnInit() {
   }
-  
+
 
   radioChange(choice){
     if(!!this.data){
@@ -44,18 +47,12 @@ export class LoginPublicComponent implements OnInit {
   }
   commencer(){
     this.spinner.show(undefined, { fullScreen: true });
-    this.serviceEleve.getEleveLogin(this.data).subscribe(res => {
-      if (res && res.isValid) {
-      
-        let req = { langue: this.data.langue, id: res.id, numero: this.data.numero,nom:this.data.nom };
-        this.cookieService.set('login-student', JSON.stringify(req), 0.02);
-        let user = new User;
-        user.id = res.id;
-        user.access_token = res.token;
-        this.authenticationService.loginPublic(user);
+    this.authenticationService.loginPublic(this.data).subscribe(res => {
+      if (res) {
+
         this.spinner.hide();
         this.router.navigate(['/public/reservation/ok'],
-        {queryParams:{id:res.id,numero:this.data.numero,nom:this.data.nom,lang:this.data.langue}});
+        {queryParams:{lang:this.data.langue}});
       } else {
         this.toastr.error("Erreur de saisie. Demander mot de passe. Merci! Typing error. Ask password. Thank's!", "Erreur de connexion/ Connexion error", {timeOut: 7000});
       }

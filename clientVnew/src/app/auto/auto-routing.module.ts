@@ -52,7 +52,7 @@ const routes: Routes = [
   { path: 'personne' , component: PersonneResponsableAffichageComponent, canActivate: [AuthGuardService]},
   { path: 'parametres/contrat' , component: ParametresContratComponent, canActivate: [AuthGuardService]},
   { path: 'login' , component: LoginComponent},
-  { path: 'register' , component: RegisterComponent, canActivate: [AuthGuardService]},
+  { path: 'register' , component: RegisterComponent,canActivate: [AuthGuardService]},
   { path: 'eleve/contrat/:id' , component: ContratComponent},
   { path: 'recherche' , component: RechercheComponent, canActivate: [AuthGuardService]},
   { path: 'notification' , component: NotificationComponent, canActivate: [AuthGuardService]},

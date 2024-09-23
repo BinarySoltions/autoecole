@@ -13,6 +13,7 @@ export class AuthPublicGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):boolean {
     const currentUser = this.authenticationService.currentUserPublicValue;
+    console.log(" public user :", currentUser)
     if (currentUser) {
         // authorised so return true
         return true;

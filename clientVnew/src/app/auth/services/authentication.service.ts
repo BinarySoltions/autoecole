@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../user.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { SharedServiceModule } from 'src/app/shared/shared/shared-service.module';
 import { CookieService } from 'ngx-cookie-service';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  })
+};
 
 @Injectable({
   providedIn: SharedServiceModule
@@ -17,37 +24,34 @@ export class AuthenticationService {
   private currentUserPublicSubject: BehaviorSubject<User>;
   public currentUserPublic: Observable<User>;
 
-  constructor(private http: HttpClient, private cookieService: CookieService,) {
+  constructor(private http: HttpClient) {
       const valeur = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')):null;
       this.currentUserSubject = new BehaviorSubject<User>(valeur);
       this.currentUser = this.currentUserSubject.asObservable();
-      const valeurPublic = this.cookieService.get('login-public') ? this.getUserPublic():null;
+      const valeurPublic = localStorage.getItem('currentUserPublic') ? JSON.parse(localStorage.getItem('currentUserPublic')):null;
       this.currentUserPublicSubject = new BehaviorSubject<User>(valeurPublic);
       this.currentUserPublic = this.currentUserPublicSubject.asObservable();
       console.log("yessa")
   }
-  getUserPublic():User {
-    let userCookie =  this.cookieService.get('login-public');
-    let userLoging = new User;
-    userLoging.access_token = userCookie;
-    return userLoging;
-  }
 
   public get currentUserValue(): User {
-      return this.currentUserSubject.value;
+    const userSession = localStorage.getItem('currentUser');
+      return this.currentUserSubject.value || userSession?JSON.parse(userSession):null;
   }
   public get currentUserPublicValue(): User {
-    return this.currentUserPublicSubject.value;
+    //TODO
+    const userSession = localStorage.getItem('currentUserPublic');
+    return this.currentUserPublicSubject.value || userSession?JSON.parse(userSession):null;
     }
 
   login(userLoging:User) {
-      return this.http.post<any>(`${this.apiUrl}auth/authenticate`, userLoging)
+      return this.http.post<any>(`${this.apiUrl}auth/authenticate`, userLoging,httpOptions)
           .pipe(map(user => {
-              // login successful if there's a jwt token in the response
+              console.log("login successful if there's a jwt token in the response");
               if (user && user.access_token) {
-                  // store user details and jwt token in local storage to keep user logged in between page refreshes
+               console.log("store user details and jwt token in local storage to keep user logged in between page refreshes");
                   localStorage.setItem('currentUser', JSON.stringify(user));
-                  this.currentUserSubject.next(user);
+                this.currentUserSubject.next(user);
               }
 
               return user;
@@ -60,19 +64,24 @@ export class AuthenticationService {
       this.currentUserSubject.next(null);
   }
 
-  loginPublic(userLoging:User){
-    let userCookie = {id:userLoging.id,token:userLoging.access_token};
-    let userString = JSON.stringify(userCookie);
-    userLoging.access_token = btoa(userString);
-    const dateNow = new Date();
-    dateNow.setDate(dateNow.getDate() + 28);
-    this.cookieService.set('_login_public', userLoging.access_token ,dateNow);
-    this.currentUserPublicSubject.next(userLoging);
+  loginPublic(req:any){
+    return this.http.post<any>(`${this.apiUrl}loginEleve`, req,httpOptions)
+    .pipe(map(user => {
+        console.log("login successful if there's a jwt token in the response");
+        if (user && user.access_token) {
+          user.lang = req.langue;
+         console.log("store user details and jwt token in local storage to keep user logged in between page refreshes");
+            localStorage.setItem('currentUserPublic', JSON.stringify(user));
+          this.currentUserPublicSubject.next(user);
+        }
+
+        return user;
+    }));
   }
 
   logoutPublic() {
     // remove user from local storage to log user out
-    this.cookieService.delete('_login_public','/');
-    this.currentUserPublicSubject.next(null); 
+    localStorage.removeItem('currentUserPublic');
+    this.currentUserPublicSubject.next(null);
   }
 }

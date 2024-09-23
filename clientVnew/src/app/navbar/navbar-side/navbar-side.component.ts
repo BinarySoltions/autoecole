@@ -35,18 +35,18 @@ export class NavbarSideComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private serviceEleve:EleveService,
-    private partageService:PartageService) { 
+    private partageService:PartageService) {
       this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.translate.setDefaultLang('fr');
     this.baseUrl = baseUrl;
     this.isLogged = this.authenticationService.currentUserValue;
   }
   ngAfterViewInit(): void {
-    this.obtenirElevesExpires();
+   // this.obtenirElevesExpires();
   }
 
   ngOnInit() {
-   
+
   }
 
 logout() {
@@ -54,13 +54,13 @@ logout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
 }
-obtenirElevesExpires() { 
+obtenirElevesExpires() {
   if(this.isLogged) {
   this.serviceEleve.obtenirElevesExpires().subscribe(res=>{
     setTimeout(() => {
       this.estNotifie  = !res? 0 : res.length;
   },0);
-   
+
   });
 
   this.partageService.nombreCourant.subscribe(n=>{

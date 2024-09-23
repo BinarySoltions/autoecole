@@ -11,10 +11,10 @@ import { DemanderPwdComponent } from '../login/login-public/demander-pwd/demande
 import { AuthPublicGuardService } from '../auth/services/auth-public-guard.service';
 
 const routes: Routes = [
-  { path: '', component: AutoPublicComponent, 
+  { path: '', component: AutoPublicComponent,
   children:[
-    { path: 'examen' , component: BeginComponent},
-  { path: 'examen/:numero/:langue' , component: BeginComponent},
+    { path: 'examen' , component: BeginComponent,canActivate: [AuthPublicGuardService]},
+  { path: 'examen/:numero/:langue' , component: BeginComponent,canActivate: [AuthPublicGuardService]},
   { path: 'session-terminer' , component: SessionFinieComponent},
   { path: 'inscription' , component: InscriptionComponent},
   { path: 'reservation/ok' , component: ReserveComponent,canActivate: [AuthPublicGuardService]},
@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'changer-mot-de-passe' , component: ChangePwdComponent},
   ]
 },
-  
+
 ];
 
 @NgModule({

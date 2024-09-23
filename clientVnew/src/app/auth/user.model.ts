@@ -12,4 +12,5 @@ export class User {
     token?:string;
     idToken?:string;
     from?:string;
+    lang:string;
 }

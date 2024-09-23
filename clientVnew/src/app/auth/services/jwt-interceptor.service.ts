@@ -3,6 +3,7 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import { SharedServiceModule } from 'src/app/shared/shared/shared-service.module';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: SharedServiceModule
@@ -13,22 +14,11 @@ export class JwtInterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // add authorization header with jwt token if available
+    request = request.clone({ headers: request.headers.append('X-TENANT-ID', environment.tenant) });
+
     let currentUser = this.authenticationService.currentUserValue;
     if (currentUser && currentUser.access_token) {
-        request = request.clone({
-            setHeaders: { 
-                Authorization: `Bearer ${currentUser.access_token}`
-            }
-        });
-    }
-    let currentUserPublic = this.authenticationService.currentUserPublicValue;
-    
-    if (currentUserPublic && currentUserPublic.access_token) {
-      request = request.clone({
-        setHeaders: { 
-              'X-Header-Public': `${currentUserPublic.access_token}`
-            }
-      });
+        request =  request.clone({ headers: request.headers.append('Authorization', `Bearer ${currentUser.access_token}`) });
     }
 
     return next.handle(request);

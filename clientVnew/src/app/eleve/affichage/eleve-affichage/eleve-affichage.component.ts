@@ -9,7 +9,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { Module } from 'src/app/entite/module.entity';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import * as _ from 'underscore';
 import { PartageService } from 'src/app/service/partage.service';
 import { ExportExcelService } from 'src/app/excel/export-excel.service';
 import { AjouterModuleComponent } from 'src/app/module/ajouter-module/ajouter-module.component';
@@ -65,7 +64,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
   ngOnInit() {
     this.spinner.show(undefined, { fullScreen: true });
     this.isLoading = true;
-    this.obtenirElevesLimites(100);
+    this.obtenirEleves();
     //this.obtenirElevesExpires();
   }
 
@@ -75,22 +74,21 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
   obtenirEleves(){
     this.serviceEleve.obtenirEleves().subscribe((result)=>{
       if (result) {
+        console.log(" result student :",result)
         this.elements = result;
-        this.listeEleves  = result.filter(eleve=>{
-          return _.extend(eleve, {'nomcomplet':eleve.nom+', '+eleve.prenom+', '+eleve.numero_contrat}) ;
-        });
+        this.listeEleves  = result;
        this.isLoading = false;
        this.dialogRef?.componentInstance.elevesChangeSubscribe.next(this.listeEleves)
       }
+      this.spinner.hide();
     });
   }
   obtenirElevesLimites(limit){
     this.serviceEleve.obtenirElevesLimites(limit).subscribe((result)=>{
       if (result) {
+        console.log(" result student :",result)
         this.elements = result;
-        this.listeEleves  = result.filter(eleve=>{
-          return _.extend(eleve, {'nomcomplet':eleve.nom+', '+eleve.prenom+', '+eleve.numero_contrat}) ;
-        });
+        this.listeEleves  = result;
         this.dialogRef?.componentInstance.elevesChangeSubscribe.next(this.listeEleves)
       }
       this.spinner.hide();

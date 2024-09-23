@@ -7,6 +7,7 @@ import { User } from 'src/app/auth/user.model';
 import { NotificationComponent } from 'src/app/notification/notification.component';
 import { EleveService } from 'src/app/service/eleve/eleve.service';
 import { PartageService } from 'src/app/service/partage.service';
+import { environment } from 'src/environments/environment';
 
 enum Lien{
   HOME = 1,
@@ -29,23 +30,25 @@ export class NavbarComponent implements OnInit,AfterViewInit {
   lienActif = this.lien.HOME;
   @Input() isExamen = false;
   isLogged: User;
+  schoolName = environment.tenant.localeCompare('longueuildb')==0?'Longueuil':"";
+
   constructor(private translate:TranslateService,
     @Inject('BASE_URL') baseUrl: string,
     private router: Router,
     private authenticationService: AuthenticationService,
     private serviceEleve:EleveService,
-    private partageService:PartageService) { 
+    private partageService:PartageService) {
       this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.translate.setDefaultLang('fr');
     this.baseUrl = baseUrl;
     this.isLogged = this.authenticationService.currentUserValue;
   }
   ngAfterViewInit(): void {
-    this.obtenirElevesExpires();
+    //this.obtenirElevesExpires();
   }
 
   ngOnInit() {
-   
+
   }
 
 logout() {
@@ -53,13 +56,13 @@ logout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
 }
-obtenirElevesExpires() { 
+obtenirElevesExpires() {
   if(this.isLogged) {
   this.serviceEleve.obtenirElevesExpires().subscribe(res=>{
     setTimeout(() => {
       this.estNotifie  = !res? 0 : res.length;
   },0);
-   
+
   });
 
   this.partageService.nombreCourant.subscribe(n=>{

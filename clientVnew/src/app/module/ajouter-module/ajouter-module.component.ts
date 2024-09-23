@@ -1,10 +1,9 @@
-import { Component,EventEmitter, OnInit, AfterViewInit, Input, Output, ViewChild } from '@angular/core';
+import { Component,EventEmitter, OnInit, AfterViewInit, Input, Output, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { Module } from 'src/app/entite/module.entity';
 import { ModuleService } from 'src/app/service/module/module.service';
 import {TranslateService} from '@ngx-translate/core';
 import { EleveService } from 'src/app/service/eleve/eleve.service';
 import { Eleve } from 'src/app/entite/eleve.entity';
-import * as _ from 'underscore';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
 import moment from 'moment';
@@ -18,7 +17,7 @@ import { ModuleModel } from 'src/app/modele/module.model';
   templateUrl: './ajouter-module.component.html',
   styleUrls: ['./ajouter-module.component.scss']
 })
-export class AjouterModuleComponent implements OnInit,AfterViewInit {
+export class AjouterModuleComponent implements OnInit,OnChanges, AfterViewInit {
 
   dropdownListEleve:any = [];
   selectedItems = [];
@@ -38,6 +37,9 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
     private toastr:ToastrService) {
       translate.setDefaultLang('fr');
     }
+  ngOnChanges(changes: SimpleChanges): void {
+   console.log("on change module :", changes);
+  }
 
   ngOnInit() {
     this.dropdownSettings = {
@@ -69,7 +71,7 @@ export class AjouterModuleComponent implements OnInit,AfterViewInit {
     });
   }
   ajouter(){
-    this.moduleModel.eleves = _.pluck(this.moduleModel.eleves,'id');
+    this.moduleModel.eleves = this.moduleModel.eleves.map((e:any)=>e.id);
     this.moduleModel.date_complete = !this.moduleModel.date_complete?null:moment(this.moduleModel.date_complete).format('YYYY-MM-DD');
     this.ajouterMoniteur();
     this.serviceModule.ajouterModuleEleves(this.moduleModel).subscribe(res=>{

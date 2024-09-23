@@ -65,11 +65,12 @@ export class ReserveComponent implements OnInit {
 
 
 
-  constructor(private router: Router, private serviceEleve: EleveService,private servicePayement:PayementService,  
+  constructor(private router: Router, private serviceEleve: EleveService,private servicePayement:PayementService,
     private toastr: ToastrService, private servicePhase:PhaseService,
     private translate: TranslateService,private spinner:NgxSpinnerService,
     private cookieService: CookieService, private serviceModule: ModuleService,
     public dialog: MatDialog, private route:ActivatedRoute,
+    private authService:AuthenticationService,
     @Inject(DOCUMENT) private _document: Document) {
     this.translate.setDefaultLang('fr');
     this.checklogin();
@@ -78,20 +79,17 @@ export class ReserveComponent implements OnInit {
 
   ngOnInit() {
     this.sub = this.route.queryParams.subscribe(params=>{
-      this.idEleve = +params['id'];
-      this.numero = params['numero'];
-      this.nom = params['nom'];
       this.lang = params['lang'];
       this.init();
     })
-   
+
   }
 
   init() {
     this.eventDriving = new EvenementEleve();
-  
+
       this.isVisible = true;
-      this.obtenirModules(this.idEleve);
+
       //this.obtenirEvenementsEleve();
       this.languages = [
         { value: 'fr', label: 'FR' },
@@ -131,15 +129,18 @@ export class ReserveComponent implements OnInit {
   }
 
   obtenirEleve(){
-    this.serviceEleve.obtenirEleve(this.idEleve).subscribe(res=>{
+    this.serviceEleve.obtenirEleve(this.authService.currentUserPublicValue.id).subscribe(res=>{
       if(res){
+        this.idEleve = this.authService.currentUserPublicValue.id;
         this.total = res.frais_inscription;
+        this.numero = res.numero_contrat;
+        this.obtenirModules(this.authService.currentUserPublicValue.id);
       }
     })
   }
 
   obtenirPayements(): void {
-    this.servicePayement.obtnenirPayements(this.idEleve).subscribe(res=>{
+    this.servicePayement.obtnenirPayements(this.authService.currentUserPublicValue.id).subscribe(res=>{
       if(res){
         this.transaction = res.payements;
         this.getTotalCost();
@@ -151,7 +152,7 @@ export class ReserveComponent implements OnInit {
     let total = 0;
     this.transaction.forEach(p=>total = total + Number(p.montant));
     this.totalPaye =  total;
-    
+
   }
 
   updateEventCompleted(){
@@ -188,7 +189,7 @@ export class ReserveComponent implements OnInit {
         }else{
           this.toastr.error("Merci de compléter la phase précédente / Please complete your previous phase !", "Erreur / Error !", { timeOut: 5000 });
         }
-       
+
         return;
       }
       if(this.validSessionOneTwo()){
@@ -205,7 +206,7 @@ export class ReserveComponent implements OnInit {
       }
       if(this.validDateEventsInfNextEventDateSaving()){
        // let dates = this.events.map(d => moment(d.date+' '+d.heure_debut));
-       // let maxDate = moment.max(dates) 
+       // let maxDate = moment.max(dates)
         this.toastr.error("Merci de contacter Pconduite pour cette réservation  / Please contact Pconduite for this reservation !", "Erreur / Error !", { timeOut: 10000 });
         return;
       }
@@ -256,7 +257,7 @@ export class ReserveComponent implements OnInit {
   dateClass: MatCalendarCellClassFunction<any> = (cellDate, view) => {
     // Only highligh dates inside the month view.
     if (view === 'month') {
-      
+
       const date = !!cellDate ? cellDate : moment();
       const dateHeures = this.eventsDateHeures
       .filter(x => x.date === date.format('YYYY-MM-DD') && x.place === null);
@@ -329,17 +330,11 @@ export class ReserveComponent implements OnInit {
     this.numero = req.numero;
     this.nom = req.nom;
     this.spinner.show(undefined, { fullScreen: true });
-    this.serviceEleve.getEleveLogin(req).subscribe(res => {
-      if (res && res.isValid) {
+    this.authService.loginPublic(req).subscribe(res => {
+      if (res) {
         this.isVisible = true;
         this.idEleve = res.id;
-        let req = { langue: this.lang, id: res.id, numero: this.numero,nom:this.nom };
-        this.cookieService.set('login-student', JSON.stringify(req), 0.02);
-        let user = new User;
-        user.id = res.id;
-        user.access_token = res.token;
-       // this.authenticationService.loginPublic(user);
-        dialogRef.close();
+        //dialogRef.close();
         this._document.defaultView.location.reload();
       } else {
 
@@ -349,11 +344,11 @@ export class ReserveComponent implements OnInit {
     setTimeout(()=> this.spinner.hide(),30000);
   }
   checklogin() {
-    this.cookieTimeout = this.cookieService.get('_login_public');
+    this.cookieTimeout = this.authService.currentUserPublicValue;
     this.openDialog();
     const src = timer(0, 60000);
     src.subscribe(v => {
-      this.cookieTimeout = this.cookieService.get('_login_public');
+      this.cookieTimeout = this.authService.currentUserPublicValue;
       this.openDialog();
     })
   }
@@ -379,7 +374,7 @@ export class ReserveComponent implements OnInit {
   deleteEvent(id, dialogRef) {
 
     let evt = this.events.find(e=>e.id === id);
-    let req = { id: id,nom:this.nom,numero:this.numero,
+    let req = { id: id,
       date:evt.date,heure_debut:evt.heure_debut,heure_fin:evt.heure_fin};
       this.spinner.show(undefined, { fullScreen: true });
     this.serviceEleve.deleteEvent(req).subscribe(res => {
@@ -409,7 +404,7 @@ export class ReserveComponent implements OnInit {
         numberOffset = eventsValidOther.length - ( !!eventsValidOtherA ?eventsValidOtherA.length : 0);
       }
       estTrue = (!!eventsValid?eventsValid.length:0) + numberOffset > 2;
-    } 
+    }
     else if(this.events.length>0){
       let evts = this.events.filter(e=>e.status != 2);
       estTrue = !!evts && evts.length == 3;
@@ -422,30 +417,30 @@ export class ReserveComponent implements OnInit {
     let eventsValid = this.events.filter(e=>moment(e.date).startOf('day').diff(moment(this.eventDriving.date).startOf('day'),'days')==0);
     if(eventsValid && eventsValid.length > 1){
       estTrue = true;
-    } 
+    }
     return estTrue;
   }
 
   validDateEventsInfNextEventDateSaving(){
     let estTrue = false;
-    let numeroEventModule = this.listeModules.find(m => m.id == this.eventDriving.module_id).numero; 
+    let numeroEventModule = this.listeModules.find(m => m.id == this.eventDriving.module_id).numero;
     let tempEvents = this.listeModules.filter(m=> this.events.find(e=>e.module_id == m.id && e.status != 2) != null);
-    let tempEventsSup = this.events.filter(e=> tempEvents.find(m=>m.id == e.module_id && 
+    let tempEventsSup = this.events.filter(e=> tempEvents.find(m=>m.id == e.module_id &&
       Number(m.numero) > numeroEventModule) != null );
-   
+
     if(tempEventsSup && tempEventsSup.length>0){
       let eventsValid = tempEventsSup.filter(e=>moment(e.date+' '+e.heure_debut).startOf('hour').diff(moment(this.eventDriving.date+' '+this.eventDriving.heure_debut).startOf('hour'),'hours')<0);
       if(eventsValid && eventsValid.length > 0){
         estTrue = true;
-      } 
+      }
     }
-    let tempEventsInf = this.events.filter(e=> tempEvents.find(m=>m.id == e.module_id 
+    let tempEventsInf = this.events.filter(e=> tempEvents.find(m=>m.id == e.module_id
       && Number(m.numero) < numeroEventModule) != null );
     if(tempEventsInf && tempEventsInf.length>0){
       let eventsValidInf = tempEventsInf.filter(e=>moment(e.date+' '+e.heure_debut).startOf('hour').diff(moment(this.eventDriving.date+' '+this.eventDriving.heure_debut).startOf('hour'),'hours')>0);
       if(eventsValidInf && eventsValidInf.length > 0){
         estTrue = true;
-      } 
+      }
     }
     return estTrue;
   }
@@ -456,12 +451,12 @@ export class ReserveComponent implements OnInit {
     if(this.events && this.events.length > 0){
       eventsId = this.events.filter(e=>e.status != 2).map(e=>e.module_id);
     }
-   
+
     if(eventsId && eventsId.length > 0){
       let eventSesion = null;
-      
+
       eventSesion = this.listeModules.filter(m=> eventsId.find(e=>e == m.id) == null && m.date_complete == null && m.sans_objet == null).sort((a,b)=>Number(a.numero) > Number(b.numero)?1:-1)[0];
-     
+
       if(eventSesion){
         sessionsCarNext = eventSesion;
       }else{
@@ -472,7 +467,7 @@ export class ReserveComponent implements OnInit {
       sessionsCarNext = this.listeModules.filter(m=> m.date_complete == null && m.sans_objet == null)
       .sort((a,b)=>Number(a.numero) > Number(b.numero)?1:-1)[0];
     }
-    
+
     if(!!sessionsCarNext){
       estTrue = !(Number(val) == sessionsCarNext.numero)
      }
@@ -482,23 +477,23 @@ export class ReserveComponent implements OnInit {
   validSessionOneTwo(){
     if(this.eventDriving.nom_module.includes('Sortie 2')){
       let evt = this.events.find(e=> e.nom_module == 'Sortie 1');
-      if(!!evt){ 
+      if(!!evt){
         return moment(evt.date).startOf('day').diff(moment(this.eventDriving.date).startOf('day'),'days') == 0;
-      } 
+      }
       let evt1 = this.events.find(e=> e.nom_module == 'Sortie 3');
-      if(!!evt1){ 
+      if(!!evt1){
         return moment(evt1.date).startOf('day').diff(moment(this.eventDriving.date).startOf('day'),'days') == 0;
-      } 
+      }
     } else if(this.eventDriving.nom_module.includes('Sortie 1')){
       let evt = this.events.find(e=> e.nom_module == 'Sortie 2');
       if(!!evt){
         return moment(evt.date).startOf('day').diff(moment(this.eventDriving.date).startOf('day'),'days') == 0;
-      } 
+      }
     }else if(this.eventDriving.nom_module.includes('Sortie 3')){
       let evt = this.events.find(e=> e.nom_module == 'Sortie 2');
       if(!!evt){
         return moment(evt.date).startOf('day').diff(moment(this.eventDriving.date).startOf('day'),'days') == 0;
-      } 
+      }
     }
     return false;
   }
@@ -507,7 +502,7 @@ export class ReserveComponent implements OnInit {
     let idPhaseCurrent = this.listeModules.find(m => m.id == this.eventDriving.module_id).phase_id;
     this.idPhase = idPhaseCurrent - 1;
     let modules = this.listePTModules.filter(m=> m.phase_id == this.idPhase && m.date_complete == null && m.sans_objet == null);
- 
+
     if(!!modules && modules.length > 0){
       return false;
     }
@@ -517,7 +512,7 @@ export class ReserveComponent implements OnInit {
     let firstModulePhase = this.listePTModules.filter(m=> m.phase_id == idPhaseCurrent && m.date_complete != null).sort((a,b)=>Number(a.numero) < Number(b.numero)?-1:1)[0];
     let lastModulePhase = this.listePTModules.filter(m=> m.phase_id == idPhaseCurrent).sort((a,b)=>Number(a.numero) < Number(b.numero)?1:-1)[0];
     if(lastModulePhase.id == this.eventDriving.module_id){
-     
+
       return moment(this.eventDriving.date).startOf('day').diff(moment(firstModulePhase.date_complete).startOf('day'),'days') >= this.delay;
     }
     return true;

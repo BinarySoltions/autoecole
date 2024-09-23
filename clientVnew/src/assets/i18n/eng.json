@@ -172,5 +172,13 @@
         "supprimer":"Delete",
         "televerser":"Upload",
         "msg_confirm":"Voulez vous supprimer?"
-    }
+    },
+    "menu":{
+      "eleve":"Student",
+      "parametre":"Settings",
+      "autre":"Other",
+      "examen":"Exam",
+      "profile":"Profil",
+      "logout":"Logout"
+  }
 }

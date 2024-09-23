@@ -9,7 +9,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { Module } from 'src/app/entite/module.entity';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import * as _ from 'underscore';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort} from '@angular/material/sort';
 import { MatTableDataSource} from '@angular/material/table';
@@ -71,8 +70,9 @@ export class GabaritEleveComponent implements OnInit, AfterViewInit,OnChanges {
     //this.dataSource.sort = this.sort;
   }
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    console.log("on change gabarit student :",changes)
     this.obtenirEleves(this.listeEleves);
-    this.phaseGroup = this.modulesConfig.map(m=> m.phase_id).filter((value, index, self) => self.indexOf(value) === index);
+    this.phaseGroup = this.modulesConfig?.map(m=> m.phase_id).filter((value, index, self) => self.indexOf(value) === index);
   }
   ngAfterViewInit() {
   }
@@ -116,7 +116,10 @@ public supprimerEleve(value){
 
  determinerPhase(modules:Module[]):string{
    let modulesCompleted = [];
-   modulesCompleted = modules.filter(m=>m.eleve_module.date_complete != null);
+   modulesCompleted = modules?.filter(m=>m.eleve_module.date_complete != null);
+   if(!modulesCompleted){
+    return "";
+   }
    let resultatArray = modulesCompleted.sort(this.compare);
    let resultat = resultatArray[0];
    if(resultat && Number(resultat.numero)){
@@ -195,10 +198,17 @@ validerExamen(row):any{
 
 onModulesChange(event){
   this.numero = Number(event.value);
+
   let isPrevPhase = false;
   if(this.numero) {
   let firstModule = this.modulesConfig[0];
   this.module = this.modulesConfig.filter(m=>Number(m.numero)=== Number(this.numero))[0];
+  this.serviceEleve.obtenirElevesModuleAfaire(this.module ).subscribe((result:Eleve[])=>{
+    console.log(" result eleves module not done :", result)
+    this.dataSource = new MatTableDataSource(result);
+      this.setDataSourceAttributes();
+  })
+  return;
   let previousElements = this.modulesConfig.filter(m=>Number(m.numero)< Number(this.numero) && Number(m.phase_id)===Number(this.module.phase_id));
   if(previousElements && previousElements.length===0 && Number(firstModule.numero) === Number(this.numero)){
     previousElements = this.modulesConfig.filter(m=>Number(m.phase_id) === Number(this.module.phase_id));

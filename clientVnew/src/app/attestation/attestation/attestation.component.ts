@@ -43,7 +43,7 @@ export class AttestationModel extends Attestation{
   ]
 })
 export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
- 
+
   numeroPermis:string = "";
   typeDeCopies:string[] = ["","COPIE DU DÉLÉGATAIRE"];
   typeCopie:string = "";
@@ -82,7 +82,7 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
     private router:Router,
     private serviceAttestation:AttestationService,
     private spinner:NgxSpinnerService
-    ) { 
+    ) {
       this.translate.setDefaultLang('fr');
     }
 
@@ -110,7 +110,7 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
         if(this.attestation.resultat_final)
           this.resultat_final[this.attestation.resultat_final-1]=true;
     });
-    
+
     this.eventsSubscription = this.events.subscribe((numAttestation) => {
       this.numeroAttestation = numAttestation;
       this.attestation.numero = numAttestation;
@@ -179,6 +179,7 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
         this.attestation.resultat_final = _.indexOf(this.resultat_final,true)+1;
         this.attestation.personne_responsable2_id = this.personneAutre.id;
       }
+
       this.attestation.numero = this.numeroAttestation;
       let req={phase_une:this.estPhaseUne,attestation:this.attestation}
       this.serviceAttestation.AjouterAttestation(req).subscribe(res=>{
@@ -190,8 +191,8 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
     public fermer(){
       this.router.navigate(["/eleves"]);
      }
-   
-  
+
+
     openDataUriWindow(url,filename) {
       var html = '<html><head><title>' +
           filename + '</title>' +
@@ -210,15 +211,15 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
       this.phaseUne = new phaseDetailModel;
       this.phaseUne.nom = "";
       this.phaseUne.modules = [];
-  
+
       this.phaseDeux = new phaseDetailModel;
       this.phaseDeux.nom = "";
       this.phaseDeux.modules = [];
-  
+
       this.phaseTrois = new phaseDetailModel;
       this.phaseTrois.nom = "";
       this.phaseTrois.modules = [];
-  
+
       this.phaseQuatre = new phaseDetailModel;
       this.phaseQuatre.nom = "";
       this.phaseQuatre.modules = [];
@@ -261,8 +262,15 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
 
     imprimer(){
       //this.print(1,"facture",1);
+      var svg = document.getElementById("barcode");
+      console.log("svg :", svg)
+      var xml = new XMLSerializer().serializeToString(svg);
+
+      var base64 = btoa(xml);
+
+      console.log("base64 :", base64)
       this.spinner.show(undefined, { fullScreen: true });
-      let req = {id:this.eleve.id,copie:this.estPhaseUne}
+      let req = {id:this.eleve.id,copie:this.estPhaseUne, barcode:base64}
        this.serviceEleve.genererAttestationPDF(req).subscribe(response=>{
          let a = response.split("\r\n\r\n")
          const byteCharacters = atob(a[1]);
@@ -271,7 +279,7 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
            byteNumbers[i] = byteCharacters.charCodeAt(i);
          }
          const byteArray = new Uint8Array(byteNumbers);
-         let file = new Blob([byteArray], { type: 'application/pdf' });   
+         let file = new Blob([byteArray], { type: 'application/pdf' });
          var fileURL = URL.createObjectURL(file);
          var tempLink = document.createElement('a');
          tempLink.style.display = 'none';

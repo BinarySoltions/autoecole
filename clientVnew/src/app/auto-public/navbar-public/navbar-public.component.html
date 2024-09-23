@@ -1,12 +1,25 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#"><img width="200" src="assets/logo_pconduite.jpg"/></a>
+  <a style="padding-right: 50px;" class="navbar-brand d-flex align-items-center flex-column" href="#"><img width="150" src="assets/logo_pconduite.jpg"/>
+    <span class="small">{{schoolName}}</span>
+  </a>
+
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav" >
-    <div class="col col-7">
-  </div>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" *ngIf="currentUser" href="#" (click)="routerProfile(); lienActif = lien.PROFILE"
+        [ngClass]="{'active':lienActif == lien.PROFILE}">{{'menu.profile' | translate}}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="currentUser" routerLink="/public/examen" (click)="lienActif = lien.Exam"
+        [ngClass]="{'active':lienActif == lien.Exam}" >{{'menu.examen' | translate}}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" *ngIf="currentUser" (click)="logout()">{{'menu.logout' | translate}}</a>
+      </li>
+      </ul>
   </div>
 </nav>
 <!-- notification-->
- 

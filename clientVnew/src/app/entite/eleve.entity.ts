@@ -10,6 +10,7 @@ export class Eleve implements Deserializable{
     id:number;
     prenom:string;
     nom:string;
+    nomcomplet:string|undefined;
     numero_contrat:string;
     email:string;
     date_naissance:any;
@@ -33,6 +34,7 @@ export class Eleve implements Deserializable{
 
     deserialize(obj: any): this {
         Object.assign(this, obj);
+        this.nomcomplet = obj.nom+', '+obj.prenom+', '+obj.numero_contrat;
         this.adresse = new Adresse().deserialize(obj.adresse);
         this.coordonnee = new Coordonnee().deserialize(obj.coordonnee);
         //this.attestation = new Attestation().deserialize(obj.attestation);
