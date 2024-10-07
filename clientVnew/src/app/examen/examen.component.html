@@ -1,4 +1,4 @@
-<div> 
+<div>
   <mdb-card>
     <mdb-card-header><h3>{{'examen.title' | translate}}</h3></mdb-card-header>
     <mdb-card-body>
@@ -6,7 +6,7 @@
         <form>
           <div class="row">
                   <div class="col col-12 push-right">
-                    <button type="button" 
+                    <button type="button"
         class="btn bg-color-green"
          (click)="soumettre()"
          style="margin-right:10px;" [disabled]="!formulaire.valid">
@@ -14,12 +14,12 @@
           </button>
                   </div>
                 </div>
-                
+
         </form>
         </mdb-card-text>
         </mdb-card-body>
         </mdb-card>
-  
+
 </div>
 <div id="1pdf"  #pdf style="background-color: white;padding: 40px 60px;font-family: Arial, Helvetica, sans-serif; font-size:20px;">
 <div>
@@ -36,9 +36,6 @@
     <tr><td colspan="3" style="text-align: left;width: 100%;">
       <span style="float: left;"><b>{{'examen.retaking_test' | translate}} </b><input name="unefois" (change)="repriseEvent(examenReponses.reprise.uneFois,1);examenReponses.reprise.deuxFois=false;examenReponses.reprise.nFois=null" [(ngModel)]="examenReponses.reprise.uneFois" type="checkbox"><span>&nbsp;</span>{{'examen.first' | translate}}<span> - </span><input name="2fois"  (change)="repriseEvent(examenReponses.reprise.deuxFois,2);examenReponses.reprise.uneFois=false;examenReponses.reprise.nFois=null" [(ngModel)]="examenReponses.reprise.deuxFois" type="checkbox"><span>&nbsp;</span>{{'examen.second' | translate}}
     </span>
-      <span  style="float: right;">     
-    <b>{{'examen.third' | translate}}</b><input name="nfois" (change)="repriseEvent(examenReponses.reprise.nFois,3);examenReponses.reprise.uneFois=false;examenReponses.reprise.deuxFois=false"
-     [(ngModel)]="examenReponses.reprise.nFois" type="text" style="border: 0;border-bottom: 1px solid black;width: 40px;height:25px;"> <b>{{'examen.third_suffix' | translate}}</b>&nbsp;&nbsp;&nbsp;&nbsp; </span>
     </td></tr>
   </table>
 </form>
@@ -51,13 +48,18 @@
   </ul>
   <p>{{'examen.success' | translate}}</p>
 </div>
-<div  
+<div
 class="box-shadow" style="min-height: 300px;">
   <h3 *ngIf="index>3">Question : {{index - 3}}/24</h3>
+  <div class="mb-3" style="
+  display: flex;
+  justify-content: center;
+">
   <canvas #myCanvas></canvas>
+</div>
  <!-- <img src="{{pdfSrc.url.url}}" /> -->
   <div class="col col-12 push-right">
-    <button type="button" 
+    <button type="button"
   class="btn bg-color-green"
   (click)="next()"
   style="margin-right:10px;" [disabled]="index == 27">
@@ -111,7 +113,7 @@ class="box-shadow" style="min-height: 300px;">
 </div>
 <div class="row" style="background-color: white; padding-bottom: 40px;">
   <div class="col col-12 push-right">
-    <button type="button" 
+    <button type="button"
 class="btn bg-color-green"
 (click)="soumettre()"
 style="margin-right:10px;" [disabled]="!formulaire.valid">
@@ -120,6 +122,6 @@ style="margin-right:10px;" [disabled]="!formulaire.valid">
   </div>
 </div>
 <div style="height: 200px;"></div>
-<app-dialog-confirmer (estConfirmer)="confirmerSoummission($event)" 
+<app-dialog-confirmer (estConfirmer)="confirmerSoummission($event)"
 [description]="'examen.msg_confirm' | translate"
 [confirmText]="'examen.confirm_text' | translate"></app-dialog-confirmer>

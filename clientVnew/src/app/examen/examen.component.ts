@@ -8,6 +8,7 @@ import { ExamenModel } from '../modele/examen-model';
 import {environment} from 'src/environments/environment';
 import { getDocument, PDFDocumentProxy, ViewportParameters,PDFRenderParams,version} from 'pdfjs-dist';
 import * as pdfjsLib from 'pdfjs-dist';
+import { AuthenticationService } from '../auth/services/authentication.service';
 declare var $: any;
 @Component({
   selector: 'app-examen',
@@ -17,6 +18,7 @@ declare var $: any;
 export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
   @Input() langue = 'fr'
   @Input() numeroIdentification = "";
+  @Input() data:any;
   isStarting = false;
   sub:any;
   @ViewChild('formulaire', { static: true }) formulaire:NgForm;
@@ -32,33 +34,58 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
   reprise = "";
 
   constructor(private translate: TranslateService,private route:Router,private router:ActivatedRoute,
+    private authService:AuthenticationService,
     private serviceEleve:EleveService) {
     this.translate.setDefaultLang('fr');
     pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`;
    }
   ngAfterViewInit(): void {
     this.index = 1;
-    this.pdfToImageDataURLAsync(this.pdfSrc.url.url).then((x)=>{
-      this.pdfTest = x;
-      this.getPage();
-    });
+
   }
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-    this.translate.setDefaultLang(this.langue);
+    if(!!this.langue){
+      this.translate.setDefaultLang(this.langue);
+    }
+    if(this.data){
+      this.examenReponses.date = moment(this.data.date_examen).format('YYYY-MM-DD');
+      this.examenReponses.nomComplet = this.data.eleve.nom + " " +this.data.eleve.prenom;
+      this.examenReponses.numeroTest = this.data.nom;
+      this.examenReponses.nomEcole = "PCONDUITE";
+      this.getExamenPrise();
+    }
+
   }
 
   ngOnInit() {
     this.index = 1;
-   this.setUrl();
+
+   if(!!this.langue){
+    this.setUrl();
     this.translate.setDefaultLang(this.langue);
-    
-    // this.sub = this.router.params.subscribe(params =>{
-    //   this.langue = params['lang'];
-    //   this.numeroIdentification = params['numero'];
-    //   this.translate.setDefaultLang(this.langue);
-    // })/assets/Fr-Examen-C5-2020-10-21-GrandFormat-"+this.index+"
   }
+  }
+
+
+  obtenirPdfExam(){
+    this.serviceEleve.getUrlExam({url:this.pdfSrc.url.urlpdf}).subscribe((res:any)=>{
+      let a = res.split("\r\n\r\n")
+         const byteCharacters = atob(a[1]);
+         const byteNumbers = new Array(byteCharacters.length);
+         for (let i = 0; i < byteCharacters.length; i++) {
+           byteNumbers[i] = byteCharacters.charCodeAt(i);
+         }
+         const byteArray = new Uint8Array(byteNumbers);
+      const data =  byteArray;
+      console.log(" data : ", data)
+      this.pdfToImageDataURLAsync(data).then((x)=>{
+        this.pdfTest = x;
+        this.getPage();
+      });
+    })
+  }
+
   setUrl() {
     this.pdfSrc = {
       name: 'Angular 2',
@@ -66,6 +93,7 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
       url: {
         url: environment.pathPublic+"images/examen/"+this.langue+"/"+this.reprise+"/1-27.pdf",
         url1: "/assets/Fr-Examen-C5-2020-10-21-GrandFormat-1-29.pdf",
+        urlpdf: "\\images\\examen\\"+this.langue+"\\"+this.reprise+"\\1-27.pdf",
         withCredentials: true
         }
       }
@@ -80,7 +108,7 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
 
   soumettre(){
     $("#confirmerModal").modal('show');
-   
+
   }
 
   confirmerSoummission(value){
@@ -106,7 +134,7 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
   }
 
    // My use case demonstrating strongly typed usage.
-   public async pdfToImageDataURLAsync(pdfFile: string): Promise<PDFDocumentProxy> {
+   public async pdfToImageDataURLAsync(pdfFile: any): Promise<PDFDocumentProxy> {
 
     const pdf: PDFDocumentProxy = await getDocument(pdfFile).promise;
     //if (pdf != null) pdf.destroy();
@@ -116,7 +144,7 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
   public async getPage(){
     const canvas = this.myCanvas.nativeElement;
     let  ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-   
+
     const page = await this.pdfTest.getPage(this.index);
 
     const viewPortParams: ViewportParameters = { scale: 1 };
@@ -132,11 +160,12 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
 
     const renderedPage = await page.render(renderContext).promise;
     const res = canvas.toDataURL();
-    
+
     return res;
   }
 
   repriseEvent(event,value){
+    console.log(" reriser ",value)
     if(this.index > 1){
       return;
     }
@@ -148,9 +177,21 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
     }
       this.index = 1;
       this.setUrl();
-      this.pdfToImageDataURLAsync(this.pdfSrc.url.url).then((x)=>{
-        this.pdfTest = x;
-        this.getPage();
-      });
+      this.obtenirPdfExam()
+  }
+
+  getExamenPrise(){
+    console.log(" reprise une fois", this.data.prise==2, this.data.prise)
+    if(this.data.prise==2){
+      this.examenReponses.reprise.uneFois = true;
+      this.examenReponses.reprise.deuxFois =  false;
+      this.examenReponses.reprise.nFois =  null;
+      this.repriseEvent(this.examenReponses.reprise.uneFois,1);
+    } else if(this.data.prise==3){
+      this.examenReponses.reprise.deuxFois = true;
+      this.examenReponses.reprise.uneFois = false;
+      this.examenReponses.reprise.nFois =  null;
+      this.repriseEvent(this.examenReponses.reprise.deuxFois,2);
+    }
   }
 }

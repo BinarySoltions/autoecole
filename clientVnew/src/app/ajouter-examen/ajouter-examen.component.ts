@@ -24,11 +24,14 @@ export class AjouterExamenComponent implements OnInit ,AfterViewInit {
   @Output() estAjouterModule = new EventEmitter<any>();
   @ViewChild('formulaire', { static: true }) formulaire:NgForm;
   elevesSelectionnes:Eleve[] = [];
+  nomExamen:any;
+  selectedStatus:number = 1;
+  dateExam:any;
 
   constructor(private serviceModule:ModuleService,
     private translate:TranslateService,
     private serviceEleve:EleveService,
-    private toastr:ToastrService) { 
+    private toastr:ToastrService) {
       translate.setDefaultLang('fr');
     }
 
@@ -44,7 +47,7 @@ export class AjouterExamenComponent implements OnInit ,AfterViewInit {
     };
   }
   ngAfterViewInit(): void {
-   
+
   }
   onItemSelect(item: any) {
     console.log(item);
@@ -52,13 +55,15 @@ export class AjouterExamenComponent implements OnInit ,AfterViewInit {
   onSelectAll(items: any) {
     console.log(items);
   }
- 
+
   ajouter(){
     let request = [];
+    const dateExamen = moment(this.dateExam).format('YYYY-MM-DD');
     const dateNow = moment().format('YYYY-MM-DD');
     this.elevesSelectionnes.forEach(e=>{
       let el  = this.listeEleves.find(e1=>e1.id == e.id);
-      request.push({eleve_id:el.id,numero:el.numero_contrat,created_at:dateNow});
+      request.push({eleve_id:el.id,numero:el.numero_contrat,created_at:dateNow,
+        date_examen:dateExamen, nom:this.nomExamen, prise:this.selectedStatus});
     });
     this.serviceEleve.ajouterExamens(request).subscribe(res=>{
       if(res.isValid){

@@ -12,6 +12,31 @@
       <div class="modal-body">
             <form #formulaire="ngForm">
           <div class="row">
+            <div class="form-align-v col col-lg-4">
+              <mat-radio-group aria-label="Prise" [(ngModel)]="selectedStatus" >
+                <mat-radio-button [value]="1">1ère prise</mat-radio-button>
+                <mat-radio-button [value]="2">Reprise 1</mat-radio-button>
+                <mat-radio-button [value]="3">Reprise 2</mat-radio-button>
+              </mat-radio-group>
+
+            </div>
+            <div class="form-align-v col col-lg-6">
+              <label for="prenom" class="requis">Nom de l'examen</label>
+              <mat-form-field>
+                  <input matInput type="text" class="example-right-align"
+                   name="prenom" [(ngModel)]="nomExamen" placeholder="Nom " required>
+              </mat-form-field>
+            </div>
+            <div class="col col-6  none-border-top form-align-v" style="z-index:1200;">
+              <label for="numero">{{'module.date_complete' | translate}}</label>
+              <mat-form-field floatLabel="never">
+                <input matInput  [matDatepicker]="picker"
+                name="dateCompletee" [(ngModel)]="dateExam"
+                 placeholder="yyyy-mm-dd">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+          </div>
       <div class="md-form col col-12  none-border-top">
           <label for="module">{{'module.eleves' | translate}}</label>
           <ng-multiselect-dropdown
@@ -37,11 +62,11 @@
       <button type="button" class="btn btn-secondary" (click)="fermer()"
          data-dismiss="modal"
          style="margin-left:10px"><i class="fas fa-ban"></i>	&nbsp;{{'label.fermer' | translate}}</button>
-    
-        
+
+
     </div>
   </div>
   </div>
   </div>
   </div>
-  
+

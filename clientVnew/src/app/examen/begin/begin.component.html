@@ -4,7 +4,7 @@
     <mdb-card-body>
       <mdb-card-text>
         <div style="margin-bottom: 20px;border-bottom: 1px solid black; padding:5px;text-align: center;"><h4><i class='fas fa-file-signature'></i> {{'examen.decIntergrity' | translate}}</h4></div>
-     
+
         <form #formulaire="ngForm">
           <div class="row">
               <div class="col col-3">
@@ -19,10 +19,10 @@
                   </mat-radio-group>
                   </div>
                   <div class="col col-3">
-                   
+
                   </div>
                 </div>
-                
+
         </form>
            <section class="example-section" [formGroup]="declarations">
           <h6>{{'examen.decTitre' | translate}}</h6>
@@ -37,7 +37,7 @@
           <mat-divider></mat-divider>
         </section>
         <div class="row"><div class="col col-12">
-          <button type="button" 
+          <button type="button"
       class="btn bg-color-green float-right"
       (click)="commencer()"
       style="margin-right:10px;" [disabled]="!formulaire.valid || !validateForm()">
@@ -48,10 +48,10 @@
         </mdb-card-body>
         <mdb-card-footer></mdb-card-footer>
         </mdb-card>
-  
+
 </div>
 <div *ngIf="isStarting">
-  <app-examen [numeroIdentification]="numeroIdentification" [langue]="langue"></app-examen>
+  <app-examen [numeroIdentification]="numeroIdentification" [langue]="langue" [data]="data"></app-examen>
 </div>
 
 <ngx-spinner>

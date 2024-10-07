@@ -20,6 +20,13 @@ const httpOptions2 = {
   }),
   'responseType'  : 'text' as 'json'
 };
+const httpOptions3 = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  }),
+  'responseType'  : 'blob' as 'json'
+};
 @Injectable({
   providedIn: SharedServiceModule
 })
@@ -84,13 +91,17 @@ export class EleveService {
   verifierExamen(numero): Observable<any>{
     return this.http.get<Eleve[]>(this.apiUrl + 'examen/'+numero);
   }
+  getUrlExam(url): Observable<any>{
+    return this.http.post<any>(this.apiUrl + 'contentExam',url, httpOptions2)
+    .pipe(catchError(this.handleError));
+  }
   soumettreExamen(examen): Observable<any>{
     return this.http.post<any>(this.apiUrl + 'examen', examen, httpOptions)
     .pipe(catchError(this.handleError));
   }
 
   obtenirExamen(id): Observable<any>{
-    return this.http.get<Eleve[]>(this.apiUrl + 'obtenirExamen/'+id);
+    return this.http.get<any>(this.apiUrl + 'obtenirExamen/'+id);
   }
 
   obtenirExamenById(id): Observable<any>{

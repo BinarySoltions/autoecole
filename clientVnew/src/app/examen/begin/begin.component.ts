@@ -16,6 +16,8 @@ export class BeginComponent implements OnInit,OnDestroy {
   isStarting = false;
   @ViewChild('formulaire') formulaire:NgForm;
   sub: any;
+  data:any;
+
   declarations = this._formBuilder.group({
     decOne: new FormControl(false, Validators.required),
     decTwo: new FormControl(false, Validators.required),
@@ -35,7 +37,7 @@ export class BeginComponent implements OnInit,OnDestroy {
     this.sub = this.router.params.subscribe(params =>{
       this.numeroIdentification = params['numero'];
       this.langue = params['langue'];
-      this.translate.setDefaultLang(this.langue);
+      this.translate.setDefaultLang(this.langue||'fr');
       if(!!this.numeroIdentification && !!this.langue){
         this.commencer();
       }
@@ -55,6 +57,7 @@ export class BeginComponent implements OnInit,OnDestroy {
     this.serviceEleve.verifierExamen(this.numeroIdentification).subscribe(r=>{
       if(r){
         this.isStarting = true;
+        this.data = r;
       }
       this.spinner.hide();
     })
