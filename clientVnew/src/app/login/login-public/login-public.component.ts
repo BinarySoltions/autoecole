@@ -49,7 +49,7 @@ export class LoginPublicComponent implements OnInit {
     this.spinner.show(undefined, { fullScreen: true });
     this.authenticationService.loginPublic(this.data).subscribe(res => {
       if (res) {
-
+        console.log(" user login :", res)
         this.spinner.hide();
         this.router.navigate(['/public/reservation/ok'],
         {queryParams:{lang:this.data.langue}});

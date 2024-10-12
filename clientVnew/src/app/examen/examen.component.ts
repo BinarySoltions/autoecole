@@ -5,10 +5,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { EleveService } from '../service/eleve/eleve.service';
 import moment from 'moment';
 import { ExamenModel } from '../modele/examen-model';
-import {environment} from 'src/environments/environment';
 import { getDocument, PDFDocumentProxy, ViewportParameters,PDFRenderParams,version} from 'pdfjs-dist';
 import * as pdfjsLib from 'pdfjs-dist';
 import { AuthenticationService } from '../auth/services/authentication.service';
+
 declare var $: any;
 @Component({
   selector: 'app-examen',
@@ -41,7 +41,8 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
    }
   ngAfterViewInit(): void {
     this.index = 1;
-
+    this.setUrl();
+    this.obtenirPdfExam();
   }
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
@@ -69,7 +70,7 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
 
 
   obtenirPdfExam(){
-    this.serviceEleve.getUrlExam({url:this.pdfSrc.url.urlpdf}).subscribe((res:any)=>{
+    this.serviceEleve.getUrlExam(this.pdfSrc).subscribe((res:any)=>{
       let a = res.split("\r\n\r\n")
          const byteCharacters = atob(a[1]);
          const byteNumbers = new Array(byteCharacters.length);
@@ -87,16 +88,21 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
   }
 
   setUrl() {
-    this.pdfSrc = {
+    let group = "Examen";
+    if(this.reprise=="1"){
+        group = "ExamenRepriseUne"
+    }
+    this.pdfSrc = {group:group,lang:this.langue};
+    /*this.pdfSrc = {
       name: 'Angular 2',
       description: 'An amazing Angular 2 pdf',
       url: {
         url: environment.pathPublic+"images/examen/"+this.langue+"/"+this.reprise+"/1-27.pdf",
         url1: "/assets/Fr-Examen-C5-2020-10-21-GrandFormat-1-29.pdf",
-        urlpdf: "\\images\\examen\\"+this.langue+"\\"+this.reprise+"\\1-27.pdf",
+        urlpdf: this.reprise,
         withCredentials: true
         }
-      }
+      }*/
   }
 
   radioChange(choice){
@@ -116,7 +122,7 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
       // const content = this.pdf.nativeElement.innerHTML;
     const dateNow = moment().format('YYYY-MM-DD');
     const content = JSON.stringify(this.examenReponses);
-    let request = {numero:this.numeroIdentification,resultat:content,date_examen:dateNow,langue:this.langue};
+    let request = {numero:this.numeroIdentification,resultat:content,date_examen:dateNow,langue:this.langue,temp:false};
     this.serviceEleve.soumettreExamen(request).subscribe(r=>{
       if(r.isValid){
         this.route.navigate(['public/session-terminer']);
@@ -125,11 +131,24 @@ export class ExamenComponent implements OnInit,OnChanges,AfterViewInit {
     }
   }
 
+  saveTemporairement(){
+    const dateNow = moment().format('YYYY-MM-DD');
+    const content = JSON.stringify(this.examenReponses);
+    let request = {numero:this.numeroIdentification,resultat:content,date_examen:dateNow,langue:this.langue,temp:true};
+    this.serviceEleve.soumettreExamen(request).subscribe(r=>{
+      if(r.isValid){
+        //this.route.navigate(['public/session-terminer']);
+      }
+    })
+  }
   next(){
     this.index = this.index+1;
     if(this.index <= 27){
       //this.setUrl();
       this.getPage();
+      if(this.index>11){
+        this.saveTemporairement();
+      }
     }
   }
 

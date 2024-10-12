@@ -38,7 +38,7 @@ export class NavbarPublicComponent implements OnInit {
   logout() {
     this.lienActif = this.lien.PROFILE;
     this.authenticationService.logoutPublic();
-    this.router.navigate(['/public/reservation']);
+    setTimeout(()=>this.router.navigate(['/public/reservation']),200);
 }
 
 routerProfile(){

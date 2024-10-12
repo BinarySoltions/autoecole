@@ -39,7 +39,7 @@ export class UploadFileComponent implements OnInit {
   loading: boolean = false; // Flag variable
   file: File = null; // Variable to store file
   groups: any[] = [
-    "Groupe", "Examen","ExamenRepriseUne" ,"Flyers","Stationnement","FlyersTarif","FlyersPerfectionnement"
+    "Groupe", "Examen","ExamenRepriseUne" ,"Flyers","Stationnement","FlyersTarif","FlyersPerfectionnement", "GroupePlus"
   ];
   languages: ValueLabel[];
   groupControl = new FormControl(this.groups[0]);
@@ -52,13 +52,13 @@ export class UploadFileComponent implements OnInit {
   });
 
   nameFile: string = "Choisir un fichier";
- 
+
   dragables = new Array(50);
   fileSelected : FileModel = new FileModel();
-  // Inject service 
+  // Inject service
   constructor(private uploadFileService: UploadFileService,private translate: TranslateService,
-    private spinner:NgxSpinnerService,) 
-  { 
+    private spinner:NgxSpinnerService,)
+  {
     this.translate.setDefaultLang('fr');
   }
 
@@ -87,14 +87,14 @@ export class UploadFileComponent implements OnInit {
       (event: any) => {
         if (typeof (event) === 'object') {
           this.nameFile = "Choisir un fichier";
- 
+
           this.getFiles();
 
-          this.loading = false; // Flag variable 
+          this.loading = false; // Flag variable
         }
         this.spinner.hide();
       }
-    
+
     );
   }
 
@@ -129,7 +129,7 @@ export class UploadFileComponent implements OnInit {
     if(pos != -1){
       return value.substring(pos+1);
     }
-   
+
   }
   getSource(file){
     return "application/pdf".localeCompare(file.mime) == 0?environment.pathPublic+'imagepdf.png':
@@ -141,8 +141,8 @@ export class UploadFileComponent implements OnInit {
   }
 
   soumettre(){
-  
-   
+
+
   }
 
   confirmerSoummission(value){

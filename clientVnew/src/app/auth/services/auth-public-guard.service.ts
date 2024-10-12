@@ -20,7 +20,7 @@ export class AuthPublicGuardService implements CanActivate {
     }
 
     // not logged in so redirect to login page with the return url
-    this.router.navigate(['/public/reservation'], { queryParams: { returnUrl: state.url }});
+    this.router.navigate(['/public/reservation']);
     return false;
   }
 }

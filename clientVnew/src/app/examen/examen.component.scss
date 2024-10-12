@@ -11,7 +11,7 @@ td{
     border: 1px solid #a8a4a4;
 }
 tbody tr:nth-child(odd) {
-   background-color: transparent !important; 
+   background-color: transparent !important;
 }
 .table-no-border>tbody>tr>td{
     border: 0px solid transparent !important;
@@ -22,4 +22,8 @@ tbody tr:nth-child(odd) {
 input{
     width: 16px;
     height: 16px;
+}
+
+input:disabled, input[type=checkbox]:disabled{
+  background-color: #e9ecef !important;
 }

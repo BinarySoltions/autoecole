@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a style="padding-right: 50px;" class="navbar-brand d-flex align-items-center flex-column" href="#"><img width="150" src="assets/logo_pconduite.jpg"/>
+  <a style="padding-right: 50px;" class="navbar-brand d-flex align-items-center flex-column" href="/public/reservation"><img width="150" src="assets/logo_pconduite.jpg"/>
     <span class="small">{{schoolName}}</span>
   </a>
 
@@ -9,7 +9,7 @@
   <div class="collapse navbar-collapse" id="navbarNav" >
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" *ngIf="currentUser" href="#" (click)="routerProfile(); lienActif = lien.PROFILE"
+        <a class="nav-link" *ngIf="currentUser" href="javasctipt:void(0)" (click)="routerProfile(); lienActif = lien.PROFILE"
         [ngClass]="{'active':lienActif == lien.PROFILE}">{{'menu.profile' | translate}}</a>
       </li>
       <li class="nav-item">
@@ -17,7 +17,7 @@
         [ngClass]="{'active':lienActif == lien.Exam}" >{{'menu.examen' | translate}}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" *ngIf="currentUser" (click)="logout()">{{'menu.logout' | translate}}</a>
+        <a class="nav-link" href="javasctipt:void(0)" *ngIf="currentUser" (click)="logout()">{{'menu.logout' | translate}}</a>
       </li>
       </ul>
   </div>
