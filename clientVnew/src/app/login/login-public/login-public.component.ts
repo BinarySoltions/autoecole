@@ -17,6 +17,7 @@ export class LoginModel{
   password:string;
   password_new:string;
   password_ref:string;
+  numeropwd:number;
 }
 @Component({
   selector: 'app-login-public',
@@ -58,5 +59,13 @@ export class LoginPublicComponent implements OnInit {
       }
       this.spinner.hide();
     });
+  }
+
+  askPWD(){
+    this.router.navigate(['/public/demander-mot-de-passe']);
+  }
+
+  changePWD(){
+    this.router.navigate(['/public/changer-mot-de-passe']);
   }
 }

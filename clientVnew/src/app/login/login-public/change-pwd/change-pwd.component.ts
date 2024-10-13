@@ -14,25 +14,28 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./change-pwd.component.scss']
 })
 export class ChangePwdComponent implements OnInit {
-
+  codeMessage ="";
   data = new LoginModel();
-
+  isAskedCode = true;
   constructor(private router: Router, private serviceEleve: EleveService,
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,private translate: TranslateService,
     private spinner:NgxSpinnerService,) {
     this.translate.setDefaultLang('fr');
+
    }
 
   ngOnInit() {
   }
-  changePwd(){
+
+  askPwd(){
+    this.codeMessage = this.translate.instant('access.codeMessage');
     this.spinner.show(undefined, { fullScreen: true });
-    this.data.password = this.data.password;
     this.data.password_new = this.data.password_new;
-    this.serviceEleve.changePassword(this.data).subscribe(res=>{
+    this.serviceEleve.askPassword(this.data).subscribe(res=>{
       if(res && res.isValid){
-        this.toastr.success("Merci de faire une réservation /Please do a reservation!", "Succes / Success", { timeOut: 10000 });
+        this.isAskedCode = false;
+        this.toastr.success(this.codeMessage , "Succes / Success", { timeOut: 10000 });
       } else {
         this.toastr.error("Erreur / Error !", "Erreur / Error !", { timeOut: 5000 });
       }
@@ -40,6 +43,22 @@ export class ChangePwdComponent implements OnInit {
     });
   }
 
+  changePwd(){
+    this.spinner.show(undefined, { fullScreen: true });
+    this.data.password_new = this.data.password_new;
+    this.serviceEleve.changePassword(this.data).subscribe(res=>{
+      if(res && res.isValid){
+        this.toastr.success("Mot passe changé /Password changed!", "Succes / Success", { timeOut: 10000 });
+        this.router.navigate(['/public/reservation']);
+      } else {
+        this.toastr.error("Erreur / Error !", "Erreur / Error !", { timeOut: 5000 });
+      }
+      this.spinner.hide();
+    });
+  }
+  isValidAskCode(){
+    return this.data.langue && this.data.numero && this.data.password_new;
+  }
   radioChange(choice){
     if(!!this.data){
       this.translate.setDefaultLang(choice.value);
@@ -56,5 +75,9 @@ export class ChangePwdComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  loginEleve(){
+    this.router.navigate(['/public/reservation']);
   }
 }

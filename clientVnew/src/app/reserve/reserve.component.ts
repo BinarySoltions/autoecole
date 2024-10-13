@@ -196,6 +196,11 @@ export class ReserveComponent implements OnInit {
         this.toastr.error("La date Sortie 1 doit être différente de Sortie 2 / Date of Session 1 must not be same of Session 2 !", "Erreur / Error !", { timeOut: 5000 });
         return;
       }
+      if(this.validSavingHoursAvailable()){
+        this.toastr.error("Entre lundi et vendredi vous avez droit à une place au dela de 17h! / Between Monday and Friday, you are authorized one seat after 5 p.m.!", "Erreur / Error !", { timeOut: 5000 });
+        return;
+      }
+
       if(this.validSaving()){
         this.toastr.error("Nombre maximum de places est limité à trois / Maximum number of places is limited to three !", "Erreur / Error !", { timeOut: 5000 });
         return;
@@ -545,5 +550,42 @@ export class ReserveComponent implements OnInit {
 
   toggleCondition(event){
     this.eventDriving.condition = event.checked;
+  }
+
+  validSavingHoursAvailable(){
+    var estTrue = false;
+    let sessionsCar = this.listeModules.filter(m=>m.date_complete)
+    .sort((a,b)=>moment(b.date_complete).startOf('day').diff(moment(a.date_complete).startOf('day'),'days'));
+    if(sessionsCar && sessionsCar.length > 0){
+      let lastSession = sessionsCar[0];
+      let eventsValid = this.events.filter(e=> e.status != 2 && moment(e.date).startOf('day').diff(moment(lastSession.date_complete).startOf('day'),'days')>0);
+      let eventsValidOther = this.events.filter(e=> e.status != 2 && moment(e.date).startOf('day').diff(moment(lastSession.date_complete).startOf('day'),'days')==0);
+      var numberOffset = 0;
+      let eventsValidForToday = [];
+      if(eventsValidOther && eventsValidOther.length > 1){
+        let eventsValidOtherA = this.listeModules.filter(e=>moment(e.date_complete).startOf('day').diff(moment(lastSession.date_complete).startOf('day'),'days')==0)||[];
+       if(eventsValidOtherA.length>0){
+        const listModuleIds = eventsValidOtherA.map((m:any)=>m.module_id);
+        let eventsValidForToday = eventsValidOther.filter((e:any)=>!listModuleIds.includes(e.module_id))
+       }
+
+      }
+      let arrayMerge = [];
+      if(eventsValid && eventsValid.length){
+        arrayMerge = eventsValid;
+      }
+      if(eventsValidForToday && eventsValidForToday.length){
+        arrayMerge = arrayMerge.concat(eventsValidForToday);
+      }
+      const eventAfter17H = arrayMerge.filter((e:any)=>e.heure_debut=="17:00:00" && moment(e.date).day()<6 && moment(e.date).day()>0);
+      estTrue = eventAfter17H && eventAfter17H.length>0 && Number(this.eventDriving.heure_debut.substring(0, 2))>16
+      &&  moment(this.eventDriving.date).day()!=6 && moment(this.eventDriving.date).day()!=0;;
+    }
+    else if(this.events.length>0){
+      let evts = this.events.filter(e=>e.status != 2 && e.heure_debut=="17:00:00" && moment(e.date).day()!=6 && moment(e.date).day()!=0);
+      estTrue = !!evts && evts.length > 0 && Number(this.eventDriving.heure_debut.substring(0, 2))>16
+      &&  moment(this.eventDriving.date).day()!=6 && moment(this.eventDriving.date).day()!=0;
+    }
+    return estTrue;
   }
 }

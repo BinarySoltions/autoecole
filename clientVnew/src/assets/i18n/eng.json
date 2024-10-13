@@ -127,14 +127,17 @@
         "titre":"Login",
         "numero":"Contract number",
         "nom":"Last name",
+        "numeropwd":"Confirmation code",
         "action":"Login",
         "password":"Password",
         "password_new":"New password",
-        "btnAsk":"Ask",
+        "btnAsk":"Ask code",
         "btnChange":"Change",
         "titre_ask":"Ask a new password",
         "titre_change":"Change your password",
-        "titre_reservation":"Do a reservation"
+        "titre_reservation":"Do a reservation",
+        "codeMessage":"Please check your email; a confirmation code has been sent to you!",
+        "seconnecter":"Login"
     },
     "reservation":{
         "titre":"Reservation",
