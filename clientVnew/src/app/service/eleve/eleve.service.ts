@@ -115,6 +115,10 @@ export class EleveService {
     return this.http.post<any>(this.apiUrl + 'printExam', req, httpOptions2)
       .pipe(catchError(this.handleError));
   }
+  genererDeclarationExamenPDF(req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'printDeclaration', req, httpOptions2)
+      .pipe(catchError(this.handleError));
+  }
   genererContratPDF(req:any): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'printContrat', req, httpOptions2)
       .pipe(catchError(this.handleError));

@@ -141,7 +141,7 @@
     "access":{
         "titre":"Connexion",
         "numero":"Numéro de contrat",
-        "nom":"Nom de famille",
+        "email":"Adresse courriel",
         "numeropwd":"Code de confirmation",
         "action":"Connecter",
         "password":"Mot de passe",
@@ -152,7 +152,8 @@
         "titre_change":"Changer mon mot de passe",
         "titre_reservation":"Faire une réservation",
         "codeMessage":"Veuillez vérifier votre adresse e-mail ; un code de confirmation vous a été envoyé !",
-        "seconnecter":"Se connecter"
+        "seconnecter":"Se connecter",
+        "emailinvalid":"Le format de l'adresse courriel est invalide"
     },
     "reservation":{
         "titre":"Reservation",

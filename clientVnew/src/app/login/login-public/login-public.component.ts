@@ -13,6 +13,7 @@ import { User } from 'src/app/auth/user.model';
 export class LoginModel{
   langue:string;
   nom:string;
+  email:string;
   numero:string;
   password:string;
   password_new:string;
@@ -26,7 +27,8 @@ export class LoginModel{
 })
 export class LoginPublicComponent implements OnInit {
   data = new LoginModel();
-
+langue='fr';
+error = false;
   constructor(private router: Router, private serviceEleve: EleveService,
     private activatedRoute: ActivatedRoute,private cookieService: CookieService,
     private toastr: ToastrService,private authenticationService: AuthenticationService,
@@ -43,19 +45,22 @@ export class LoginPublicComponent implements OnInit {
 
   radioChange(choice){
     if(!!this.data){
+      this.langue = choice.value;
       this.translate.setDefaultLang(choice.value);
     }
   }
   commencer(){
+    this.error = false;
     this.spinner.show(undefined, { fullScreen: true });
     this.authenticationService.loginPublic(this.data).subscribe(res => {
       if (res) {
-        console.log(" user login :", res)
+        //console.log(" user login :", res)
         this.spinner.hide();
         this.router.navigate(['/public/reservation/ok'],
         {queryParams:{lang:this.data.langue}});
       } else {
-        this.toastr.error("Erreur de saisie. Demander mot de passe. Merci! Typing error. Ask password. Thank's!", "Erreur de connexion/ Connexion error", {timeOut: 7000});
+        this.error = true;
+        //this.toastr.error("Erreur de saisie. Demander mot de passe. Merci! Typing error. Ask password. Thank's!", "Erreur de connexion/ Connexion error", {timeOut: 7000});
       }
       this.spinner.hide();
     });

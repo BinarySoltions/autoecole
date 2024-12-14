@@ -1,0 +1,22 @@
+_16fd9ecee06855d2bf02598b94b51272.djqtsrsxkq.acm-validations.aws.
+_d91d901951af85b5d4c26bbb96008668.www.s2ms-sn.com.
+
+_050d237329137426ffabfe606de202ba.djqtsrsxkq.acm-validations.aws.
+_02ea557cddbc0a32f2593cb333e5b0ab.s2ms-sn.com.
+
+
+aws s3 cp fr s3://s3-teksi-s2ms/fr --recursive
+
+
+sudo ln -s /usr/local/ssl/lib/libssl.so.1.0.0 /usr/lib64/libssl.so.10
+sudo ln -s /usr/local/ssl/lib/libcrypto.so.1.0.0 /usr/lib64/libcrypto.so.10
+
+
+
+aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 676206946020.dkr.ecr.eu-west-3.amazonaws.com
+
+docker build -t teksi-keycloak .
+
+docker tag teksi-keycloak:latest 676206946020.dkr.ecr.eu-west-3.amazonaws.com/teksi-keycloak:latest
+
+docker push 676206946020.dkr.ecr.eu-west-3.amazonaws.com/teksi-keycloak:latest

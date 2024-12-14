@@ -30,12 +30,12 @@ export class AdminComponent implements OnInit,OnDestroy {
    }
 
   ngOnInit() {
-  
+
     this.sub = this.router.params.subscribe(params =>{
       this.idExamen = +params['id'];
       this.obtenirExam(this.idExamen);
     })
-    
+
   }
 
   obtenirExam(val){
@@ -62,7 +62,7 @@ export class AdminComponent implements OnInit,OnDestroy {
         this.toastr.error("Une erreur est survenue!", "Modifier un examen", {timeOut: 5000});
       }
     })
-    
+
   }
  imprimer(){
   //this.print(1,'test_examen',1);
@@ -76,12 +76,39 @@ export class AdminComponent implements OnInit,OnDestroy {
       byteNumbers[i] = byteCharacters.charCodeAt(i);
     }
     const byteArray = new Uint8Array(byteNumbers);
-    let file = new Blob([byteArray], { type: 'application/pdf' });       
+    let file = new Blob([byteArray], { type: 'application/pdf' });
     var fileURL = URL.createObjectURL(file);
     var tempLink = document.createElement('a');
     tempLink.style.display = 'none';
     tempLink.href = fileURL;
     tempLink.setAttribute('download', "examen_"+this.examenReponses.nomComplet+".pdf");
+    document.body.appendChild(tempLink);
+    tempLink.click();
+    document.body.removeChild(tempLink);
+    window.URL.revokeObjectURL(fileURL);
+    //var tab = window.open(fileURL,'_blank');
+    this.spinner.hide();
+  });
+ }
+
+ imprimerDeclaration(){
+  //this.print(1,'test_examen',1);
+  let req = {id:this.idExamen};
+  this.spinner.show(undefined, { fullScreen: true });
+  this.serviceEleve.genererDeclarationExamenPDF(req).subscribe(response=>{
+    let a = response.split("\r\n\r\n")
+    const byteCharacters = atob(a[1]);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    let file = new Blob([byteArray], { type: 'application/pdf' });
+    var fileURL = URL.createObjectURL(file);
+    var tempLink = document.createElement('a');
+    tempLink.style.display = 'none';
+    tempLink.href = fileURL;
+    tempLink.setAttribute('download', "declaration"+this.examenReponses.nomComplet+".pdf");
     document.body.appendChild(tempLink);
     tempLink.click();
     document.body.removeChild(tempLink);

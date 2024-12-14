@@ -3,6 +3,22 @@
     <mdb-card-header><h3>{{'access.titre' | translate}}</h3></mdb-card-header>
     <mdb-card-body>
       <mdb-card-text>
+        <p *ngIf="error" style="color: brown;">
+          <span *ngIf="langue=='fr'" class="d-flex flex-column">
+            <span>NOUS AVONS CHANGÉ ET SÉCURISÉ LA CONNEXION. si vous avez un message d’erreur de connexion :</span>
+            <span>1- vérifier que vous avez bien entré votre numero de contrat.</span>
+            <span>2- verifier que vous avez bien entré l’adresse courriel fournie a Pconduite.</span>
+            <span>3- vérifier que vous avez bien entré votre mot de passe. </span>
+            <span>Si cela ne fonctionne toujours pas , cliquer sur « changer mon mot passe » ensuite réessayer la connexion. merci</span>
+           </span>
+           <span *ngIf="langue=='eng'" class="d-flex flex-column">
+            <span> WE HAVE CHANGED AND SECURED THE CONNECTION. If you have a connection error message:</span>
+            <span>1- check that you have entered your contract number correctly.</span>
+            <span>2- check that you have entered the email address provided to Pconduite correctly.</span>
+            <span>3- check that you have entered your password correctly. </span>
+            <span>If it still does not work, click on "change my password" then try the connection again. Thank you</span>
+               </span>
+        </p>
         <form #formulaire="ngForm">
           <div class="row">
             <div class="col col-lg-12">
@@ -20,8 +36,11 @@
                 </div>
                 <div class="col col-lg-4">
                   <mat-form-field>
-                    <input matInput type="text" maxlength="50" name="nom" aria-label="Nom" [(ngModel)]="data.nom"  placeholder="{{'access.nom' | translate}}" required>
+                    <input #emailField="ngModel" email matInput type="email" maxlength="50" name="email" aria-label="E-mail" [(ngModel)]="data.email"  placeholder="{{'access.email' | translate}}" required>
                   </mat-form-field>
+                  <div *ngIf="emailField.invalid && (emailField.touched || emailField.dirty)">
+                    <small *ngIf="emailField.errors?.['email']">{{'access.emailinvalid' | translate}}</small>
+                  </div>
                   </div>
                   <div class="col col-lg-4">
                     <mat-form-field>

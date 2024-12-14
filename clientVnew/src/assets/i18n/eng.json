@@ -126,7 +126,7 @@
     "access":{
         "titre":"Login",
         "numero":"Contract number",
-        "nom":"Last name",
+        "email":"E-mail",
         "numeropwd":"Confirmation code",
         "action":"Login",
         "password":"Password",
@@ -137,7 +137,8 @@
         "titre_change":"Change your password",
         "titre_reservation":"Do a reservation",
         "codeMessage":"Please check your email; a confirmation code has been sent to you!",
-        "seconnecter":"Login"
+        "seconnecter":"Login",
+        "emailinvalid":"The email format is not valid"
     },
     "reservation":{
         "titre":"Reservation",

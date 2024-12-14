@@ -61,8 +61,7 @@ class PayementController extends Controller
 
     public function detailsPayements(Request $request)
     {
-        $payement = Payement::distinct()
-        ->select(
+        $payement = Payement::select(
             DB::raw("CASE WHEN payement.eleve_id=0 THEN CONCAT(JSON_EXTRACT(payement.detail,'$.prenom'),' ',JSON_EXTRACT(payement.detail,'$.nom'))  ELSE CONCAT(eleve.prenom,' ',eleve.nom)  END as nom "),
             'payement.montant',
             'payement.type',
