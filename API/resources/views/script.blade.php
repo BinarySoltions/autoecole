@@ -1,24 +1,25 @@
 <script>
-     var called = false;  
-    
-    function toggleDesc() {
-        if(!called){
-        $(".complete").toggle();
-        $(".more").click(function() {
-           
-            if ($(this).text().localeCompare("Voir moins..") == 0) {
-                $(this).text("Voir plus..").siblings(".complete").toggle();
-                $(this).siblings(".notAll").toggle();
+    var called = false;
 
-            } else {
-                $(this).text("Voir moins..").siblings(".complete").toggle();
-                $(this).siblings(".notAll").toggle();
-                
+    function toggleDesc() {
+        if (!called) {
+            $(".complete").toggle();
+            $(".more").click(function() {
+
+                if ($(this).text().localeCompare("Voir moins..") == 0) {
+                    $(this).text("Voir plus..").siblings(".complete").toggle();
+                    $(this).siblings(".notAll").toggle();
+
+                } else {
+                    $(this).text("Voir moins..").siblings(".complete").toggle();
+                    $(this).siblings(".notAll").toggle();
+
+                }
+            });
+            called = true;
         }
-        });
-        called = true;
     }
-    }
+
     function getMessage(group, div, nbr) {
         $.ajax({
             type: 'POST',
@@ -135,4 +136,24 @@
         });
 
     });
+
+    function ouvrirPopup() {
+        document.getElementById('popup-pub').style.display = 'flex';
+    }
+
+    function fermerPopup() {
+        document.getElementById('popup-pub').style.display = 'none';
+        // Sauvegarde la date actuelle pour ne plus afficher le popup aujourd'hui
+        localStorage.setItem('popupDate', new Date().toDateString());
+    }
+
+    /*window.onload = function() {
+        let derniereVisite = localStorage.getItem('popupDate');
+        let aujourdHui = new Date().toDateString();
+
+        // Si la date est différente ou inexistante, on affiche le popup
+        if (derniereVisite !== aujourdHui) {
+            setTimeout(ouvrirPopup, 1000); // Affiche après 1 seconde
+        }
+    };*/
 </script>

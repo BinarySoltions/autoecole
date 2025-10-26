@@ -588,4 +588,41 @@ export class ReserveComponent implements OnInit {
     }
     return estTrue;
   }
+
+  validSavingHoursForWeekEndAvailable(){
+    var estTrue = false;
+    let sessionsCar = this.listeModules.filter(m=>m.date_complete)
+    .sort((a,b)=>moment(b.date_complete).startOf('day').diff(moment(a.date_complete).startOf('day'),'days'));
+    if(sessionsCar && sessionsCar.length > 0){
+      let lastSession = sessionsCar[0];
+      let eventsValid = this.events.filter(e=> e.status != 2 && moment(e.date).startOf('day').diff(moment(lastSession.date_complete).startOf('day'),'days')>0);
+      let eventsValidOther = this.events.filter(e=> e.status != 2 && moment(e.date).startOf('day').diff(moment(lastSession.date_complete).startOf('day'),'days')==0);
+      var numberOffset = 0;
+      let eventsValidForToday = [];
+      if(eventsValidOther && eventsValidOther.length > 1){
+        let eventsValidOtherA = this.listeModules.filter(e=>moment(e.date_complete).startOf('day').diff(moment(lastSession.date_complete).startOf('day'),'days')==0)||[];
+       if(eventsValidOtherA.length>0){
+        const listModuleIds = eventsValidOtherA.map((m:any)=>m.module_id);
+        let eventsValidForToday = eventsValidOther.filter((e:any)=>!listModuleIds.includes(e.module_id))
+       }
+
+      }
+      let arrayMerge = [];
+      if(eventsValid && eventsValid.length){
+        arrayMerge = eventsValid;
+      }
+      if(eventsValidForToday && eventsValidForToday.length){
+        arrayMerge = arrayMerge.concat(eventsValidForToday);
+      }
+      const eventWeekend = arrayMerge.filter((e:any)=>moment(e.date).day()==6 || moment(e.date).day()==0);
+      estTrue = eventWeekend && eventWeekend.length>0
+      &&  (moment(this.eventDriving.date).day()==6 || moment(this.eventDriving.date).day()==0);
+    }
+    else if(this.events.length>0){
+      let evts = this.events.filter(e=>moment(e.date).day()==6 || moment(e.date).day()==0);
+      estTrue = !!evts && evts.length > 0
+      &&  (moment(this.eventDriving.date).day()==6 || moment(this.eventDriving.date).day()==0);
+    }
+    return estTrue;
+  }
 }

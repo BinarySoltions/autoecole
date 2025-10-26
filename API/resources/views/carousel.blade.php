@@ -13,6 +13,17 @@
         <br/>
         <a href="https://pconduite.com/auto/public/reservation" class="btn btn-primary bottom-l"  role="button" aria-disabled="true">
         <i class="fas fa-user-lock icon-2x pull-left"></i>  <div class="btn-large"> Se connecter / <br/>Login</div></a>
+        <!-- QR Code YouTube -->
+<div style="margin-top: 15px; text-align: left;">
+  <a href="https://youtube.com/@ecoledeconduitepconduite?feature=shared" target="_blank" style="display: inline-flex; align-items: center; background-color:#00742c;
+            color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none;
+            font-weight: bold; font-size: 16px;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg"
+         alt="YouTube" style="height: 20px; margin-right: 8px;">
+    Voir notre chaîne YouTube
+  </a>
+</div>
+
       </div>
     </div>
     <div class="carousel-item image" data-bs-interval="2000">
@@ -23,6 +34,17 @@
         <br/>
         <a href="https://pconduite.com/auto/public/reservation" class="btn btn-primary bottom-l"  role="button" aria-disabled="true">
         <i class="fas fa-user-lock icon-2x pull-left"></i>  <div class="btn-large"> Se connecter / <br/>Login</div></a>
+        <!-- QR Code YouTube -->
+<div style="margin-top: 15px; text-align: left;">
+   <a href="https://youtube.com/@ecoledeconduitepconduite?feature=shared" target="_blank" style="display: inline-flex; align-items: center; background-color: #00742c;
+            color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none;
+            font-weight: bold; font-size: 16px;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg"
+         alt="YouTube" style="height: 20px; margin-right: 8px;">
+    Voir notre chaîne YouTube
+  </a>
+</div>
+
       </div>
     </div>
     <div class="carousel-item image">
@@ -33,6 +55,17 @@
         <br/>
         <a href="https://pconduite.com/auto/public/reservation" class="btn btn-primary bottom-l"  role="button" aria-disabled="true">
         <i class="fas fa-user-lock icon-2x pull-left"></i>  <div class="btn-large"> Se connecter / <br/>Login</div></a>
+        <!-- QR Code YouTube -->
+<div style="margin-top: 15px; text-align: left;">
+  <a href="https://youtube.com/@ecoledeconduitepconduite?feature=shared" target="_blank" style="display: inline-flex; align-items: center; background-color: #00742c;
+            color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none;
+            font-weight: bold; font-size: 16px;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg"
+         alt="YouTube" style="height: 20px; margin-right: 8px;">
+    Voir notre chaîne YouTube
+  </a>
+</div>
+
       </div>
     </div>
   </div>

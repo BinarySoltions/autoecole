@@ -5,7 +5,8 @@
   "cli": {
     "cache": {
       "enabled": false
-    }
+    },
+    "analytics": "17375060-d1bc-4596-8e30-5eb521868e86"
   },
   "projects": {
     "auto": {

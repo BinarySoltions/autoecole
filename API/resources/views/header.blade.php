@@ -256,11 +256,13 @@
     @media only screen and (max-width: 600px) {
         .top-r{
             position: absolute;
-            top:-170px;
+            top:-47px;
+            opacity: 0.90;
         }
         .bottom-l{
             position: absolute;
             bottom:-81px;
+            opacity: 0.90;
         }
         .img-phone{
             max-height:300px;
