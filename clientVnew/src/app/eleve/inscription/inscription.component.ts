@@ -10,6 +10,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { NgForm } from '@angular/forms';
 import moment from 'moment';
 import { CookieService } from 'ngx-cookie-service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-inscription',
@@ -30,13 +32,16 @@ export class InscriptionComponent implements OnInit {
   languages: { value: string; label: string; }[];
   lang = 'fr';
   condition :boolean;
+  pdfUrlFr!: SafeResourceUrl;
+  pdfUrlEn!: SafeResourceUrl;
 
-  constructor(private router:Router, 
+  constructor(private router:Router,
         private serviceEleve:EleveService,
         private activatedRoute: ActivatedRoute,
         private toastr: ToastrService,
         private translate:TranslateService,
-        private cookieService:CookieService) {
+        private cookieService:CookieService,
+        private sanitizer: DomSanitizer) {
          this.translate.setDefaultLang('fr');
           this.cookiePremiereInscription = this.cookieService.get('subscribe-student');
          }
@@ -53,8 +58,71 @@ export class InscriptionComponent implements OnInit {
         { value: 'fr', label: 'FR' },
         { value: 'eng', label: 'ENG' }
         ];
+
+        this.pdfUrlFr = this.sanitizer.bypassSecurityTrustResourceUrl('assets/feuillet-medical-liste-maladie-deficits-fonctionnels2024.pdf');
+        this.pdfUrlEn = this.sanitizer.bypassSecurityTrustResourceUrl('assets/illness-functional-impairment-checklist2024.pdf');
+
+        (window as any).openPolicy = (lang: string) => this.openPolicy(lang);
+
+        this.openPolicy();
     }
 
+    openPolicy(lang: string = 'fr') {
+    const pdfUrl =
+      lang === 'fr'
+        ? 'assets/feuillet-medical-liste-maladie-deficits-fonctionnels2024.pdf'
+        : 'assets/illness-functional-impairment-checklist2024.pdf';
+
+    Swal.fire({
+      title: 'Veuillez lire la politique',
+      width: '900px',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showConfirmButton: true,
+      confirmButtonText: 'J’accepte',
+      didOpen: () => {
+        const confirmBtn = Swal.getConfirmButton();
+        confirmBtn.disabled = false; // 🔒 Désactivate au début
+
+        const policyBox = document.getElementById('pdf-container');
+        if (policyBox) {
+          policyBox.addEventListener('scroll', () => {
+            if (policyBox.scrollTop + policyBox.clientHeight >= policyBox.scrollHeight - 2) {
+              confirmBtn.disabled = false; // 🔓 Activer lorsque scrolled tout en bas
+            }
+          });
+        }
+      },
+      html: `
+        <div style="margin-bottom:10px;">
+          <button onclick="window.openPolicy('fr')" style="margin-right:5px;">
+            Français
+          </button>
+          <button onclick="window.openPolicy('eng')">
+            English
+          </button>
+        </div>
+
+        <div id="pdf-container"
+             style="
+               max-height:65vh;
+               overflow-y:auto;
+               padding:5px;
+               border:1px solid #ccc;
+               border-radius:6px;
+             ">
+          <iframe src="assets/pdfjs/web/viewer.html?file=../../../${pdfUrl}"
+                  width="100%" height="600px"
+                  style="border:none;">
+          </iframe>
+        </div>
+      `,
+    }).then(result => {
+      if (result.isConfirmed) {
+       //localStorage.setItem("policyIsOk","true")
+      }
+    });
+    }
   public obtenirEleveById(id:number){
     if(id){
       this.action = "Modifier";

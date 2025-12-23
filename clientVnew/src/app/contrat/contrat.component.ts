@@ -15,6 +15,7 @@ import { EcoleService } from '../service/ecole/ecole.service';
 import { EleveService } from '../service/eleve/eleve.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import moment from 'moment';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-contrat',
@@ -23,25 +24,25 @@ import moment from 'moment';
 })
 export class ContratComponent implements OnInit {
   parametres = new ParametresContrat();
-  eleve:Eleve = new Eleve();
+  eleve: Eleve = new Eleve();
   idEleve: number;
   TPS = 9.975;
   TVQ = 5;
   ecole = new Ecole();
   actionGenerer: boolean;
   totalPaye = 0;
-  versement = [0.00,0.00,0.00,0.00,0.00,0.00];
+  versement = [0.00, 0.00, 0.00, 0.00, 0.00, 0.00];
   dateVersion: any;
   heurePratique: any;
   heureTheorique: any;
 
-  constructor(private serviceContrat:ContratService, private activatedRoute:ActivatedRoute,
-    private router:Router, 
+  constructor(private serviceContrat: ContratService, private activatedRoute: ActivatedRoute,
+    private router: Router,
     private toastr: ToastrService,
-    private translate:TranslateService,
-    private serviceEcole:EcoleService,
-    private serviceEleve:EleveService,
-    private spinner:NgxSpinnerService) { }
+    private translate: TranslateService,
+    private serviceEcole: EcoleService,
+    private serviceEleve: EleveService,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.dateVersion = moment("2019-01-01").format("YYYY-MM-DD");
@@ -50,77 +51,111 @@ export class ContratComponent implements OnInit {
     this.obtenirParametresContrat();
     this.initialiserEcole();
     this.initialiserEleve();
-    this.serviceEleve.obtenirEleveById(this.idEleve).subscribe(res=>{
-      if(res){
+    this.serviceEleve.obtenirEleveById(this.idEleve).subscribe(res => {
+      if (res) {
         this.eleve = res;
-        const v = this.eleve.frais_inscription/6;
-       // this.versement[0] = Number(v.toFixed(2));
-       this.calculerVersement(this.eleve.frais_inscription,this.eleve.versement)
+        const v = this.eleve.frais_inscription / 6;
+        // this.versement[0] = Number(v.toFixed(2));
+        this.calculerVersement(this.eleve.frais_inscription, this.eleve.versement)
       }
     });
-    this.serviceEcole.obtenirEcole().subscribe(res=>{
-      if(res){
+    this.serviceEcole.obtenirEcole().subscribe(res => {
+      if (res) {
         this.ecole = res;
       }
     })
   }
 
-  calculerVersement(montant:any,nbrVersement:any){
-    if(!nbrVersement){
-      let v = montant*0.20;
-      this.versement[0] =Number(v.toFixed(2));
-      let vautre = montant*0.80/5;
-      this.versement.fill(Number(vautre.toFixed(2)),1);
+  calculerVersement(montant: any, nbrVersement: any) {
+    if (!nbrVersement) {
+      let v = montant * 0.20;
+      this.versement[0] = Number(v.toFixed(2));
+      let vautre = montant * 0.80 / 5;
+      this.versement.fill(Number(vautre.toFixed(2)), 1);
     }
-    if(nbrVersement && nbrVersement>0){
-      if(nbrVersement == 6){
-        let v = montant*0.20;
-        this.versement[0] =Number(v.toFixed(2));
-        let vautre = montant*0.80/5;
-        this.versement.fill(Number(vautre.toFixed(2)),1);
+    if (nbrVersement && nbrVersement > 0) {
+      if (nbrVersement == 6) {
+        let v = montant * 0.20;
+        this.versement[0] = Number(v.toFixed(2));
+        let vautre = montant * 0.80 / 5;
+        this.versement.fill(Number(vautre.toFixed(2)), 1);
       } else {
-        let vautre = montant/nbrVersement;
-        this.versement.fill(Number(vautre.toFixed(2)),6-nbrVersement);
+        let vautre = montant / nbrVersement;
+        this.versement.fill(Number(vautre.toFixed(2)), 6 - nbrVersement);
       }
     }
   }
-  obtenirParametresContrat(){
-    this.serviceContrat.obtenirParametresContrat().subscribe(res=>{
-      if(res) {
+  obtenirParametresContrat() {
+    this.serviceContrat.obtenirParametresContrat().subscribe(res => {
+      if (res) {
         this.parametres = res;
       }
     });
   }
-  obtenirTotalHorsTaxes(){
-    if (this.eleve){
+  obtenirTotalHorsTaxes() {
+    if (this.eleve) {
       let montantHorsTaxe = Number(this.eleve.frais_inscription);
-      return montantHorsTaxe/(1+0.05+0.09975);
+      return montantHorsTaxe / (1 + 0.05 + 0.09975);
     }
     return 0;
   }
-  obtenirTotalAvecTaxes(){
-    if (this.eleve){
+  obtenirTotalAvecTaxes() {
+    if (this.eleve) {
       return Number(this.eleve.frais_inscription);
     }
     return 0;
   }
-  obtenirTVQ(){
-    return this.obtenirTotalHorsTaxes()*this.TVQ/100;
+  obtenirTVQ() {
+    return this.obtenirTotalHorsTaxes() * this.TVQ / 100;
   }
-  obtenirTPS(){
-    return this.obtenirTotalHorsTaxes()*this.TPS/100;
+  obtenirTPS() {
+    return this.obtenirTotalHorsTaxes() * this.TPS / 100;
   }
-  
 
-  heuresEvent(event){
+
+  heuresEvent(event) {
     this.heurePratique = event.heurePratique;
     this.heureTheorique = event.heureTheorique;
   }
 
-  imprimer(){
+ calculateAge(dobMomentObject) {
+    // 1. Obtenir la date actuelle
+    const today = moment();
+
+    // 2. Calculer la différence entre la date actuelle et la date de naissance
+    // L'argument 'years' (années) indique à Moment de retourner la différence en années.
+    // L'argument 'true' est facultatif, il retourne la différence sous forme de nombre décimal.
+    // Cependant, pour l'âge, nous voulons l'arrondi (le nombre d'années complètes).
+
+    const age = today.diff(dobMomentObject, 'years');
+
+    return age;
+}
+  imprimer() {
+    const age = this.calculateAge(moment(this.eleve.date_naissance));
+    if(age<18){
+
+
+    Swal.fire({
+      title: "Information",
+      text: "L'élève a moins de 18 ans!",
+      icon: "warning",
+      showCancelButton: false,
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Ok, pour continuer!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.imprimerPdf();
+      }
+    });
+    } else{
+      this.imprimerPdf();
+    }
+  }
+  imprimerPdf() {
     this.spinner.show(undefined, { fullScreen: true });
-    let req = {id:this.eleve.id,heurePratique:this.heurePratique,heureTheorique:this.heureTheorique};
-    this.serviceEleve.genererContratPDF(req).subscribe(response=>{
+    let req = { id: this.eleve.id, heurePratique: this.heurePratique, heureTheorique: this.heureTheorique };
+    this.serviceEleve.genererContratPDF(req).subscribe(response => {
       let a = response.split("\r\n\r\n")
       const byteCharacters = atob(a[1]);
       const byteNumbers = new Array(byteCharacters.length);
@@ -128,12 +163,12 @@ export class ContratComponent implements OnInit {
         byteNumbers[i] = byteCharacters.charCodeAt(i);
       }
       const byteArray = new Uint8Array(byteNumbers);
-      let file = new Blob([byteArray], { type: 'application/pdf' });       
+      let file = new Blob([byteArray], { type: 'application/pdf' });
       var fileURL = URL.createObjectURL(file);
       var tempLink = document.createElement('a');
       tempLink.style.display = 'none';
       tempLink.href = fileURL;
-      tempLink.setAttribute('download', "contrat-"+this.eleve.numero_contrat+"_"+this.eleve.prenom+"_"+this.eleve.nom+".pdf");
+      tempLink.setAttribute('download', "contrat-" + this.eleve.numero_contrat + "_" + this.eleve.prenom + "_" + this.eleve.nom + ".pdf");
       document.body.appendChild(tempLink);
       tempLink.click();
       document.body.removeChild(tempLink);
@@ -142,22 +177,22 @@ export class ContratComponent implements OnInit {
       this.spinner.hide();
     });
   }
-  openDataUriWindow(url,filename) {
+  openDataUriWindow(url, filename) {
     var html = '<html><head><title>' +
-        filename + '</title>' +
-        '<style>html, body { padding: 0; margin: 0; } iframe { width: 100%; height: 100%; border: 0;}  </style>' +
-        '</head><body>' +
-        '<iframe src="' + url + '"></iframe>' +
-        '</body></html>';
+      filename + '</title>' +
+      '<style>html, body { padding: 0; margin: 0; } iframe { width: 100%; height: 100%; border: 0;}  </style>' +
+      '</head><body>' +
+      '<iframe src="' + url + '"></iframe>' +
+      '</body></html>';
     var a = window.open();
     a.document.write(html);
-}
-  fermer(){
+  }
+  fermer() {
     this.router.navigate(['/eleves']);
   }
-  public initialiserEleve(){
+  public initialiserEleve() {
     this.eleve = new Eleve();
-    this.eleve.prenom ="";
+    this.eleve.prenom = "";
     this.eleve.nom = "";
     this.eleve.numero_contrat = "";
     this.eleve.adresse = new Adresse();
@@ -171,9 +206,9 @@ export class ContratComponent implements OnInit {
     this.eleve.coordonnee.telephone = "";
     this.eleve.coordonnee.telephone_autre = "";
   }
-  public initialiserEcole(){
+  public initialiserEcole() {
     this.ecole = new Ecole();
-    this.ecole.raison_social ="";
+    this.ecole.raison_social = "";
     this.ecole.nom = "";
     this.ecole.email = "";
     this.ecole.adresse = new AdresseEcole();
