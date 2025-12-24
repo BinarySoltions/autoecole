@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild, Inject } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild, Inject, Optional } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -34,7 +34,7 @@ export class NoteModuleComponent implements  OnInit {
 
   listeModules: Module[] = [];
   eleveModele:Eleve;
-  //listeEleves:any;
+  listeEleves:any;
   isLoading = true;
 
   descControl= new FormControl("");
@@ -45,16 +45,19 @@ export class NoteModuleComponent implements  OnInit {
   });
   phaseGroup: number[];
   selected=0;
+  idEleve: number;
 
 
   constructor(private serviceModule: ModuleService,
-    public dialogRef: MatDialogRef<NoteModuleComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    @Optional() public dialogRef: MatDialogRef<NoteModuleComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private serviceEleve:EleveService,
     private spinner:NgxSpinnerService,
+    private activatedRoute: ActivatedRoute,
     private translate: TranslateService, private toastr:ToastrService) {
     this.translate.setDefaultLang('fr');
     console.log('res listeeleves :',data)
+    this.idEleve = +this.activatedRoute.snapshot.paramMap.get('id');
     this.obtenirEleves();
   }
 
@@ -75,7 +78,11 @@ export class NoteModuleComponent implements  OnInit {
     this.serviceEleve.obtenirEleves().subscribe((result)=>{
       if (result) {
         console.log(" result student :",result)
-        this.data.listeEleves  = result;
+        if(this.idEleve){
+           this.listeEleves = result.filter(e=> e.id === this.idEleve);
+        } else {
+           this.listeEleves = result;
+        }
        this.isLoading = false;
       }
       this.spinner.hide();

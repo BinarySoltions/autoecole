@@ -16,7 +16,7 @@
         <div class="md-form col col-12  none-border-top">
           <label for="module">{{'module.eleves' | translate}}</label>
           <ng-multiselect-dropdown name="eleves" #listEleve placeholder="{{'label.selectionner' | translate}}" [settings]="dropdownSettings"
-            [data]="data.listeEleves" formControlName="eleves"
+            [data]="listeEleves" formControlName="eleves"
             (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
           </ng-multiselect-dropdown>
         </div>
