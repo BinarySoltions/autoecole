@@ -6,10 +6,11 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { EleveModule } from 'src/app/entite/eleve-module.entity';
-import { Eleve } from 'src/app/entite/eleve.entity';
+import { Eleve, EleveSummary } from 'src/app/entite/eleve.entity';
 import { Module } from 'src/app/entite/module.entity';
 import { AjouterNoteModel } from 'src/app/modele/ajouter-note.model';
 import { EleveService } from 'src/app/service/eleve/eleve.service';
@@ -25,7 +26,6 @@ export interface DialogData {
   styleUrls: ['./note-module.component.scss']
 })
 export class NoteModuleComponent implements  OnInit {
-  elevesChangeSubscribe : BehaviorSubject<Eleve[]>;
   dropdownListEleve:any = [];
   selectedItems = [];
   dropdownSettings = {};
@@ -35,12 +35,12 @@ export class NoteModuleComponent implements  OnInit {
   listeModules: Module[] = [];
   eleveModele:Eleve;
   //listeEleves:any;
-
+  isLoading = true;
 
   descControl= new FormControl("");
   form = new FormGroup({
-    text:this.descControl,
-    id_module:new FormControl(0,[Validators.required]),
+    note:this.descControl,
+    module_id:new FormControl(0,[Validators.required]),
     eleves:new FormControl([],[Validators.required])
   });
   phaseGroup: number[];
@@ -51,26 +51,35 @@ export class NoteModuleComponent implements  OnInit {
     public dialogRef: MatDialogRef<NoteModuleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private serviceEleve:EleveService,
+    private spinner:NgxSpinnerService,
     private translate: TranslateService, private toastr:ToastrService) {
     this.translate.setDefaultLang('fr');
     console.log('res listeeleves :',data)
-    this.elevesChangeSubscribe?.subscribe(res=>{
-      data.listeEleves = res;
-      console.log('subscribe listeeleves :')
-    });
+    this.obtenirEleves();
   }
 
   ngOnInit() {
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',
-      textField: 'nomcomplet',
+      textField: 'nom_complet',
       selectAllText: 'Cocher tout',
       unSelectAllText: 'Décocher tout',
       searchPlaceholderText:'Rechercher',
       allowSearchFilter: true
     };
     this.obtenirModules();
+  }
+
+  obtenirEleves(){
+    this.serviceEleve.obtenirEleves().subscribe((result)=>{
+      if (result) {
+        console.log(" result student :",result)
+        this.data.listeEleves  = result;
+       this.isLoading = false;
+      }
+      this.spinner.hide();
+    });
   }
   onItemSelect(item: any) {
     console.log(item);

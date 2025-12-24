@@ -155,7 +155,7 @@ export class EleveService {
       .pipe(catchError(this.handleError));
   }
   ajouterNoteSortie(req:any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'ajouterNoteSortie', req, httpOptions)
+    return this.http.put<any>(this.apiUrl + 'Student/modules/update-note', req, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

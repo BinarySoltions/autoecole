@@ -82,7 +82,6 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
         this.elements = result;
         this.listeEleves  = result;
        this.isLoading = false;
-       //this.dialogRef?.componentInstance.elevesChangeSubscribe.next(this.listeEleves)
       }
       this.spinner.hide();
     });
@@ -93,7 +92,6 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
         console.log(" result student :",result)
         this.elements = result;
         this.listeEleves  = result;
-        //this.dialogRef?.componentInstance.elevesChangeSubscribe.next(this.listeEleves)
       }
       this.spinner.hide();
     });

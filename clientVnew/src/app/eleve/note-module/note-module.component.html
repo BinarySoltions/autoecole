@@ -4,7 +4,7 @@
         <div class="col col-4 mx-auto">
           <mat-form-field>
             <mat-label>{{'module.nom' | translate }}</mat-label>
-            <mat-select aria-label="{{'module.nom' | translate }}" [(value)]="selected" formControlName="id_module"
+            <mat-select aria-label="{{'module.nom' | translate }}" [(value)]="selected" formControlName="module_id"
               class="form-control" (selectionChange)="onModulesChange($event)" style="border: 0px solid #ced4da;">
               <mat-option [value]="0">{{'label.selectionner' | translate}}</mat-option>
               <mat-optgroup *ngFor="let group of phaseGroup" [label]="'Phase '+group">
