@@ -21,7 +21,7 @@ export class MonitorService {
   constructor(private http: HttpClient) { }
 
   obtenirMoniteur():Observable<any>{
-    return this.http.get<any>(this.apiUrl+'moniteurs')
+    return this.http.get<any>(this.apiUrl+'Moniteur')
     .pipe(catchError(this.handleError));
   }
   enregistrerMoniteur(moniteur):Observable<any>{

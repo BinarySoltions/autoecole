@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort} from '@angular/material/sort';
 import { MatTableDataSource} from '@angular/material/table';
+import { EleveModule } from 'src/app/entite/eleve-module.entity';
 declare var $: any;
 
 
@@ -116,7 +117,7 @@ public supprimerEleve(value){
 
  determinerPhase(modules:Module[]):string{
    let modulesCompleted = [];
-   modulesCompleted = modules?.filter(m=>m.eleve_module.date_complete != null);
+   modulesCompleted = modules?.filter(m=>m.eleve_module?.date_complete != null);
    if(!modulesCompleted){
     return "";
    }
@@ -130,12 +131,11 @@ public supprimerEleve(value){
 
  determinerModulesAfaire(modules:Module[]):string{
   let modulesCompleted = [];
-  modulesCompleted = modules.filter(m=>m.eleve_module.date_complete != null);
+  modulesCompleted = modules.filter(m=>m.eleve_module?.date_complete != null);
   let resultatCompleted = modulesCompleted.sort(this.compare);
   let lastModuleCompleted = resultatCompleted[0];
   let modulesAbsent = [];
-  modulesAbsent = modules.filter(m=>m.eleve_module.date_complete == null);
-
+  modulesAbsent = modules.filter(m=>m.eleve_module?.date_complete == null);
   let resultat = "";
   modulesAbsent.forEach((r:any)=>{
     if(r && Number(r.numero) && lastModuleCompleted && Number(r.numero) < Number(lastModuleCompleted.numero)){
@@ -221,7 +221,7 @@ onModulesChange(event){
    previousNumbers = previousElements.map(n=>n.numero);
   }
   let listPreviousModules =  this.elements.filter((e:Eleve)=>{
-    let index = isPrevPhase?(e.modules.filter(m=>Number(m.phase_id) === Number(this.module.phase_id)-1).every(m=> m.eleve_module.date_complete!=null || m.eleve_module.sans_objet!=null)?1:-1) : e.modules.findIndex((m:Module)=>this.compareModuleDone(m,previousNumbers));
+    let index = isPrevPhase?(e.modules.filter(m=>Number(m.module.phase_id) === Number(this.module.phase_id)-1).every(m=> m.date_complete!=null || m.sans_objet!=null)?1:-1) : e.modules.findIndex((m:EleveModule)=>this.compareModuleDone(m,previousNumbers));
     if(index != -1 && Number(firstModule.numero) != Number(this.numero)){
      return e;
     }else if(Number(firstModule.numero) === Number(this.numero)){
@@ -231,8 +231,8 @@ onModulesChange(event){
 
   let testlisteEleves =  listPreviousModules.filter((e:Eleve)=>{
 
-   let index = Number(this.module.phase_id)>1?(e.modules.filter(m=>Number(m.phase_id) === Number(this.module.phase_id)-1).every(m=> m.eleve_module.date_complete!=null || m.eleve_module.sans_objet!=null)?
-   e.modules.findIndex((m:Module)=>this.compareModuleAbsent(m)):-1):e.modules.findIndex((m:Module)=>this.compareModuleAbsent(m));
+   let index = Number(this.module.phase_id)>1?(e.modules.filter(m=>Number(m.module.phase_id) === Number(this.module.phase_id)-1).every(m=> m.date_complete!=null || m.sans_objet!=null)?
+   e.modules.findIndex((m:EleveModule)=>this.compareModuleAbsent(m)):-1):e.modules.findIndex((m:EleveModule)=>this.compareModuleAbsent(m));
    if(index != -1){
     return e;
    }
@@ -247,13 +247,13 @@ onModulesChange(event){
 }
 
 compareModuleAbsent(m):boolean{
-  return Number(m.numero) === Number(this.numero) && m.eleve_module.date_complete===null && m.eleve_module.sans_objet ===null;
+  return Number(m.module.numero) === Number(this.numero) && m.date_complete===null && m.sans_objet ===null;
 }
 
 compareModuleDone(m,previousNumbers):boolean{
   //return previousNumbers.includes(m.numero) && m.eleve_module.type !="T" && (m.eleve_module.date_complete!=null || m.eleve_module.sans_objet!=null) ||
   //previousNumbers.includes(m.numero) && m.eleve_module.type==="T";
-  return previousNumbers.includes(m.numero);
+  return previousNumbers.includes(m.module.numero);
 }
 
 getModules(phase){

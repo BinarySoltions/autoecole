@@ -49,7 +49,7 @@ export class NoteSortieComponent implements OnInit {
     this.paginator = mp;
   }
   constructor(private erreurSortie: ErreurSortieService,private activatedRoute: ActivatedRoute,
-    private cdRef: ChangeDetectorRef, private serviceModule: ModuleService,private router:Router, 
+    private cdRef: ChangeDetectorRef, private serviceModule: ModuleService,private router:Router,
     private serviceEleve:EleveService,
     private translate: TranslateService) {
     this.translate.setDefaultLang('fr');
@@ -73,7 +73,7 @@ export class NoteSortieComponent implements OnInit {
     if(id){
       this.serviceEleve.obtenirEleveById(id).subscribe(eleve=>{
         this.eleveModele = eleve;
-        this.moduleEleve = this.eleveModele.modules.map(m=>m.eleve_module);
+        this.moduleEleve = this.eleveModele.modules.map(m=>m);
       });
     }
   }

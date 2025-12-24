@@ -23,7 +23,7 @@ export class GenererComponent implements OnInit {
   public eventsSubject: Subject<string> = new Subject<string>();
   attestation:AttestationModel;
 
-  
+
   constructor(
     private activatedRoute:ActivatedRoute,
     private serviceAttestation:AttestationService) { }
@@ -39,7 +39,7 @@ export class GenererComponent implements OnInit {
   }
   obtenirAttestationById(id){
     this.serviceAttestation.obtenirAttestationById(id).subscribe(res=>{
-      if(_.has(res,'id')){
+      if(_.has(res,'numero')){
         this.attestation = res;
         this.attestation.numero = res.numero;
         this.eventsSubject.next(this.attestation.numero);

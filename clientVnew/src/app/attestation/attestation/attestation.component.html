@@ -176,7 +176,7 @@
       width: 17% !important;
       height: 2% !important;
     }
- 
+
     .numero-attestation{
       font-size: 30px;
       letter-spacing: 10px;
@@ -250,19 +250,19 @@
   <div class="row">
    <table class="resize-100">
      <tr>
-       <td><input type="checkbox" 
-        aria-label="phaseUne" 
-        [(ngModel)]="estPhaseUne" 
+       <td><input type="checkbox"
+        aria-label="phaseUne"
+        [(ngModel)]="estPhaseUne"
         >&nbsp;Copie Phase 1
       </td>
       <td>
           <label class="inline-block"><input
             (click)="selectionnerComplet()"
-             type="checkbox" aria-label="complet"  [(ngModel)]="estCopieDelegataire" 
-      
+             type="checkbox" aria-label="complet"  [(ngModel)]="estCopieDelegataire"
+
          >&nbsp;Copie Complète</label>
       </td>
-      
+
       <td align="right" style="width:60%">
           <button type="button" class="btn bg-color-green-btn"
            (click)="telecharger()"
@@ -321,7 +321,7 @@
         </tr>
         <tr class="">
           <td rowspan="2" colspan="2" class="no-border-bottom font-label no-border-right bg-color-green" style="width:30%">
-            
+
           </td>
           <td class="no-border-bottom font-label no-border-left bg-color-green" style="width:10%"></td>
           <td colspan="2" class="no-border-bottom font-label" style="width:30%">
@@ -332,7 +332,7 @@
           </td>
         </tr>
         <tr>
-         
+
           <td class=" no-border-top font-label no-border-left bg-color-green" style="width:10%"></td>
           <td colspan="2" class=" no-border-top font-label" style="width:30%">
             <span>&nbsp;{{eleve.nom}}</span>
@@ -348,16 +348,16 @@
           <td  class="no-border-bottom font-label" style="width:15%">
            Numéro
           </td>
-          
+
           <td colspan="5"  class="no-border-bottom font-label" style="width:75%">
             Rue
           </td>
         </tr>
         <tr>
-        
+
           <td  class=" font-label no-border-top" style="width:15%">
             {{eleve.adresse.numero}} </td>
-           
+
           <td colspan="5" class=" font-label no-border-top" style="width:75%">
            {{eleve.adresse.rue}}<span *ngIf="ecole.adresse.appartement">, &nbsp;{{eleve.adresse.appartement}}</span>
           </td>
@@ -413,16 +413,16 @@
         <td  class="no-border-bottom font-label" style="width:15%">
          Numéro
         </td>
-        
+
         <td colspan="5"  class="no-border-bottom font-label" style="width:75%">
           Rue
         </td>
       </tr>
       <tr>
-      
+
         <td  class=" font-label no-border-top" style="width:15%">
           {{ecole.adresse.numero}} </td>
-         
+
         <td colspan="5" class=" font-label no-border-top" style="width:75%">
          {{ecole.adresse.rue}}<span *ngIf="ecole.adresse.appartement">, &nbsp;{{ecole.adresse.appartement}}</span>
         </td>
@@ -461,14 +461,14 @@
             </tr>
             <tr>
               <td colspan="3" style="padding:0" class="bg-color-green no-border-top centrer">(Année-Mois-Jour)</td>
-             
+
             </tr>
             <ng-template ngFor let-module [ngForOf]="phaseUne.modules">
               <tr>
                 <td class="border-left font-label border-right bg-color-white border-bottom centrer">
-                  {{obtenirModule(module.nom)}} {{module.nom}}</td>
+                  {{obtenirModule(module.module.nom)}} {{module.module.nom}}</td>
                 <td class="border-right font-label bg-color-white border-bottom centrer" colspan="3">
-                  {{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}{{obtenirDate(module?.eleve_module)}}</td>
+                  {{module?.date_complete | date:"yyyy-MM-dd"}}{{obtenirDate(module)}}</td>
               </tr>
             </ng-template>
             <tr>
@@ -498,15 +498,15 @@
             </tr>
             <ng-template ngFor let-module [ngForOf]="phaseDeux.modules">
               <tr>
-                <td class="border-left border-right font-label bg-color-white border-bottom centrer">{{obtenirModule(module.nom)}}{{module.nom}}</td>
+                <td class="border-left border-right font-label bg-color-white border-bottom centrer">{{obtenirModule(module.module.nom)}}{{module.module.nom}}</td>
                 <td class="border-right bg-color-white font-label border-bottom centrer" colspan="3">
-                  {{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}{{obtenirDate(module?.eleve_module)}}</td>
+                  {{module?.date_complete | date:"yyyy-MM-dd"}}{{obtenirDate(module)}}</td>
               </tr>
             </ng-template>
             <tr>
               <td class="no-border" colspan="4"></td>
             </tr>
-           
+
           </table>
         </td>
         <td class="bg-color-gray no-border-bottom" align="center"
@@ -529,14 +529,14 @@
             </tr>
             <ng-template ngFor let-module [ngForOf]="phaseTrois.modules">
               <tr>
-                <td class="border-left font-label border-right bg-color-white border-bottom centrer">{{obtenirModule(module.nom)}}{{module.nom}}</td>
+                <td class="border-left font-label border-right bg-color-white border-bottom centrer">{{obtenirModule(module.module.nom)}}{{module.module.nom}}</td>
                 <td class="border-right font-label bg-color-white border-bottom centrer" colspan="3">
-                  {{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}{{obtenirDate(module?.eleve_module)}}</td>
+                  {{module?.date_complete | date:"yyyy-MM-dd"}}{{obtenirDate(module)}}</td>
               </tr>
             </ng-template>
             </table>
         </td>
-        <td align="top" class="bg-color-gray no-border-bottom" 
+        <td align="top" class="bg-color-gray no-border-bottom"
         style="width:200px;padding: 10px 0px 10px 10px;vertical-align: top;"
         *ngIf="!estPhaseUne">
           <table class="table-bordered-yes" style="width:230px; padding:10px;">
@@ -557,12 +557,12 @@
             </tr>
             <ng-template ngFor let-module [ngForOf]="phaseQuatre.modules">
               <tr>
-                <td class="border-left font-label border-right bg-color-white border-bottom centrer">{{obtenirModule(module.nom)}}{{module.nom}}</td>
+                <td class="border-left font-label border-right bg-color-white border-bottom centrer">{{obtenirModule(module.module.nom)}}{{module.module.nom}}</td>
                 <td class="border-right font-label bg-color-white border-bottom centrer" colspan="3">
-                  {{module?.eleve_module?.date_complete | date:"yyyy-MM-dd"}}{{obtenirDate(module?.eleve_module)}}</td>
+                  {{module?.date_complete | date:"yyyy-MM-dd"}}{{obtenirDate(module)}}</td>
               </tr>
             </ng-template>
-            
+
           </table>
         </td>
         <td colspan="3" class="no-border-bottom" *ngIf="estPhaseUne" style="width:75%;  padding:0px 0px 0px 10px;" colspan="1">
@@ -614,7 +614,7 @@
       </tr>
       <tr>
         <td class=" no-border-bottom" colspan="3" style="width:100%; height: 200px;padding: 10px 10px 0px 10px;">
-         
+
         </td>
       </tr>
     </table>
@@ -664,16 +664,16 @@
           </table>
           <table class="table-bordered-yes texte" *ngIf="estPhaseUne">
             <tr>
-              
+
               <td class="font-label" style="padding: 10px; text-align:justify"><span style="font-weight:bolder;">La communication de renseignements personnels</span><br/>
-                <span>Le personnel autorisé de la Société de l’assurance automobile du Québec traite de façon confidentielle les renseignements personnels qui 
-                  lui sont confiés. Ils sont indispensables pour appliquer les lois que la Société est chargée d’appliquer, notamment le Code de la sécurité 
-                  routière, la Loi sur l’assurance automobile et la Loi concernant le transport rémunéré de personnes par automobile. La Société communique 
-                  ces renseignements à ses mandataires et à certains ministères et organismes, selon la Loi sur l’accès aux documents des organismes publics 
-                  et sur la protection des renseignements personnels. Ces renseignements peuvent aussi servir aux fins de production de statistiques, d’étude, 
-                  de sondage, d’enquête ou de vérification. Omettre de les fournir peut entraîner un refus du service demandé. Vous pouvez consulter les 
+                <span>Le personnel autorisé de la Société de l’assurance automobile du Québec traite de façon confidentielle les renseignements personnels qui
+                  lui sont confiés. Ils sont indispensables pour appliquer les lois que la Société est chargée d’appliquer, notamment le Code de la sécurité
+                  routière, la Loi sur l’assurance automobile et la Loi concernant le transport rémunéré de personnes par automobile. La Société communique
+                  ces renseignements à ses mandataires et à certains ministères et organismes, selon la Loi sur l’accès aux documents des organismes publics
+                  et sur la protection des renseignements personnels. Ces renseignements peuvent aussi servir aux fins de production de statistiques, d’étude,
+                  de sondage, d’enquête ou de vérification. Omettre de les fournir peut entraîner un refus du service demandé. Vous pouvez consulter les
                   renseignements personnels vous concernant, en obtenir une copie ou les faire corriger.</span><br/>
-                  <span>Pour plus d’information, consultez la Politique de confidentialité de la Société à <a href="https://saaq.gouv.qc.ca/" >saaq.gouv.qc.ca</a> ou téléphonez au Centre de relations avec 
+                  <span>Pour plus d’information, consultez la Politique de confidentialité de la Société à <a href="https://saaq.gouv.qc.ca/" >saaq.gouv.qc.ca</a> ou téléphonez au Centre de relations avec
                     la clientèle de la Société.</span>
               </td>
             </tr>

@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { environment } from 'src/environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { Ecole } from 'src/app/entite/ecole.entity';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { SharedServiceModule } from 'src/app/shared/shared/shared-service.module';
 
 
@@ -23,11 +23,13 @@ export class EcoleService {
   constructor(private http:HttpClient) { }
 
   obtenirEcole():Observable<Ecole>{
-    return this.http.get<Ecole>(this.apiUrl+'ecoles');
+    return this.http.get<Ecole[]>(this.apiUrl+'School').pipe(
+      map((res:Ecole[])=>res[0]),
+    catchError(this.handleError));
   }
 
   AjouterEcole(ecole:Ecole):Observable<Ecole>{
-    return this.http.post<Ecole>(this.apiUrl+'ecole',ecole,httpOptions)
+    return this.http.post<Ecole>(this.apiUrl+'School',ecole,httpOptions)
     .pipe(catchError(this.handleError));
   }
 

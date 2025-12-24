@@ -19,15 +19,15 @@ const httpOptions = {
 export class PersonneResponsableService {
 
   readonly apiUrl = environment.apiEndpoint;
-  
+
   constructor(private http:HttpClient,
     private toastr:ToastrService) { }
 
   obtnenirPersonnesResponsables(): Observable<PersonneResponsable[]> {
-    return this.http.get<PersonneResponsable[]>(this.apiUrl + 'personnes');
+    return this.http.get<PersonneResponsable[]>(this.apiUrl + 'PersonneResponsable');
   }
   ajouterPersonneResponsable(personne: PersonneResponsable): Observable<PersonneResponsable[]> {
-    return this.http.post<PersonneResponsable[]>(this.apiUrl + 'personne', personne, httpOptions)
+    return this.http.post<PersonneResponsable[]>(this.apiUrl + 'PersonneResponsable', personne, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
@@ -39,7 +39,7 @@ export class PersonneResponsableService {
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
-      
+
        errorMessage =  `Backend returned code ${error.status}, ` +
         `body was: ${error.error}`;
     }

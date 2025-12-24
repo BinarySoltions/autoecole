@@ -28,7 +28,7 @@ export class ModuleService {
   constructor(private http: HttpClient) { }
 
   obtnenirModules(): Observable<Module[]> {
-    return this.http.get<Module[]>(this.apiUrl + 'modules');
+    return this.http.get<Module[]>(this.apiUrl + 'Module');
   }
 
   ajouterModuleEleves(module: ModuleModel): Observable<{'valid':boolean}> {

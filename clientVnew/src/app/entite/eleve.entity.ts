@@ -5,6 +5,7 @@ import { Phase } from './phase.entity';
 import { Module } from './module.entity';
 import { Payement } from '../payement/payement.model';
 import { Attestation } from './attestation.entity';
+import { EleveModule } from './eleve-module.entity';
 
 export class Eleve implements Deserializable{
     id:number;
@@ -23,7 +24,7 @@ export class Eleve implements Deserializable{
     frais_inscription:number;
     adresse:Adresse;
     coordonnee:Coordonnee;
-    modules:Module[];
+    modules:EleveModule[];
     payements:Payement[];
     attestation:any;
     examens:any;
@@ -38,10 +39,10 @@ export class Eleve implements Deserializable{
         this.adresse = new Adresse().deserialize(obj.adresse);
         this.coordonnee = new Coordonnee().deserialize(obj.coordonnee);
         //this.attestation = new Attestation().deserialize(obj.attestation);
-        obj.modules.foreach(module =>{
-            this.modules.push(new Module().deserialize(module));
+        obj.modules.forEach(module =>{
+            this.modules.push(new EleveModule().deserialize(module));
         });
-        obj.payements.foreach(payement =>{
+        obj.payements.forEach(payement =>{
             this.payements.push(new Payement().deserialize(payement));
         });
         return this;

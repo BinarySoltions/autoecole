@@ -18,7 +18,7 @@ const httpOptions2 = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
   }),
-  'responseType'  : 'text' as 'json'
+  'responseType'  : 'blob' as 'json'
 };
 const httpOptions3 = {
   headers: new HttpHeaders({
@@ -38,7 +38,7 @@ export class EleveService {
   constructor(private http: HttpClient) { }
 
   obtenirEleveById(id: number): Observable<Eleve> {
-    return this.http.get<Eleve>(this.apiUrl + 'eleve/' + id);
+    return this.http.get<Eleve>(this.apiUrl + 'Student/' + id);
   }
   obtenirEleve(id: number): Observable<Eleve> {
     return this.http.get<Eleve>(this.apiUrl + 'obtenirEleve/' + id);
@@ -47,10 +47,10 @@ export class EleveService {
     return this.http.get<Eleve>(this.apiUrl + 'elevePublic/' + id);
   }
   obtenirEleves(): Observable<Eleve[]> {
-    return this.http.get<Eleve[]>(this.apiUrl + 'eleves');
+    return this.http.get<Eleve[]>(this.apiUrl + 'Student');
   }
   obtenirElevesLimites(limit): Observable<Eleve[]> {
-    return this.http.get<Eleve[]>(this.apiUrl + 'eleves/'+limit);
+    return this.http.get<Eleve[]>(this.apiUrl + 'Student/'+limit);
   }
 
   obtenirElevesUniquement(): Observable<Eleve[]> {
@@ -123,8 +123,8 @@ export class EleveService {
     return this.http.post<any>(this.apiUrl + 'printContrat', req, httpOptions2)
       .pipe(catchError(this.handleError));
   }
-  genererAttestationPDF(req:any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'printAttestation', req, httpOptions2)
+  genererAttestationPDF(eleveId:number,req:any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + `Certificate/student/${eleveId}/detailed-pdf`, req, httpOptions2)
       .pipe(catchError(this.handleError));
   }
 

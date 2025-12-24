@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
       private toastr: ToastrService,
   ) {
       // redirect to home if already logged in
-      if (this.authenticationService.currentUserValue) { 
+      if (this.authenticationService.currentUserValue) {
           this.router.navigate(['/']);
       }
   }
@@ -51,10 +51,11 @@ export class LoginComponent implements OnInit {
           .pipe(first())
           .subscribe(
               data => {
-                  
+
                   this.router.navigate([this.returnUrl]);
               },
               error => {
+                 this.router.navigate([this.returnUrl]);
                   this.loading = false;
                   this.toastr.error("Mot de passe ou email incorrect!", "Erreur de connexion", {timeOut: 5000});
                   this.socialUserLogin = new User();

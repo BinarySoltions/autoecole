@@ -147,22 +147,22 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
   }
   initialiserPhases(eleve:any){
     this.phaseUne.modules = _.filter(eleve.modules,function(m){
-      return m.phase_id == 1;
+      return m.module.phase_id == 1;
     });
     this.phaseUne.nom = _.first(this.phaseUne.modules).phase.nom;
 
     this.phaseDeux.modules = _.filter(eleve.modules,function(m){
-      return m.phase_id == 2;
+      return m.module.phase_id == 2;
     });
     this.phaseDeux.nom = _.first(this.phaseDeux.modules).phase.nom;
 
     this.phaseTrois.modules = _.filter(eleve.modules,function(m){
-      return m.phase_id == 3;
+      return m.module.phase_id == 3;
     });
     this.phaseTrois.nom = _.first(this.phaseTrois.modules).phase.nom;
 
     this.phaseQuatre.modules = _.filter(eleve.modules,function(m){
-      return m.phase_id == 4;
+      return m.module.phase_id == 4;
     });
     this.phaseQuatre.nom = _.first(this.phaseQuatre.modules).phase.nom;
   }
@@ -181,12 +181,20 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
       }
 
       this.attestation.numero = this.numeroAttestation;
-      let req={phase_une:this.estPhaseUne,attestation:this.attestation}
-      this.serviceAttestation.AjouterAttestation(req).subscribe(res=>{
-        if(_.has(res,'id')){
-          this.imprimer();
-        }
-      });
+      //let req={phase_une:this.estPhaseUne,attestation:this.attestation}
+      if(this.attestation.id){
+        this.serviceAttestation.ModifierAttestation(this.attestation).subscribe(res=>{
+          if(res){
+            this.imprimer();
+          }
+        });
+      } else {
+        this.serviceAttestation.AjouterAttestation(this.attestation).subscribe(res=>{
+          if(res){
+            this.imprimer();
+          }
+        });
+      }
     }
     public fermer(){
       this.router.navigate(["/eleves"]);
@@ -270,17 +278,10 @@ export class AttestationComponent implements OnInit,AfterViewInit,OnDestroy {
 
       console.log("base64 :", base64)
       this.spinner.show(undefined, { fullScreen: true });
-      let req = {id:this.eleve.id,copie:this.estPhaseUne, barcode:base64}
-       this.serviceEleve.genererAttestationPDF(req).subscribe(response=>{
-         let a = response.split("\r\n\r\n")
-         const byteCharacters = atob(a[1]);
-         const byteNumbers = new Array(byteCharacters.length);
-         for (let i = 0; i < byteCharacters.length; i++) {
-           byteNumbers[i] = byteCharacters.charCodeAt(i);
-         }
-         const byteArray = new Uint8Array(byteNumbers);
-         let file = new Blob([byteArray], { type: 'application/pdf' });
-         var fileURL = URL.createObjectURL(file);
+      let req = {is_Final_copy:!this.estPhaseUne}
+       this.serviceEleve.genererAttestationPDF(this.eleve.id,req).subscribe(response=>{
+         let a = response
+         var fileURL = URL.createObjectURL(response);
          var tempLink = document.createElement('a');
          tempLink.style.display = 'none';
          tempLink.href = fileURL;

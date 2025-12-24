@@ -24,14 +24,18 @@ export class AttestationService {
   constructor(private http:HttpClient) { }
 
   obtenirAttestationById(id):Observable<AttestationModel>{
-    return this.http.get<AttestationModel>(this.apiUrl+'attestation/'+id);
+    return this.http.get<AttestationModel>(this.apiUrl+'Certificate/student/'+id);
   }
 
   AjouterAttestation(attestation:any):Observable<AttestationModel>{
-    return this.http.post<AttestationModel>(this.apiUrl+'attestation',attestation,httpOptions)
+    return this.http.post<AttestationModel>(this.apiUrl+'Certificate',attestation,httpOptions)
     .pipe(catchError(this.handleError));
   }
 
+  ModifierAttestation(attestation:any):Observable<AttestationModel>{
+    return this.http.put<AttestationModel>(this.apiUrl+'Certificate/'+attestation.id,attestation,httpOptions)
+    .pipe(catchError(this.handleError));
+  }
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
