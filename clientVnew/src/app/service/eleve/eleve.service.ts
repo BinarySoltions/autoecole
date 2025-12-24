@@ -90,7 +90,7 @@ export class EleveService {
   }
 
   ajouterExamens(eleve:any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'pass', eleve, httpOptions)
+    return this.http.post<any>(this.apiUrl + 'Exam/batch',{'exams': eleve}, httpOptions)
       .pipe(catchError(this.handleError));
   }
   verifierExamen(numero): Observable<any>{
@@ -106,11 +106,11 @@ export class EleveService {
   }
 
   obtenirExamen(id): Observable<any>{
-    return this.http.get<any>(this.apiUrl + 'obtenirExamen/'+id);
+    return this.http.get<any>(this.apiUrl + 'Exam/student/'+id);
   }
 
   obtenirExamenById(id): Observable<any>{
-    return this.http.get<Eleve[]>(this.apiUrl + 'obtenirExamenById/'+id);
+    return this.http.get<Eleve[]>(this.apiUrl + 'Exam/'+id);
   }
   modifierExamen(examen): Observable<any>{
     return this.http.post<any>(this.apiUrl + 'enregistrerExamen', examen, httpOptions)

@@ -39,7 +39,7 @@ export class AjouterExamenComponent implements OnInit ,AfterViewInit {
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',
-      textField: 'nomcomplet',
+      textField: 'nom_complet',
       selectAllText: 'Cocher tout',
       unSelectAllText: 'Décocher tout',
       searchPlaceholderText:'Rechercher',
@@ -66,7 +66,7 @@ export class AjouterExamenComponent implements OnInit ,AfterViewInit {
         date_examen:dateExamen, nom:this.nomExamen, prise:this.selectedStatus});
     });
     this.serviceEleve.ajouterExamens(request).subscribe(res=>{
-      if(res.isValid){
+      if(res){
         this.estAjouterModule.emit(true);
         this.toastr.success("L'examen a été ajouté avec succés!","Information");
       }else{

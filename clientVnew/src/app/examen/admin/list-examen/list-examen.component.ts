@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { ExamenModel } from 'src/app/modele/examen-model';
 
 
 
@@ -76,7 +77,9 @@ export class ListExamenComponent implements OnInit,OnDestroy {
   }
 
   obtenirNomComplet(){
-    const eleve = this.elements[0].eleve;
-    return eleve.prenom+" "+eleve.nom;
+   return this.elements[0].nom_complet;
+  }
+    isActive(r:any):boolean{
+   return !!r?.resultat;
   }
 }
