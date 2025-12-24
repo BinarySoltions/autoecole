@@ -48,7 +48,7 @@ export class TotalComponent implements OnInit {
     this.datesEvent.emit(totalPayement);
     this.servicePayement.obtnenirTotalPayementsByDates(totalPayement).subscribe(res=>{
       this.transactions = [];
-      if(res){
+      if(res.montant && res.montant.length>0){
         this.transactions.push(<TotalPayement>res);
         this.dataSource = new MatTableDataSource<TotalPayement>(this.transactions);
         this.spinner.hide();
@@ -57,7 +57,7 @@ export class TotalComponent implements OnInit {
       }
     })
   };
-  public getTotalCost(montant:TotalTypePayement[]=[]): number 
+  public getTotalCost(montant:TotalTypePayement[]=[]): number
   {
     return montant.map(m=>Number(m.montant)).reduce((accumulator, currentValue) => accumulator + currentValue);
   }

@@ -47,7 +47,7 @@ export class PayementService {
     .pipe(catchError(this.handleError));
   }
   obtnenirTotalPayementsByDates(totalPayement:TotalPayement): Observable<TotalPayement> {
-    return this.http.post<TotalPayement>(this.apiUrl + 'payements',totalPayement,httpOptions);
+    return this.http.get<TotalPayement>(this.apiUrl + 'Payments/date-range?date_debut='+totalPayement.dateDebut+'&date_fin='+totalPayement.dateFin);
   }
   genererPDF(req:any): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'Payments/receipt', req, httpOptions2)
@@ -59,12 +59,12 @@ export class PayementService {
       .pipe(catchError(this.handleError));
   }
 
-  obtnenirDetailsPayements(totalPayement:TotalPayement): Observable<TotalPayement> {
-    return this.http.post<TotalPayement>(this.apiUrl + 'detailsPayements',totalPayement,httpOptions);
+  obtnenirDetailsPayements(totalPayement:TotalPayement): Observable<{nom:string; montant:number;type:string;date_payement:any;}[]> {
+    return this.http.get<{nom:string; montant:number;type:string;date_payement:any;}[]>(this.apiUrl + 'Payments/date-range/details?date_debut='+totalPayement.dateDebut+'&date_fin='+totalPayement.dateFin);
   }
 
   genererFacturePersoPDF(req:any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'printFacturePerso', req, httpOptions2)
+    return this.http.post<any>(this.apiUrl + 'Payments/receipt/custom', req, httpOptions2)
       .pipe(catchError(this.handleError));
   }
   private handleError(error: HttpErrorResponse) {

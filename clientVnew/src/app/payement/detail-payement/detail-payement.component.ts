@@ -18,7 +18,7 @@ export class DetailPayementComponent implements OnInit, OnChanges {
   @Input() dateDebut:any;
   @Input() dateFin:any;
   displayedColumns: string[] = ['date_payement','nom','type','montant'];
-  transactions:{nom:string; montant:number;type:string;date_payement:any;}[]=[];
+  transactions:{nom:string; montant:number;type:string;date_payement:any;}[]|any=[];
   dataSource1 = new MatTableDataSource<any>(this.transactions);
 
   private paginator: MatPaginator;
@@ -48,7 +48,7 @@ export class DetailPayementComponent implements OnInit, OnChanges {
   }
 
   enregistrer(){
-  
+
     this.formaterDate();
     let totalPayement = new TotalPayement();
     totalPayement.dateDebut = this.dateDebut;
@@ -56,14 +56,14 @@ export class DetailPayementComponent implements OnInit, OnChanges {
     if(!!this.dateDebut && !!this.dateFin){
       this.obtenirDetailsPayements(totalPayement);
     }
-    
+
   };
- 
+
   obtenirDetailsPayements(totalPayement){
     this.spinner.show(undefined, { fullScreen: true });
     this.servicePayement.obtnenirDetailsPayements(totalPayement).subscribe(res=>{
       this.transactions = [];
-      if(res){
+      if(res && res.length>0){
         this.transactions = <any>res;
         this.dataSource1 = new MatTableDataSource<any>(this.transactions);
         this.setDataSourceAttributes();
@@ -93,7 +93,7 @@ export class DetailPayementComponent implements OnInit, OnChanges {
   applyFilter(event: Event) {
     if(event) {
       const filterValue = (event.target as HTMLInputElement).value;
-      this.dataSource1.filter = filterValue.trim().toLowerCase();  
+      this.dataSource1.filter = filterValue.trim().toLowerCase();
     }
     if (this.dataSource1.paginator) {
       this.dataSource1.paginator.firstPage();
