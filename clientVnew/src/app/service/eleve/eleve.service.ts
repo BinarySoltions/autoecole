@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Eleve } from 'src/app/entite/eleve.entity';
+import { Eleve, EleveSummary } from 'src/app/entite/eleve.entity';
 import { environment } from 'src/environments/environment';
 import { SharedServiceModule } from 'src/app/shared/shared/shared-service.module';
 import { Module } from 'src/app/entite/module.entity';
@@ -46,23 +46,28 @@ export class EleveService {
   obtenirEleveByIdPublic(id: number): Observable<Eleve> {
     return this.http.get<Eleve>(this.apiUrl + 'elevePublic/' + id);
   }
-  obtenirEleves(): Observable<Eleve[]> {
-    return this.http.get<Eleve[]>(this.apiUrl + 'Student');
+  obtenirEleves(): Observable<EleveSummary[]> {
+    return this.http.get<EleveSummary[]>(this.apiUrl + 'Student/summary');
   }
-  obtenirElevesLimites(limit): Observable<Eleve[]> {
-    return this.http.get<Eleve[]>(this.apiUrl + 'Student/'+limit);
+  obtenirElevesLimites(limit): Observable<EleveSummary[]> {
+    return this.http.get<EleveSummary[]>(this.apiUrl + 'Student/'+limit);
   }
 
   obtenirElevesUniquement(): Observable<Eleve[]> {
     return this.http.get<Eleve[]>(this.apiUrl + 'eleves_seulement');
   }
 
-  obtenirElevesModuleAfaire(module:Module): Observable<Eleve[]> {
-    return this.http.post<Eleve[]>(this.apiUrl + 'eleves_module_faire',module, httpOptions);
+  obtenirElevesModuleAfaire(moduleId:Module): Observable<EleveSummary[]> {
+    return this.http.get<EleveSummary[]>(this.apiUrl + 'Student/summary'+'?moduleId='+moduleId);
   }
 
-  ajouterEleve(eleve: Eleve): Observable<Eleve> {
-    return this.http.post<Eleve>(this.apiUrl + 'eleve', eleve, httpOptions)
+  ajouterEleve(eleve: Eleve): Observable<number> {
+    return this.http.post<number>(this.apiUrl + 'Student', eleve, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  modifierEleve(eleveId:number,eleve: Eleve): Observable<number> {
+    return this.http.put<number>(this.apiUrl + 'Student/' + eleveId, eleve, httpOptions)
       .pipe(catchError(this.handleError));
   }
   inscrireEleve(eleve: Eleve): Observable<Eleve> {

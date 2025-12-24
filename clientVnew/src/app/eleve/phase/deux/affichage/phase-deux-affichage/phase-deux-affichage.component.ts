@@ -25,7 +25,7 @@ export class PhaseDeuxAffichageComponent implements OnInit {
   showNote(row){
     console.log(row);
     const dialogRef = this.dialog.open(ModalNoteComponent, {
-      data: {note: row.eleve_module.note, sortie: row.type==="T"?"Théorie "+row.nom:row.nom, moniteur:row.eleve_module.moniteur}
+      data: {note: row.note, sortie: row.type==="T"?"Théorie "+row.nom:row.nom, moniteur:row.moniteur}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -35,14 +35,14 @@ export class PhaseDeuxAffichageComponent implements OnInit {
 
   isNote(row){
     if(row){
-      return !!row.eleve_module.note;
+      return !!row.note;
     }
     return false;
   }
 
   isMonitor(row){
     if(row){
-      return !!row.eleve_module.moniteur;
+      return !!row.moniteur;
     }
     return false;
   }

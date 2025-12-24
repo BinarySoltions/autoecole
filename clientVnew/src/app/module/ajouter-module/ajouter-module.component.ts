@@ -45,7 +45,7 @@ export class AjouterModuleComponent implements OnInit,OnChanges, AfterViewInit {
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',
-      textField: 'nomcomplet',
+      textField: 'nom_complet',
       selectAllText: 'Cocher tout',
       unSelectAllText: 'Décocher tout',
       searchPlaceholderText:'Rechercher',

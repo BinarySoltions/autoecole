@@ -18,7 +18,7 @@
                     <select matNativeControl
                     name="moniteur"
                     aria-label="Enseignant/Teacher"
-                     [(ngModel)]="moduleModel.id_moniteur" 
+                     [(ngModel)]="moduleModel.id_moniteur"
                      placeholder="Enseignant/Teacher">
                         <option  value="0">{{'label.selectionner' | translate}}</option>
                         <ng-template ngFor let-moniteur [ngForOf]="moniteurs" let-i="index">
@@ -35,11 +35,11 @@
                   <select matNativeControl
                   name="module"
                   aria-label="{{'module.nom' | translate }}"
-                   [(ngModel)]="moduleModel.id_module" 
+                   [(ngModel)]="moduleModel.id_module"
                    placeholder="date completee" required>
                       <option  value="0">{{'label.selectionner' | translate}}</option>
                       <ng-template ngFor let-module [ngForOf]="listeModules" let-i="index">
-                          <option [value]="module.id">{{module.nom}}</option>
+                          <option [value]="module.id">{{module.type=="T"?'Module '+module.nom:module.nom}}</option>
                       </ng-template>
                     </select>
                     </mat-form-field>
@@ -52,7 +52,7 @@
                  placeholder="yyyy-mm-dd">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>  
+              </mat-form-field>
       </div>
       <div class="col col-12 form-align-v  none-border-top">
           <mat-checkbox (change)='changeSansObjet(moduleModel.sans_objet)'  name="sansObjet" [(ngModel)]="moduleModel.sans_objet">Sans objet (S.O)</mat-checkbox>
@@ -82,11 +82,11 @@
       <button type="button" class="btn btn-secondary"
          data-dismiss="modal"
          style="margin-left:10px"><i class="fas fa-ban"></i>	&nbsp;{{'label.fermer' | translate}}</button>
-    
-        
+
+
     </div>
   </div>
   </div>
   </div>
   </div>
-  
+

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, ElementRef, HostListener, ChangeDetectorRef, AfterViewInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { EleveService } from 'src/app/service/eleve/eleve.service';
-import { Eleve } from 'src/app/entite/eleve.entity';
+import { Eleve, EleveSummary } from 'src/app/entite/eleve.entity';
 import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstrap-md';
 import core from 'src/app/core/core.json';
 import lien from 'src/app/core/lien.json';
@@ -33,12 +33,12 @@ export class GabaritEleveComponent implements OnInit, AfterViewInit,OnChanges {
   @Output() estSupprimeEleve = new EventEmitter<number>();
 
   @ViewChild('row') row: ElementRef;
-  elements: Eleve[]=[];
-  headElements1 = ['nom', 'prenom','coordonnee.telephone','attestation.resultat_phase_une','modules','id'];
-  dataSource: MatTableDataSource<Eleve>;
+  elements: EleveSummary[]=[];
+  headElements1 = ['nom', 'prenom','telephone','resultat_phase_une','module','id'];
+  dataSource: MatTableDataSource<EleveSummary>;
 
   searchText: string = '';
-  previous: Eleve[]=[];
+  previous: EleveSummary[]=[];
 
   maxVisibleItems: number = 20;
   idEleveASupprimer : number;
@@ -115,20 +115,6 @@ public supprimerEleve(value){
   this.estSupprimeEleve.emit(this.idEleveASupprimer);
 }
 
- determinerPhase(modules:Module[]):string{
-   let modulesCompleted = [];
-   modulesCompleted = modules?.filter(m=>m.eleve_module?.date_complete != null);
-   if(!modulesCompleted){
-    return "";
-   }
-   let resultatArray = modulesCompleted.sort(this.compare);
-   let resultat = resultatArray[0];
-   if(resultat && Number(resultat.numero)){
-     resultat = (resultat.type==="T" ? "Théorie "+resultat.nom : resultat.nom);
-   }
-  return resultat;
- }
-
  determinerModulesAfaire(modules:Module[]):string{
   let modulesCompleted = [];
   modulesCompleted = modules.filter(m=>m.eleve_module?.date_complete != null);
@@ -181,8 +167,8 @@ setDataSourceAttributes() {
   }
 }
 attestationValide(row):any{
-  if(row.attestation && row.attestation.resultat_phase_une){
-    return row.attestation.resultat_phase_une;
+  if(row.resultat_phase_une){
+    return row.resultat_phase_une;
   } else {
     return false;
   }
@@ -203,47 +189,12 @@ onModulesChange(event){
   if(this.numero) {
   let firstModule = this.modulesConfig[0];
   this.module = this.modulesConfig.filter(m=>Number(m.numero)=== Number(this.numero))[0];
-  this.serviceEleve.obtenirElevesModuleAfaire(this.module ).subscribe((result:Eleve[])=>{
+  this.serviceEleve.obtenirElevesModuleAfaire(this.module.id).subscribe((result:EleveSummary[])=>{
     console.log(" result eleves module not done :", result)
     this.dataSource = new MatTableDataSource(result);
       this.setDataSourceAttributes();
   })
-  return;
-  let previousElements = this.modulesConfig.filter(m=>Number(m.numero)< Number(this.numero) && Number(m.phase_id)===Number(this.module.phase_id));
-  if(previousElements && previousElements.length===0 && Number(firstModule.numero) === Number(this.numero)){
-    previousElements = this.modulesConfig.filter(m=>Number(m.phase_id) === Number(this.module.phase_id));
-  } else if(previousElements && previousElements.length===0){
-    previousElements = this.modulesConfig.filter(m=>Number(m.phase_id) === Number(this.module.phase_id)-1);
-    isPrevPhase = true;
   }
-  let previousNumbers = [];
-  if(previousElements && previousElements.length>0){
-   previousNumbers = previousElements.map(n=>n.numero);
-  }
-  let listPreviousModules =  this.elements.filter((e:Eleve)=>{
-    let index = isPrevPhase?(e.modules.filter(m=>Number(m.module.phase_id) === Number(this.module.phase_id)-1).every(m=> m.date_complete!=null || m.sans_objet!=null)?1:-1) : e.modules.findIndex((m:EleveModule)=>this.compareModuleDone(m,previousNumbers));
-    if(index != -1 && Number(firstModule.numero) != Number(this.numero)){
-     return e;
-    }else if(Number(firstModule.numero) === Number(this.numero)){
-      return e;
-     }
-   });
-
-  let testlisteEleves =  listPreviousModules.filter((e:Eleve)=>{
-
-   let index = Number(this.module.phase_id)>1?(e.modules.filter(m=>Number(m.module.phase_id) === Number(this.module.phase_id)-1).every(m=> m.date_complete!=null || m.sans_objet!=null)?
-   e.modules.findIndex((m:EleveModule)=>this.compareModuleAbsent(m)):-1):e.modules.findIndex((m:EleveModule)=>this.compareModuleAbsent(m));
-   if(index != -1){
-    return e;
-   }
-  });
-
-  this.dataSource = new MatTableDataSource(testlisteEleves);
-  this.setDataSourceAttributes();
-} else{
-  this.dataSource = new MatTableDataSource(this.elements);
-  this.setDataSourceAttributes();
-}
 }
 
 compareModuleAbsent(m):boolean{

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, ElementRef, HostListener, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { EleveService } from 'src/app/service/eleve/eleve.service';
-import { Eleve } from 'src/app/entite/eleve.entity';
+import { Eleve, EleveSummary } from 'src/app/entite/eleve.entity';
 import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstrap-md';
 import core from 'src/app/core/core.json';
 import lien from 'src/app/core/lien.json';
@@ -14,6 +14,7 @@ import { ExportExcelService } from 'src/app/excel/export-excel.service';
 import { AjouterModuleComponent } from 'src/app/module/ajouter-module/ajouter-module.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NoteModuleComponent } from '../../note-module/note-module.component';
+import { ModuleService } from 'src/app/service/module/module.service';
 
 
 
@@ -27,17 +28,16 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
 
   champ:any=core;
   lien:any=lien;
-  listeEleves:Eleve[]=[];
+  listeEleves:EleveSummary[]=[];
 
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('row') row: ElementRef;
-  elements: Eleve[]=[];
+  elements: EleveSummary[]=[];
   headElements = ['Nom', 'Prénom', 'Adresse','Téléphone','Module','Action'];
 
   searchText: string = '';
-  previous: Eleve[]=[];
-
+  previous: EleveSummary[]=[];
   maxVisibleItems: number = 20;
   idEleveASupprimer : number;
   indexASupprimer :number;
@@ -54,7 +54,8 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
     private toastr:ToastrService,
     private exportExcelService:ExportExcelService,
     private partageService:PartageService,
-    private dialog:MatDialog) {
+    private dialog:MatDialog,
+    private moduleService:ModuleService) {
       this.translate.setDefaultLang('fr');
    }
 
@@ -66,6 +67,9 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
     this.isLoading = true;
     this.obtenirEleves();
     //this.obtenirElevesExpires();
+    this.moduleService.obtnenirModules().subscribe(res=>{
+      this.modules = res;
+    });
   }
 
   ngAfterViewInit() {
@@ -78,7 +82,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
         this.elements = result;
         this.listeEleves  = result;
        this.isLoading = false;
-       this.dialogRef?.componentInstance.elevesChangeSubscribe.next(this.listeEleves)
+       //this.dialogRef?.componentInstance.elevesChangeSubscribe.next(this.listeEleves)
       }
       this.spinner.hide();
     });
@@ -89,7 +93,7 @@ export class EleveAffichageComponent implements OnInit,AfterViewInit {
         console.log(" result student :",result)
         this.elements = result;
         this.listeEleves  = result;
-        this.dialogRef?.componentInstance.elevesChangeSubscribe.next(this.listeEleves)
+        //this.dialogRef?.componentInstance.elevesChangeSubscribe.next(this.listeEleves)
       }
       this.spinner.hide();
     });
@@ -120,17 +124,7 @@ public supprimerEleve(value,index){
    this.router.navigate([lien.url.ajout_eleve]);
  }
 
- determinerPhase(modules:Module[]):string{
-   let mapModule = new Map;
-   modules.forEach(m=>{
-      if(m.eleve_module.date_complete != null){
-        mapModule.set(m.numero,m.nom);
-      }
-   });
-   let resultatArray = Array.from(mapModule.keys()).sort(this.compare);
-   let resultat = mapModule.get(resultatArray[0]);
-  return resultat;
- }
+
   compare(a, b){
   if (a < b) return 1;
   if (b < a) return -1;
@@ -168,7 +162,7 @@ exporterEleves(){
 
  let columns = [];
  this.elements.forEach(e=>{
-  columns.push({nom:e.nom,prenom:e.prenom,email:e.email,telephone:e.coordonnee.telephone,numero_contrat:e.numero_contrat});
+  columns.push({nom:e.nom,prenom:e.prenom,email:e.email,telephone:e.telephone,numero_contrat:e.numero_contrat});
  });
 
  this.exportExcelService.exportElevsAsExcelFile(columns,titre);

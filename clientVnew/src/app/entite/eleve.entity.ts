@@ -48,3 +48,13 @@ export class Eleve implements Deserializable{
         return this;
     }
 }
+
+export interface EleveSummary{
+    id:number;
+    prenom:string;
+    nom:string;
+    numero_contrat:string;
+    email:string;
+    telephone:string;
+    module:string;
+}

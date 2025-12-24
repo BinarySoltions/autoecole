@@ -27,7 +27,7 @@ export class EleveSaisieComponent implements OnInit,PeutEtreDeactivate {
   baseUrl:any;
   @ViewChild('formulaire', { static: true }) formulaire:NgForm;
 
-  constructor(private router:Router, 
+  constructor(private router:Router,
         private serviceEleve:EleveService,
         private activatedRoute: ActivatedRoute,
         private toastr: ToastrService,
@@ -49,7 +49,7 @@ export class EleveSaisieComponent implements OnInit,PeutEtreDeactivate {
       { value: 'Québec', label: 'Québec' },
       { value: 'Ontario', label: 'Ontario' }
       ];
-  
+
     }
 
   public obtenirEleveById(id:number){
@@ -57,6 +57,7 @@ export class EleveSaisieComponent implements OnInit,PeutEtreDeactivate {
       this.action = "Modifier";
       this.serviceEleve.obtenirEleveById(id).subscribe(eleve=>{
         this.eleveModele = eleve;
+        this.initIfAddress(this.eleveModele);
         this.eleveModele.payed = this.eleveModele.date_rappel_payement != null;
         this.initialiserDate();
       });
@@ -76,11 +77,18 @@ export class EleveSaisieComponent implements OnInit,PeutEtreDeactivate {
   }
   public enregistrer(){
     this.formaterDate();
+    if(this.idEleve){
+      this.serviceEleve.modifierEleve(this.idEleve,this.eleveModele).subscribe((eleveId)=>{
+        this.toastr.success("L'élève a été modifié avec succés!", "Sauvegarde d'un élève", {timeOut: 5000});
+        this.fermer();
+      });
+    } else {
     this.serviceEleve.ajouterEleve(this.eleveModele).subscribe((eleve)=>{
-      this.eleveModele.id = eleve.id;
+      this.eleveModele.id = eleve;
       this.toastr.success("L'élève a été ajouté avec succés!", "Sauvegarde d'un élève", {timeOut: 5000});
       this.fermer();
     });
+    }
   }
   formaterDate(){
     this.eleveModele.date_inscription = !this.eleveModele.date_inscription?null:moment(this.eleveModele.date_inscription).format('YYYY-MM-DD');
@@ -121,4 +129,27 @@ export class EleveSaisieComponent implements OnInit,PeutEtreDeactivate {
    public onStatusChanged(arg) {
     this.eleveModele.status = arg.checked;
    }
+
+   initIfAddress(eleveModele: Eleve) {
+  if (!eleveModele) { return; }
+
+  if (!eleveModele.adresse) {
+    eleveModele.adresse = new Adresse();
+     this.eleveModele.adresse.numero = null;
+    this.eleveModele.adresse.rue = "";
+    this.eleveModele.adresse.appartement = "";
+    this.eleveModele.adresse.municipalite = "";
+    this.eleveModele.adresse.province = "";
+    this.eleveModele.adresse.code_postal = "";
+  }
+
+  if (!eleveModele.coordonnee) {
+    eleveModele.coordonnee = new Coordonnee();
+    this.eleveModele.coordonnee.telephone = "";
+    this.eleveModele.coordonnee.telephone_autre = "";
+  }
 }
+}
+
+
+

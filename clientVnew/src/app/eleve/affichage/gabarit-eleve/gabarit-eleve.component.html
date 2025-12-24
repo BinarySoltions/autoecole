@@ -44,15 +44,15 @@
               <td mat-cell *matCellDef="let row" data-label="prenom" class="cut-text"> {{row.prenom}} </td>
             </ng-container>
             <!-- Progress Column -->
-            <ng-container matColumnDef="coordonnee.telephone">
+            <ng-container matColumnDef="telephone">
               <th class="bg-color-green" mat-header-cell *matHeaderCellDef mat-sort-header> Téléphone </th>
-              <td mat-cell *matCellDef="let row" data-label="telephone" class="cut-text"> {{row.coordonnee?.telephone}}
+              <td mat-cell *matCellDef="let row" data-label="telephone" class="cut-text"> {{row.telephone}}
               </td>
             </ng-container>
             <!-- Progress Column -->
-            <ng-container matColumnDef="attestation.resultat_phase_une">
+            <ng-container matColumnDef="resultat_phase_une">
               <th class="bg-color-green" mat-header-cell *matHeaderCellDef mat-sort-header> Attestation </th>
-              <td mat-cell *matCellDef="let row" data-label="attestation" style="text-align: center;"> <span
+              <td mat-cell *matCellDef="let row" data-label="attestation"> <span
                   *ngIf="attestationValide(row)">
                   <i class="fas fa-file-contract"></i>
                 </span>
@@ -64,10 +64,10 @@
 
             <!-- Progress Column -->
             <!-- Progress Column -->
-            <ng-container matColumnDef="modules">
+            <ng-container matColumnDef="module">
               <th class="bg-color-green" mat-header-cell *matHeaderCellDef> Module </th>
-              <td mat-cell *matCellDef="let row" data-label="module" style="text-align: center;">
-                {{determinerPhase(row.modules)}}<span *ngIf="!determinerPhase(row.modules)">
+              <td mat-cell *matCellDef="let row" data-label="module" >
+                {{+row.module?'Théorie '+row.module:row.module}}<span *ngIf="!row.module">
                   <i class="fa fa-ban"></i>
                 </span> </td>
             </ng-container>

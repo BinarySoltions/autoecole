@@ -26,15 +26,15 @@ export class DetailComponent implements OnInit {
   phaseTrois:phaseDetailModel;
   phaseQuatre:phaseDetailModel;
 
-  constructor(private router:Router, 
+  constructor(private router:Router,
         private serviceEleve:EleveService,
         private activatedRoute: ActivatedRoute,
         private toastr: ToastrService,
-        private translate: TranslateService) { 
+        private translate: TranslateService) {
           this.translate.setDefaultLang('fr');
         }
   ngOnInit() {
-   
+
     this.idEleve = +this.activatedRoute.snapshot.paramMap.get('id');
     this.obtenirEleveById(this.idEleve);
     this.initialiserEleveModele();
@@ -61,22 +61,22 @@ export class DetailComponent implements OnInit {
   }
   initialiserPhases(eleve:any){
     this.phaseUne.modules = _.filter(eleve.modules,function(m){
-      return m.phase_id == 1;
+      return m.module.phase_id == 1;
     });
     this.phaseUne.nom = _.first(this.phaseUne.modules).phase.nom;
 
     this.phaseDeux.modules = _.filter(eleve.modules,function(m){
-      return m.phase_id == 2;
+      return m.module.phase_id == 2;
     });
     this.phaseDeux.nom = _.first(this.phaseDeux.modules).phase.nom;
 
     this.phaseTrois.modules = _.filter(eleve.modules,function(m){
-      return m.phase_id == 3;
+      return m.module.phase_id == 3;
     });
     this.phaseTrois.nom = _.first(this.phaseTrois.modules).phase.nom;
 
     this.phaseQuatre.modules = _.filter(eleve.modules,function(m){
-      return m.phase_id == 4;
+      return m.module.phase_id == 4;
     });
     this.phaseQuatre.nom = _.first(this.phaseQuatre.modules).phase.nom;
   }

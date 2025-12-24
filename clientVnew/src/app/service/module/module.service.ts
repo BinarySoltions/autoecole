@@ -32,7 +32,7 @@ export class ModuleService {
   }
 
   ajouterModuleEleves(module: ModuleModel): Observable<{'valid':boolean}> {
-    return this.http.post<{'valid':boolean}>(this.apiUrl + 'module_eleves', module, httpOptions)
+    return this.http.post<{'valid':boolean}>(this.apiUrl + 'Student/modules/enroll-multiple', module, httpOptions)
       .pipe(catchError(this.handleError));
   }
   ajouterPhaseModule(phaseModule:PhaseModel):Observable<Phase[]>{

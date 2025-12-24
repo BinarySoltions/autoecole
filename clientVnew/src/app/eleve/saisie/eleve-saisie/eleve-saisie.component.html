@@ -1,4 +1,4 @@
- 
+
 <mdb-card>
     <mdb-card-header>
       <div class="row">
@@ -49,7 +49,7 @@
       <mat-form-field>
           <input matInput type="text" maxlength="10" name="app" aria-label="App" [(ngModel)]="eleveModele.adresse.appartement" class="col-3" placeholder="app">
       </mat-form-field>
-        
+
       </div>
       <!-- <div class="md-form input-group col col-4 none-border-top">
           <app-champ-obligatoire [modele]="adresseNumero"></app-champ-obligatoire>
@@ -64,7 +64,7 @@
       <mat-form-field>
           <input matInput type="text" maxlength="50" #municipalite="ngModel" name="municipalite" aria-label="Municipalite" [(ngModel)]="eleveModele.adresse.municipalite" class="requis" placeholder="Municipalité" required>
       </mat-form-field>
-      
+
       <!-- <app-champ-obligatoire [modele]="municipalite"></app-champ-obligatoire> -->
     </div>
   <div class="form-align-v col col-lg-4 none-border-top">
@@ -81,7 +81,7 @@
       <mat-form-field>
           <input matInput type="text" maxlength="10" #codePostal="ngModel" name="codePostal" aria-label="Code postal" [(ngModel)]="eleveModele.adresse.code_postal"  placeholder="code postal" required>
       </mat-form-field>
-      
+
       <app-champ-obligatoire [modele]="codePostal"></app-champ-obligatoire>
     </div>
 </div>
@@ -166,7 +166,7 @@
       <label for="dateNaissance">Date d'expiration permis</label>
             <mat-form-field floatLabel="never">
                 <input matInput  [matDatepicker]="pickerFinPermis"
-                name="dateFinPermis" [(ngModel)]="eleveModele.date_fin_permis" 
+                name="dateFinPermis" [(ngModel)]="eleveModele.date_fin_permis"
                  placeholder="yyyy-mm-dd">
                 <mat-datepicker-toggle matSuffix [for]="pickerFinPermis"></mat-datepicker-toggle>
                 <mat-datepicker #pickerFinPermis></mat-datepicker>
@@ -175,7 +175,7 @@
   <div class="col col-lg-4  none-border-top form-align-v">
     <label for="dateFinContrat">Date d'expiration contrat</label>
           <mat-form-field floatLabel="never">
-              <input matInput  [matDatepicker]="pickerFinContrat" 
+              <input matInput  [matDatepicker]="pickerFinContrat"
               name="dateFinContrat" [(ngModel)]="eleveModele.date_fin_contrat"
                placeholder="yyyy-mm-dd" >
               <mat-datepicker-toggle matSuffix [for]="pickerFinContrat"></mat-datepicker-toggle>
@@ -184,7 +184,7 @@
 </div>
 <div class="col col-lg-4  none-border-top form-align-v" style="border: 1px solid gray;padding-top:10px">
   <mat-checkbox [checked]="eleveModele.payed" (change)="onSelectionChanged($event)">
-          Paiements en retard 
+          Paiements en retard
         </mat-checkbox>
         <mat-checkbox [checked]="eleveModele.status == 1" (change)="onStatusChanged($event)">
           Désactiver l'élève
@@ -195,7 +195,7 @@
               <input matInput type="number" class="example-right-align" min="0" max="6"
                name="versement" [(ngModel)]="eleveModele.versement" placeholder="Nombre de versements">
           </mat-form-field>
-          </div> 
+          </div>
 </div>
   </div>
 </form>
@@ -204,7 +204,7 @@
 <mdb-card-footer class="text-muted">
 <div class="row">
   <div class="col col-12" style="text-align:right">
-      <button type="button" 
+      <button type="button"
       class="btn bg-color-green"
        (click)="enregistrer()"
        style="margin-right:10px;" [disabled]="!formulaire.valid">
@@ -216,4 +216,3 @@
 </div>
 </mdb-card-footer>
 </mdb-card>
-  
