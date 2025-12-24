@@ -79,7 +79,7 @@ export class EleveService {
     .pipe(catchError(this.handleError));
   }
   obtenirElevesParTrimestre(trimestre:any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'exporter_registre', trimestre, httpOptions)
+    return this.http.get<any>(this.apiUrl + 'Student/export/trimester', { params: trimestre })
       .pipe(catchError(this.handleError));
   }
   rechercherEleves(term): Observable<Eleve[]> {
