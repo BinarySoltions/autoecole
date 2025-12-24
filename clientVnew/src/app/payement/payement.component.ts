@@ -16,6 +16,7 @@ import { Coordonnee } from '../entite/coordonnee.entity';
 import { MatDialog } from '@angular/material/dialog';
 import { GabaritFactureComponent } from './gabarit-facture/gabarit-facture.component';
 import { result } from 'underscore';
+import { EleveService } from '../service/eleve/eleve.service';
 
 @Component({
   selector: 'app-payement',
@@ -48,6 +49,7 @@ export class PayementComponent implements OnInit,AfterViewInit {
       private toastr: ToastrService,
       private translate:TranslateService,
       private serviceEcole:EcoleService,
+      private serviceEleve:EleveService,
       private dialog:MatDialog) {
        this.translate.setDefaultLang('fr');
       }
@@ -66,16 +68,28 @@ export class PayementComponent implements OnInit,AfterViewInit {
       this.serviceEcole.obtenirEcole().subscribe(e =>{
         this.ecole = !e?new Ecole():e;
       })
+      this.obtenirEleve();
   }
   ngAfterViewInit(): void {
-    this.servicePayement.obtnenirPayements(this.idEleve).subscribe(res=>{
+   this.obtenirPayements();
+  }
+  obtenirPayements() {
+     this.servicePayement.obtnenirPayements(this.idEleve).subscribe(res=>{
       if(res){
-        this.eleve = res;
-        this.transactions = this.eleve.payements;
+        this.transactions = res;
         this.dataSource.data = this.transactions;
-        this.numeroFacture = this.eleve.numero_contrat;
+
         this.getTotalCost();
       }
+    });
+  }
+
+  obtenirEleve(){
+    this.serviceEleve.obtenirEleve(this.idEleve).subscribe(res=>{
+      if(res){
+        this.eleve = res;
+        this.numeroFacture = this.eleve.numero_contrat;
+       }
     });
   }
   formaterDate(){
@@ -115,11 +129,11 @@ export class PayementComponent implements OnInit,AfterViewInit {
     this.payement.eleve_id = this.idEleve;
     this.servicePayement.ajouterPayement(this.payement).subscribe(res=>{
       if(res){
-        this.eleve = res;
-        this.transactions = this.eleve.payements;
-        this.payement = new Payement();
-        this.dataSource = new MatTableDataSource<Payement>(this.transactions);
-        this.getTotalCost();
+       this.obtenirPayements();
+       this.toastr.success("Le payement a été ajouté avec succes!","Infrormation");
+       this.formulaire.resetForm();
+      }else{
+       this.toastr.error("Une erreur est survenue lors de l'enregistement!");
       }
     })
   };

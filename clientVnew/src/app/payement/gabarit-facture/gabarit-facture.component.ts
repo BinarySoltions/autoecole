@@ -113,15 +113,7 @@ imprimerOuEnvoyer(){
    this.spinner.show(undefined, { fullScreen: true });
    let req = {id:this.data.eleve.id,payments:this.data.payementsPDF.map(x=>x.id)}
     this.servicePayement.genererPDF(req).subscribe(response=>{
-      let a = response.split("\r\n\r\n")
-      const byteCharacters = atob(a[1]);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      let file = new Blob([byteArray], { type: 'application/pdf' });
-      var fileURL = URL.createObjectURL(file);
+      var fileURL = URL.createObjectURL(response);
       var tempLink = document.createElement('a');
       tempLink.style.display = 'none';
       tempLink.href = fileURL;

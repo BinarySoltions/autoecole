@@ -18,7 +18,7 @@ const httpOptions2 = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
   }),
-  responseType: 'text' as 'json'
+  responseType: 'blob' as 'json'
 };
 
 const httpOptions3 = {
@@ -38,19 +38,19 @@ export class PayementService {
 
   constructor(private http: HttpClient) { }
 
-  obtnenirPayements(id:number): Observable<Eleve> {
-    return this.http.get<Eleve>(this.apiUrl + 'payements/'+id);
+  obtnenirPayements(id:number): Observable<Payement[]> {
+    return this.http.get<Payement[]>(this.apiUrl + 'Payments/eleve/'+id);
   }
 
   ajouterPayement(payement:Payement):Observable<Eleve>{
-    return this.http.post<Eleve>(this.apiUrl+'payer',payement,httpOptions)
+    return this.http.post<Eleve>(this.apiUrl+'Payments',payement,httpOptions)
     .pipe(catchError(this.handleError));
   }
   obtnenirTotalPayementsByDates(totalPayement:TotalPayement): Observable<TotalPayement> {
     return this.http.post<TotalPayement>(this.apiUrl + 'payements',totalPayement,httpOptions);
   }
   genererPDF(req:any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'printPayment', req, httpOptions2)
+    return this.http.post<any>(this.apiUrl + 'Payments/receipt', req, httpOptions2)
       .pipe(catchError(this.handleError));
   }
 

@@ -142,7 +142,7 @@ export class ReserveComponent implements OnInit {
   obtenirPayements(): void {
     this.servicePayement.obtnenirPayements(this.authService.currentUserPublicValue.id).subscribe(res=>{
       if(res){
-        this.transaction = res.payements;
+        this.transaction = res;
         this.getTotalCost();
       }
     });
