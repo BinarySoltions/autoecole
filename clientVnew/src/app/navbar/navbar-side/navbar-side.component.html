@@ -1,5 +1,5 @@
 
-<ul class="menu-ul" *ngIf="!checkLogin()">
+<ul class="menu-ul" *ngIf="checkLogin()">
 <li class="nav-item">
 <i class="fas fa-home"></i> &nbsp; <a class="" href="#" (click)="lienActif = lien.HOME"
         [ngClass]="{'active':lienActif == lien.HOME}">Accueil </a>

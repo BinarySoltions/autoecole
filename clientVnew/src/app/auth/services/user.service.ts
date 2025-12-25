@@ -11,15 +11,15 @@ import { SharedServiceModule } from 'src/app/shared/shared/shared-service.module
 export class UserService {
 
   readonly apiUrl = environment.apiEndpoint;
-  
+
   constructor(private http: HttpClient) { }
 
   getAll():Observable<User[]> {
-      return this.http.get<User[]>(`${this.apiUrl}users`);
+      return this.http.get<User[]>(`${this.apiUrl}User`);
   }
 
   getById(id: number) {
-      return this.http.get(`${this.apiUrl}users/${id}`);
+      return this.http.get(`${this.apiUrl}User/${id}`);
   }
 
   register(user: User) {
@@ -27,10 +27,10 @@ export class UserService {
   }
 
   update(user: User) {
-      return this.http.put(`${this.apiUrl}users/${user.id}`, user);
+      return this.http.put(`${this.apiUrl}User/${user.id}`, user);
   }
 
   delete(id: number) {
-      return this.http.delete(`${this.apiUrl}users/${id}`);
+      return this.http.delete(`${this.apiUrl}User/${id}`);
   }
 }

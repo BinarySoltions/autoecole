@@ -125,7 +125,7 @@ export class EleveService {
       .pipe(catchError(this.handleError));
   }
   genererContratPDF(req:any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'printContrat', req, httpOptions2)
+    return this.http.get<any>(this.apiUrl + `Contract/student/${req.id}/contract/details-pdf`,  httpOptions2)
       .pipe(catchError(this.handleError));
   }
   genererAttestationPDF(eleveId:number,req:any): Observable<any> {

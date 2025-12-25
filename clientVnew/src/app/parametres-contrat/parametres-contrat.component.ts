@@ -35,8 +35,8 @@ export class ParametresContratComponent implements OnInit {
     this.serviceContrat.obtenirParametresContrat().subscribe(res=>{
       if(res) {
         this.parametres = res;
-        this.spinner.hide();
       }
+      this.spinner.hide();
     });
   }
   activerContent(value){

@@ -48,7 +48,7 @@
         <a class="nav-link" routerLink="/notification" (click)="lienActif = lien.ELEVE"><i class="fas fa-bell color-text"></i>
           <sup><span style="font-weight: bold;color: black;">{{estNotifie}}</span></sup></a>
     </div>
-    <div class="col col-2" *ngIf="!estNotifie">
+    <div class="col col-2" *ngIf="!estNotifie || false">
       <i class="far fa-bell"></i>
   </div>
       <div class="dropdown col col-3" style="text-align:right">

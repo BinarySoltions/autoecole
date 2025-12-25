@@ -22,11 +22,11 @@ export class ContratService {
   constructor(private http:HttpClient) { }
 
   obtenirParametresContrat():Observable<ParametresContrat>{
-    return this.http.get<ParametresContrat>(this.apiUrl+'parametres/contrat');
+    return this.http.get<ParametresContrat>(this.apiUrl+'ParametreContrat/active');
   }
 
   AjouterParametresContrat(param:ParametresContrat):Observable<ParametresContrat>{
-    return this.http.post<ParametresContrat>(this.apiUrl+'parametre/contrat',param,httpOptions)
+    return this.http.post<ParametresContrat>(this.apiUrl+'ParametreContrat',param,httpOptions)
     .pipe(catchError(this.handleError));
   }
 

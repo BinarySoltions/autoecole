@@ -72,6 +72,6 @@ obtenirElevesExpires() {
 }}
 
 checkLogin(){
-  return this.authenticationService.currentUserValue;
+  return this.authenticationService.currentUserValue||true;
 }
 }
